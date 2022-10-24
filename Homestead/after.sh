@@ -34,4 +34,12 @@ psql -d saf_mtv -h homestead -U homestead -e -c "CREATE USER saf_mtv_dbuser WITH
 psql -d saf_mtv -h homestead -U homestead -e -c "GRANT ALL PRIVILEGES ON DATABASE saf_mtv to saf_mtv_dbuser;"
 
 sudo service php8.1-fpm restart
-sudo sytemctl restart nginx
+sudo systemctl restart nginx
+
+set -e
+
+cd /var/www/saf-mtv
+composer install
+php artisan migrate
+
+npm install && npm run build
