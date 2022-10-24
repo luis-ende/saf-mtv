@@ -1,0 +1,40 @@
+ip: 192.168.56.56
+memory: 2048
+cpus: 2
+provider: virtualbox
+name: saf-mtv-vbox
+hostname: homestead
+
+authorize: ~/.ssh/id_rsa.pub
+keys:
+  - ~/.ssh/id_rsa
+
+folders:
+  -
+    map: ~//Projects/saf-mtv
+    to: /var/www/saf-mtv
+
+sites:
+  -
+    map: saf-mtv.test
+    to: /var/www/saf-mtv/public
+    php: "8.0"
+
+databases:
+  - saf_mtv
+
+features:
+  -
+    mysql: false
+  -
+    mariadb: false
+  -
+    postgresql: true
+  -
+    ohmyzsh: false
+  -
+    webdriver: false
+services:
+  -
+    enabled:
+      - "postgresql@13-main"
