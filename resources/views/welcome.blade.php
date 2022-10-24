@@ -32,7 +32,7 @@
                         <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Ingresar</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Registro</a>
+                            <a href="{{ route('wizard.registro-mtv.create') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Registro</a>
                         @endif
                     @endauth
                 </div>
