@@ -18,7 +18,7 @@ sites:
   -
     map: saf-mtv.test
     to: /var/www/saf-mtv/public
-    php: "8.0"
+    php: "8.1"
 
 databases:
   - saf_mtv
