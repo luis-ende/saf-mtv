@@ -14,7 +14,7 @@ class RegistroWizard extends AbstractWizard
 
     public static string $slug = 'registro-mtv';
 
-    public string $onCompleteAction = RegistrationAction::class;
+    public string $onCompleteAction = RegistroAction::class;
 
     protected array $steps = [
         PerfilNegocioStep::class,
@@ -30,5 +30,10 @@ class RegistroWizard extends AbstractWizard
     public function sharedData(Request $request): array
     {
         return [];
+    }
+
+    protected function redirectTo(): string
+    {
+        return route('dashboard');
     }
 }

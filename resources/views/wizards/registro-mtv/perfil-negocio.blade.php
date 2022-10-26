@@ -1,12 +1,29 @@
-<x-guest-layout>        
+{{--@include('layouts.registro-navigation')--}}
+<x-guest-layout>
     <div class="container">
-        <h1>1. Perfil de tu Negocio</h1><br>
-        <form method="POST" action="{{ route('wizard.registro-mtv.store') }}">
+        {{ $wizard['title'] }}
+        <h1>1. Tu Perfil de Negocio</h1><br>
+
+        @if ($wizard['id'])
+            @php($wizardId = $wizard['id'])
+            <form method="POST" action="{{ route('wizard.registro-mtv.update', [$wizardId, 'perfil-negocio']) }}">
+        @else
+            <form method="POST" action="{{ route('wizard.registro-mtv.store') }}">
+        @endif
+
             @csrf
 
             <div class="form-group">
-                <label for="rfc">RFC</label>
-                <input type="text" class="form-control" id="rfc">
+                <!-- RFC -->
+                <div>
+                    <x-input-label for="rfc" :value="__('RFC')" />
+
+                    <x-rfc-input id="rfc" class="form-control"
+                                 name="rfc"
+                                 :value="old('rfc')" />
+
+                    <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
+                </div>
             </div>
             <div class="form-group">
                 <label for="direccion">Dirección de contacto</label>
@@ -31,6 +48,29 @@
                     <option value="value2" selected>Value 2</option>
                     <option value="value3">Value 3</option>
                 </select>
+            </div>
+
+            <!-- Password -->
+            <div class="mt-4">
+                <x-input-label for="password" :value="__('Password')" />
+
+                <x-text-input id="password" class="block mt-1 w-full"
+                              type="password"
+                              name="password"
+                              required autocomplete="new-password" />
+
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mt-4">
+                <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+
+                <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                              type="password"
+                              name="password_confirmation" required />
+
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
             </div>
 
             <input class="btn btn-primary" type="submit" value="Siguiente">

@@ -1,7 +1,11 @@
-<x-guest-layout>        
+{{--@include('layouts.registro-navigation')--}}
+<x-guest-layout>
     <div class="container">
-        <h1>2. Descripción de tu Negocio</h1><br>
-        <form method="POST" action="{{ route('wizard.registro-mtv.update', 'descripcion-negocio') }}">
+        {{ $wizard['title'] }}
+        <h1>2. Descripción de tu negocio</h1><br>
+        @php($wizardId = $wizard['id'])
+
+        <form method="POST" action="{{ route('wizard.registro-mtv.update', [$wizardId, 'descripcion-negocio']) }}">
             @csrf
 
             <div class="form-group">
@@ -19,7 +23,7 @@
             <div class="form-group">
                 <label for="telefono">Sitio Web</label>
                 <input type="text" class="form-control" id="telefono">
-            </div>            
+            </div>
 
             <input class="btn btn-primary" type="submit" value="Siguiente">
         </form>
