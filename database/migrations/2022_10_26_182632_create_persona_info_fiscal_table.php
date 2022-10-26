@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('rfc', 13)->unique();
-            $table->string('password');
-            $table->boolean('activo')->default(true);
-            $table->timestamp('last_login');
-            $table->foreignId('id_persona')->constrained('personas');
-            $table->rememberToken();
+        Schema::create('persona_info_fiscal', function (Blueprint $table) {
+            $table->id();            
+            $table->integer('id_asentamiento');
+            $table->integer('id_tipo_vialidad');
+            $table->string('vialidad', 120);
+            $table->string('num_int', 80);
+            $table->string('num_ext', 100);                        
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('persona_info_fiscal');
     }
 };

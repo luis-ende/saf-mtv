@@ -22,8 +22,8 @@ return new class extends Migration
             $table->integer('id_asentamiento');
             $table->integer('id_tipo_vialidad');
             $table->string('vialidad', 120);
-            $table->string('num_ext', 100);
             $table->string('num_int', 80);
+            $table->string('num_ext', 100);                        
             $table->string('lada', 8);
             $table->string('telefono_fijo', 10);
             $table->string('extension', 8);
