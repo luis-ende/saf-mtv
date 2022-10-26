@@ -30,7 +30,8 @@ return new class extends Migration
             $table->string('telefono_movil', 12);
             $table->string('email', 255);
             $table->string('email_alterno', 255);
-            $table->string('grupo_prioritario')->nullable();            
+            $table->string('grupo_prioritario')->nullable();    
+            $table->timestamps();        
         });
     }
 
