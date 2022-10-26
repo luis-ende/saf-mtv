@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('perfiles', function (Blueprint $table) {
             $table->id();
             $table->string('rfc', 13)->unique();
+            $table->string('email', 255);
             $table->string('nombre_razon_social');
             $table->string('direccion');
             $table->string('nombre_contacto');
