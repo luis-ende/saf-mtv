@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('oportunidades_negocio', function (Blueprint $table) {
             $table->id();
-            $table->string('rfc', 13)->unique();
-            $table->string('password');
-            $table->boolean('activo');
-            $table->timestamp('last_login');
-            $table->foreignId('id_persona')->constrained('personas');
-            $table->rememberToken();
+            $table->string('nombre_procedimiento');            
+            $table->date('fecha_publicacion');
+            $table->string('tipo_contratacion', 100);
+            $table->string('metodo_contratacion', 60);
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('oportunidades_negocio');
     }
 };

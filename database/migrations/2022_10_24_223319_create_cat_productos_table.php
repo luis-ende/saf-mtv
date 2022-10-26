@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('perfil_oportunidades', function (Blueprint $table) {
+        Schema::create('cat_productos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_persona')->constrained('personas');
+            $table->string('nombre_catalogo', 100);
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('perfil_oportunidades');
+        Schema::dropIfExists('cat_productos');
     }
 };

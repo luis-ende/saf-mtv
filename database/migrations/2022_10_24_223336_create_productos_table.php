@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_cat_productos')->constrained('cat_productos');
             $table->string('clave_cabms', 10);
             $table->string('nombre');
+            $table->text('descripcion');
             $table->string('tipo');
             $table->string('categoria')->nullable();
             $table->string('subcategoria')->nullable();

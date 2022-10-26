@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('catalogos_productos', function (Blueprint $table) {
+        Schema::create('perfil_negocio_diferenciadores', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_catalogo', 100);
+            $table->foreignId('id_perfil_negocio')->constrained('perfil_negocio');
+            $table->string('diferenciador', 50);
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('catalogos_productos');
+        Schema::dropIfExists('perfil_negocio_diferenciadores');
     }
 };
