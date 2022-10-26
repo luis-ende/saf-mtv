@@ -20,10 +20,14 @@ class DescripcionNegocioStep extends WizardStep
     public function fields(): array
     {
         return [
-            Field::make('lema_negocio'),
-            Field::make('descripcion_negocio'),
+            Field::make('lema_negocio')->rules(['required']),
+            Field::make('descripcion_negocio')->rules(['required']),
             Field::make('diferenciador'),
             Field::make('sitio_web'),
+            Field::make('cuenta_facebook'),
+            Field::make('cuenta_twitter'),
+            Field::make('cuenta_linkedin'),
+            Field::make('num_whatsapp'),
         ];
     }
 }

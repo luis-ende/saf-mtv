@@ -21,11 +21,27 @@ class PerfilNegocioStep extends WizardStep
     {
         return [
             Field::make('rfc'),
-            Field::make('nombre'),
-            Field::make('direccion'),
-            Field::make('contacto'),
-            Field::make('telefono'),
-            Field::make('correo_electronico'),
+            Field::make('password'),
+            Field::make('nombre')->rules(['required']),
+            Field::make('primer_ap'),
+            Field::make('segundo_ap'),
+            Field::make('id_asentamiento'),
+            Field::make('id_tipo_vialidad'),
+            Field::make('vialidad'),            
+            Field::make('num_int'),
+            Field::make('num_ext'),            
+            Field::make('id_asentamiento_dfiscal'),
+            Field::make('id_tipo_vialidad_dfiscal'),
+            Field::make('vialidad_fiscal'),            
+            Field::make('num_int_dfiscal'),
+            Field::make('num_ext_dfiscal'),
+            Field::make('lada'),            
+            Field::make('telefono_fijo'),
+            Field::make('extension'),
+            Field::make('telefono_movil'),
+            Field::make('email'),
+            Field::make('email_alterno'),
+            Field::make('grupo_prioritario'),            
         ];
     }
 }

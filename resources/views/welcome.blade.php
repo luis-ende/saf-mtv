@@ -22,21 +22,26 @@
             }
         </style>
     </head>
-    <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-            @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Escritorio</a>
-                    @else
-                        <a class="btn btn-primary" href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Ingresar</a>
+    <body class="antialiased">            
+        <div class="container">
+            <div class="row">
+                @if (Route::has('login'))                
+                        @auth
+                        <div class="col-6">
+                            <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Escritorio</a>
+                        </div>
+                        @else
+                            <div class="col-6">
+                                <a class="btn btn-primary" href="{{ route('login') }}">Iniciar sesión</a>
 
-                        @if (Route::has('wizard.registro-mtv.create'))
-                            <a class="btn btn-primary" href="{{ route('wizard.registro-mtv.create') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Registro en MTV</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+                                @if (Route::has('wizard.registro-mtv.create'))
+                                    <a class="btn btn-primary px-5" href="{{ route('wizard.registro-mtv.create') }}">Sé parte de Mi Tiendita Virtual</a>
+                                @endif
+                            </div>
+                        @endauth
+                    </div>
+                @endif
+            </div>
         </div>
     </body>
 </html>

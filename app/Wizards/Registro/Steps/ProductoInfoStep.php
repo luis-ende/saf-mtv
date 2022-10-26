@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class ProductoInfoStep extends WizardStep
 {
-    public string $title = 'Ofrece tus productos';
+    public string $title = 'Ofrece tus productos (opcional)';
 
     public string $slug = 'catalogo-productos';
 
@@ -21,6 +21,12 @@ class ProductoInfoStep extends WizardStep
     {
         return [
             Field::make('nombre_producto'),
+            Field::make('clave_cabms'),
+            Field::make('descripcion_producto'),
+            Field::make('tipo_producto'),
+            Field::make('categoria_producto'),
+            Field::make('subcategoria_producto'),
+            Field::make('marca'),
         ];
     }
 }
