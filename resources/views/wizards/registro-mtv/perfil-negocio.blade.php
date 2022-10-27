@@ -49,40 +49,9 @@
                     Dirección de contacto
                 </div>
                 <div class="card-body">
-                    <div class="form-group">
-                        <label for="cp">Código postal:</label>
-                        <input type="text" class="form-control" id="cp" name="cp" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="entidad_federativa">Entidad federativa:</label>
-                        <input type="text" class="form-control" id="entidad_federativa" name="entidad_federativa">
-                    </div>
-                    <div class="form-group">
-                        <label for="alcaldia">Alcaldía:</label>
-                        <input type="text" class="form-control" id="alcaldia" name="alcaldia">
-                    </div>
-                    <div class="form-group">
-                        <label for="colonia">Colonia:</label>
-                        <input type="text" class="form-control" id="colonia" name="colonia">
-                    </div>
-                    <div class="form-group">
-                        <label for="tipo_vialidad">Tipo vialidad:</label>
-                        <input type="text" class="form-control" id="tipo_vialidad" name="tipo_vialidad">
-                    </div>
-                    <div class="form-group">
-                        <label for="vialidad">Vialidad:</label>
-                        <input type="text" class="form-control" id="vialidad" name="vialidad" value="{{ $step['vialidad'] ??  old('vialidad') }}">
-                        <x-input-error :messages="$errors->get('vialidad')" class="mt-2" />
-                    </div>
-                    <div class="form-group">
-                        <label for="num_ext">Número exterior:</label>
-                        <input type="text" class="form-control" id="num_ext" name="num_ext" value="{{ $step['num_ext'] ??  old('num_ext') }}">
-                        <x-input-error :messages="$errors->get('num_ext')" class="mt-2" />
-                    </div>
-                    <div class="form-group">
-                        <label for="num_int">Número interior:</label>
-                        <input type="text" class="form-control" id="num_int" name="num_int" value="{{ $step['num_int'] ??  old('num_int') }}">
-                    </div>              
+                    
+                    <x-direccion-input />
+                    
                     <div class="form-group">
                         <label>Teléfono fijo:</label>
                         <label for="lada">Lada internacional</label>
@@ -121,23 +90,10 @@
                     Dirección fiscal
                 </div>
                 <div class="card-body">
-                    <input type="hidden" id="id_asentamiento" value="1" name="id_asentamiento">                    
-                    <div class="form-group">
-                        <label for="cp_dfiscal">Código postal:</label>
-                        <input type="text" class="form-control" id="cp_dfiscal" name="cp_dfiscal">
-                    </div>
-                    <div class="form-group">
-                        <label for="entidad_federativa_dfiscal">Entidad federativa:</label>
-                        <input type="text" class="form-control" id="entidad_federativa_dfiscal" name="entidad_federativa_dfiscal">
-                    </div>
-                    <div class="form-group">
-                        <label for="alcaldia_dfiscal">Alcaldía:</label>
-                        <input type="text" class="form-control" id="alcaldia_dfiscal" name="alcaldia_dfiscal">
-                    </div>
-                    <div class="form-group">
-                        <label for="colonia_dfiscal">Colonia:</label>
-                        <input type="text" class="form-control" id="colonia_dfiscal" name="colonia_dfiscal">
-                    </div>
+                    <input type="hidden" id="id_asentamiento" value="1" name="id_asentamiento">
+                    
+                    <x-direccion-input />
+
                     <div class="form-group">
                         <label for="tipo_vialidad_dfiscal">Tipo vialidad:</label>
                         <input type="text" class="form-control" id="tipo_vialidad_dfiscal" name="tipo_vialidad_dfiscal">
