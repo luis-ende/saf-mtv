@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('rfc', 13)->unique();
             $table->string('nombre', 120);
-            $table->string('primer_ap', 60);
-            $table->string('segundo_ap', 60);
+            $table->string('primer_ap', 60)->nullable();
+            $table->string('segundo_ap', 60)->nullable();
+            $table->string('nombre_contacto', 120)->nullable();
             $table->integer('id_asentamiento');
             $table->integer('id_tipo_vialidad');
             $table->string('vialidad', 120);
