@@ -34,6 +34,15 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <x-dropdown-link :href="route('perfil-negocio')">
+                            {{ __('Perfil') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('catalogo-productos')">
+                            {{ __('Mi catalogo') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('centro-notificaciones')">
+                            {{ __('Notificaciones') }}
+                        </x-dropdown-link>
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -43,7 +52,7 @@
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
-                        </form>
+                        </form>                        
                     </x-slot>
                 </x-dropdown>
             </div>
