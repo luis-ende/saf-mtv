@@ -1,3 +1,6 @@
+@props(['productos' => []])
+
+
 <br>
 <div>
     <div class="table-responsive">
@@ -15,56 +18,18 @@
             </tr>
             </thead>
             <tbody>
+            @foreach ($productos as $producto)
             <tr>
-                <th scope="row">1</th>
-                <td>Sit</td>
-                <td>Amet</td>
-                <td>Consectetur</td>
-                <td>Consectetur</td>
-                <td>Consectetur</td>
-                <td>Consectetur</td>
-                <td><a href="#">Editar</a><span> / </span><a href="#">Eliminar</a><span> / </span><a href="#">Fotos</a></td>
+                <th scope="row">{{ $producto->id }}</th>                
+                <td>{{ $producto->clave_cabms }}</td>
+                <td>{{ $producto->nombre }}</td>
+                <td>{{ $producto->tipo }}</td>
+                <td>{{ $producto->categoria }}</td>
+                <td>{{ $producto->subcategoria }}</td>
+                <td>{{ $producto->marca }}</td>                
+                <td><a href="{{ route('productos.edit') }}">Editar</a><span> / </span><a href="#">Eliminar</a><span> / </span><a href="#">Fotos</a></td>
             </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Adipisicing</td>
-                <td>Elit</td>
-                <td>Sint</td>
-                <td>Consectetur</td>
-                <td>Consectetur</td>
-                <td>Consectetur</td>
-                <td><a href="#">Editar</a><span> / </span><a href="#">Eliminar</a><span> / </span><a href="#">Fotos</a></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Hic</td>
-                <td>Fugiat</td>
-                <td>Temporibus</td>
-                <td>Consectetur</td>
-                <td>Consectetur</td>
-                <td>Consectetur</td>
-                <td><a href="#">Editar</a><span> / </span><a href="#">Eliminar</a><span> / </span><a href="#">Fotos</a></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Hic</td>
-                <td>Fugiat</td>
-                <td>Temporibus</td>
-                <td>Consectetur</td>
-                <td>Consectetur</td>
-                <td>Consectetur</td>
-                <td><a href="#">Editar</a><span> / </span><a href="#">Eliminar</a><span> / </span><a href="#">Fotos</a></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Hic</td>
-                <td>Fugiat</td>
-                <td>Temporibus</td>
-                <td>Consectetur</td>
-                <td>Consectetur</td>
-                <td>Consectetur</td>
-                <td><a href="#">Editar</a><span> / </span><a href="#">Eliminar</a><span> / </span><a href="#">Fotos</a></td>
-            </tr>
+            @endforeach                        
             </tbody>
         </table>
     </div>

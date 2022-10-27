@@ -2,7 +2,7 @@
 
 
 <div>
-    <form method="POST" action="">
+    <form method="POST" action="{{ route('productos.store') }}">
         @csrf
         <div class="form-group">
             <label>{{  $context === 'wizard' ? '¿Qué producto ofreces?' : 'Tipo de producto:' }}</label>
@@ -21,15 +21,15 @@
         </div>
         <div class="form-group">
             <label for="descripcion">Descripcion:</label>
-            <input type="text" class="form-control" id="descripcion" name="descripcion_producto" value="{{ $step['descripcion_producto'] ?? old('descripcion_producto') }}">
+            <textarea type="text" class="form-control" id="descripcion_producto" name="descripcion_producto" value="{{ $step['descripcion_producto'] ?? old('descripcion_producto') }}"></textarea>
         </div>
         <div class="form-group">
             <label for="categoria">Categoría:</label>
-            <input type="text" class="form-control" id="categoria" name="categoria_producto" value="{{ $step['categoria_producto'] ?? old('categoria_producto') }}">
+            <input type="text" class="form-control" id="categoria_producto" name="categoria_producto" value="{{ $step['categoria_producto'] ?? old('categoria_producto') }}">
         </div>
         <div class="form-group">
             <label for="subcategoria">Subcategoría:</label>
-            <input type="text" class="form-control" id="subcategoria" name="subcategoria_producto" value="{{ $step['subcategoria_producto'] ?? old('subcategoria_producto') }}">
+            <input type="text" class="form-control" id="subcategoria_producto" name="subcategoria_producto" value="{{ $step['subcategoria_producto'] ?? old('subcategoria_producto') }}">
         </div>
         <div class="form-group">
             <label for="marca">Marca:</label>

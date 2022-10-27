@@ -9,7 +9,7 @@
                     Completa y actualiza tu catálogo de los bienes o servicios que te gustaría ofrecer a la Ciudad de México
                 </div>                
                 <x-producto-form /> <br>                
-                <x-productos-table />
+                <x-productos-table :productos="$productosPersona" />
             </div>
         </div>
     </div>    
