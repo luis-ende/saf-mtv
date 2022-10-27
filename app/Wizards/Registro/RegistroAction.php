@@ -38,19 +38,19 @@ class RegistroAction extends WizardAction
                     'email' => $payload['email'],
                     'email_alterno' => $payload['email_alterno'],
                     'grupo_prioritario' => $payload['grupo_prioritario'],
-                ]);        
-        
-                $perfilNegocio = PerfilNegocio::create([
+                ]);
+
+                PerfilNegocio::create([
                     'id_persona' => $persona->id,
                     'lema_negocio' => $payload['lema_negocio'],
-                    'descripcion_negocio' => $payload['descripcion_negocio'],            
+                    'descripcion_negocio' => $payload['descripcion_negocio'],
                     'sitio_web' => $payload['sitio_web'],
                     'cuenta_facebook' => $payload['cuenta_facebook'],
                     'cuenta_twitter' => $payload['cuenta_twitter'],
                     'cuenta_linkedin' => $payload['cuenta_linkedin'],
                     'num_whatsapp' => $payload['num_whatsapp'],
                 ]);
-        
+
                 $catalogoProductos = CatalogoProductos::create([
                     'nombre_catalogo' => 'Catálogo principal',
                     'id_persona' => $persona->id,
@@ -82,12 +82,12 @@ class RegistroAction extends WizardAction
                 event(new Registered($user));
 
                 Auth::login($user);
-            });        
+            });
         } catch (Exception $e) {
-            return $this->error(
+            return $this->failure(
                 'El proceso de registro no pudo ser completado debido a un error interno.'
             );
-        }        
+        }
 
 
         return $this->success();

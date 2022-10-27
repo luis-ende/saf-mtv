@@ -4,13 +4,6 @@
         {{ $wizard['title'] }}
         <h1>1. Tu Perfil de Negocio</h1><br>
 
-        @error('wizard')
-            <div class="bg-red-300 text-red-700 px-6 py-4">
-                <span class="font-semibold">Whoops!</span>
-                {{ $message }}
-            </div>
-        @enderror
-
         @if ($wizard['id'])
             @php($wizardId = $wizard['id'])
             <form method="POST" action="{{ route('wizard.registro-mtv.update', [$wizardId, 'perfil-negocio']) }}">
@@ -20,26 +13,29 @@
 
             @csrf
 
-            <div class="form-group">                
+            <div class="form-group">
                 <x-input-label for="rfc" :value="__('RFC')" />
 
                 <x-rfc-input id="rfc" class="form-control"
                              name="rfc"
-                             :value="old('rfc')" />
+                             :value="$step['rfc'] ?? old('rfc')" />
 
                 <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
             </div>
             <div class="form-group">
                 <label for="nombre">Nombre o razón social:</label>
-                <input type="text" class="form-control" id="nombre" name="nombre">
+                <input type="text" class="form-control" id="nombre" name="nombre" value="{{ $step['nombre'] ?? old('nombre') }}" required>
+                <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
             </div>
             <div class="form-group">
                 <label for="primer_ap">Primer apellido:</label>
-                <input type="text" class="form-control" id="primer_ap" name="primer_ap">
+                <input type="text" class="form-control" id="primer_ap" name="primer_ap" value="{{ $step['primer_ap'] ?? old('primer_ap') }}">
+                <x-input-error :messages="$errors->get('primer_ap')" class="mt-2" />
             </div>
             <div class="form-group">
                 <label for="segundo_ap">Segundo apellido:</label>
-                <input type="text" class="form-control" id="segundo_ap" name="segundo_ap">
+                <input type="text" class="form-control" id="segundo_ap" name="segundo_ap" value="{{ $step['segundo_ap'] ??  old('segundo_ap') }}">
+                <x-input-error :messages="$errors->get('segundo_ap')" class="mt-2" />
             </div>
 
             <input type="hidden" id="id_asentamiento" value="1" name="id_asentamiento">
@@ -60,8 +56,8 @@
                 <label for="colonia">Colonia:</label>
                 <input type="text" class="form-control" id="colonia" name="colonia">
             </div>
-            
-            
+
+
             <div class="form-group">
                 <label for="tipo_vialidad">Tipo vialidad:</label>
                 <input type="text" class="form-control" id="tipo_vialidad" name="tipo_vialidad">
@@ -69,10 +65,12 @@
             <div class="form-group">
                 <label for="vialidad">Vialidad:</label>
                 <input type="text" class="form-control" id="vialidad" name="vialidad">
+                <x-input-error :messages="$errors->get('vialidad')" class="mt-2" />
             </div>
             <div class="form-group">
                 <label for="num_ext">Número exterior:</label>
                 <input type="text" class="form-control" id="num_ext" name="num_ext">
+                <x-input-error :messages="$errors->get('num_ext')" class="mt-2" />
             </div>
             <div class="form-group">
                 <label for="num_int">Número interior:</label>
@@ -80,10 +78,10 @@
             </div>
 
             <!-- Dirección fiscal -->
-            <input type="hidden" id="id_asentamiento" value="1" name="id_asentamiento">            
+            <input type="hidden" id="id_asentamiento" value="1" name="id_asentamiento">
 
             <label>Dirección fiscal:</label>
-            <div class="form-group">                
+            <div class="form-group">
                 <label for="cp_dfiscal">Código postal:</label>
                 <input type="text" class="form-control" id="cp_dfiscal" name="cp_dfiscal">
             </div>
@@ -121,27 +119,32 @@
             <div class="form-group">
                 <label>Teléfono fijo:</label>
                 <label for="lada">Lada internacional</label>
-                <input type="text" class="form-control" id="lada" name="lada">
+                <input type="text" class="form-control" id="lada" name="lada" value="{{ $step['lada'] ?? old('lada') }}">
+                <x-input-error :messages="$errors->get('lada')" class="mt-2" />
             </div>
-            <div class="form-group">                
+            <div class="form-group">
                 <label for="telefono_fijo">Numérico a 10 dígitos</label>
-                <input type="text" class="form-control" id="telefono_fijo" name="telefono_fijo">
+                <input type="text" class="form-control" id="telefono_fijo" name="telefono_fijo" value="{{ $step['telefono_fijo'] ?? old('telefono_fijo') }}">
+                <x-input-error :messages="$errors->get('telefono_fijo')" class="mt-2" />
             </div>
-            <div class="form-group">                
+            <div class="form-group">
                 <label for="extension">Ext.</label>
-                <input type="text" class="form-control" id="extension" name="extension">
+                <input type="text" class="form-control" id="extension" name="extension" value="{{ $step['extension'] ?? old('extension') }}">
             </div>
-            <div class="form-group">                
+            <div class="form-group">
                 <label for="telefono_movil">Teléfono móvil:</label>
-                <input type="text" class="form-control" id="telefono_movil" name="telefono_movil">
+                <input type="text" class="form-control" id="telefono_movil" name="telefono_movil" value="{{ $step['extension'] ?? old('extension') }}">
+                <x-input-error :messages="$errors->get('telefono_movil')" class="mt-2" />
             </div>
-            <div class="form-group">                
+            <div class="form-group">
                 <label for="email">Correo electrónico principal:</label>
-                <input type="email" class="form-control" id="email" name="email">
+                <input type="email" class="form-control" id="email" name="email" value="{{ $step['email'] ?? old('email') }}" required>
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
-            <div class="form-group">                
+            <div class="form-group">
                 <label for="email_alterno">Correo electrónico alternativo:</label>
-                <input type="email" class="form-control" id="email_alterno" name="email_alterno">
+                <input type="email" class="form-control" id="email_alterno" name="email_alterno" value="{{ $step['email_alterno'] ?? old('email_alterno') }}">
+                <x-input-error :messages="$errors->get('email_alterno')" class="mt-2" />
             </div>
 
             <div class="form-group">

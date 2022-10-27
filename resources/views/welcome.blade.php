@@ -22,10 +22,10 @@
             }
         </style>
     </head>
-    <body class="antialiased">            
+    <body class="antialiased">
         <div class="container">
             <div class="row">
-                @if (Route::has('login'))                
+                @if (Route::has('login'))
                         @auth
                         <div class="col-6">
                             <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Escritorio</a>
