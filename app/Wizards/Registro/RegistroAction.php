@@ -38,6 +38,7 @@ class RegistroAction extends WizardAction
                     'email' => $payload['email'],
                     'email_alterno' => $payload['email_alterno'],
                     'grupo_prioritario' => $payload['grupo_prioritario'],
+                    'nombre_contacto' => $payload['nombre_contacto'],
                 ]);
 
                 PerfilNegocio::create([

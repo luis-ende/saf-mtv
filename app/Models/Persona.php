@@ -16,7 +16,7 @@ class Persona extends Model
      */
     protected $fillable = [
         'rfc',
-        'nombre',
+        'nombre',        
         'primer_ap',
         'segundo_ap',
         'id_asentamiento',
@@ -31,6 +31,7 @@ class Persona extends Model
         'email',
         'email_alterno',
         'grupo_prioritario',
+        'nombre_contacto',
     ];
 
      /**
