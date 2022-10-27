@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CatalogoProductosController;
 use App\Http\Controllers\PerfilNegocioController;
+use App\Http\Controllers\CentroNotificacionesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +28,6 @@ Route::get('/catalogo-productos', [CatalogoProductosController::class, 'index'])
 
 Route::get('/perfil-negocio', [PerfilNegocioController::class, 'index'])->middleware(['auth', 'verified'])->name('perfil-negocio');
 
+Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'index'])->middleware(['auth', 'verified'])->name('centro-notificaciones');
 
 require __DIR__.'/auth.php';
