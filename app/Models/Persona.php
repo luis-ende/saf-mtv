@@ -43,4 +43,12 @@ class Persona extends Model
         'id_asentamiento' => 1,
         'id_tipo_vialidad' => 1,
     ];
+
+    /**
+     * Obtener catálogo de productos asociado a la persona.
+     */
+    public function catalogoProductos()
+    {
+        return $this->hasOne(CatalogoProductos::class, 'id_persona', 'id');
+    }
 }

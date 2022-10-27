@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\Producto;
+
 class CatalogoProductos extends Model
 {
     use HasFactory;
@@ -25,4 +27,12 @@ class CatalogoProductos extends Model
         'id_persona',
         'nombre_catalogo',
     ];
+
+     /**
+     * Obtener productos del catálogo.
+     */
+    public function productos()
+    {
+        return $this->hasMany(Producto::class, 'id_cat_productos', 'id');
+    }
 }
