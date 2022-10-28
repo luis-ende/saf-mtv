@@ -1,5 +1,8 @@
-<input type="text"
+<input id="rfc"
+       name="rfc"
+       type="text"
        required autofocus
+       data-rfc-existe="0"
        placeholder="RFC con homoclave"
        maxlength="13"
-       style="text-transform: uppercase;" {!! $attributes->merge(['class' => 'rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50']) !!}>
+       oninput="this.value = this.value.toUpperCase()" {!! $attributes->merge(['class' => 'form-control']) !!}>

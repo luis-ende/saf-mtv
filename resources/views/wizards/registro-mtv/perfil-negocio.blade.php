@@ -15,11 +15,7 @@
 
             <div class="form-group">
                 <x-input-label for="rfc" :value="__('RFC')" />
-
-                <x-rfc-input id="rfc" class="form-control"
-                             name="rfc"
-                             :value="$step['rfc'] ?? old('rfc')" />
-
+                <x-rfc-validacion-input :value="$step['rfc'] ?? old('rfc')" />
                 <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
             </div>
             <div class="form-group">
@@ -39,7 +35,7 @@
             </div>
             <div class="form-group">
                 <label for="nombre_contacto">Persona a contactar:</label>
-                <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" value="{{ $step['nombre_contacto'] ??  old('nombre_contacto') }}">                
+                <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" value="{{ $step['nombre_contacto'] ??  old('nombre_contacto') }}">
             </div>
 
             <input type="hidden" id="id_asentamiento" value="1" name="id_asentamiento">
@@ -49,9 +45,9 @@
                     Dirección de contacto
                 </div>
                 <div class="card-body">
-                    
+
                     <x-direccion-input />
-                    
+
                     <div class="form-group">
                         <label>Teléfono fijo:</label>
                         <label for="lada">Lada internacional</label>
@@ -81,9 +77,9 @@
                         <label for="email_alterno">Correo electrónico alternativo:</label>
                         <input type="email" class="form-control" id="email_alterno" name="email_alterno" value="{{ $step['email_alterno'] ?? old('email_alterno') }}">
                         <x-input-error :messages="$errors->get('email_alterno')" class="mt-2" />
-                    </div>  
+                    </div>
                 </div>
-            </div>            
+            </div>
 
             <div class="card">
                 <div class="card-header">
@@ -91,8 +87,8 @@
                 </div>
                 <div class="card-body">
                     <input type="hidden" id="id_asentamiento" value="1" name="id_asentamiento">
-                    
-                    <x-direccion-input />
+
+                    <!--<x-direccion-input />-->
 
                     <div class="form-group">
                         <label for="tipo_vialidad_dfiscal">Tipo vialidad:</label>
@@ -111,7 +107,7 @@
                         <input type="text" class="form-control" id="num_int_dfiscal" name="num_int_dfiscal">
                     </div>
                 </div>
-            </div>            
+            </div>
 
             <div class="form-group">
                 <label for="grupo_prioritario">Perteneces a algún grupo prioritario:</label>
@@ -146,7 +142,10 @@
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
             </div>
 
-            <input class="btn btn-primary" type="submit" value="Siguiente">
+            <button
+                id="btn_siguiente"
+                class="btn btn-primary"
+                disabled="this.document.getElementById('rfc_existe_en_padron').value === '1'">Siguiente</button>
         </form>
     </div>
 </x-guest-layout>

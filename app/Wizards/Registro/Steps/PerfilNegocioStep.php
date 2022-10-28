@@ -20,7 +20,7 @@ class PerfilNegocioStep extends WizardStep
     public function fields(): array
     {
         return [
-            Field::make('rfc')->rules(['required', 'min:10', 'max:13']),
+            Field::make('rfc')->rules(['required', 'min:10', 'max:13', 'unique:users']),
             Field::make('password')->rules(['required']),
             Field::make('nombre')->rules(['required']),
             Field::make('primer_ap'),

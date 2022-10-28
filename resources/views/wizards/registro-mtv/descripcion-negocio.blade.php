@@ -50,7 +50,7 @@
             </div>
 
             <a class="btn btn-primary" href="{{ route('wizard.registro-mtv.show', [$wizardId, 'perfil-negocio']) }}">Anterior</a>
-            <input class="btn btn-primary" type="submit" value="Siguiente">
+            <button id="btn_siguiente" class="btn btn-primary">Siguiente</button>
         </form>
     </div>
 </x-guest-layout>

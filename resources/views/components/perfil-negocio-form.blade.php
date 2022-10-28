@@ -3,11 +3,7 @@
 
     <div class="form-group">
         <x-input-label for="rfc" :value="__('RFC')" />
-
-        <x-rfc-input id="rfc" class="form-control"
-                        name="rfc"
-                        :value="$step['rfc'] ?? old('rfc')" />
-
+        <x-rfc-validacion-input :value="$step['rfc'] ?? old('rfc')" />
         <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
     </div>
     <div class="form-group">
