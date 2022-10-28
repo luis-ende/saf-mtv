@@ -1,26 +1,7 @@
-<script>
-    function handler() {
-        return {
-            fields: [],
-            entidadSeleccionada: null,
-            entidades: [ 'CDMX', 'Querétaro', 'Chiapas' ], 
-            alcaldias: [ 'B. Juárez', 'Coyoacán', 'Tlalpan' ], 
-            colonias: ['Colonia 1', 'Colonia 2' ],
-            vialidades: ['CALLE', 'CALZADA', 'EJE VIAL'],
-            refresh() {
-                this.colonias = [];
-                this.colonias.push('Colonia X');
-                this.colonias.push('Colonia Y');
-                this.colonias.push('Colonia W');
-            },            
-        }
-    }
-</script>
-
-<div x-data="handler()">
+<div x-data="domicilioDetalles()">
     <div class="form-group">
         <label for="cp">Código postal:</label>
-        <input type="text" class="form-control" maxlength="8" id="cp" name="cp" required 
+        <input type="text" class="form-control" maxlength="8" id="cp" name="cp" x-model="cpText"
                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                @blur="refresh()">
     </div>
@@ -30,7 +11,7 @@
             <template x-for="entidad in entidades" :key="entidad">
                 <option :value="entidad" x-text="entidad"></option>
             </template>
-        </select>    
+        </select>
     </div>
     <div class="form-group">
         <label for="alcaldia">Alcaldía:</label>
@@ -42,7 +23,7 @@
     </div>
     <div class="form-group">
         <label for="colonia">Colonia:</label>
-        <select x-model="entidadSeleccionada" class="form-control" id="colonia" name="colonia" required>        
+        <select x-model="entidadSeleccionada" class="form-control" id="colonia" name="colonia" required>
             <template x-for="colonia in colonias" :key="colonia">
                 <option :value="colonia" x-text="colonia"></option>
             </template>
@@ -69,3 +50,44 @@
         <input type="text" class="form-control" id="num_int" name="num_int">
     </div>
 </div>
+
+<script>
+    function domicilioDetalles() {
+        return {
+            cpText: '',
+            fields: [],
+            entidadSeleccionada: null,
+            entidades: [],
+            alcaldias: [],
+            colonias: [],
+            vialidades: [],
+            refresh() {
+                fetch('/api/contacto/asentamientos/' + this.cpText)
+                    .then((res) => res.json())
+                    .then((res) => {
+                        console.log(res);
+
+                        this.entidades = [];
+                        this.alcaldias = [];
+                        this.colonias = [];
+
+                        res.forEach(asentamiento => {
+                            if(this.entidades.indexOf(asentamiento.entidad) === -1) {
+                                this.entidades.push(asentamiento.entidad);
+                            }
+                            if(this.alcaldias.indexOf(asentamiento.alcaldia) === -1) {
+                                this.alcaldias.push(asentamiento.alcaldia);
+                            }
+                            if(this.colonias.indexOf(asentamiento.colonia) === -1) {
+                                this.colonias.push(asentamiento.colonia);
+                            }
+                            this.entidades.sort();
+                            this.alcaldias.sort();
+                            this.colonias.sort();
+                        });
+                        this.rfcExisteEnPadronProveedores = res[0] === 1;
+                    })
+            },
+        }
+    }
+</script>

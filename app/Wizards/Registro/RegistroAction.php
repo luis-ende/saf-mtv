@@ -19,6 +19,8 @@ class RegistroAction extends WizardAction
 {
     public function execute($payload): ActionResult
     {
+        // TODO: Validar que el rfc no exista ya en padrón de proveedores
+
         try {
             DB::transaction(function() use($payload) {
                 $persona = Persona::create([
