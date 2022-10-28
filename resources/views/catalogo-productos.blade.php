@@ -7,10 +7,11 @@
                 </div>
                 <div class="p-6 bg-white border-b border-gray-200">
                     Completa y actualiza tu catálogo de los bienes o servicios que te gustaría ofrecer a la Ciudad de México
-                </div>                
-                <x-producto-form /> <br>                
+                </div>
+
+                <x-producto-form /> <br>
                 <x-productos-table :productos="$productosPersona" />
             </div>
         </div>
-    </div>    
+    </div>
 </x-app-layout>

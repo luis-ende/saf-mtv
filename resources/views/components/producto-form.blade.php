@@ -1,5 +1,4 @@
-@props(['context' => 'page'])
-
+@props(['context' => 'page', 'mode' => 'add'])
 
 <div>
     <form method="POST" action="{{ route('productos.store') }}">
@@ -36,6 +35,10 @@
             <input type="text" class="form-control" id="marca" name="marca" value="{{ $step['marca'] ?? old('marca') }}">
         </div>
 
-        <button class="btn btn-primary" type="submit">Agregar producto</button>        
+        @if ($mode === 'add')
+            <button class="btn btn-primary" type="submit">Agregar producto</button>
+        @else
+            <button class="btn btn-primary" type="submit">Guardar</button>
+        @endif
     </form>
 </div>

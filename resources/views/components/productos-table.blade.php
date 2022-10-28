@@ -1,5 +1,16 @@
 @props(['productos' => []])
 
+@if(session('success'))
+    <div class="alert alert-success">
+        {!! session('success') !!}
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger">
+        {!! session('error') !!}
+    </div>
+@endif
 
 <br>
 <div>
@@ -20,16 +31,26 @@
             <tbody>
             @foreach ($productos as $producto)
             <tr>
-                <th scope="row">{{ $producto->id }}</th>                
+                <th scope="row">{{ $producto->id }}</th>
                 <td>{{ $producto->clave_cabms }}</td>
                 <td>{{ $producto->nombre }}</td>
                 <td>{{ $producto->tipo }}</td>
                 <td>{{ $producto->categoria }}</td>
                 <td>{{ $producto->subcategoria }}</td>
-                <td>{{ $producto->marca }}</td>                
-                <td><a href="{{ route('productos.edit') }}">Editar</a><span> / </span><a href="#">Eliminar</a><span> / </span><a href="#">Fotos</a></td>
+                <td>{{ $producto->marca }}</td>
+                <td>
+                    <a href="{{ route('productos.edit', [$producto->id]) }}">Editar</a><span> / </span>
+                    <form id="producto_destroy_form_{{ $producto->id }}" action="{{ route('productos.destroy', [$producto->id]) }}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <a href="{{ route('productos.destroy', [$producto->id]) }}"
+                           onclick="event.preventDefault();document.getElementById('producto_destroy_form_{{ $producto->id }}').submit();">Eliminar</a>
+                    </form>
+                    <span> / </span>
+                    <a href="#">Fotos</a>
+                </td>
             </tr>
-            @endforeach                        
+            @endforeach
             </tbody>
         </table>
     </div>
