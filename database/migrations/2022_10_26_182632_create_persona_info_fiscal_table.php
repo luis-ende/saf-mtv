@@ -14,12 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('persona_info_fiscal', function (Blueprint $table) {
-            $table->id();            
+            $table->id();
+            $table->foreignId('id_persona')->constrained('personas');
             $table->integer('id_asentamiento');
             $table->integer('id_tipo_vialidad');
             $table->string('vialidad', 120);
             $table->string('num_int', 80);
-            $table->string('num_ext', 100);                        
+            $table->string('num_ext', 100);
             $table->timestamps();
         });
     }
