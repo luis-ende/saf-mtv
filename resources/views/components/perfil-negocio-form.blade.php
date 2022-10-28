@@ -23,7 +23,7 @@
     </div>
     <div class="form-group">
         <label for="nombre_contacto">Persona a contactar:</label>
-        <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" value="{{ $step['nombre_contacto'] ??  old('nombre_contacto') }}">                
+        <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" value="{{ $step['nombre_contacto'] ??  old('nombre_contacto') }}">
     </div>
 
     <input type="hidden" id="id_asentamiento" value="1" name="id_asentamiento">
@@ -33,22 +33,9 @@
             Dirección de contacto
         </div>
         <div class="card-body">
-            <div class="form-group">
-                <label for="cp">Código postal:</label>
-                <input type="text" class="form-control" id="cp" name="cp" required>
-            </div>
-            <div class="form-group">
-                <label for="entidad_federativa">Entidad federativa:</label>
-                <input type="text" class="form-control" id="entidad_federativa" name="entidad_federativa">
-            </div>
-            <div class="form-group">
-                <label for="alcaldia">Alcaldía:</label>
-                <input type="text" class="form-control" id="alcaldia" name="alcaldia">
-            </div>
-            <div class="form-group">
-                <label for="colonia">Colonia:</label>
-                <input type="text" class="form-control" id="colonia" name="colonia">
-            </div>
+
+            <x-direccion-input />
+
             <div class="form-group">
                 <label for="tipo_vialidad">Tipo vialidad:</label>
                 <input type="text" class="form-control" id="tipo_vialidad" name="tipo_vialidad">
@@ -66,7 +53,7 @@
             <div class="form-group">
                 <label for="num_int">Número interior:</label>
                 <input type="text" class="form-control" id="num_int" name="num_int" value="{{ $step['num_int'] ??  old('num_int') }}">
-            </div>              
+            </div>
             <div class="form-group">
                 <label>Teléfono fijo:</label>
                 <label for="lada">Lada internacional</label>
@@ -96,16 +83,16 @@
                 <label for="email_alterno">Correo electrónico alternativo:</label>
                 <input type="email" class="form-control" id="email_alterno" name="email_alterno" value="{{ $step['email_alterno'] ?? old('email_alterno') }}">
                 <x-input-error :messages="$errors->get('email_alterno')" class="mt-2" />
-            </div>  
+            </div>
         </div>
-    </div>            
+    </div>
 
     <div class="card">
         <div class="card-header">
             Dirección fiscal
         </div>
         <div class="card-body">
-            <input type="hidden" id="id_asentamiento" value="1" name="id_asentamiento">                    
+            <input type="hidden" id="id_asentamiento" value="1" name="id_asentamiento">
             <div class="form-group">
                 <label for="cp_dfiscal">Código postal:</label>
                 <input type="text" class="form-control" id="cp_dfiscal" name="cp_dfiscal">
@@ -139,7 +126,7 @@
                 <input type="text" class="form-control" id="num_int_dfiscal" name="num_int_dfiscal">
             </div>
         </div>
-    </div>            
+    </div>
 
     <div class="form-group">
         <label for="grupo_prioritario">Perteneces a algún grupo prioritario:</label>
