@@ -16,9 +16,6 @@ class Persona extends Model
      */
     protected $fillable = [
         'rfc',
-        'nombre',        
-        'primer_ap',
-        'segundo_ap',
         'id_asentamiento',
         'id_tipo_vialidad',
         'vialidad',
