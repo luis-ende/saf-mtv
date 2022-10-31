@@ -14,15 +14,19 @@ class PerfilNegocioStep extends WizardStep
 
     public function viewData(Request $request): array
     {
-        return $this->withFormData();
+        return $this->withFormData([
+            'tipos_vialidad' => [ 'Calle', 'Avenida', 'Boulevard', ],
+        ]);
     }
 
     public function fields(): array
     {
         return [
+            Field::make('tipo_persona')->rules(['required']),
             Field::make('rfc')->rules(['required', 'min:10', 'max:13', 'unique:users']),
-            Field::make('password')->rules(['required']),
-            Field::make('nombre')->rules(['required']),
+            Field::make('password')->rules(['required']),            
+            Field::make('razon_social'),
+            Field::make('nombre'),
             Field::make('primer_ap'),
             Field::make('segundo_ap'),
             Field::make('nombre_contacto'),

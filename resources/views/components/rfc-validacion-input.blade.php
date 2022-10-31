@@ -1,3 +1,5 @@
+@props(['tipo_persona' => 'F'])
+
 <div x-data="rfcValidacion()">
        <x-rfc-input
               x-model="rfcText"
@@ -19,13 +21,13 @@
 
             rfcExiste() {
                 this.rfcExisteEnPadronProveedores = false;
-                console.log('rfcExiste()');
 
                 if (this.rfcText !== '') {
                     fetch('/api/proveedores/' + this.rfcText)
                             .then((res) => res.json())
                             .then((res) => {
                                 this.rfcExisteEnPadronProveedores = res[0] === 1;
+                                document.getElementById('btn_perfil_negocio_siguiente').disabled = this.rfcExisteEnPadronProveedores;
                             })
                 }
             },

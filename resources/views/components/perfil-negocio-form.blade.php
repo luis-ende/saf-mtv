@@ -1,25 +1,34 @@
 <form method="POST" action="">
     @csrf
 
-    <div class="form-group">
-        <x-input-label for="rfc" :value="__('RFC')" />
-        <x-rfc-validacion-input :value="$step['rfc'] ?? old('rfc')" />
-        <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
-    </div>
-    <div class="form-group">
-        <label for="nombre">Nombre o razón social:</label>
-        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ $step['nombre'] ?? old('nombre') }}" required>
-        <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
-    </div>
-    <div class="form-group">
-        <label for="primer_ap">Primer apellido:</label>
-        <input type="text" class="form-control" id="primer_ap" name="primer_ap" value="{{ $step['primer_ap'] ?? old('primer_ap') }}">
-        <x-input-error :messages="$errors->get('primer_ap')" class="mt-2" />
-    </div>
-    <div class="form-group">
-        <label for="segundo_ap">Segundo apellido:</label>
-        <input type="text" class="form-control" id="segundo_ap" name="segundo_ap" value="{{ $step['segundo_ap'] ??  old('segundo_ap') }}">
-        <x-input-error :messages="$errors->get('segundo_ap')" class="mt-2" />
+    <div x-data="{ tipoPersona: 'F' }">
+        <div class="form-group">
+            <label>Tipo de persona:</label>
+            <label for="tipo_persona">Física</label>
+            <input type="radio" x-model="tipoPersona" id="tipo_persona" name="tipo_persona" value="F" checked>
+            <label for="tipo_persona">Moral</label>
+            <input type="radio" x-model="tipoPersona" id="tipo_persona" name="tipo_persona" value="M">
+        </div>
+        <div class="form-group">
+            <x-input-label for="rfc" :value="__('RFC')" />
+            <x-rfc-validacion-input :value="$step['rfc'] ?? old('rfc')" />
+            <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
+        </div>    
+        <div class="form-group">
+            <label for="nombre">Nombre o razón social:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ $step['nombre'] ?? old('nombre') }}" required>
+            <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+        </div>
+        <div class="form-group" x-show="tipoPersona == 'F'">
+            <label for="primer_ap">Primer apellido:</label>
+            <input type="text" class="form-control" id="primer_ap" name="primer_ap" value="{{ $step['primer_ap'] ?? old('primer_ap') }}">
+            <x-input-error :messages="$errors->get('primer_ap')" class="mt-2" />
+        </div>
+        <div class="form-group" x-show="tipoPersona == 'F'">
+            <label for="segundo_ap">Segundo apellido:</label>
+            <input type="text" class="form-control" id="segundo_ap" name="segundo_ap" value="{{ $step['segundo_ap'] ??  old('segundo_ap') }}">
+            <x-input-error :messages="$errors->get('segundo_ap')" class="mt-2" />
+        </div>
     </div>
     <div class="form-group">
         <label for="nombre_contacto">Persona a contactar:</label>

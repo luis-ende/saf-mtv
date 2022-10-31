@@ -1,5 +1,10 @@
 {{--@include('layouts.registro-navigation')--}}
 <x-guest-layout>
+    @php($tiposVialidad = [])
+    @isset ($step)
+        @php($tiposVialidad = $step['tipos_vialidad'])
+    @endisset
+
     <div class="container">
         {{ $wizard['title'] }}
         <h1>1. Tu Perfil de Negocio</h1><br>
@@ -13,25 +18,44 @@
 
             @csrf
 
-            <div class="form-group">
-                <x-input-label for="rfc" :value="__('RFC')" />
-                <x-rfc-validacion-input :value="$step['rfc'] ?? old('rfc')" />
-                <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
-            </div>
-            <div class="form-group">
-                <label for="nombre">Nombre o razón social:</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" value="{{ $step['nombre'] ?? old('nombre') }}" required>
-                <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
-            </div>
-            <div class="form-group">
-                <label for="primer_ap">Primer apellido:</label>
-                <input type="text" class="form-control" id="primer_ap" name="primer_ap" value="{{ $step['primer_ap'] ?? old('primer_ap') }}">
-                <x-input-error :messages="$errors->get('primer_ap')" class="mt-2" />
-            </div>
-            <div class="form-group">
-                <label for="segundo_ap">Segundo apellido:</label>
-                <input type="text" class="form-control" id="segundo_ap" name="segundo_ap" value="{{ $step['segundo_ap'] ??  old('segundo_ap') }}">
-                <x-input-error :messages="$errors->get('segundo_ap')" class="mt-2" />
+            <div x-data="{ tipoPersona: 'F' }">
+                <div class="form-group">
+                    <label>Tipo de persona:</label>
+                    <label for="tipo_persona_fisica">Física</label>
+                    <input type="radio" x-model="tipoPersona" id="tipo_persona_fisica" name="tipo_persona" value="F" checked>
+                    <label for="tipo_persona_moral">Moral</label>
+                    <input type="radio" x-model="tipoPersona" id="tipo_persona_moral" name="tipo_persona" value="M">
+                </div>
+                <div class="form-group">
+                    <x-input-label for="rfc" :value="__('RFC:')" />
+                    <x-rfc-validacion-input :value="$step['rfc'] ?? old('rfc')" x-bind::maxlength="tipoPersona == 'F' ? '13' : '11'" />
+                    <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
+                </div>
+                <div class="form-group" x-show="tipoPersona === 'M'">
+                    <label for="razon_social">Razón social:</label>
+                    <input type="text" class="form-control" id="razon_social" name="razon_social" value="{{ $step['razon_social'] ?? old('razon_social') }}">
+                    <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+                </div>
+                <div class="form-group" x-show="tipoPersona === 'F'">
+                    <label for="curp">CURP:</label>
+                    <input type="text" class="form-control" id="curp" name="curp" value="{{ $step['curp'] ?? old('curp') }}" required maxlength="18" required>
+                    <x-input-error :messages="$errors->get('curp')" class="mt-2" />
+                </div>
+                <div class="form-group" x-show="tipoPersona === 'F'">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" value="{{ $step['nombre'] ?? old('nombre') }}">
+                    <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+                </div>
+                <div class="form-group" x-show="tipoPersona === 'F'">
+                    <label for="primer_ap">Primer apellido:</label>
+                    <input type="text" class="form-control" id="primer_ap" name="primer_ap" value="{{ $step['primer_ap'] ?? old('primer_ap') }}">
+                    <x-input-error :messages="$errors->get('primer_ap')" class="mt-2" />
+                </div>
+                <div class="form-group" x-show="tipoPersona === 'F'">
+                    <label for="segundo_ap">Segundo apellido:</label>
+                    <input type="text" class="form-control" id="segundo_ap" name="segundo_ap" value="{{ $step['segundo_ap'] ??  old('segundo_ap') }}">
+                    <x-input-error :messages="$errors->get('segundo_ap')" class="mt-2" />
+                </div>
             </div>
             <div class="form-group">
                 <label for="nombre_contacto">Persona a contactar:</label>
@@ -46,7 +70,7 @@
                 </div>
                 <div class="card-body">
 
-                    <x-direccion-input />
+                    <x-direccion-input :tipos_vialidad="$tiposVialidad" />
 
                     <div class="form-group">
                         <label>Teléfono fijo:</label>
@@ -142,10 +166,10 @@
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
             </div>
 
+            <!-- TODO: Deshabilitar toda la sección para impedir continuar con el registro si el RFC ya existe? -->
             <button
-                id="btn_siguiente"
-                class="btn btn-primary"
-                disabled="this.document.getElementById('rfc_existe_en_padron').value === '1'">Siguiente</button>
+                id="btn_perfil_negocio_siguiente"
+                class="btn btn-primary">Siguiente</button>
         </form>
     </div>
 </x-guest-layout>

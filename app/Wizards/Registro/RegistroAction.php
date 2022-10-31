@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
 use App\Models\Persona;
+use App\Models\PersonaFisica;
+use App\Models\PersonaMoral;
 use App\Models\PerfilNegocio;
 use App\Models\CatalogoProductos;
 use App\Models\Producto;
@@ -19,17 +21,17 @@ class RegistroAction extends WizardAction
 {
     public function execute($payload): ActionResult
     {
-        // TODO: Validar que el rfc no exista ya en padrón de proveedores
+        // TODO: Validaciones pendientes:
+        // - Validar que el RFC no exista ya en padrón de proveedores
+        // - Validar que el RFC sea de la longitud y formato correctos
 
         try {
             DB::transaction(function() use($payload) {
                 $persona = Persona::create([
+                    'id_tipo_persona' => $payload['tipo_persona'],
                     'rfc' => $payload['rfc'],
-                    'nombre' => $payload['nombre'],
-                    'primer_ap' => $payload['primer_ap'],
-                    'segundo_ap' => $payload['segundo_ap'],
-                    'id_asentamiento' => 1,
-                    'id_tipo_vialidad' => 1,
+                    'id_asentamiento' => 1, // TODO
+                    'id_tipo_vialidad' => 1, // TODO
                     'vialidad' => $payload['vialidad'],
                     'num_int' => $payload['num_int'],
                     'num_ext' => $payload['num_ext'],
@@ -42,6 +44,21 @@ class RegistroAction extends WizardAction
                     'grupo_prioritario' => $payload['grupo_prioritario'],
                     'nombre_contacto' => $payload['nombre_contacto'],
                 ]);
+
+                if ($persona->tipo_persona === "F") {
+                    $personaFisica = PersonaFisica::create([
+                        'id_persona' => $persona->id,
+                        'curp' => $payload['curp'],
+                        'nombre' => $payload['nombre'],
+                        'primer_ap' => $payload['primer_ap'],
+                        'segundo_ap' => $payload['segundo_ap'],
+                    ]);
+                } elseif ($persona->tipo_persona === "M") {
+                    $personaMoral = PersonaMoral::create([
+                        'id_persona' => $persona->id,
+                        'razon_social' => $payload['razon_social'],
+                    ]);
+                }
 
                 PerfilNegocio::create([
                     'id_persona' => $persona->id,

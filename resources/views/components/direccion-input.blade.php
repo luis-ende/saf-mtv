@@ -1,3 +1,5 @@
+@props(['tipos_vialidad' => []])
+
 <div x-data="domicilioDetalles()">
     <div class="form-group">
         <label for="cp">Código postal:</label>
@@ -29,18 +31,21 @@
             </template>
         </select>
     </div>
-    <div class="form-group">
-        <label for="tipo_vialidad">Tipo vialidad:</label>
-        <select class="form-control" id="tipo_vialidad" name="tipo_vialidad">
-            <template x-for="vialidad in vialidades" :key="vialidad">
-                <option :value="vialidad" x-text="vialidad"></option>
-            </template>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="vialidad">Vialidad:</label>
-        <input type="text" class="form-control" id="vialidad" name="vialidad">
-    </div>
+    <div  x-data="{ tipoVialidad: 'Vialidad' }">
+        <div class="form-group">
+            <label for="tipo_vialidad">Tipo vialidad:</label>
+            <select class="form-control" id="tipo_vialidad" name="tipo_vialidad"  x-on:change="tipoVialidad = $event.target.value" >
+                <option selected value="Vialidad"> -- Selecciona -- </option>
+                @foreach ((array) $tipos_vialidad as $tipo_vialidad)
+                    <option value={{ $tipo_vialidad }}>{{ $tipo_vialidad }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="vialidad" x-text="tipoVialidad"></label>
+            <input type="text" class="form-control" id="vialidad" name="vialidad">
+        </div>
+    </div>    
     <div class="form-group">
         <label for="num_ext">Número exterior:</label>
         <input type="text" class="form-control" id="num_ext" name="num_ext">
