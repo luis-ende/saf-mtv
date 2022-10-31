@@ -15,10 +15,8 @@ return new class extends Migration
     {
         Schema::create('personas', function (Blueprint $table) {
             $table->id();
-            $table->string('rfc', 13)->unique();
-            $table->string('nombre', 120);
-            $table->string('primer_ap', 60)->nullable();
-            $table->string('segundo_ap', 60)->nullable();
+            $table->string('rfc', 13)->unique();            
+            $table->char('id_tipo_persona', 1); // "F" = "Física" | "M" = "Moral"
             $table->string('nombre_contacto', 120)->nullable();
             $table->integer('id_asentamiento');
             $table->integer('id_tipo_vialidad');
