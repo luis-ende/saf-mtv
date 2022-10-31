@@ -2,10 +2,14 @@
 
 ## Requerimientos
 
-- VirtualBox 6.1
-- Vagrant 2.3.1
+- Laravel 9
+- PostgreSQL 13
 
 ## Ambiente local de desarrollo
+
+- VirtualBox 6.1
+- Vagrant 2.3.1
+- Laravel Homestead (ver servicios que se instalan por default en el ambiente de desarrollo en: https://laravel.com/docs/9.x/homestead#included-software)
  
 - Para levantar el proyecto en modo local ir a la carpeta `Homestead`
 - Copiar el archivo `Homestead.example.yaml` como `Homestead.yaml` y ajustar rutas de directorios locales (en Windows el formato de las rutas debe ajustarse, ver https://laravel.com/docs/9.x/homestead#configuring-shared-folders)
