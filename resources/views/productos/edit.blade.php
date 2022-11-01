@@ -25,7 +25,7 @@
 
         <div class="tab-content" id="producto_tabs_content">
             <div class="tab-pane fade show active" id="tab-content-detalles" role="tabpanel" aria-labelledby="tab-detalles">
-                <x-producto-form :mode="__('edit')" />
+                <x-producto-form :mode="__('edit')" :producto="$producto"/>
             </div>
             <div class="tab-pane fade" id="tab-content-fotos" role="tabpanel" aria-labelledby="tab-fotos">
                 <p>Fotos del producto</p>

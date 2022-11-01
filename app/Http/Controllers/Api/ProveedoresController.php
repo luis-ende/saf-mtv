@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Support\Facades\Http;
+
+use App\Services\BusquedaRFCService;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
 
 class ProveedoresController extends Controller
 {
@@ -14,8 +15,10 @@ class ProveedoresController extends Controller
      * @param $rfc
      * @return \Illuminate\Http\JsonResponse
      */
-    public function __invoke($rfc)
+    public function __invoke($rfc, BusquedaRFCService $busquedaRFCService)
     {
-        return response()->json([0]);
+        $rfcEstatus = $busquedaRFCService->consultaRFCEstatus($rfc);
+
+        return response()->json($rfcEstatus);
     }
 }

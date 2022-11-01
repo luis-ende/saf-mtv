@@ -33,12 +33,12 @@
                 </div>
                 <div class="form-group" x-show="tipoPersona === 'M'">
                     <label for="razon_social">Razón social:</label>
-                    <input type="text" class="form-control" id="razon_social" name="razon_social" value="{{ $step['razon_social'] ?? old('razon_social') }}">
+                    <input type="text" class="form-control" id="razon_social" name="razon_social" value="{{ $step['razon_social'] ?? old('razon_social') }}" x-bind:required="tipoPersona != 'F'">
                     <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
                 </div>
                 <div class="form-group" x-show="tipoPersona === 'F'">
                     <label for="curp">CURP:</label>
-                    <input type="text" class="form-control" id="curp" name="curp" value="{{ $step['curp'] ?? old('curp') }}" required maxlength="18" required>
+                    <input type="text" class="form-control" id="curp" name="curp" value="{{ $step['curp'] ?? old('curp') }}" maxlength="18">
                     <x-input-error :messages="$errors->get('curp')" class="mt-2" />
                 </div>
                 <div class="form-group" x-show="tipoPersona === 'F'">

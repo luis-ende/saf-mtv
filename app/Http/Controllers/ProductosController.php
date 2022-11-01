@@ -31,7 +31,7 @@ class ProductosController extends Controller
     /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function update(Request $request)
+    public function update(Request $request, Producto $producto)
     {
         Producto::create([
             'id_cat_productos' => Auth::user()->persona->catalogoProductos->id,
@@ -50,9 +50,9 @@ class ProductosController extends Controller
     /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function show(Request $request)
+    public function show(Request $request, Producto $producto)
     {
-        return view('productos.edit');
+        return view('productos.edit', ['producto' => $producto]);
     }
 
     /**

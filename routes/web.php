@@ -37,6 +37,8 @@ Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'in
 
 Route::post('/productos', [ProductosController::class, 'store'])->middleware(['auth', 'verified'])->name('productos.store');
 
+Route::put('/productos', [ProductosController::class, 'store'])->middleware(['auth', 'verified'])->name('productos.update');
+
 Route::get('/productos/edit/{producto}', [ProductosController::class, 'show'])->middleware(['auth', 'verified'])->name('productos.edit');
 
 Route::delete('/productos/delete/{producto}', [ProductosController::class, 'destroy'])->middleware(['auth', 'verified'])->name('productos.destroy');
