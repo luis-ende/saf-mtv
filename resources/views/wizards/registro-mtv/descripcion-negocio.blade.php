@@ -1,8 +1,8 @@
 {{--@include('layouts.registro-navigation')--}}
 <x-guest-layout>
     <div class="container">
-        {{ $wizard['title'] }}
-        <h1>2. Descripción de tu negocio</h1><br>
+        <h1>{{ $wizard['title'] }}</h1>
+        <h2>2. Descripción de tu negocio</h2><br>
         @php($wizardId = $wizard['id'])
 
         @error('wizard')

@@ -1,8 +1,8 @@
 {{--@include('layouts.registro-navigation')--}}
 <x-guest-layout>
     <div class="container">
-        {{ $wizard['title'] }}
-        <h1>3. Tus productos</h1><br>
+        <h1>{{ $wizard['title'] }}</h1>
+        <h2>3. Tus productos</h1><br>
         @php($wizardId = $wizard['id'])
         <form method="POST" action="{{ route('wizard.registro-mtv.update', [$wizardId, 'catalogo-productos']) }}">
             @csrf
