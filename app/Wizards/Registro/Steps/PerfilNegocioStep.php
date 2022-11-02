@@ -14,6 +14,7 @@ class PerfilNegocioStep extends WizardStep
 
     public function viewData(Request $request): array
     {
+        // TODO: Crear tabla con tipos de vialidad para devolver
         return $this->withFormData([
             'tipos_vialidad' => [ 'Calle', 'Avenida', 'Boulevard', ],
         ]);
@@ -22,9 +23,9 @@ class PerfilNegocioStep extends WizardStep
     public function fields(): array
     {
         return [
-            Field::make('tipo_persona')->rules(['required']),            
+            Field::make('tipo_persona')->rules(['required']),
             Field::make('rfc')->rules(['required', 'min:10', 'max:13', 'unique:users']),
-            Field::make('password')->rules(['required']),            
+            Field::make('password')->rules(['required']),
             Field::make('razon_social'),
             Field::make('curp'),
             Field::make('nombre'),

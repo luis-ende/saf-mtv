@@ -2,47 +2,52 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 
 class BusquedaRFCService
 {
-    private const ID_ETAPA_CON_CONSTANCIA = 7;
-
-
-
-    public function consultaRFCEstatus($rfc) {
+    /**
+     * Consulta si el RFC ya existe en el Padrón de Proveedores o en MTV.
+     *
+     * @param string $rfc
+     * @return array
+     */
+    public function consultaRFCEstatus(string $rfc): array {
         $response = Http::get( config('app.api_url_busqueda_rfc_padron_proveedores') . $rfc);
 
         $responseData = [
             'rfc' => $rfc,
-            'id_etapa' => 0,
-            'nombre_etapa' => '',
+            'permitir_registro' => false,
+            'existe_en_mtv' => false,
+            'existe_en_padron_proveedores' => false,
+            'etapa_en_padron_proveedores' => '',
+            'error' => false,
         ];
 
-
-//        0	Object { rfc: "JUAA810316M17", es_usuario: true, id_etapa: 1, … }
-//            rfc	"JUAA810316M17"
-//            es_usuario	true
-//            id_etapa	1
-//            etapa	"SOLICITUD EN PROCESO"
-
-        if ($response->successful()) {
-            $estatusData = $response->json();
-
-            if ($estatusData == "no existe") {
-                $responseData['existe_en_padron_proveedores'] = false;
-            } else {
-                if (isset($estatusData['es_usuario']) && $estatusData['es_usuario'] === 1) {
-                    if ($estatusData['id_etapa'] === self::ID_ETAPA_CON_CONSTANCIA) {
-                        $responseData['estatus'] = 1;
-                    }
-                }
-            }
-
-            return $estatusData;
+        $usuarioExistente = User::firstWhere('rfc', $rfc);
+        if ($usuarioExistente) {
+            $responseData['existe_en_mtv'] = true;
         }
 
         $responseData['http_status'] = $response->status();
+        if ($response->successful()) {
+            $estatusData = $response->json();
+            if ($estatusData === 'no existe') {
+                $responseData['permitir_registro'] = true;
+            } else {
+                if (isset($estatusData['es_usuario'])) {
+                    if ($estatusData['es_usuario'] === true) {
+                        $responseData['existe_en_padron_proveedores'] = true;
+                        $responseData['etapa_en_padron_proveedores'] = $estatusData['etapa'];
+                    } else {
+                        $responseData['permitir_registro'] = true;
+                    }
+                }
+            }
+        } else {
+            $responseData['error'] = true;
+        }
 
         return $responseData;
     }
