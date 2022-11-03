@@ -25,11 +25,6 @@ class BusquedaRFCService
             'error' => false,
         ];
 
-        $usuarioExistente = User::firstWhere('rfc', $rfc);
-        if ($usuarioExistente) {
-            $responseData['existe_en_mtv'] = true;
-        }
-
         $responseData['http_status'] = $response->status();
         if ($response->successful()) {
             $estatusData = $response->json();
@@ -47,6 +42,12 @@ class BusquedaRFCService
             }
         } else {
             $responseData['error'] = true;
+        }
+
+        $usuarioExistente = User::firstWhere('rfc', $rfc);
+        if ($usuarioExistente) {
+            $responseData['existe_en_mtv'] = true;
+            $responseData['permitir_registro'] = false;
         }
 
         return $responseData;
