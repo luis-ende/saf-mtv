@@ -6,7 +6,7 @@
               @blur="verificaRFC()"
               @keyup="rfcInvalido = ''"
               :value="$value" />
-       <label x-text="rfcInvalido != '' ? 'RFC no puede ser registrado.' : ''" class="text-sm text-red-600 space-y-1"></label>
+       <label x-text="rfcInvalido != '' ? 'No es posible registrar el RFC en Mi Tiendita Virtual.' : ''" class="text-sm text-red-600 space-y-1"></label>
 </div>
 
 <script>
@@ -32,10 +32,11 @@
                                 if (!res['error']) {
                                     this.rfcExisteEnPadronProveedores = res['existe_en_padron_proveedores'];
                                     this.rfcExisteEnMTV = res['existe_en_mtv'];
-                                    this.rfcEtapaEnPadronProveedores = res['etapa_en_padron_proveedores'];
-                                    this.rfcInvalido = res['rfc'];
+                                    this.rfcEtapaEnPadronProveedores = res['etapa_en_padron_proveedores'];                                    
 
                                     if (!res['permitir_registro']) {
+                                        this.rfcInvalido = res['rfc'];
+                                        
                                         if (this.rfcExisteEnPadronProveedores) {
                                             Swal.fire({
                                                 title: this.rfcInvalido,

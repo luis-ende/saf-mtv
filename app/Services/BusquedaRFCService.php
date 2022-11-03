@@ -31,6 +31,7 @@ class BusquedaRFCService
             if ($estatusData === 'no existe') {
                 $responseData['permitir_registro'] = true;
             } else {
+                $estatusData = $estatusData[0];
                 if (isset($estatusData['es_usuario'])) {
                     if ($estatusData['es_usuario'] === true) {
                         $responseData['existe_en_padron_proveedores'] = true;

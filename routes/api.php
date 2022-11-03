@@ -24,10 +24,10 @@ Route::get('contacto/asentamientos/{cp}', [\App\Http\Controllers\Api\ContactoCon
 
 // TODO: API Endpoint de prueba, remover...
 Route::get('etapa_proveedor/{rfc}', function(Request $request) {
-    return response()->json([
+    return response()->json([[
         'rfc' => "JUAA810316M17",
         'es_usuario' => true,
         'id_etapa' => '1',
         'etapa' => "SOLICITUD EN PROCESO",
-    ]);
+    ]]);
 });
