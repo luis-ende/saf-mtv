@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <x-input-label for="rfc" :value="__('RFC:')" />
-                    <x-rfc-validacion-input :value="$step['rfc'] ?? old('rfc')" />
+                    <x-rfc-validacion-input :value="__('')" />
                     <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'M'">

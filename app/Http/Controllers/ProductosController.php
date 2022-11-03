@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +13,7 @@ class ProductosController extends Controller
     /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         Producto::create([
             'id_cat_productos' => Auth::user()->persona->catalogoProductos->id,
@@ -25,7 +26,7 @@ class ProductosController extends Controller
             'marca' => $request->input('marca'),
         ]);
 
-        return redirect()->route('catalogo-productos');
+        return redirect()->back();
     }
 
     /**

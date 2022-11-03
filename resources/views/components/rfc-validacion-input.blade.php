@@ -3,22 +3,10 @@
 <div x-data="rfcValidacion()">
        <x-rfc-input
               x-model="rfcText"
-              @blur="rfcExiste()"
+              @blur="verificaRFC()"
+              @keyup="rfcInvalido = ''"
               :value="$value" />
-
-       <div class="alert alert-warning" x-show="rfcExisteEnPadronProveedores" role="alert">
-           <span class="fw-bold" x-text="rfcInvalido" ></span>
-           <span> Ya cuentas con un registro en el Padrón de Proveedores (</span>
-           <span x-text="rfcEtapaEnPadronProveedores"></span>
-           <span>). Puedes enviar la información de tu catálogo en el perfil de tu negocio. Ingresa al </span>
-           <a href="https://tianguisdigital.finanzas.cdmx.gob.mx/login">Padrón de Proveedores</a>
-        </div>
-        <div class="alert alert-warning" x-show="rfcExisteEnMTV && ! rfcExisteEnPadronProveedores" role="alert">
-            <span class="fw-bold" x-text="rfcInvalido" ></span>
-            <span> Ya cuentas con un registro en Mi Tiendita Virtual. </span>
-            <a href="{{ route('login') }}">Inicia sesión</a>
-            <span> para acceder al portal.</span>
-        </div>
+       <label x-text="rfcInvalido != '' ? 'RFC no puede ser registrado.' : ''" class="text-sm text-red-600 space-y-1"></label>
 </div>
 
 <script>
@@ -30,11 +18,12 @@
             rfcText: document.getElementById('rfc').value,
             rfcInvalido: '',
 
-            rfcExiste() {
+            verificaRFC() {
                 this.rfcExisteEnPadronProveedores = false;
                 this.rfcEtapaEnPadronProveedores = '';
                 this.rfcExisteEnMTV = false;
                 this.rfcInvalido = '';
+                document.getElementById('btn_perfil_negocio_siguiente').disabled = false;
 
                 if (this.rfcText !== '') {
                     fetch('/api/proveedores/' + this.rfcText)
@@ -47,8 +36,32 @@
                                     this.rfcInvalido = res['rfc'];
 
                                     if (!res['permitir_registro']) {
-                                        document.getElementById('rfc').focus();
-                                        document.getElementById('btn_perfil_negocio_siguiente').disabled = true;
+                                        if (this.rfcExisteEnPadronProveedores) {
+                                            Swal.fire({
+                                                title: this.rfcInvalido,
+                                                html: "Ya cuentas con un registro en el Padrón de Proveedores ("
+                                                    + this.rfcEtapaEnPadronProveedores + "). " +
+                                                    "Puedes enviar la información de tu catálogo en el perfil de tu negocio. " +
+                                                    '<a href="https://tianguisdigital.finanzas.cdmx.gob.mx/login">Padrón de Proveedores</a>.',
+                                                icon: "warning",
+                                                allowOutsideClick: false,
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    document.getElementById('btn_perfil_negocio_siguiente').disabled = true;
+                                                }
+                                            })
+                                        } else if (this.rfcExisteEnMTV) {
+                                            Swal.fire({
+                                                title: this.rfcInvalido,
+                                                html: 'Ya cuentas con un registro en Mi Tiendita Virtual. <br><a href="{{ route('login') }}">Inicia sesión</a> para acceder al portal.',
+                                                icon: "warning",
+                                                allowOutsideClick: false,
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    document.getElementById('btn_perfil_negocio_siguiente').disabled = true;
+                                                }
+                                            })
+                                        }
                                     }
                                 }
                             })
