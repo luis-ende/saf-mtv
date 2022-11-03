@@ -1,4 +1,6 @@
-@props(['tipo_persona' => 'F', 'value'])
+@props(['tipo_persona' => 'F', 'value', 'modo' => 'registro'])
+
+@php($url = $modo === 'registro' ? '/api/proveedores/registro/' : '/api/proveedores/login/')
 
 <div x-data="rfcValidacion()">
        <x-rfc-input
@@ -18,6 +20,11 @@
             rfcText: document.getElementById('rfc').value,
             rfcInvalido: '',
             mensajeError: '',
+            modoValidacion: {!! json_encode($modo) !!},
+            rfcVerificacionUrl: {!! json_encode($url) !!},
+            btnFormSubmit: this.modoValidacion === 'registro' ?
+                document.getElementById('btn_perfil_negocio_siguiente') :
+                document.getElementById('btn_login'),
 
             verificaRFC() {
                 this.rfcExisteEnPadronProveedores = false;
@@ -25,10 +32,12 @@
                 this.rfcExisteEnMTV = false;
                 this.rfcInvalido = '';
                 this.mensajeError = '';
-                document.getElementById('btn_perfil_negocio_siguiente').disabled = false;
+                if (this.btnFormSubmit) {
+                    this.btnFormSubmit.disabled = false;
+                }
 
                 if (this.rfcText !== '') {
-                    fetch('/api/proveedores/' + this.rfcText)
+                    fetch(this.rfcVerificacionUrl + this.rfcText)
                             .then((res) => res.json())
                             .then((res) => {
                                 if (res['error']) {
@@ -36,10 +45,10 @@
                                     document.getElementById('btn_perfil_negocio_siguiente').disabled = true;
                                 } else {
                                     this.rfcExisteEnPadronProveedores = res['existe_en_padron_proveedores'];
-                                    this.rfcExisteEnMTV = res['existe_en_mtv'];
+                                    this.rfcExisteEnMTV = res['existe_en_mtv'] ? res['existe_en_mtv'] : true;
                                     this.rfcEtapaEnPadronProveedores = res['etapa_en_padron_proveedores'];
 
-                                    if (!res['permitir_registro']) {
+                                    if (!res['permitir_registro_login']) {
                                         this.rfcInvalido = res['rfc'];
 
                                         if (this.rfcExisteEnPadronProveedores) {
@@ -53,10 +62,12 @@
                                                 allowOutsideClick: false,
                                             }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    document.getElementById('btn_perfil_negocio_siguiente').disabled = true;
+                                                    if (this.btnFormSubmit) {
+                                                        this.btnFormSubmit.disabled = true;
+                                                    }
                                                 }
                                             })
-                                        } else if (this.rfcExisteEnMTV) {
+                                        } else if (this.rfcExisteEnMTV && this.modoValidacion === 'registro') {
                                             Swal.fire({
                                                 title: this.rfcInvalido,
                                                 html: 'Ya cuentas con un registro en Mi Tiendita Virtual. <br><a href="{{ route('login') }}">Inicia sesión</a> para acceder al portal.',
@@ -64,7 +75,9 @@
                                                 allowOutsideClick: false,
                                             }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    document.getElementById('btn_perfil_negocio_siguiente').disabled = true;
+                                                    if (this.btnFormSubmit) {
+                                                        this.btnFormSubmit.disabled = true;
+                                                    }
                                                 }
                                             })
                                         }
@@ -77,7 +90,11 @@
                 if (this.mensajeError !== '') {
                     return this.mensajeError;
                 } else if (this.rfcInvalido !== '') {
-                    return 'No es posible registrar el RFC en Mi Tiendita Virtual.';
+                    if (this.modoValidacion === 'registro') {
+                        return 'No es posible registrar el RFC en Mi Tiendita Virtual.';
+                    } else if (this.modoValidacion === 'login') {
+                        return 'No es posible ingresar con el RFC a Mi Tiendita Virtual.';
+                    }
                 }
             },
         }

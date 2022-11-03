@@ -15,11 +15,10 @@
             <!-- RFC -->
             <div>
                 <x-input-label for="rfc" :value="__('RFC')" />
-
-                <x-rfc-input id="rfc" class="block mt-1 w-full"
-                              name="rfc"
-                              :value="old('rfc')" />
-
+                <x-rfc-validacion-input id="rfc" class="block mt-1 w-full"
+                                        name="rfc"
+                                        :modo="__('login')"
+                                        :value="old('rfc')" />
                 <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
             </div>
 
@@ -45,14 +44,14 @@
 
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900 px-3" href="{{ route('password.request') }}">
                         {{ __('¿Olvidaste tu contraseña?') }}
                     </a>
                 @endif
 
-                <x-primary-button class="ml-3">
-                    {{ __('Inicia sesión') }}
-                </x-primary-button>
+                <button id="btn_login" class="btn btn-primary">
+                    Iniciar sesión
+                </button>
             </div>
         </form>
     </x-auth-card>

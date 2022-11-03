@@ -18,7 +18,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('proveedores/{rfc}', \App\Http\Controllers\Api\ProveedoresController::class);
+Route::get('proveedores/registro/{rfc}', [\App\Http\Controllers\Api\ProveedoresController::class, 'verificaRFCRegistro']);
+
+Route::get('proveedores/login/{rfc}', [\App\Http\Controllers\Api\ProveedoresController::class, 'verificaRFCLogin']);
 
 Route::get('contacto/asentamientos/{cp}', [\App\Http\Controllers\Api\ContactoController::class, 'consultaInfoDomicilio']);
 
@@ -27,7 +29,7 @@ Route::get('etapa_proveedor/{rfc}', function(Request $request) {
     return response()->json([[
         'rfc' => "JUAA810316M17",
         'es_usuario' => true,
-        'id_etapa' => '1',
-        'etapa' => "SOLICITUD EN PROCESO",
+        'id_etapa' => '10',
+        'etapa' => "SOLICITUD VENCIDA",
     ]]);
 });

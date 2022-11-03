@@ -2,22 +2,30 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 
-use App\Services\BusquedaRFCService;
+use App\Services\VerificacionRFCService;
 use App\Http\Controllers\Controller;
 
 class ProveedoresController extends Controller
 {
     /**
-     * Consulta si existe RFC en Padrón de Proveedores.
-     *
-     * @param $rfc
-     * @return \Illuminate\Http\JsonResponse
+     * Consulta si existe RFC en Padrón de Proveedores o en MTV.
      */
-    public function __invoke($rfc, BusquedaRFCService $busquedaRFCService)
+    public function verificaRFCRegistro($rfc, VerificacionRFCService $verificacionRFCService): JsonResponse
     {
-        $rfcEstatus = $busquedaRFCService->consultaRFCEstatus($rfc);
+        $rfcEstatus = $verificacionRFCService->verficaRFCEstatus($rfc);
+
+        return response()->json($rfcEstatus);
+    }
+
+    /**
+     * Consulta si existe RFC en Padrón de Proveedores.
+     */
+    public function verificaRFCLogin($rfc, VerificacionRFCService $verificacionRFCService): JsonResponse
+    {
+        $rfcEstatus = $verificacionRFCService->verificaRFCExisteEnPadronProveedores($rfc);
 
         return response()->json($rfcEstatus);
     }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Services\BusquedaCPService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
@@ -11,24 +13,10 @@ class ContactoController extends Controller
 {
     /**
      * Consulta asentamientos por código postal.
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function consultaInfoDomicilio($cp)
+    public function consultaInfoDomicilio(string $cp, BusquedaCPService $busquedaCPService): JsonResponse
     {
-//        $asentamientos = DB::table('cat_asentamientos')
-//            ->select('id', 'asentamiento as colonia', 'municipio as alcaldia', 'entidad')
-//            ->where('cp', $cp)
-//            ->get();
-
-        // TODO: Datos de prueba en ambiente de desarrollo
-        $asentamientos = [
-            [
-                'colonia' => 'San Ángel',
-                'alcaldia' => 'Álvaro Obregón',
-                'entidad' => 'Ciudad de México',
-            ],
-        ];
+        $asentamientos = $busquedaCPService->buscaCPDomicilio($cp);
 
         return response()->json($asentamientos);
     }
