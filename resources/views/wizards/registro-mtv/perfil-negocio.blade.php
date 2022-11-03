@@ -111,44 +111,44 @@
             </div>
 
             <hr>
-            <div class="card">
-                <div class="card-header">
-                    Dirección fiscal
-                </div>
-                <div class="card-body">
-                    <input type="hidden" id="id_asentamiento" value="1" name="id_asentamiento">
+{{--            <div class="card">--}}
+{{--                <div class="card-header">--}}
+{{--                    Dirección fiscal--}}
+{{--                </div>--}}
+{{--                <div class="card-body">--}}
+{{--                    <input type="hidden" id="id_asentamiento" value="1" name="id_asentamiento">--}}
 
-                    <!--<x-direccion-input />-->
+{{--                    <!--<x-direccion-input />-->--}}
 
-                    <div class="form-group">
-                        <label for="tipo_vialidad_dfiscal">Tipo vialidad:</label>
-                        <input type="text" class="form-control" id="tipo_vialidad_dfiscal" name="tipo_vialidad_dfiscal">
-                    </div>
-                    <div class="form-group">
-                        <label for="vialidad_dfiscal">Vialidad:</label>
-                        <input type="text" class="form-control" id="vialidad_dfiscal" name="vialidad_dfiscal">
-                    </div>
-                    <div class="form-group">
-                        <label for="num_ext_dfiscal">Número exterior:</label>
-                        <input type="text" class="form-control" id="num_ext_dfiscal" name="num_ext_dfiscal">
-                    </div>
-                    <div class="form-group">
-                        <label for="num_int_dfiscal">Número interior:</label>
-                        <input type="text" class="form-control" id="num_int_dfiscal" name="num_int_dfiscal">
-                    </div>
-                </div>
-            </div>
+{{--                    <div class="form-group">--}}
+{{--                        <label for="tipo_vialidad_dfiscal">Tipo vialidad:</label>--}}
+{{--                        <input type="text" class="form-control" id="tipo_vialidad_dfiscal" name="tipo_vialidad_dfiscal">--}}
+{{--                    </div>--}}
+{{--                    <div class="form-group">--}}
+{{--                        <label for="vialidad_dfiscal">Vialidad:</label>--}}
+{{--                        <input type="text" class="form-control" id="vialidad_dfiscal" name="vialidad_dfiscal">--}}
+{{--                    </div>--}}
+{{--                    <div class="form-group">--}}
+{{--                        <label for="num_ext_dfiscal">Número exterior:</label>--}}
+{{--                        <input type="text" class="form-control" id="num_ext_dfiscal" name="num_ext_dfiscal">--}}
+{{--                    </div>--}}
+{{--                    <div class="form-group">--}}
+{{--                        <label for="num_int_dfiscal">Número interior:</label>--}}
+{{--                        <input type="text" class="form-control" id="num_int_dfiscal" name="num_int_dfiscal">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
-            <hr>
-            <div class="form-group">
-                <label for="grupo_prioritario">Perteneces a algún grupo prioritario:</label>
-                <select class="form-control" id="grupo_prioritario" name="grupo_prioritario">
-                    <option value="1" selected>MIPYMES</option>
-                    <option value="2">SOCIEDADES COOPERATIVAS</option>
-                    <option value="3">MUJERES EMPRENDEDORAS</option>
-                    <option value="4">CAMPESINOS O COMUNIDADES INDÍGENAS</option>
-                </select>
-            </div>
+{{--            <hr>--}}
+{{--            <div class="form-group">--}}
+{{--                <label for="grupo_prioritario">Perteneces a algún grupo prioritario:</label>--}}
+{{--                <select class="form-control" id="grupo_prioritario" name="grupo_prioritario">--}}
+{{--                    <option value="1" selected>MIPYMES</option>--}}
+{{--                    <option value="2">SOCIEDADES COOPERATIVAS</option>--}}
+{{--                    <option value="3">MUJERES EMPRENDEDORAS</option>--}}
+{{--                    <option value="4">CAMPESINOS O COMUNIDADES INDÍGENAS</option>--}}
+{{--                </select>--}}
+{{--            </div>--}}
 
             <!-- Password -->
             <div class="mt-4">

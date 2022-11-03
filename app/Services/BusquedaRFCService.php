@@ -43,6 +43,9 @@ class BusquedaRFCService
             }
         } else {
             $responseData['error'] = true;
+            $responseData['permitir_registro'] = false;
+
+            return $responseData;
         }
 
         $usuarioExistente = User::firstWhere('rfc', $rfc);
