@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_cat_productos')->constrained('cat_productos');
-            $table->string('tipo');
+            $table->char('tipo', 1); // 'B' = 'Bien', 'S' = 'Servicio'
             $table->string('clave_cabms', 10);
             $table->string('nombre');
             $table->string('descripcion', 140);
