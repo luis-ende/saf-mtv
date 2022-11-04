@@ -16,3 +16,5 @@
 - Es necesario agregar el DNS local (saf-mtv.test) `hosts` (Agregar línea 192.168.56.56	saf-mtv.test)
 - Ejecutar `vagrant up`
 - El sitio local debe estar disponible en el url `saf-mtv.test`
+
+- En modo de desarrollo ejecutar `npm run dev` para ver reflejados inmediatamente los cambios en archivos css y js
