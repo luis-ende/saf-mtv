@@ -24,6 +24,8 @@ Route::get('proveedores/login/{rfc}', [\App\Http\Controllers\Api\ProveedoresCont
 
 Route::get('contacto/asentamientos/{cp}', [\App\Http\Controllers\Api\ContactoController::class, 'consultaInfoDomicilio']);
 
+Route::get('contacto/curp/{curp}', [\App\Http\Controllers\Api\ContactoController::class, 'consultaCURP']);
+
 // TODO: API Endpoint de prueba, remover...
 Route::get('etapa_proveedor/{rfc}', function(Request $request) {
     return response()->json([[
