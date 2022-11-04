@@ -13,14 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('persona_info_fiscal', function (Blueprint $table) {
+        Schema::create('contactos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_persona')->constrained('personas');
-            $table->integer('id_asentamiento');
-            $table->integer('id_tipo_vialidad');
-            $table->string('vialidad', 120);
-            $table->string('num_int', 80);
-            $table->string('num_ext', 100);
+            $table->string('nombre', 120);
+            $table->string('primer_ap', 60);
+            $table->string('segundo_ap', 60);
+            $table->text('cargo');
+            $table->string('telefono_oficina', 15);
+            $table->string('extension', 8);
+            $table->string('telefono_movil', 12);
+            $table->string('email');
             $table->timestamps();
         });
     }
@@ -32,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('persona_info_fiscal');
+        Schema::dropIfExists('contactos');
     }
 };

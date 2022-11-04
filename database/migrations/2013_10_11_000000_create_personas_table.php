@@ -15,21 +15,13 @@ return new class extends Migration
     {
         Schema::create('personas', function (Blueprint $table) {
             $table->id();
-            $table->string('rfc', 13)->unique();            
+            $table->string('rfc', 13)->unique();
             $table->char('id_tipo_persona', 1); // "F" = "Física" | "M" = "Moral"
-            $table->string('nombre_contacto', 120)->nullable();
             $table->integer('id_asentamiento');
             $table->integer('id_tipo_vialidad');
             $table->string('vialidad', 120);
-            $table->string('num_int', 80)->nullable();
             $table->string('num_ext', 100);
-            $table->string('lada', 8);
-            $table->string('telefono_fijo', 10);
-            $table->string('extension', 8)->nullable();
-            $table->string('telefono_movil', 12);
-            $table->string('email', 255);
-            $table->string('email_alterno', 255)->nullable();
-            $table->string('grupo_prioritario')->nullable();
+            $table->string('num_int', 80)->nullable();
             $table->timestamps();
         });
     }

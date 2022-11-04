@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_persona')->constrained('personas');
             $table->text('razon_social');
+            $table->date('fecha_constitucion');
             $table->timestamps();
         });
     }

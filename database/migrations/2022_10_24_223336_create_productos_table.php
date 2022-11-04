@@ -16,13 +16,16 @@ return new class extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_cat_productos')->constrained('cat_productos');
+            $table->string('tipo');
             $table->string('clave_cabms', 10);
             $table->string('nombre');
-            $table->text('descripcion');
-            $table->string('tipo');
-            $table->string('categoria')->nullable();
-            $table->string('subcategoria')->nullable();
-            $table->string('marca');
+            $table->string('descripcion', 140);
+            $table->decimal('precio', 22, 2);
+            // Si el tipo de producto es 'Bien'
+            $table->string('marca')->nullable();
+            $table->string('modelo')->nullable();
+            $table->string('color', 30)->nullable();
+            $table->string('material')->nullable();
             $table->timestamps();
         });
     }

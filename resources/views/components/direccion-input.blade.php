@@ -41,7 +41,7 @@
         </select>
     </div>
     <div class="form-group col-md-3">
-        <label for="vialidad" x-text="tipoVialidad"></label>
+        <label for="vialidad" x-text="tipoVialidad + ':'"></label>
         <input type="text" class="form-control" id="vialidad" name="vialidad">
     </div>
     <div class="form-group col-md-3">

@@ -9,7 +9,7 @@ use App\Models\catalogoProductos;
 
 class PerfilNegocio extends Model
 {
-    use HasFactory;    
+    use HasFactory;
 
     /**
      * The table associated with the model.
@@ -25,8 +25,9 @@ class PerfilNegocio extends Model
      */
     protected $fillable = [
         'id_persona',
+        'grupo_prioritario',
         'lema_negocio',
-        'descripcion_negocio',        
+        'descripcion_negocio',
         'sitio_web',
         'cuenta_facebook',
         'cuenta_twitter',

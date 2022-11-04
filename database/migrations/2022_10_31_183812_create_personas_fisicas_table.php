@@ -17,9 +17,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_persona')->constrained('personas');
             $table->string('curp', 18);
+            $table->date('fecha_nacimiento');
+            $table->char('genero', 1);
             $table->string('nombre', 120);
-            $table->string('primer_ap', 60)->nullable();
-            $table->string('segundo_ap', 60)->nullable();
+            $table->string('primer_ap', 60);
+            $table->string('segundo_ap', 60);
             $table->timestamps();
         });
     }

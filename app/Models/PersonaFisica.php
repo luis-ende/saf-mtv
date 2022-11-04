@@ -16,6 +16,8 @@ class PersonaFisica extends Model
      */
     protected $fillable = [
         'curp',
+        'fecha_nacimiento',
+        'genero',
         'nombre',
         'primer_ap',
         'segundo_ap',

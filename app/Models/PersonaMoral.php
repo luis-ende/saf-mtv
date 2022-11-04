@@ -14,7 +14,8 @@ class PersonaMoral extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [        
-        'razon_social',        
+    protected $fillable = [
+        'fecha_constitucion',
+        'razon_social',
     ];
 }

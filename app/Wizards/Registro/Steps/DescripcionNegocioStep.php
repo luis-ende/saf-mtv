@@ -20,6 +20,7 @@ class DescripcionNegocioStep extends WizardStep
     public function fields(): array
     {
         return [
+            Field::make('grupo_prioritario'),
             Field::make('lema_negocio')->rules(['required']),
             Field::make('descripcion_negocio')->rules(['required']),
             Field::make('diferenciador'),

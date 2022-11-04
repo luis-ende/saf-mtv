@@ -22,14 +22,6 @@ class Persona extends Model
         'vialidad',
         'num_int',
         'num_ext',
-        'lada',
-        'telefono_fijo',
-        'extension',
-        'telefono_movil',
-        'email',
-        'email_alterno',
-        'grupo_prioritario',
-        'nombre_contacto',
     ];
 
      /**

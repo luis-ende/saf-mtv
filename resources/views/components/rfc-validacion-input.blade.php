@@ -22,18 +22,19 @@
             mensajeError: '',
             modoValidacion: {!! json_encode($modo) !!},
             rfcVerificacionUrl: {!! json_encode($url) !!},
-            btnFormSubmit: this.modoValidacion === 'registro' ?
-                document.getElementById('btn_perfil_negocio_siguiente') :
-                document.getElementById('btn_login'),
 
             verificaRFC() {
+                let btnFormSubmit = this.modoValidacion === 'registro' ?
+                    document.getElementById('btn_perfil_negocio_siguiente') :
+                    document.getElementById('btn_login');
+
                 this.rfcExisteEnPadronProveedores = false;
                 this.rfcEtapaEnPadronProveedores = '';
                 this.rfcExisteEnMTV = false;
                 this.rfcInvalido = '';
                 this.mensajeError = '';
-                if (this.btnFormSubmit) {
-                    this.btnFormSubmit.disabled = false;
+                if (btnFormSubmit) {
+                    btnFormSubmit.disabled = false;
                 }
 
                 if (this.rfcText !== '') {
@@ -62,8 +63,8 @@
                                                 allowOutsideClick: false,
                                             }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    if (this.btnFormSubmit) {
-                                                        this.btnFormSubmit.disabled = true;
+                                                    if (btnFormSubmit) {
+                                                        btnFormSubmit.disabled = true;
                                                     }
                                                 }
                                             })
@@ -75,8 +76,8 @@
                                                 allowOutsideClick: false,
                                             }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    if (this.btnFormSubmit) {
-                                                        this.btnFormSubmit.disabled = true;
+                                                    if (btnFormSubmit) {
+                                                        btnFormSubmit.disabled = true;
                                                     }
                                                 }
                                             })
