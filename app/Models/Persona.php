@@ -41,4 +41,11 @@ class Persona extends Model
     {
         return $this->hasOne(CatalogoProductos::class, 'id_persona', 'id');
     }
+
+    /**
+     * Obtener los contactos asociados a la persona.
+     */
+    //public function contactos() {
+    //    return $this->hasMany(CatalogoProductos::class, 'id_persona', 'id');
+    //}
 }

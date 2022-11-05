@@ -1,7 +1,6 @@
 <input id="rfc"
        name="rfc"
        type="text"
-       required
        placeholder="RFC con homoclave"
        maxlength="13"
        minlength="12"

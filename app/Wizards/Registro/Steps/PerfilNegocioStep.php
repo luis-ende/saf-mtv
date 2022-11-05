@@ -39,6 +39,7 @@ class PerfilNegocioStep extends WizardStep
             Field::make('vialidad')->rules(['required']),
             Field::make('num_ext')->rules(['required']),
             Field::make('num_int'),
+            Field::make('contactos_lista')->rules(['required']),
         ];
     }
 }

@@ -37,16 +37,13 @@
                 <div class="row">
                     <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                         <label for="curp">CURP:</label>
-                        <input type="text" class="form-control" id="curp" name="curp" value="{{ $step['curp'] ?? old('curp') }}" maxlength="18">
+                        <x-curp-input value="{{ $step['curp'] ?? old('curp') }}" />
                         <x-input-error :messages="$errors->get('curp')" class="mt-2" />
                     </div>
-                    <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
-                        <label for="rfc_parcial">RFC:</label>
-                        <input type="text" class="form-control" id="rfc_parcial" name="rfc_parcial" value="{{ $step['rfc_parcial'] ?? old('rfc_parcial') }}" disabled>
-                    </div>
-                    <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
-                        <label for="rfc_parcial">Homoclave:</label>
-                        <input type="text" class="form-control" id="rfc_parcial" name="rfc_parcial" value="{{ $step['rfc_parcial'] ?? old('rfc_parcial') }}">
+                    <div class="form-group col-md-4">
+                        <x-input-label for="rfc" :value="__('RFC con homoclave:')" />
+                        <x-rfc-validacion-input :value="__('')" />
+                        <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
                     </div>
                     <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                         <label for="fecha_nacimiento">Fecha de nacimiento:</label>
@@ -72,11 +69,6 @@
                         <x-input-error :messages="$errors->get('segundo_ap')" class="mt-2" />
                     </div>
                     <div class="form-group col-md-4" x-show="tipoPersona === 'M'">
-                        <x-input-label for="rfc" :value="__('RFC con homoclave:')" />
-                        <x-rfc-validacion-input :value="__('')" />
-                        <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
-                    </div>
-                    <div class="form-group col-md-4" x-show="tipoPersona === 'M'">
                         <label for="fecha_constitucion">Fecha de constitución:</label>
                         <input type="date" class="form-control" id="fecha_constitucion" name="fecha_constitucion" value="{{ $step['fecha_constitucion'] ?? old('fecha_constitucion') }}" >
                         <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
@@ -99,9 +91,18 @@
                     </div>
                 </div>
                 <hr>
+                <div class="card">
+                    <div class="card-header">
+                        Contactos
+                    </div>
+                    <div class="card-body row g-3">
+                        <x-contactos-lista />
+                    </div>
+                </div>
+                <hr>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <x-input-label for="password" :value="__('Contraseña:')" />
+                        <label for="password">Contraseña:</label>
                         <x-text-input id="password" class="block mt-1 w-full"
                                       type="password"
                                       name="password"
@@ -110,7 +111,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <x-input-label for="password_confirmation" :value="__('Confirmar contraseña:')" />
+                        <label for="password_confirmation">Confirmar contraseña:</label>
                         <x-text-input id="password_confirmation" class="block mt-1 w-full"
                                       type="password"
                                       name="password_confirmation" required />

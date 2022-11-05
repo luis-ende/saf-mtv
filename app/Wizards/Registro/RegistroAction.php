@@ -35,14 +35,14 @@ class RegistroAction extends WizardAction
                     'vialidad' => $payload['vialidad'],
                     'num_int' => $payload['num_int'],
                     'num_ext' => $payload['num_ext'],
-                    'lada' => $payload['lada'],
+                    /* 'lada' => $payload['lada'],
                     'telefono_fijo' => $payload['telefono_fijo'],
                     'extension' => $payload['extension'],
                     'telefono_movil' => $payload['telefono_movil'],
                     'email' => $payload['email'],
                     'email_alterno' => $payload['email_alterno'],
                     'grupo_prioritario' => $payload['grupo_prioritario'],
-                    'nombre_contacto' => $payload['nombre_contacto'],
+                    'nombre_contacto' => $payload['nombre_contacto'], */
                 ]);
 
                 if ($persona->tipo_persona === "F") {
@@ -77,7 +77,7 @@ class RegistroAction extends WizardAction
                 ]);
 
                 // Si se capturaron los datos del producto
-                if (isset($payload['nombre_producto']) && isset($payload['clave_cabms'])) {
+                /* if (isset($payload['nombre_producto']) && isset($payload['clave_cabms'])) {
                     Producto::create([
                         'nombre' => $payload['nombre_producto'],
                         'clave_cabms' => $payload['clave_cabms'],
@@ -88,7 +88,7 @@ class RegistroAction extends WizardAction
                         'marca' => $payload['marca'],
                         'id_cat_productos' => $catalogoProductos->id,
                     ]);
-                }
+                } */
 
                 $user = User::create([
                     'rfc' => $payload['rfc'],

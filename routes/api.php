@@ -30,8 +30,8 @@ Route::get('contacto/curp/{curp}', [\App\Http\Controllers\Api\ContactoController
 Route::get('etapa_proveedor/{rfc}', function(Request $request) {
     return response()->json([[
         'rfc' => "JUAA810316M17",
-        'es_usuario' => true,
-        'id_etapa' => '10',
-        'etapa' => "SOLICITUD VENCIDA",
+        'es_usuario' => false,
+        'id_etapa' => '7',
+        'etapa' => "CONSTANCIA",
     ]]);
 });
