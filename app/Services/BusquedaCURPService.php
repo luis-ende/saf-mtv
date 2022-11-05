@@ -22,14 +22,18 @@ class BusquedaCURPService
             return $responseData;
         }
 
-        $response = Http::post(config('app.api_url_consulta_curp'), [
-            'security' => [
-                'tokenId' => env('API_BUSQUEDA_CURP_TOKEN')
-            ],
-            'data' => [
-                'CURP' => $curp
-            ],
-        ]);
+        if (env('APP_ENV') === 'local') {
+            $response = Http::get(config('app.api_url_consulta_curp') . $curp);
+        } else {
+            $response = Http::post(config('app.api_url_consulta_curp'), [
+                'security' => [
+                    'tokenId' => env('API_BUSQUEDA_CURP_TOKEN')
+                ],
+                'data' => [
+                    'CURP' => $curp
+                ],
+            ]);
+        }
 
         $curpResponseData = $response->json();
         if ($response->successful()) {
@@ -56,35 +60,10 @@ class BusquedaCURPService
             $responseData['error_msg'] = $response['error']['msg'];
         }
 
-
-//        {
-//            "error": {
-//            "msg": "Datos obtenidos correctamente",
-//    "code": 0
-//  },
-//  "data": [
-//    {
-//        "CURP": "FOGG851019HDFLRL02",
-//      "nombres": "GUILLERMO NATIVIDAD",
-//      "apellido1": "FLORES",
-//      "apellido2": "GARDUÑO",
-//      "sexo": "H",
-//      "cveEntidadNac": "DF",
-//      "fechNac": "19/10/1985",
-//      "nacionalidad": "MEX",
-//      "anioReg": "1985",
-//      "statusCurp": "RCN"
-//    }
-//  ]
-//}
-
-//        {
-//            "error": {
-//            "msg": "Sin acceso, consulta con tu administrador quedará registro de la solicitud",
-//    "code": 0
-//  }
-//}
-
         return $responseData;
+    }
+
+    protected function obtenerCURPResponse() {
+
     }
 }

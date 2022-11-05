@@ -11,7 +11,7 @@
        <label x-text="obtenerMensajeError()" class="text-sm text-red-600 space-y-1"></label>
 </div>
 
-<script>
+<script type="text/javascript">
     function rfcValidacion() {
         return {
             rfcExisteEnPadronProveedores: false,
@@ -43,7 +43,9 @@
                             .then((res) => {
                                 if (res['error']) {
                                     this.mensajeError = 'Servicio no disponible. No es posible registrar el RFC en Mi Tiendita Virtual.'
-                                    document.getElementById('btn_perfil_negocio_siguiente').disabled = true;
+                                    if (btnFormSubmit) {
+                                        btnFormSubmit.disabled = true;
+                                    }
                                 } else {
                                     this.rfcExisteEnPadronProveedores = res['existe_en_padron_proveedores'];
                                     this.rfcExisteEnMTV = res['existe_en_mtv'] ? res['existe_en_mtv'] : true;

@@ -1,6 +1,5 @@
 {{--@include('layouts.registro-navigation')--}}
 <x-guest-layout>
-    {{ $step['rfc'] }}
     @php($tiposVialidad = [])
     @isset ($step)
         @php($tiposVialidad = $step['tipos_vialidad'])
@@ -12,24 +11,38 @@
 
         @if ($wizard['id'])
             @php($wizardId = $wizard['id'])
-            <form method="POST" class="row g-3" action="{{ route('wizard.registro-mtv.update', [$wizardId, 'perfil-negocio']) }}">
+            <form id="perfil_negocio_form" method="POST" class="row g-3" action="{{ route('wizard.registro-mtv.update', [$wizardId, 'perfil-negocio']) }}">
         @else
-            <form method="POST" class="row g-3" action="{{ route('wizard.registro-mtv.store') }}">
+            <form id="perfil_negocio_form" method="POST" class="row g-3" action="{{ route('wizard.registro-mtv.store') }}">
         @endif
+
+        @php($tipoPersona = $step['tipo_persona'] ?? old('tipo_persona'))
 
             @csrf
 
-            <div x-data="{ tipoPersona: 'F' }">
+            <div x-data="perfilNegocioValidaciones()">
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label>Soy</label>
                         <div class="form-check">
                             <label class="form-check-label" for="tipo_persona_fisica">Persona física</label>
-                            <input type="radio" class="form-check-input" x-model="tipoPersona" id="tipo_persona_fisica" name="tipo_persona" value="F" checked>
+                            <input type="radio"
+                                   class="form-check-input"
+                                   x-model="tipoPersona"
+                                   id="tipo_persona_fisica"
+                                   name="tipo_persona"
+                                   value="F"
+                            >
                         </div>
                         <div class="form-check">
                             <label class="form-check-label" for="tipo_persona_moral">Persona moral</label>
-                            <input class="form-check-input" type="radio" x-model="tipoPersona" id="tipo_persona_moral" name="tipo_persona" value="M">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   x-model="tipoPersona"
+                                   id="tipo_persona_moral"
+                                   name="tipo_persona"
+                                   value="M"
+                            >
                         </div>
                     </div>
                 </div>
@@ -37,12 +50,12 @@
                 <div class="row">
                     <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                         <label for="curp">CURP:</label>
-                        <x-curp-input value="{{ $step['curp'] ?? old('curp') }}" />
+                        <x-curp-input value="{{ $step['curp'] ?? old('curp') }}" x-bind:required="tipoPersona === 'F'" />
                         <x-input-error :messages="$errors->get('curp')" class="mt-2" />
                     </div>
                     <div class="form-group col-md-4">
-                        <x-input-label for="rfc" :value="__('RFC con homoclave:')" />
-                        <x-rfc-validacion-input :value="__('')" />
+                        <label for="rfc">RFC con homoclave:</label>
+                        <x-rfc-validacion-input value="{{ $step['rfc'] ?? old('rfc') }}" />
                         <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
                     </div>
                     <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
@@ -70,24 +83,32 @@
                     </div>
                     <div class="form-group col-md-4" x-show="tipoPersona === 'M'">
                         <label for="fecha_constitucion">Fecha de constitución:</label>
-                        <input type="date" class="form-control" id="fecha_constitucion" name="fecha_constitucion" value="{{ $step['fecha_constitucion'] ?? old('fecha_constitucion') }}" >
+                        <input type="date" class="form-control" id="fecha_constitucion" name="fecha_constitucion"
+                               value="{{ $step['fecha_constitucion'] ?? old('fecha_constitucion') }}"
+                               x-bind:required="tipoPersona === 'M'"
+                        >
                         <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
                     </div>
                     <div class="form-group col-md-12" x-show="tipoPersona === 'M'">
                         <label for="razon_social">Razón social:</label>
-                        <input type="text" class="form-control" id="razon_social" name="razon_social" value="{{ $step['razon_social'] ?? old('razon_social') }}" x-bind:required="tipoPersona != 'F'">
-                        <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+                        <input type="text" class="form-control" id="razon_social" name="razon_social"
+                               value="{{ $step['razon_social'] ?? old('razon_social') }}"
+                               x-bind:required="tipoPersona === 'M'"
+                        >
+                        <x-input-error :messages="$errors->get('razon_social')" class="mt-2" />
                     </div>
                 </div>
 
-                <input type="hidden" id="id_asentamiento" value="1" name="id_asentamiento">
                 <hr>
                 <div class="card">
                     <div class="card-header">
                         Dirección
                     </div>
                     <div class="card-body row g-3">
-                        <x-direccion-input :tipos_vialidad="$tiposVialidad" />
+                        <x-direccion-input
+                            :step="$step"
+                            :tipos_vialidad="$tiposVialidad"
+                        />
                     </div>
                 </div>
                 <hr>
@@ -96,7 +117,9 @@
                         Contactos
                     </div>
                     <div class="card-body row g-3">
-                        <x-contactos-lista />
+                        <x-contactos-lista
+                            :step="$step"
+                        />
                     </div>
                 </div>
                 <hr>
@@ -121,8 +144,31 @@
                 <br>
                 <button
                     id="btn_perfil_negocio_siguiente"
+                    @click="if (!validaPerfilNegocioDatos()) { event.preventDefault() }"
                     class="btn btn-primary">Siguiente</button>
             </div>
         </form>
     </div>
 </x-guest-layout>
+
+<script>
+    function perfilNegocioValidaciones() {
+        return {
+            tipoPersona: '{{ $tipoPersona ?? 'F' }}',
+
+            validaPerfilNegocioDatos() {
+                if (document.getElementById('contactos_lista').value === '[]') {
+                    Swal.fire({
+                        title: 'Información incompleta',
+                        html: 'Se requiere al menos un contacto en la lista de contactos.',
+                        icon: "error",
+                    })
+
+                    return false;
+                }
+
+                return true;
+            }
+        }
+    }
+</script>

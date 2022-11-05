@@ -21,7 +21,7 @@ class ContactoController extends Controller
      */
     public function consultaInfoDomicilio(string $cp, BusquedaCPService $busquedaCPService): JsonResponse
     {
-        $asentamientos = $busquedaCPService->buscaCPDomicilio($cp);
+        $asentamientos = $busquedaCPService->buscaCPAsentamiento($cp);
 
         return response()->json($asentamientos);
     }

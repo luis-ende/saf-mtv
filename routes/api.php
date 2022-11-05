@@ -26,7 +26,7 @@ Route::get('contacto/asentamientos/{cp}', [\App\Http\Controllers\Api\ContactoCon
 
 Route::get('contacto/curp/{curp}', [\App\Http\Controllers\Api\ContactoController::class, 'consultaCURP']);
 
-// TODO: API Endpoint de prueba, remover...
+// TODO: API Endpoints de prueba para modo local de desarrollo, remover...
 Route::get('etapa_proveedor/{rfc}', function(Request $request) {
     return response()->json([[
         'rfc' => "JUAA810316M17",
@@ -34,4 +34,25 @@ Route::get('etapa_proveedor/{rfc}', function(Request $request) {
         'id_etapa' => '7',
         'etapa' => "CONSTANCIA",
     ]]);
+});
+
+Route::get('consulta_curp/{curp}', function(Request $request) {
+    return response()->json([
+        'error' => [
+            'msg' => 'Datos obtenidos correctamente',
+            'code' => 0,
+        ],
+        'data' => [[
+            'CURP' => 'FOGG851019HDFLRL02',
+            'nombres' => 'NOMBRE PRUEBA',
+            'apellido1' => 'APELLIDO',
+            'apellido2' => 'APELLIDO',
+            'sexo' => 'H',
+            'cveEntidadNac' => 'DF',
+            'fechNac' => '19/10/1990',
+            'nacionalidad' => 'MEX',
+            'anioReg' => '1990',
+            'statusCurp' => 'RCN'
+        ]]
+    ]);
 });

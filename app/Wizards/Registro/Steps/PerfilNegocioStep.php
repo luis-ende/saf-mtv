@@ -2,6 +2,7 @@
 
 namespace App\Wizards\Registro\Steps;
 
+use App\Repositories\VialidadRepository;
 use Arcanist\Field;
 use Arcanist\WizardStep;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class PerfilNegocioStep extends WizardStep
     {
         // TODO: Crear tabla con tipos de vialidad para devolver
         return $this->withFormData([
-            'tipos_vialidad' => [ 'Calle', 'Avenida', 'Boulevard', ],
+            'tipos_vialidad' => VialidadRepository::obtieneTiposVialidad(),
         ]);
     }
 
@@ -34,12 +35,13 @@ class PerfilNegocioStep extends WizardStep
             Field::make('segundo_ap'),
             Field::make('fecha_constitucion'),
             Field::make('razon_social'),
+            Field::make('cp'),
             Field::make('id_asentamiento'),
             Field::make('id_tipo_vialidad'),
             Field::make('vialidad')->rules(['required']),
             Field::make('num_ext')->rules(['required']),
             Field::make('num_int'),
-            Field::make('contactos_lista')->rules(['required']),
+            Field::make('contactos_lista'),
         ];
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 class BusquedaCPService
 {
-    public function buscaCPDomicilio(string $cp): array {
+    public function buscaCPAsentamiento(string $cp): array {
         $asentamientos = DB::table('cat_asentamientos')
             ->select('id', 'asentamiento as colonia', 'municipio as alcaldia', 'entidad')
             ->where('cp', $cp)
