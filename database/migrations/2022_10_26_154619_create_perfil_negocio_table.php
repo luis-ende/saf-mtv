@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('perfil_negocio', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_persona')->constrained('personas');
-            $table->string('grupo_prioritario', 60)->nullable();
-            $table->string('tipo_pyme', 10)->nullable();
-            $table->string('sector', 30)->nullable();
-            $table->string('categoria', 50)->nullable();
+            $table->bigInteger('id_grupo_prioritario');
+            $table->bigInteger('id_tipo_pyme')();
+            $table->bigInteger('id_sector');
+            $table->bigInteger('id_categoria_scian')->nullable();
             $table->text('lema_negocio')->nullable();
             $table->text('descripcion_negocio')->nullable();
             $table->string('sitio_web', 255)->nullable();

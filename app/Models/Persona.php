@@ -4,9 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Persona extends Model
 {
+    public const PERSONA_FISICA_ID = 'F';
+    public const PERSONA_MORAL_ID = 'M';
+
     use HasFactory;
 
     /**
@@ -37,7 +42,7 @@ class Persona extends Model
     /**
      * Obtener catálogo de productos asociado a la persona.
      */
-    public function catalogoProductos()
+    public function catalogoProductos(): HasOne
     {
         return $this->hasOne(CatalogoProductos::class, 'id_persona', 'id');
     }
@@ -45,7 +50,7 @@ class Persona extends Model
     /**
      * Obtener los contactos asociados a la persona.
      */
-    //public function contactos() {
-    //    return $this->hasMany(CatalogoProductos::class, 'id_persona', 'id');
-    //}
+    public function contactos(): HasMany {
+        return $this->hasMany(Contacto::class, 'id_persona', 'id');
+    }
 }

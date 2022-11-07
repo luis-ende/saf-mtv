@@ -5,12 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Producto extends Model
+class Contacto extends Model
 {
     use HasFactory;
-
-    public const PRODUCTO_BIEN_ID = 'B';
-    public const PRODUCTO_SERVICIO_ID = 'S';
 
     /**
      * The attributes that are mass assignable.
@@ -18,15 +15,18 @@ class Producto extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id_cat_productos',
-        'tipo',
-        'clave_cabms',
+        'id_persona',
         'nombre',
-        'descripcion',
-        'precio',
-        'marca',
-        'modelo',
-        'color',
-        'material',
+        'primer_ap',
+        'segundo_ap',
+        'cargo',
+        'telefono_oficina',
+        'extension',
+        'telefono_movil',
+        'email',
     ];
+
+    public function persona() {
+        return $this->belongsTo(Persona::class);
+    }
 }

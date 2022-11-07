@@ -15,6 +15,7 @@ class PersonaMoral extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id_persona',
         'fecha_constitucion',
         'razon_social',
     ];
