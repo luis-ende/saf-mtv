@@ -22,7 +22,7 @@
 <div class="container" x-data="{ tipoProducto: '{{ $tipoProducto ?? 'B' }}' }">
     @if ($mode === 'wizard')
         <h1>{{ $wizard['title'] }}</h1>
-        <h2>3. Tus productos</h2><br>
+        <h2>3. Tus producto</h2><br>
     @endif
         <form method="POST" action="{{ $formAction }}">
             @csrf
@@ -58,7 +58,12 @@
                            class="form-control"
                            id="clave_cabms"
                            name="clave_cabms"
-                           value="{{ $claveCABMS }}" required>
+                           placeholder="Buscar clave CABMS..."
+                           value="{{ $claveCABMS }}"
+                           required readonly>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#cabmsModal">
+                        Buscar clave CABMS
+                    </button>
                 </div>
                 <div class="form-group col-md-9">
                     <label for="nombre_producto">Nombre del producto:</label>
@@ -107,7 +112,7 @@
                            value="{{ $material }}">
                 </div>
             </div>
-
+            <br>
             @if ($mode === 'add')
                 <button class="btn btn-primary" type="submit">Agregar producto</button>
             @elseif ($mode === 'wizard')
@@ -117,4 +122,6 @@
                 <button class="btn btn-primary" type="submit">Guardar</button>
             @endif
         </form>
+
+        <x-cabms-busqueda-modal />
 </div>

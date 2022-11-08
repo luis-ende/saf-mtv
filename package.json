@@ -19,6 +19,7 @@
         "vite": "^3.0.0"
     },
     "dependencies": {
+        "fuse.js": "^6.6.2",
         "sweetalert2": "^11.6.5"
     }
 }
