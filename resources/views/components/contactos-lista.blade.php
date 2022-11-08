@@ -1,9 +1,9 @@
 @props(['step' => []])
 
 @php($contactosLista = isset($persona) ? $persona->contactosLista : ( isset($step) ? $step['contactos_lista'] : old('contactos_lista')))
-@php($contactosLista = $contactosLista === '' ? '[]' : json_decode($contactosLista))
+@php($contactosLista = !$contactosLista ? json_decode('[]') : json_decode($contactosLista))
 
-<div x-data="listaContactos()">
+<div x-data="listaContactos()" x-init="initModalForm()">
     <input
         type="hidden"
         id="contactos_lista"
@@ -61,7 +61,7 @@
                     <h5 class="modal-title" id="contactosModalLabel">Contactos</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div id="contactoFormContainer" class="modal-body">
                     <div class="form-group">
                         <label for="contacto_nombre">Nombre:</label>
                         <input type="text" class="form-control" id="contacto_nombre" name="contacto_nombre" maxlength="120" data-contacto-campo-requerido="1">
@@ -195,6 +195,16 @@
             },
             getErrors() {
                 return this.errors;
+            },
+            initModalForm() {
+                document.getElementById('contactosModal').addEventListener('shown.bs.modal', function () {
+                    let formInputs = document.getElementById('contactoFormContainer');
+                    Array.from(formInputs.getElementsByTagName('input')).forEach(input => input.disabled = false);
+                });
+                document.getElementById('contactosModal').addEventListener('hidden.bs.modal', function () {
+                    let formInputs = document.getElementById('contactoFormContainer');
+                    Array.from(formInputs.getElementsByTagName('input')).forEach(input => input.disabled = true);
+                })
             }
         }
     }

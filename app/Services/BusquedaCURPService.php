@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Services;
 
@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Http;
 
 class BusquedaCURPService
 {
-    public function obtieneCURPDatos($curp) {
+    public function obtieneCURPDatos($curp)
+    {
         $responseData = [
             'curp' => $curp,
             'curp_invalido' => false,
@@ -63,7 +64,8 @@ class BusquedaCURPService
         return $responseData;
     }
 
-    protected function obtenerCURPResponse() {
+    protected function obtenerCURPResponse()
+    {
 
     }
 }

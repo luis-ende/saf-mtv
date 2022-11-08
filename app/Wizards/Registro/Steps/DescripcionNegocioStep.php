@@ -2,6 +2,9 @@
 
 namespace App\Wizards\Registro\Steps;
 
+use App\Repositories\GrupoPrioritarioRepository;
+use App\Repositories\SectorRepository;
+use App\Repositories\TipoPymeRepository;
 use Arcanist\Field;
 use Arcanist\WizardStep;
 use Illuminate\Http\Request;
@@ -14,16 +17,24 @@ class DescripcionNegocioStep extends WizardStep
 
     public function viewData(Request $request): array
     {
-        return $this->withFormData();
+        return $this->withFormData([
+            'grupos_prioritarios' => GrupoPrioritarioRepository::obtieneGruposPrioritarios(),
+            'tipos_pyme' => TipoPymeRepository::obtieneTiposPyme(),
+            'sectores' => SectorRepository::obtieneSectores(),
+            'categorias_scian' => [], // TODO: Implementar cuando esté listo el catálogo
+        ]);
     }
 
     public function fields(): array
     {
         return [
-            Field::make('grupo_prioritario'),
+            Field::make('id_grupo_prioritario'),
+            Field::make('id_tipo_pyme'),
+            Field::make('id_sector'),
+            Field::make('id_categoria_scian'),
             Field::make('lema_negocio')->rules(['required']),
             Field::make('descripcion_negocio')->rules(['required']),
-            Field::make('diferenciador'),
+            Field::make('diferenciadores'),
             Field::make('sitio_web'),
             Field::make('cuenta_facebook'),
             Field::make('cuenta_twitter'),

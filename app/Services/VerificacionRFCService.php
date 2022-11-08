@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Services;
 
@@ -15,7 +15,8 @@ class VerificacionRFCService
     /**
      * Verifica si el RFC ya existe en el Padrón de Proveedores o en MTV y obtiene detalles sobre el registro existente.
      */
-    public function verficaRFCEstatus(string $rfc): array {
+    public function verficaRFCEstatus(string $rfc): array
+    {
         $responseData = $this->verificaRFCExisteEnPadronProveedores($rfc);
 
         $responseData['existe_en_mtv'] = false;
@@ -27,7 +28,8 @@ class VerificacionRFCService
         return $responseData;
     }
 
-    public function verificaRFCExisteEnPadronProveedores(string $rfc): array {
+    public function verificaRFCExisteEnPadronProveedores(string $rfc): array
+    {
         $response = Http::get( config('app.api_url_busqueda_rfc_padron_proveedores') . $rfc);
 
         $responseData = [
@@ -66,7 +68,8 @@ class VerificacionRFCService
         return $responseData;
     }
 
-    protected function verificaRFCExisteEnMTV($rfc): bool {
+    protected function verificaRFCExisteEnMTV($rfc): bool
+    {
         return User::firstWhere('rfc', $rfc) != null;
     }
 }

@@ -21,12 +21,13 @@ class ProductosController extends Controller
             'nombre' => $request->input('nombre_producto'),
             'descripcion' => $request->input('descripcion_producto'),
             'tipo' => $request->input('tipo_producto'),
-            'categoria' => $request->input('categoria_producto'),
-            'subcategoria' => $request->input('subcategoria_producto'),
-            'marca' => $request->input('marca'),
+            'precio' => $request->input('precio'),
+            'marca' => $request->input('modelo'),
+            'color' => $request->input('color'),
+            'material' => $request->input('material'),
         ]);
 
-        return redirect()->back();
+        return redirect()->route('catalogo-productos');
     }
 
     /**
@@ -34,16 +35,15 @@ class ProductosController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
-        Producto::create([
-            'id_cat_productos' => Auth::user()->persona->catalogoProductos->id,
-            'clave_cabms' => $request->input('clave_cabms'),
-            'nombre' => $request->input('nombre_producto'),
-            'descripcion' => $request->input('descripcion_producto'),
-            'tipo' => $request->input('tipo_producto'),
-            'categoria' => $request->input('categoria_producto'),
-            'subcategoria' => $request->input('subcategoria_producto'),
-            'marca' => $request->input('marca'),
-        ]);
+        $producto['clave_cabms'] = $request->input('clave_cabms');
+        $producto['nombre'] = $request->input('nombre_producto');
+        $producto['descripcion'] = $request->input('descripcion_producto');
+        $producto['tipo'] = $request->input('tipo_producto');
+        $producto['precio'] = $request->input('precio');
+        $producto['marca'] = $request->input('modelo');
+        $producto['color'] = $request->input('color');
+        $producto['material'] = $request->input('material');
+        $producto->save();
 
         return redirect()->route('catalogo-productos');
     }

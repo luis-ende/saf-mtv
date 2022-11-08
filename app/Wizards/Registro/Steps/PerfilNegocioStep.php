@@ -15,7 +15,6 @@ class PerfilNegocioStep extends WizardStep
 
     public function viewData(Request $request): array
     {
-        // TODO: Crear tabla con tipos de vialidad para devolver
         return $this->withFormData([
             'tipos_vialidad' => VialidadRepository::obtieneTiposVialidad(),
         ]);
