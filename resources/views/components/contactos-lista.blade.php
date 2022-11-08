@@ -62,6 +62,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div id="contactoFormContainer" class="modal-body">
+                    <input type="hidden" id="contacto_id" name="contacto_id">
                     <div class="form-group">
                         <label for="contacto_nombre">Nombre:</label>
                         <input type="text" class="form-control" id="contacto_nombre" name="contacto_nombre" maxlength="120" data-contacto-campo-requerido="1">
@@ -120,19 +121,28 @@
             errors: {},
 
             guardaContacto() {
-                let contacto = {
-                        'id': this.contactos.length + 1,
-                        'nombre': document.getElementById('contacto_nombre').value,
-                        'primer_ap': document.getElementById('contacto_primer_ap').value,
-                        'segundo_ap': document.getElementById('contacto_segundo_ap').value,
-                        'cargo': document.getElementById('contacto_cargo').value,
-                        'telefono_oficina': document.getElementById('contacto_telefono_oficina').value,
-                        'extension': document.getElementById('contacto_extension').value,
-                        'telefono_movil': document.getElementById('contacto_telefono_movil').value,
-                        'email': document.getElementById('contacto_email').value,
-                };
+                let contacto = {};
+                let contactoId = document.getElementById('contacto_id').value;
+                let esNuevoContacto = contactoId == 0;
+                if (esNuevoContacto) {
+                    contacto['id'] = this.contactos.length + 1;
+                } else {
+                    contacto = this.contactos.find(item => item.id == contactoId);
+                }
+
+                contacto['nombre'] = document.getElementById('contacto_nombre').value;
+                contacto['primer_ap'] = document.getElementById('contacto_primer_ap').value;
+                contacto['segundo_ap'] = document.getElementById('contacto_segundo_ap').value;
+                contacto['cargo'] = document.getElementById('contacto_cargo').value;
+                contacto['telefono_oficina'] = document.getElementById('contacto_telefono_oficina').value;
+                contacto['extension'] = document.getElementById('contacto_extension').value;
+                contacto['telefono_movil'] = document.getElementById('contacto_telefono_movil').value;
+                contacto['email'] = document.getElementById('contacto_email').value;
+
                 if (this.validaContacto(contacto)) {
-                    this.contactos.push(contacto);
+                    if (esNuevoContacto) {
+                        this.contactos.push(contacto);
+                    }
                     this.contactosModalForm.hide();
                 }
             },
@@ -140,6 +150,7 @@
                 document.getElementById('contactosModalLabel').innerText = 'Editar contacto';
                 let contacto = this.contactos.find(item => item.id === id);
                 if (contacto) {
+                    document.getElementById('contacto_id').value = contacto.id;
                     document.getElementById('contacto_nombre').value = contacto.nombre;
                     document.getElementById('contacto_primer_ap').value = contacto.primer_ap;
                     document.getElementById('contacto_segundo_ap').value = contacto.segundo_ap;
@@ -179,6 +190,7 @@
                 return !invalidState;
             },
             clearFormFields() {
+                document.getElementById('contacto_id').value = 0;
                 document.getElementById('contacto_nombre').value = '';
                 document.getElementById('contacto_primer_ap').value = '';
                 document.getElementById('contacto_segundo_ap').value = '';
