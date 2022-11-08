@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('extension', 8);
             $table->string('telefono_movil', 12);
             $table->string('email');
+            $table->unsignedSmallInteger('orden_matriz_escalamiento')->default(1);
             $table->timestamps();
         });
     }

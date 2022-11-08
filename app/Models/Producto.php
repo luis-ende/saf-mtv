@@ -9,8 +9,8 @@ class Producto extends Model
 {
     use HasFactory;
 
-    public const PRODUCTO_BIEN_ID = 'B';
-    public const PRODUCTO_SERVICIO_ID = 'S';
+    public const TIPO_PRODUCTO_BIEN_ID = 'B';
+    public const TIPO_PRODUCTO_SERVICIO_ID = 'S';
 
     /**
      * The attributes that are mass assignable.

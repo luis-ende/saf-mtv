@@ -25,9 +25,13 @@ class PerfilNegocio extends Model
      */
     protected $fillable = [
         'id_persona',
-        'grupo_prioritario',
+        'id_grupo_prioritario',
+        'id_tipo_pyme',
+        'id_sector',
+        'id_categoria_scian',
         'lema_negocio',
         'descripcion_negocio',
+        'diferenciadores',
         'sitio_web',
         'cuenta_facebook',
         'cuenta_twitter',

@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Persona extends Model
 {
-    public const PERSONA_FISICA_ID = 'F';
-    public const PERSONA_MORAL_ID = 'M';
+    public const TIPO_PERSONA_FISICA_ID = 'F';
+    public const TIPO_PERSONA_MORAL_ID = 'M';
 
     use HasFactory;
 
