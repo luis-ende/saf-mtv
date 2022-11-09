@@ -1,12 +1,7 @@
 <!-- Modal -->
 <div class="modal modal-lg fade" id="cabmsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content" x-data="dataTable()"
-             x-init="
-        initData()
-        $watch('searchInput', value => {
-          search(value)
-        })" >
+        <div class="modal-content" x-data="dataTable()" x-init="initModalForm()">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Búsqueda de claves CABMS</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -17,26 +12,31 @@
                             <div class="bg-white p-5 shadow-md w-full flex flex-col">
                                 <div class="flex justify-between items-center">
                                     <div class="flex space-x-2 items-center">
-                                        <p>Mostrar</p>
-                                        <select x-model="view" @change="changeView()">
+                                        <label for="select-view">Mostrar</label>
+                                        <select id="select-view" x-model="view" @change="changeView()" class="px-4 py-1 border rounded focus:outline-none">
                                             <option value="5">5</option>
                                             <option value="10">10</option>
                                             <option value="25">25</option>
                                             <option value="50">50</option>
-                                            <option value="100">100</option>
                                         </select>
                                     </div>
                                     <div>
-                                        <input x-model="searchInput" type="text" class="px-2 py-1 border rounded focus:outline-none" placeholder="Buscar...">
+                                        <input id="input-search" @keydown.enter="search($event.target.value)"
+                                               type="text" class="px-2 py-1 border rounded focus:outline-none"
+                                               placeholder="Buscar (presione ENTER)..." autofocus>
                                     </div>
                                 </div>
-                                <table class="mt-5">
+                                <div x-show="loading">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="spinner-grow text-secondary" role="status">
+                                            <span class="visually-hidden">Cargando...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="mt-5" x-show="!loading">
                                     <thead class="border-b-2">
                                     <th width="5%">
                                         <div class="flex space-x-2">
-                                          <span>
-                                            X
-                                          </span>
                                         </div>
                                     </th>
                                     <th width="20%">
@@ -92,7 +92,7 @@
                                         </tr>
                                     </template>
                                     <tr x-show="isEmpty()">
-                                        <td colspan="5" class="text-center py-3 text-gray-900 text-sm">No matching records found.</td>
+                                        <td colspan="5" class="text-center py-3 text-gray-900 text-sm">Búsqueda sin resultados.</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -114,12 +114,15 @@
                                     <div class="border px-2 cursor-pointer" @click.prevent="changePage(pagination.lastPage)">
                                         <span class="text-gray-700">Último</span>
                                     </div>
+                                    <div x-show="!isEmpty()">
+                                        <span x-text="items.length + ' claves encontradas'" colspan="5" class="text-center px-3 text-gray-600 text-sm"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 <script>
-                    let data = [{ "clave_cabms": "5131003994", "concepto_cabms": "ESCRITORIO DE MADERA ESTILO NEOCLASICO, S. XIX.XX MADERA,81 X 182 X 103 (BIENES MUEBLES HISTÓRICOS; 3.1.274)", "partida_especifica": "" }, { "clave_cabms": "5131003996", "concepto_cabms": "ESCRITORIO DE MADERA PARA OFICINA C/ 4 CAJONES DE LA EPOCA EN COLOR NATURAL (BIENES MUEBLES ARTÍSTICOS; 2.1.252)", "partida_especifica": "" }, { "clave_cabms": "5131003998", "concepto_cabms": "ESCRITORIO DE MADERA PARA OFICINA CON CAJONES EN COLOR NATURAL Y BARNIZADA CA. SIGLO XX DIMENSIONES: 134 X 86.3 CM. X 79.3 CM. DE ALTURA (BIENES MUEBLES ARTÍSTICOS; 2.1.245)", "partida_especifica": "" }, { "clave_cabms": "5131004000", "concepto_cabms": "ESCRITORIO MUEBLE PARA OFICINA CON 5 CAJONES DE LA EPOCA, RELOJ CON BASE Y PUERTA CON CRISTAL GARIBOLIADO Y LIBRERO CON PUERTAS DE VIDRIO MAD-115,117 Y 118 (BIENES MUEBLES ARTÍSTICOS; 2.1.25)", "partida_especifica": "" }, { "clave_cabms": "5131004002", "concepto_cabms": "ESCRITORIO RECTANGULAR ESTILO NEOCLASICO, S. XIX MADERA LABRADA, 77 X 180 X 98.5 (CLAUSELL) (BIENES MUEBLES HISTÓRICOS; 3.1.269)", "partida_especifica": "" }, { "clave_cabms": "5291000632", "concepto_cabms": "ESCRITORIO PARA MAESTRO.", "partida_especifica": "" }]
+                    let cabmsData = []
                 </script>
             </div>
             <div class="modal-footer">
@@ -134,16 +137,16 @@
 <script>
     window.dataTable = function () {
         return {
+            loading: false,
             checkedItems: [],
             cabmsModal: new bootstrap.Modal(document.getElementById('cabmsModal'), { keyboard: false }),
             items: [],
             view: 5,
-            searchInput: '',
             pages: [],
             offset: 5,
             pagination: {
-                total: data.length,
-                lastPage: Math.ceil(data.length / 5),
+                total: 0,
+                lastPage: 0,
                 perPage: 5,
                 currentPage: 1,
                 from: 1,
@@ -155,7 +158,10 @@
                 rule: 'asc'
             },
             initData() {
-                this.items = data.sort(this.compareOnKey('clave_cabms', 'asc'))
+                this.items = cabmsData.sort(this.compareOnKey('clave_cabms', 'asc'))
+                this.pagination.total = cabmsData.length
+                this.pagination.lastPage = Math.ceil(cabmsData.length / this.view)
+                this.changePage(1)
                 this.showPages()
             },
             compareOnKey(key, rule) {
@@ -178,12 +184,6 @@
                             }
                         }
                         return comparison
-                    } else {
-                        if (rule === 'asc') {
-                            return a.year - b.year
-                        } else {
-                            return b.year - a.year
-                        }
                     }
                 }
             },
@@ -198,21 +198,20 @@
             },
             search(value) {
                 if (value.length > 1) {
-                    const options = {
-                        isCaseSensitive: false,
-                        shouldSort: true,
-                        keys: ['clave_cabms', 'concepto_cabms'],
-                        threshold: 0.6,
-                    }
-                    const fuse = new Fuse(data, options)
-                    this.items = fuse.search(value).map(elem => elem.item)
+                    this.loading = true;
+                    fetch('/api/catalogo_cabms/' + 'B/' + value)
+                        .then((res) => res.json())
+                        .then((json) => {
+                            this.loading = false
+                            cabmsData = json
+                            this.initData()
+                        });
                 } else {
-                    this.items = data
+                    cabmsData = [];
+                    this.items = cabmsData
+                    this.changePage(1)
+                    this.showPages()
                 }
-                // console.log(this.items.length)
-
-                this.changePage(1)
-                this.showPages()
             },
             sort(field, rule) {
                 this.items = this.items.sort(this.compareOnKey(field, rule))
@@ -265,8 +264,20 @@
                 if (this.checkedItems.length > 0) {
                     document.getElementById('clave_cabms').value = this.checkedItems[0];
                 }
-                this.checkedItems = [];
                 this.cabmsModal.hide();
+            },
+            initModalForm() {
+                document.getElementById('cabmsModal').addEventListener('show.bs.modal', () => {
+                    document.getElementById('input-search').value = '';
+                    cabmsData = [];
+                    this.items = [];
+                    this.checkedItems = [];
+                    this.initData();
+                });
+                document.getElementById('cabmsModal').addEventListener('shown.bs.modal', () => {
+                    this.loading = false;
+                    document.getElementById('input-search').focus();
+                });
             }
         }
     }
