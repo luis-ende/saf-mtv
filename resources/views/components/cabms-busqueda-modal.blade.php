@@ -158,11 +158,9 @@
                 rule: 'asc'
             },
             initData() {
-                this.items = cabmsData.sort(this.compareOnKey('clave_cabms', 'asc'))
-                this.pagination.total = cabmsData.length
-                this.pagination.lastPage = Math.ceil(cabmsData.length / this.view)
-                this.changePage(1)
-                this.showPages()
+                this.items = cabmsData.sort(this.compareOnKey('concepto_cabms', 'asc'))
+                this.pagination.total = this.items.length
+                this.pagination.lastPage = Math.ceil(this.items.length / this.view)
             },
             compareOnKey(key, rule) {
                 return function(a, b) {
@@ -199,18 +197,21 @@
             search(value) {
                 if (value.length > 1) {
                     this.loading = true;
+                    // TODO: Usar variable para tipo de producto: 'B', 'S'
                     fetch('/api/catalogo_cabms/' + 'B/' + value)
                         .then((res) => res.json())
                         .then((json) => {
                             this.loading = false
                             cabmsData = json
+                            this.items = cabmsData;
                             this.initData()
+                            this.changePage(1)
                         });
                 } else {
                     cabmsData = [];
                     this.items = cabmsData
+                    this.initData()
                     this.changePage(1)
-                    this.showPages()
                 }
             },
             sort(field, rule) {
@@ -220,6 +221,7 @@
             },
             changePage(page) {
                 if (page >= 1 && page <= this.pagination.lastPage) {
+                    this.showPages()
                     this.currentPage = page
                     const total = this.items.length
                     const lastPage = Math.ceil(total / this.view) || 1
@@ -234,7 +236,9 @@
                     this.pagination.currentPage = page
                     this.pagination.from = from
                     this.pagination.to = to
-                    this.showPages()
+                    if (page >= 1 || page === this.pagination.lastPage) {
+                        this.showPages()
+                    }
                 }
             },
             showPages() {
@@ -267,11 +271,14 @@
                 this.cabmsModal.hide();
             },
             initModalForm() {
-                document.getElementById('cabmsModal').addEventListener('show.bs.modal', () => {
+                document.getElementById('cabmsModal').addEventListener('hidden.bs.modal', () => {
                     document.getElementById('input-search').value = '';
                     cabmsData = [];
                     this.items = [];
                     this.checkedItems = [];
+                    this.pages = [];
+                });
+                document.getElementById('cabmsModal').addEventListener('shown.bs.modal', () => {
                     this.initData();
                 });
                 document.getElementById('cabmsModal').addEventListener('shown.bs.modal', () => {
