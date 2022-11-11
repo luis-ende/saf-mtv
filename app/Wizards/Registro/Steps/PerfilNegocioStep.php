@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class PerfilNegocioStep extends WizardStep
 {
-    public string $title = 'Perfil de tu Negocio';
+    public string $title = 'Datos de contacto';
 
     public string $slug = 'perfil-negocio';
 

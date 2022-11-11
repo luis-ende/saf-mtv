@@ -113,8 +113,10 @@
         @if ($mode === 'add')
             <button class="btn btn-primary" type="submit">Agregar producto</button>
         @elseif ($mode === 'wizard')
-            <a class="btn btn-primary" href="{{ route('wizard.registro-mtv.show', [$wizard['id'], 'descripcion-negocio']) }}">Anterior</a>
-            <button id="btn_siguiente" class="btn btn-primary">Finalizar</button>
+            <div class="py-4">
+                <a class="btn btn-primary" href="{{ route('wizard.registro-mtv.show', [$wizard['id'], 'descripcion-negocio']) }}">Anterior</a>
+                <button id="btn_siguiente" class="btn btn-primary">Finalizar registro</button>
+            </div>
         @else
             <button class="btn btn-primary" type="submit">Guardar</button>
         @endif

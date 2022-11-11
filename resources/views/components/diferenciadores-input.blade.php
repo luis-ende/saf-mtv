@@ -19,7 +19,7 @@
     }
     .tags-input-wrapper .tag{
         display: inline-block;
-        background-color: rgba(119, 12, 12, 0.76);
+        background-color: #691C32;
         color: white;
         border-radius: 40px;
         padding: 0px 3px 0px 7px;

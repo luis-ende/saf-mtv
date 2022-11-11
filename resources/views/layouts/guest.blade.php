@@ -28,7 +28,7 @@
                             {{--                        </div>--}}
                         @else
                             <div class="col-3">
-                                <a class="btn btn-primary" href="{{ route('login') }}">Iniciar sesión</a>
+                                <a class="btn btn-primary" href="{{ route('login') }}">Ingresa</a>
                             </div>
                         @endauth
                     @endif

@@ -10,7 +10,7 @@
         name="contactos_lista"
         x-bind:value="JSON.stringify(contactos)"
     >
-    <div class="col-md-2">
+    <div class="col-md-2 mb-3">
         <!-- Button trigger modal -->
         <button type="button"
                 class="btn btn-primary"
@@ -19,12 +19,11 @@
         </button>
     </div>
     <div class="table-responsive">
-        <table class="table table-bordered table-sm ">
+        <table class="table table-striped table-sm ">
             <thead>
             <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Primer apellido</th>
-                <th scope="col">Segundo apellido</th>
+                <th scope="col">#</th>
+                <th scope="col">Nombre completo</th>
                 <th scope="col">Cargo</th>
                 <th scope="col">Teléfono oficina</th>
                 <th scope="col">Extensión</th>
@@ -33,11 +32,10 @@
             </tr>
             </thead>
             <tbody>
-                <template x-for="contacto in contactos" :key="contacto.id">
+                <template x-for="(contacto, index) in contactos" :key="contacto.id">
                     <tr>
-                        <td x-text="contacto.nombre"></td>
-                        <td x-text="contacto.primer_ap"></td>
-                        <td x-text="contacto.segundo_ap"></td>
+                        <td x-text="index + 1"></td>
+                        <td x-text="contacto.nombre + ' ' + contacto.primer_ap + ' ' + contacto.segundo_ap"></td>
                         <td x-text="contacto.cargo"></td>
                         <td x-text="contacto.telefono_oficina"></td>
                         <td x-text="contacto.extension"></td>

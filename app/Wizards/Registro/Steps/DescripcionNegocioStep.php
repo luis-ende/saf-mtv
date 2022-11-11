@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class DescripcionNegocioStep extends WizardStep
 {
-    public string $title = 'Completa la descripción del Perfil de tu Negocio';
+    public string $title = 'Perfil de tu Negocio';
 
     public string $slug = 'descripcion-negocio';
 

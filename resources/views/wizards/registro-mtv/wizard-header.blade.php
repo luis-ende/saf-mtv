@@ -1,9 +1,29 @@
-{{--{{ dd($wizard['steps']) }}--}}
-<div class="py-2">
-    <h2>{{ $wizard['title'] }}</h2>
+<label class="text-primary mt-3 text-lg font-bold mx-3">{{ $wizard['title'] }}</label>
+<div class="py-3 bg-[#691C32] m-3 mb-4 rounded pl-5 flex flex-row flex-wrap">
+{{--    {{ dd($wizard) }}--}}
     @foreach($wizard['steps'] as $stepData)
-        <span class="{{ $stepData['active'] ? 'text-primary fw-bold' : 'text-secondary' }}">
-            {{ $loop->index + 1 . '. ' . $stepData['title'] }}->
-        </span>
+        <div class="p-0 flex flex-row">
+            <a class="{{ $stepData['active'] ? 'text-[#BC955C] fw-bold' : 'text-slate-200' }} text-base no-underline hover:text-[#BC955C] flex flex-row"
+               href="{{ $stepData['url'] }}">
+                @if($loop->index === 0)
+                    @svg('icomoon-profile', ['class' => 'h-5 w-5 inline-block'])
+                @elseif ($loop->index === 1)
+                    @svg('bytesize-portfolio', ['class' => 'h-5 w-5 inline-block'])
+                @elseif ($loop->index === 2)
+                    @svg('gmdi-storefront-o', ['class' => 'h-5 w-5 inline-block'])
+                @endif
+                {!! "&nbsp;" !!}
+                <span>{{ $stepData['title'] }}</span>
+                @if($loop->index + 1 !== $loop->count)
+                    {!! "&nbsp;" !!}
+                    {!! "&nbsp;" !!}
+                    {!! "&nbsp;" !!}
+                    @svg('heroicon-s-arrow-right-circle', ['class' => 'h-5 w-5 inline-block'])
+                    {!! "&nbsp;" !!}
+                    {!! "&nbsp;" !!}
+                    {!! "&nbsp;" !!}
+                @endif
+            </a>
+        </div>
     @endforeach
 </div>
