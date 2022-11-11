@@ -29,32 +29,26 @@ Route::get('contacto/curp/{curp}', [\App\Http\Controllers\Api\ContactoController
 Route::get('catalogo_cabms/{tipo_producto}/{criterio_busqueda}', [\App\Http\Controllers\Api\CatalogoCABMSController::class, 'buscaClavesCABMS']);
 
 // TODO: API Endpoints de prueba para modo local de desarrollo, remover...
-Route::get('etapa_proveedor/{rfc}', function(Request $request) {
-    return response()->json([[
-        'rfc' => "JUAA810316M17",
-        'es_usuario' => false,
-        'id_etapa' => '7',
-        'etapa' => "CONSTANCIA",
-    ]]);
-});
 
 Route::get('consulta_curp/{curp}', function(Request $request) {
-    return response()->json([
-        'error' => [
-            'msg' => 'Datos obtenidos correctamente',
-            'code' => 0,
-        ],
-        'data' => [[
-            'CURP' => 'FOGG851019HDFLRL02',
-            'nombres' => 'NOMBRE PRUEBA',
-            'apellido1' => 'APELLIDO',
-            'apellido2' => 'APELLIDO',
-            'sexo' => 'H',
-            'cveEntidadNac' => 'DF',
-            'fechNac' => '19/10/1990',
-            'nacionalidad' => 'MEX',
-            'anioReg' => '1990',
-            'statusCurp' => 'RCN'
-        ]]
-    ]);
+    if (env('APP_ENV') === 'local') {
+        return response()->json([
+            'error' => [
+                'msg' => 'Datos obtenidos correctamente',
+                'code' => 0,
+            ],
+            'data' => [[
+                'CURP' => 'JUAA810316HDFLRL02',
+                'nombres' => 'NOMBRE PRUEBA',
+                'apellido1' => 'APELLIDO 1',
+                'apellido2' => 'APELLIDO 2',
+                'sexo' => 'H',
+                'cveEntidadNac' => 'DF',
+                'fechNac' => '19/10/1990',
+                'nacionalidad' => 'MEX',
+                'anioReg' => '1990',
+                'statusCurp' => 'RCN'
+            ]]
+        ]);
+    }
 });
