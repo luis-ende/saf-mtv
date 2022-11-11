@@ -1,4 +1,5 @@
 <div x-data="curpConsulta()">
+    <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
     <input id="curp"
            name="curp"
            type="text"
@@ -17,14 +18,19 @@
         return {
             curpText: document.getElementById('curp').value,
             mensajeError: '',
+            isLoading: false,
 
             buscaCURP() {
                 this.mensajeError = '';
+                this.isLoading = false;
 
                 if (this.curpText !== '') {
+                    this.isLoading = true;
                     fetch('/api/contacto/curp/' + this.curpText)
-                        .then((res) => res.json())
+                        .then((res) => { console.log('response 1: '+ res.status); return res.json(); })
                         .then((res) => {
+                            console.log('response 2');
+                            this.isLoading = false;
                             if (res['error']) {
                                 this.mensajeError = 'Servicio de consulta de CURP no disponible.'
                             } else {

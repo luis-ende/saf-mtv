@@ -11,6 +11,8 @@ class CatalogoCABMSController extends Controller
     public function buscaClavesCABMS(string $tipoProducto, string $criterioBusqueda): JsonResponse {
         $busquedaResultados = CatalogoCABMSRepository::obtieneClavesCABMS($tipoProducto, $criterioBusqueda);
 
+        // TODO: Implementar tratamiento de excepciones
+
         return response()->json($busquedaResultados);
     }
 }

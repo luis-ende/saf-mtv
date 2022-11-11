@@ -6,10 +6,11 @@
 @php($numExt = isset($persona) ? $persona->num_ext : ( isset($step) ? $step['num_ext'] : old('num_ext')))
 @php($numInt = isset($persona) ? $persona->num_int : ( isset($step) ? $step['num_int'] : old('num_int')))
 
-<div x-data="domicilioDetalles()" class="row g-3" x-init="refreshCPAsentamiento()">
+<div x-data="domicilioDetalles()" class="row g-3" x-init="refreshCPAsentamiento(); isLoading = false;">
     <input type="hidden" id="id_asentamiento" x-bind:value="asentamientoSeleccion" name="id_asentamiento">
     <div class="form-group col-md-3">
         <label for="cp">Código postal:</label>
+        <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
         <input type="text" class="form-control" maxlength="8" id="cp" name="cp" x-model="cpText" required
                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                @blur="refreshCPAsentamiento()"
@@ -77,11 +78,16 @@
             alcaldias: [],
             colonias: [],
             vialidades: [],
+            isLoading: false,
+
             refreshCPAsentamiento() {
+                this.isLoading = true;
+
                 if (this.cpText !== '') {
                     fetch('/api/contacto/asentamientos/' + this.cpText)
                         .then((res) => res.json())
                         .then((res) => {
+                            this.isLoading = false;
                             this.entidades = [];
                             this.alcaldias = [];
                             this.colonias = [];

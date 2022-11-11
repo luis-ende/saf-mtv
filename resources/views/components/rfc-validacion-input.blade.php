@@ -3,12 +3,13 @@
 @php($url = $modo === 'registro' ? '/api/proveedores/registro/' : '/api/proveedores/login/')
 
 <div x-data="rfcValidacion()">
-       <x-rfc-input
-              x-model="rfcText"
-              @blur="verificaRFC()"
-              @keyup="rfcInvalido = ''"
-              :value="$value" />
-       <label x-text="obtenerMensajeError()" class="text-sm text-red-600 space-y-1"></label>
+    <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+    <x-rfc-input
+          x-model="rfcText"
+          @blur="verificaRFC()"
+          @keyup="rfcInvalido = ''"
+          :value="$value" />
+    <label x-text="obtenerMensajeError()" class="text-sm text-red-600 space-y-1"></label>
 </div>
 
 <script type="text/javascript">
@@ -22,6 +23,7 @@
             mensajeError: '',
             modoValidacion: {!! json_encode($modo) !!},
             rfcVerificacionUrl: {!! json_encode($url) !!},
+            isLoading: false,
 
             verificaRFC() {
                 let btnFormSubmit = this.modoValidacion === 'registro' ?
@@ -38,9 +40,11 @@
                 }
 
                 if (this.rfcText !== '') {
+                    this.isLoading = true;
                     fetch(this.rfcVerificacionUrl + this.rfcText)
                             .then((res) => res.json())
                             .then((res) => {
+                                this.isLoading = false;
                                 if (res['error']) {
                                     this.mensajeError = 'Servicio no disponible. No es posible registrar el RFC en Mi Tiendita Virtual.'
                                     if (btnFormSubmit) {

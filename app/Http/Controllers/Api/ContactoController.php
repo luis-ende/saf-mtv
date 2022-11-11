@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Cache;
 
 class ContactoController extends Controller
 {
-    public function consultaCURP($curp, BusquedaCURPService $busquedaCPService): JsonResponse {
-        $curpDatos = $busquedaCPService->obtieneCURPDatos($curp);
+    public function consultaCURP($curp, BusquedaCURPService $busquedaCURPService): JsonResponse {
+        $curpDatos = $busquedaCURPService->obtieneCURPDatos($curp);
 
         return response()->json($curpDatos);
     }

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class BusquedaCURPService
 {
-    public function obtieneCURPDatos($curp)
+    public function obtieneCURPDatos(string $curp): array
     {
         $responseData = [
             'curp' => $curp,
@@ -23,42 +23,52 @@ class BusquedaCURPService
             return $responseData;
         }
 
-        if (env('APP_ENV') === 'local') {
-            $response = Http::get(config('app.api_url_consulta_curp') . $curp);
-        } else {
-            $response = Http::post(config('app.api_url_consulta_curp'), [
-                'security' => [
-                    'tokenId' => env('API_BUSQUEDA_CURP_TOKEN')
-                ],
-                'data' => [
-                    'CURP' => $curp
-                ],
-            ]);
-        }
+        $response = null;
+        try {
+            if (env('TEST_MODE') === true) {
+                $response = Http::get(config('app.api_url_consulta_curp') . $curp);
+            } else {
+                $response = Http::post(config('app.api_url_consulta_curp'), [
+                    'security' => [
+                        'tokenId' => env('API_BUSQUEDA_CURP_TOKEN')
+                    ],
+                    'data' => [
+                        'CURP' => $curp
+                    ],
+                ]);
+            }
 
-        $curpResponseData = $response->json();
-        if ($response->successful()) {
-            if ($curpResponseData['error']['code'] === 0) {
-                if (isset($curpResponseData['data'])) {
-                    $responseData['curp_datos'] = $curpResponseData['data'][0];
-                    $genero = $responseData['curp_datos']['sexo'];
-                    if ($genero === 'H') {
-                        $responseData['curp_datos']['sexo'] = 'M';
-                    } elseif ($genero === 'M') {
-                        $responseData['curp_datos']['sexo'] = 'F';
+            $curpResponseData = $response->json();
+            if ($response->successful()) {
+                if ($curpResponseData['error']['code'] === 0) {
+                    if (isset($curpResponseData['data'])) {
+                        $responseData['curp_datos'] = $curpResponseData['data'][0];
+                        $genero = $responseData['curp_datos']['sexo'];
+                        if ($genero === 'H') {
+                            $responseData['curp_datos']['sexo'] = 'M';
+                        } elseif ($genero === 'M') {
+                            $responseData['curp_datos']['sexo'] = 'F';
+                        }
+                    } else {
+                        $responseData['error'] = true;
                     }
                 } else {
-                    $responseData['error'] = true;
+                    $responseData['curp_no_localizado'] = true;
                 }
             } else {
-                $responseData['curp_no_localizado'] = true;
+                $responseData['error'] = true;
             }
-        } else {
+        } catch (Exception $e) {
             $responseData['error'] = true;
+            $responseData['error_msg'] = $e->getMessage();
         }
 
         if ($responseData['error']) {
-            $responseData['error_msg'] = $response['error']['msg'];
+            if (isset($response['error']['msg'])) {
+                $responseData['error_msg'] = $response['error']['msg'];
+            } elseif ($response)  {
+                $responseData['error_msg'] = $response->reason();
+            }
         }
 
         return $responseData;
