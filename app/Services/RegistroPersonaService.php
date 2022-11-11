@@ -22,7 +22,7 @@ class RegistroPersonaService
         DB::transaction(function() use($personaRegistroDatos) {
             $persona = Persona::create([
                 'id_tipo_persona' => $personaRegistroDatos['tipo_persona'],
-                'rfc' => $personaRegistroDatos['rfc'],
+                'rfc' => $personaRegistroDatos['rfc_completo'],
                 'id_asentamiento' => $personaRegistroDatos['id_asentamiento'],
                 'id_tipo_vialidad' => $personaRegistroDatos['id_tipo_vialidad'],
                 'vialidad' => $personaRegistroDatos['vialidad'],
@@ -108,7 +108,7 @@ class RegistroPersonaService
             }
 
             $user = User::create([
-                'rfc' => $personaRegistroDatos['rfc'],
+                'rfc' => $personaRegistroDatos['rfc_completo'],
                 'id_persona' => $persona->id,
                 'activo' => true,
                 'last_login' => now(),

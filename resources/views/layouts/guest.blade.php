@@ -13,7 +13,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body>
+    <body class="font-sans antialiased">
         <!-- Page Heading -->
         <header class="bg-white shadow">
             <div class="container py-3">

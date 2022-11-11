@@ -24,7 +24,9 @@ class PerfilNegocioStep extends WizardStep
     {
         return [
             Field::make('tipo_persona')->rules(['required']),
-            Field::make('rfc')->rules(['required', 'min:10', 'max:13', 'unique:users']),
+            Field::make('rfc')->rules(['required']), // RFC completo (persona moral) o sólo homoclave (persona física)
+            Field::make('rfc_sin_homoclave')->rules(['required']), // Si es persona física
+            Field::make('rfc_completo')->rules(['required', 'unique:users,rfc']),
             Field::make('password')->rules(['required']),
             Field::make('curp'),
             Field::make('fecha_nacimiento'),

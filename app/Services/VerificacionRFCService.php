@@ -81,7 +81,7 @@ class VerificacionRFCService
                 [
                     'rfc' => "JUAA810316M17",
                     'es_usuario' => true,
-                    'id_etapa' => '7',
+                    'id_etapa' => 7,
                     'etapa' => "CONSTANCIA",
                 ],
                 [
@@ -93,7 +93,7 @@ class VerificacionRFCService
                 [
                     'rfc' => "JUAA810316M19",
                     'es_usuario' => true,
-                    'id_etapa' => '10',
+                    'id_etapa' => 10,
                     'etapa' => "SOLICITUD VENCIDA",
                 ]
             ];
@@ -101,6 +101,15 @@ class VerificacionRFCService
             $testRFC = array_filter($testRFCs, function($item) use($rfc) {
                 return $item['rfc'] === $rfc;
             });
+
+            if (count($testRFC) == 0) {
+                $testRFC = [[
+                    'rfc' => $rfc,
+                    'es_usuario' => true,
+                    'id_etapa' => 10,
+                    'etapa' => "VENCIDO / PRUEBA",
+                ]];
+            }
 
             return array_values($testRFC);
         }

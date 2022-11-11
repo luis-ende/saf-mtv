@@ -1,15 +1,17 @@
-@props(['tipo_persona' => 'F', 'value', 'modo' => 'registro'])
+@props(['value', 'modo' => 'registro'])
 
 @php($url = $modo === 'registro' ? '/api/proveedores/registro/' : '/api/proveedores/login/')
 
-<div x-data="rfcValidacion()">
+<div x-data="rfcValidacion()" x-init="rfcCompleto = obtieneRFCCompleto()">
     <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
     <x-rfc-input
           x-model="rfcText"
           @blur="verificaRFC()"
           @keyup="rfcInvalido = ''"
-          :value="$value" />
+          :value="$value"
+    />
     <label x-text="obtenerMensajeError()" class="text-sm text-red-600 space-y-1"></label>
+    <input type="hidden" id="rfc_completo" name="rfc_completo" x-model="rfcCompleto">
 </div>
 
 <script type="text/javascript">
@@ -20,6 +22,7 @@
             rfcExisteEnMTV: false,
             rfcText: document.getElementById('rfc').value,
             rfcInvalido: '',
+            rfcCompleto: '',
             mensajeError: '',
             modoValidacion: {!! json_encode($modo) !!},
             rfcVerificacionUrl: {!! json_encode($url) !!},
@@ -39,9 +42,12 @@
                     btnFormSubmit.disabled = false;
                 }
 
-                if (this.rfcText !== '') {
+                this.rfcCompleto = this.obtieneRFCCompleto();
+
+                if (this.rfcText && this.rfcCompleto !== '') {                    
                     this.isLoading = true;
-                    fetch(this.rfcVerificacionUrl + this.rfcText)
+
+                    fetch(this.rfcVerificacionUrl + this.rfcCompleto)
                             .then((res) => res.json())
                             .then((res) => {
                                 this.isLoading = false;
@@ -52,7 +58,7 @@
                                     }
                                 } else {
                                     this.rfcExisteEnPadronProveedores = res['existe_en_padron_proveedores'];
-                                    this.rfcExisteEnMTV = res['existe_en_mtv'] ? res['existe_en_mtv'] : true;
+                                    this.rfcExisteEnMTV = res['existe_en_mtv'];
                                     this.rfcEtapaEnPadronProveedores = res['etapa_en_padron_proveedores'];
 
                                     if (!res['permitir_registro_login']) {
@@ -104,6 +110,18 @@
                     }
                 }
             },
+            obtieneRFCCompleto() {
+                const tipoPersona = document.getElementsByName('tipo_persona')[0].value;
+                if (tipoPersona === 'M') {
+                    // Contiene RFC con homoclave
+                    return this.rfcText; 
+                } else if (tipoPersona === 'F') {
+                    // Input value contiene solo homoclave
+                    return document.getElementById('rfc_sin_homoclave').value + this.rfcText; 
+                }
+
+                return '';
+            }
         }
     }
 </script>

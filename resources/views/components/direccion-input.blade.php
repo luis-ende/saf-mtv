@@ -13,8 +13,9 @@
         <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
         <input type="text" class="form-control" maxlength="8" id="cp" name="cp" x-model="cpText" required
                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-               @blur="refreshCPAsentamiento()"
-        >
+               @keyup="errorMessage = ''"
+               @blur="refreshCPAsentamiento()">
+        <label x-show="errorMessage != ''" x-text="errorMessage" class="text-sm text-red-600 space-y-1"></label>
     </div>
     <div class="form-group col-md-3">
         <label for="entidad_federativa">Entidad federativa:</label>
@@ -79,6 +80,7 @@
             colonias: [],
             vialidades: [],
             isLoading: false,
+            errorMessage: '',
 
             refreshCPAsentamiento() {
                 this.isLoading = true;
@@ -91,6 +93,10 @@
                             this.entidades = [];
                             this.alcaldias = [];
                             this.colonias = [];
+
+                            if (res.length === 0) {
+                               this.errorMessage = 'No se encontraron asentamientos asociados al CP';
+                            }
 
                             res.forEach(asentamiento => {
                                 if(!this.entidades.find(item => item.nombre === asentamiento.entidad)) {
@@ -115,7 +121,6 @@
                                     this.asentamientoSeleccion = this.colonias[0].id;
                                 }
                             });
-                            this.rfcExisteEnPadronProveedores = res[0] === 1;
                         });
                 }
             },

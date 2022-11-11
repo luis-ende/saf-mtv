@@ -3,7 +3,8 @@
 @php($tiposVialidad = [])
 
 @php($tipoPersona = isset($persona) ? $persona->tipo_persona : (isset($step) ? $step['tipo_persona'] : old('tipo_persona')))
-@php($rfc = isset($persona) ? $persona->rfc : (isset($step) ? $step['rfc'] : old('rfc')))
+@php($rfc = isset($persona) ? $persona->rfc : (isset($step) && isset($step['rfc']) ? $step['rfc'] : old('rfc')))
+@php($rfcSinH = isset($step) && isset($step['rfc_sin_homoclave']) ? $step['rfc_sin_homoclave'] : old('rfc_sin_homoclave'))
 @php($curp = isset($persona) ? $persona->curp : (isset($step) ? $step['curp'] : old('curp')))
 @php($fechaNacimiento = isset($persona) ? $persona->fecha_nacimiento : (isset($step) ? $step['fecha_nacimiento'] : old('fecha_nacimiento')))
 @php($genero = isset($persona) ? $persona->genero : (isset($step) ? $step['genero'] : old('genero')))
@@ -25,7 +26,7 @@
     @endif
 @endif
 
-<div class="container" x-data="perfilNegocioValidaciones()">
+<div class="container" x-data="perfilNegocioValidaciones()" x-init="onChangeTipoPersona(tipoPersona)">
     <form id="perfil_negocio_form" method="POST" class="row g-3" action="{{ $formAction }}">
         @csrf
 
@@ -34,7 +35,7 @@
                 <label class="text-[#BC955C] font-bold">Datos personales</label>
             </div>
             <div class="card-body row g-3">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label>Eres persona</label>
                     <div class="form-check">
                         <label class="form-check-label" for="tipo_persona_fisica">física</label>
@@ -44,28 +45,39 @@
                                id="tipo_persona_fisica"
                                name="tipo_persona"
                                value="F"
+                               @change="onChangeTipoPersona($event.target.value)"                               
                         >
                     </div>
                     <div class="form-check">
                         <label class="form-check-label" for="tipo_persona_moral">moral</label>
-                        <input class="form-check-input"
-                               type="radio"
+                        <input type="radio"
+                               class="form-check-input"
                                x-model="tipoPersona"
                                id="tipo_persona_moral"
                                name="tipo_persona"
                                value="M"
+                               @change="onChangeTipoPersona($event.target.value)"
                         >
                     </div>
                 </div>
-                <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
+                <div class="form-group col-md-3" x-show="tipoPersona === 'F'">
                     <label for="curp">CURP:</label>
                     <x-curp-input value="{{ $curp }}" x-bind:required="tipoPersona === 'F'" />
                     <x-input-error :messages="$errors->get('curp')" class="mt-2" />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="rfc">RFC con homoclave:</label>
+                <div class="form-group col-md-3" x-show="tipoPersona === 'F'">
+                    <label for="rfc_sin_homoclave">RFC:</label>
+                    <input type="text" class="form-control" 
+                           style="background-color: lightgray" 
+                           id="rfc_sin_homoclave" 
+                           name="rfc_sin_homoclave" 
+                           value="{{ $rfcSinH ?? '' }}"
+                           readonly>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="rfc" x-text="tipoPersona === 'F' ? 'Homoclave' : 'RFC con homoclave'"></label>
                     <x-rfc-validacion-input value="{{ $rfc }}" />
-                    <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('rfc_completo')" class="mt-2" />
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                     <label for="fecha_nacimiento">Fecha de nacimiento:</label>
@@ -163,15 +175,24 @@
                 @endif
             </div>
         </div>
-    </form>
+    </form>    
 </div>
 
 <script>
     function perfilNegocioValidaciones() {
+        document.getElementById('curp').addEventListener('focus', function() { console.log('focus') }, false);
+        document.getElementById('curp').addEventListener('blur', function() { console.log('blur') }, false);
+        //document.getElementById('tipo_persona_fisica').addEventListener('focus', function() { console.log('pf focus'); document.getElementById('curp').focus() }, false);        
+
         return {
             tipoPersona: '{{ $tipoPersona ?? 'F' }}',
 
             validaPerfilNegocioDatos() {
+                if (this.tipoPersona === 'M') {
+                    document.getElementById('rfc_sin_homoclave').value = '';
+                    document.getElementById('rfc_completo').value = document.getElementById('rfc').value;
+                }                
+
                 if (document.getElementById('contactos_lista').value === '[]') {
                     Swal.fire({
                         title: 'Información incompleta',
@@ -183,6 +204,19 @@
                 }
 
                 return true;
+            },
+            onChangeTipoPersona(tipoPersona) {                                
+                let rfcInput = document.getElementById('rfc');
+                let curpInput = document.getElementById('curp');                
+                if (tipoPersona === 'F') {                                        
+                    rfcInput.maxLength = 3; // Para homoclave
+                    console.log('curp visible: ' + curpInput.style.visibility);
+                    curpInput.focus();
+                } else if (tipoPersona === 'M') {
+                    console.log('rfc visible: ' + curpInput.style.visibility);
+                    rfcInput.maxLength = 12; // Para RFC con homoclave
+                    rfcInput.focus();
+                }                
             }
         }
     }
