@@ -26,11 +26,6 @@
 @endif
 
 <div class="container" x-data="perfilNegocioValidaciones()">
-    @if ($mode === 'wizard')
-        <h1>{{ $wizard['title'] }}</h1>
-        <h2>1. Tu Perfil de Negocio</h2><br>
-    @endif
-
     <form id="perfil_negocio_form" method="POST" class="row g-3" action="{{ $formAction }}">
         @csrf
 
@@ -73,23 +68,23 @@
             </div>
             <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                 <label for="fecha_nacimiento">Fecha de nacimiento:</label>
-                <input type="text" class="form-control-plaintext" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $fechaNacimiento }}" readonly>
+                <input type="text" class="form-control" style="background-color: lightgray" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $fechaNacimiento }}" readonly>
             </div>
             <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                 <label for="genero">Género:</label>
-                <input type="text" class="form-control-plaintext" id="genero" name="genero" value="{{ $genero }}" readonly>
+                <input type="text" class="form-control" style="background-color: lightgray" id="genero" name="genero" value="{{ $genero }}" readonly>
             </div>
             <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                 <label for="nombre">Nombre:</label>
-                <input type="text" class="form-control-plaintext" id="nombre" name="nombre" value="{{ $nombre }}" readonly>
+                <input type="text" class="form-control" style="background-color: lightgray" id="nombre" name="nombre" value="{{ $nombre }}" readonly>
             </div>
             <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                 <label for="primer_ap">Primer apellido:</label>
-                <input type="text" class="form-control-plaintext" id="primer_ap" name="primer_ap" value="{{ $primerAp }}" readonly>
+                <input type="text" class="form-control" style="background-color: lightgray" id="primer_ap" name="primer_ap" value="{{ $primerAp }}" readonly>
             </div>
             <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                 <label for="segundo_ap">Segundo apellido:</label>
-                <input type="text" class="form-control-plaintext" id="segundo_ap" name="segundo_ap" value="{{ $segudoAp }}" readonly>
+                <input type="text" class="form-control" style="background-color: lightgray" id="segundo_ap" name="segundo_ap" value="{{ $segudoAp }}" readonly>
             </div>
             <div class="form-group col-md-4" x-show="tipoPersona === 'M'">
                 <label for="fecha_constitucion">Fecha de constitución:</label>

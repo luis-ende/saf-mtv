@@ -22,8 +22,6 @@
 
 <div class="container" x-data="descripcionNegocioReglas()">
     @if ($mode === 'wizard')
-        <h1>{{ $wizard['title'] }}</h1>
-        <h2>2. Descripción de tu negocio</h2><br>
         @php($wizardId = $wizard['id'])
     @endif
 

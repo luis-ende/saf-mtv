@@ -20,108 +20,105 @@
 
 {{--@include('layouts.registro-navigation')--}}
 <div class="container" x-data="{ tipoProducto: '{{ $tipoProducto ?? 'B' }}' }">
-    @if ($mode === 'wizard')
-        <h1>{{ $wizard['title'] }}</h1>
-        <h2>3. Tus producto</h2><br>
-    @endif
-        <form method="POST" action="{{ $formAction }}">
-            @csrf
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label>¿Qué producto ofreces?</label>
-                    <div class="form-check">
-                        <label class="form-check-label" for="tipo_producto_bien">Bien</label>
-                        <input type="radio"
-                               class="form-check-input"
-                               id="tipo_producto_bien"
-                               x-model="tipoProducto"
-                               name="tipo_producto"
-                               value="B"
-                        >
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label" for="tipo_producto_servicio">Servicio</label>
-                        <input type="radio"
-                               class="form-check-input"
-                               id="tipo_producto_servicio"
-                               x-model="tipoProducto"
-                               name="tipo_producto"
-                               value="S"
-                        >
-                    </div>
+    <form method="POST" action="{{ $formAction }}">
+        @csrf
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label>¿Qué producto ofreces?</label>
+                <div class="form-check">
+                    <label class="form-check-label" for="tipo_producto_bien">Bien</label>
+                    <input type="radio"
+                           class="form-check-input"
+                           id="tipo_producto_bien"
+                           x-model="tipoProducto"
+                           name="tipo_producto"
+                           value="B"
+                    >
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label" for="tipo_producto_servicio">Servicio</label>
+                    <input type="radio"
+                           class="form-check-input"
+                           id="tipo_producto_servicio"
+                           x-model="tipoProducto"
+                           name="tipo_producto"
+                           value="S"
+                    >
                 </div>
             </div>
-            <div class="row">
-                <div class="form-group col-md-3">
-                    <label for="clave_cabms">Clave CABMS:</label>
-                    <input type="text"
+        </div>
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for="clave_cabms">Clave CABMS:</label>
+                <input type="text"
+                       class="form-control"
+                       style="background-color: lightgray"
+                       id="clave_cabms"
+                       name="clave_cabms"
+                       placeholder="Buscar clave CABMS..."
+                       value="{{ $claveCABMS }}"
+                       required readonly>
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#cabmsModal">
+                    Buscar clave CABMS
+                </button>
+            </div>
+            <div class="form-group col-md-9">
+                <label for="nombre_producto">Nombre del producto:</label>
+                <input type="text" class="form-control" id="nombre_producto" name="nombre_producto"
+                       value="{{ $nombreProducto }}" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label for="descripcion_producto">Descripcion:</label>
+                <textarea class="form-control" id="descripcion_producto"
+                          name="descripcion_producto" maxlength="140">{{ $descripcionProducto }}</textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="precio">Precio:</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">$</span>
+                    <input type="number"
+                           min="0"
+                           step=".01"
                            class="form-control"
-                           id="clave_cabms"
-                           name="clave_cabms"
-                           placeholder="Buscar clave CABMS..."
-                           value="{{ $claveCABMS }}"
-                           required readonly>
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#cabmsModal">
-                        Buscar clave CABMS
-                    </button>
-                </div>
-                <div class="form-group col-md-9">
-                    <label for="nombre_producto">Nombre del producto:</label>
-                    <input type="text" class="form-control" id="nombre_producto" name="nombre_producto"
-                           value="{{ $nombreProducto }}" required>
+                           id="precio" name="precio"
+                           value="{{ $precio }}" required>
                 </div>
             </div>
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label for="descripcion_producto">Descripcion:</label>
-                    <textarea class="form-control" id="descripcion_producto"
-                              name="descripcion_producto" maxlength="140">{{ $descripcionProducto }}</textarea>
-                </div>
+            <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
+                <label for="marca">Marca:</label>
+                <input type="text" class="form-control" id="marca" name="marca"
+                       value="{{ $marca }}">
             </div>
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="precio">Precio:</label>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">$</span>
-                        <input type="number"
-                               min="0"
-                               step=".01"
-                               class="form-control"
-                               id="precio" name="precio"
-                               value="{{ $precio }}" required>
-                    </div>
-                </div>
-                <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                    <label for="marca">Marca:</label>
-                    <input type="text" class="form-control" id="marca" name="marca"
-                           value="{{ $marca }}">
-                </div>
-                <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                    <label for="modelo">Modelo:</label>
-                    <input type="text" class="form-control" id="modelo" name="modelo"
-                           value="{{ $modelo }}">
-                </div>
-                <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                    <label for="color">Color:</label>
-                    <input type="text" class="form-control" id="color" name="color"
-                           value="{{ $color }}">
-                </div>
-                <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                    <label for="material">Material:</label>
-                    <input type="text" class="form-control" id="material" name="material"
-                           value="{{ $material }}">
-                </div>
+            <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
+                <label for="modelo">Modelo:</label>
+                <input type="text" class="form-control" id="modelo" name="modelo"
+                       value="{{ $modelo }}">
             </div>
-            <br>
-            @if ($mode === 'add')
-                <button class="btn btn-primary" type="submit">Agregar producto</button>
-            @elseif ($mode === 'wizard')
-                <a class="btn btn-primary" href="{{ route('wizard.registro-mtv.show', [$wizard['id'], 'descripcion-negocio']) }}">Anterior</a>
-                <button id="btn_siguiente" class="btn btn-primary">Finalizar</button>
-            @else
-                <button class="btn btn-primary" type="submit">Guardar</button>
-            @endif
-        </form>
+            <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
+                <label for="color">Color:</label>
+                <input type="text" class="form-control" id="color" name="color"
+                       value="{{ $color }}">
+            </div>
+            <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
+                <label for="material">Material:</label>
+                <input type="text" class="form-control" id="material" name="material"
+                       value="{{ $material }}">
+            </div>
+        </div>
+        <br>
+        @if ($mode === 'add')
+            <button class="btn btn-primary" type="submit">Agregar producto</button>
+        @elseif ($mode === 'wizard')
+            <a class="btn btn-primary" href="{{ route('wizard.registro-mtv.show', [$wizard['id'], 'descripcion-negocio']) }}">Anterior</a>
+            <button id="btn_siguiente" class="btn btn-primary">Finalizar</button>
+        @else
+            <button class="btn btn-primary" type="submit">Guardar</button>
+        @endif
+    </form>
 
-        <x-cabms-busqueda-modal />
+    <x-cabms-busqueda-modal />
 </div>

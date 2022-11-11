@@ -19,7 +19,7 @@ use App\Http\Controllers\ProductosController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('homepage');
 
 Route::get('/info-venderle-a-cdmx', function() {
     return view('info.show');
