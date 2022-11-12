@@ -36,8 +36,8 @@
             </div>
             <div class="card-body row g-3">
                 <div class="form-group col-md-3">
-                    <label>Eres persona</label>
-                    <div class="form-check">
+                    <label class="mr-5">Eres persona</label>
+                    <div class="form-check form-check-inline">
                         <label class="form-check-label" for="tipo_persona_fisica">física</label>
                         <input type="radio"
                                class="form-check-input"
@@ -45,10 +45,10 @@
                                id="tipo_persona_fisica"
                                name="tipo_persona"
                                value="F"
-                               @change="onChangeTipoPersona($event.target.value)"                               
+                               @change="onChangeTipoPersona($event.target.value)"
                         >
                     </div>
-                    <div class="form-check">
+                    <div class="form-check form-check-inline">
                         <label class="form-check-label" for="tipo_persona_moral">moral</label>
                         <input type="radio"
                                class="form-check-input"
@@ -67,15 +67,15 @@
                 </div>
                 <div class="form-group col-md-3" x-show="tipoPersona === 'F'">
                     <label for="rfc_sin_homoclave">RFC:</label>
-                    <input type="text" class="form-control" 
-                           style="background-color: lightgray" 
-                           id="rfc_sin_homoclave" 
-                           name="rfc_sin_homoclave" 
+                    <input type="text" class="form-control"
+                           style="background-color: lightgray"
+                           id="rfc_sin_homoclave"
+                           name="rfc_sin_homoclave"
                            value="{{ $rfcSinH ?? '' }}"
                            readonly>
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="rfc" x-text="tipoPersona === 'F' ? 'Homoclave' : 'RFC con homoclave'"></label>
+                    <label for="rfc" x-text="tipoPersona === 'F' ? 'Homoclave:' : 'RFC con homoclave:'"></label>
                     <x-rfc-validacion-input value="{{ $rfc }}" />
                     <x-input-error :messages="$errors->get('rfc_completo')" class="mt-2" />
                 </div>
@@ -175,14 +175,14 @@
                 @endif
             </div>
         </div>
-    </form>    
+    </form>
 </div>
 
 <script>
     function perfilNegocioValidaciones() {
         document.getElementById('curp').addEventListener('focus', function() { console.log('focus') }, false);
         document.getElementById('curp').addEventListener('blur', function() { console.log('blur') }, false);
-        //document.getElementById('tipo_persona_fisica').addEventListener('focus', function() { console.log('pf focus'); document.getElementById('curp').focus() }, false);        
+        //document.getElementById('tipo_persona_fisica').addEventListener('focus', function() { console.log('pf focus'); document.getElementById('curp').focus() }, false);
 
         return {
             tipoPersona: '{{ $tipoPersona ?? 'F' }}',
@@ -191,7 +191,7 @@
                 if (this.tipoPersona === 'M') {
                     document.getElementById('rfc_sin_homoclave').value = '';
                     document.getElementById('rfc_completo').value = document.getElementById('rfc').value;
-                }                
+                }
 
                 if (document.getElementById('contactos_lista').value === '[]') {
                     Swal.fire({
@@ -205,10 +205,10 @@
 
                 return true;
             },
-            onChangeTipoPersona(tipoPersona) {                                
+            onChangeTipoPersona(tipoPersona) {
                 let rfcInput = document.getElementById('rfc');
-                let curpInput = document.getElementById('curp');                
-                if (tipoPersona === 'F') {                                        
+                let curpInput = document.getElementById('curp');
+                if (tipoPersona === 'F') {
                     rfcInput.maxLength = 3; // Para homoclave
                     console.log('curp visible: ' + curpInput.style.visibility);
                     curpInput.focus();
@@ -216,7 +216,7 @@
                     console.log('rfc visible: ' + curpInput.style.visibility);
                     rfcInput.maxLength = 12; // Para RFC con homoclave
                     rfcInput.focus();
-                }                
+                }
             }
         }
     }

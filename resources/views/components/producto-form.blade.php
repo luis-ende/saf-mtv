@@ -18,14 +18,13 @@
     @php($formAction = route('productos.update', $producto->id))
 @endif
 
-{{--@include('layouts.registro-navigation')--}}
-<div class="container" x-data="{ tipoProducto: '{{ $tipoProducto ?? 'B' }}' }">
+<div x-data="{ tipoProducto: '{{ $tipoProducto ?? 'B' }}' }">
     <form method="POST" action="{{ $formAction }}">
         @csrf
         <div class="row">
-            <div class="form-group col-md-4">
-                <label>¿Qué producto ofreces?</label>
-                <div class="form-check">
+            <div class="form-group col-md-4 mb-3">
+                <label class="mr-5">¿Qué producto ofreces?</label>
+                <div class="form-check form-check-inline">
                     <label class="form-check-label" for="tipo_producto_bien">Bien</label>
                     <input type="radio"
                            class="form-check-input"
@@ -35,7 +34,7 @@
                            value="B"
                     >
                 </div>
-                <div class="form-check">
+                <div class="form-check form-check-inline">
                     <label class="form-check-label" for="tipo_producto_servicio">Servicio</label>
                     <input type="radio"
                            class="form-check-input"
@@ -50,17 +49,21 @@
         <div class="row">
             <div class="form-group col-md-3">
                 <label for="clave_cabms">Clave CABMS:</label>
-                <input type="text"
-                       class="form-control"
-                       style="background-color: lightgray"
-                       id="clave_cabms"
-                       name="clave_cabms"
-                       placeholder="Buscar clave CABMS..."
-                       value="{{ $claveCABMS }}"
-                       required readonly>
-                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#cabmsModal">
-                    Buscar clave CABMS
-                </button>
+                <div class="flex flex-row">
+                    <input type="text"
+                           class="form-control"
+                           style="background-color: lightgray"
+                           id="clave_cabms"
+                           name="clave_cabms"
+                           placeholder="Buscar clave CABMS..."
+                           value="{{ $claveCABMS }}"
+                           required readonly>
+                    <a href="#"
+                       class="text-base no-underline hover:text-[#BC955C]"
+                       data-bs-toggle="modal" data-bs-target="#cabmsModal">
+                        @svg('fluentui-text-bullet-list-square-search-20', ['class' => 'h-10 w-10 inline-block'])
+                    </a>
+                </div>
             </div>
             <div class="form-group col-md-9">
                 <label for="nombre_producto">Nombre del producto:</label>
@@ -111,7 +114,11 @@
         </div>
         <br>
         @if ($mode === 'add')
-            <button class="btn btn-primary" type="submit">Agregar producto</button>
+            <button class="btn btn-primary"
+                    type="submit">
+                @svg('heroicon-m-plus-circle', ['class' => 'h-7 w-7 inline-block'])
+                Agregar producto
+            </button>
         @elseif ($mode === 'wizard')
             <div class="py-4">
                 <a class="btn btn-primary" href="{{ route('wizard.registro-mtv.show', [$wizard['id'], 'descripcion-negocio']) }}">Anterior</a>

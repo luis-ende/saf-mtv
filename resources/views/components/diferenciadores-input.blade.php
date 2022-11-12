@@ -5,9 +5,8 @@
 <style>
     .tags-input-wrapper{
         background: transparent;
-        padding: 10px;
+        padding: 6px;
         border-radius: 4px;
-        max-width: 400px;
         border: 1px solid #ccc
     }
     .tags-input-wrapper input{
@@ -34,16 +33,14 @@
 </style>
 
 <label for="diferenciadores">Diferenciadores empresariales (separados con comas):</label>
-<div class="form-floating">
-    <input
-        x-data="diferenciadoresLista()"
-        x-init="inicializaLista()"
-        type="text"
-        class="form-control"
-        id="diferenciadores"
-        name="diferenciadores"
-    >
-</div>
+<input
+    x-data="diferenciadoresLista()"
+    x-init="inicializaLista()"
+    type="text"
+    class="form-control"
+    id="diferenciadores"
+    name="diferenciadores"
+>
 
 <script type="text/javascript">
     (function(){

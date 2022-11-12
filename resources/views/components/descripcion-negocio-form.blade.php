@@ -73,9 +73,12 @@
                        value="{{ $step['lema_negocio'] ?? old('lema_negocio') }}">
                 <x-input-error :messages="$errors->get('lema_negocio')" class="mt-2"/>
             </div>
+            <div class="form-group col-md-4">
+                <x-diferenciadores-input :diferenciadores="$diferenciadores" />
+            </div>
         </div>
         <div class="row">
-            <div class="form-group col-12">
+            <div class="form-group col-md-12">
                 <label for="descripcion_negocio">Descripción del negocio:</label>
                 <textarea class="form-control" id="descripcion_negocio" name="descripcion_negocio">
                     {{ $step['descripcion_negocio'] ?? old('descripcion_negocio') }}
@@ -85,30 +88,42 @@
         </div>
         <div class="row">
             <div class="form-group col-md-4">
-                <x-diferenciadores-input :diferenciadores="$diferenciadores" />
-            </div>
-            <div class="form-group col-md-4">
-                <label for="sitio_web">Sitio Web:</label>
+                <div class="flex flex-row space-x-2 my-2">
+                    @svg('iconoir-internet', ['class' => 'h-5 w-5 inline-block'])
+                    <label for="sitio_web">Sitio Web:</label>
+                </div>
                 <input type="text" class="form-control" id="sitio_web" name="sitio_web"
                        value="{{ $step['sitio_web'] ?? old('sitio_web') }}">
             </div>
             <div class="form-group col-md-4">
-                <label for="cuenta_facebook">Cuenta Facebook:</label>
+                <div class="flex flex-row space-x-2 my-2">
+                    @svg('iconpark-facebookone-o', ['class' => 'h-5 w-5 inline-block'])
+                    <label for="cuenta_facebook">Facebook:</label>
+                </div>
                 <input type="text" class="form-control" id="cuenta_facebook" name="cuenta_facebook"
                        value="{{ $step['cuenta_facebook'] ?? old('cuenta_facebook') }}">
             </div>
             <div class="form-group col-md-4">
-                <label for="cuenta_twitter">Cuenta Twitter:</label>
+                <div class="flex flex-row space-x-2 my-2">
+                    @svg('bi-twitter', ['class' => 'h-5 w-5 inline-block'])
+                    <label for="cuenta_twitter">Twitter:</label>
+                </div>
                 <input type="text" class="form-control" id="cuenta_twitter" name="cuenta_twitter"
                        value="{{ $step['cuenta_twitter'] ?? old('cuenta_twitter') }}">
             </div>
             <div class="form-group col-md-4">
-                <label for="cuenta_linkedin">Cuenta LinkedIn:</label>
+                <div class="flex flex-row space-x-2 my-2">
+                    @svg('antdesign-linkedin-o', ['class' => 'h-5 w-5 inline-block'])
+                    <label for="cuenta_linkedin">LinkedIn:</label>
+                </div>
                 <input type="text" class="form-control" id="cuenta_linkedin" name="cuenta_linkedin"
                        value="{{ $step['cuenta_linkedin'] ?? old('cuenta_linkedin') }}">
             </div>
             <div class="form-group col-md-4">
-                <label for="num_whatsapp">Número Whatsapp:</label>
+                <div class="flex flex-row space-x-2 my-2">
+                    @svg('ri-whatsapp-line', ['class' => 'h-5 w-5 inline-block'])
+                    <label for="num_whatsapp">Whatsapp:</label>
+                </div>
                 <input type="text" class="form-control" id="num_whatsapp" name="num_whatsapp"
                        value="{{ $step['num_whatsapp'] ?? old('num_whatsapp') }}">
             </div>

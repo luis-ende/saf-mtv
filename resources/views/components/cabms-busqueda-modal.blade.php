@@ -13,7 +13,7 @@
                                 <div class="flex justify-between items-center">
                                     <div class="flex space-x-2 items-center">
                                         <label for="select-view">Mostrar</label>
-                                        <select id="select-view" x-model="view" @change="changeView()" class="px-4 py-1 border rounded focus:outline-none">
+                                        <select id="select-view" x-model="view" @change="changeView()" class="form-control px-4 py-1 border rounded focus:outline-none">
                                             <option value="5">5</option>
                                             <option value="10">10</option>
                                             <option value="25">25</option>
@@ -22,8 +22,8 @@
                                     </div>
                                     <div>
                                         <input id="input-search" @keydown.enter="search($event.target.value)"
-                                               type="text" class="px-2 py-1 border rounded focus:outline-none"
-                                               placeholder="Buscar (presione ENTER)..." autofocus>
+                                               type="text" class="form-control px-2 py-1 border rounded focus:outline-none"
+                                               placeholder="Buscar (presiona ENTER)..." autofocus>
                                     </div>
                                 </div>
                                 <div x-show="loading">
@@ -46,8 +46,8 @@
                                           </span>
                                             </span>
                                             <div class="flex flex-col">
-                                                <svg @click="sort('clave_cabms', 'asc')" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="h-3 w-3 cursor-pointer text-gray-500 fill-current" x-bind:class="{'text-blue-500': sorted.field === 'clave_cabms' && sorted.rule === 'asc'}"><path d="M5 15l7-7 7 7"></path></svg>
-                                                <svg @click="sort('clave_cabms', 'desc')" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="h-3 w-3 cursor-pointer text-gray-500 fill-current" x-bind:class="{'text-blue-500': sorted.field === 'clave_cabms' && sorted.rule === 'desc'}"><path d="M19 9l-7 7-7-7"></path></svg>
+                                                <svg @click="sort('clave_cabms', 'asc')" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="h-3 w-3 cursor-pointer text-gray-500 fill-current" x-bind:class="{'text-primary': sorted.field === 'clave_cabms' && sorted.rule === 'asc'}"><path d="M5 15l7-7 7 7"></path></svg>
+                                                <svg @click="sort('clave_cabms', 'desc')" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="h-3 w-3 cursor-pointer text-gray-500 fill-current" x-bind:class="{'text-primary': sorted.field === 'clave_cabms' && sorted.rule === 'desc'}"><path d="M19 9l-7 7-7-7"></path></svg>
                                             </div>
                                         </div>
                                     </th>

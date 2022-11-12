@@ -12,43 +12,46 @@
     </div>
 @endif
 
-<br>
-<div>
-    <div class="table-responsive">
-        <table class="table table-bordered table-sm ">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Clave CABMS</th>
-                <th scope="col">Tipo</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Descripcion</th>
-                <th scope="col">Precio</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach ($productos as $producto)
-            <tr>
-                <th scope="row">{{ $producto->id }}</th>
-                <td>{{ $producto->clave_cabms }}</td>
-                <td>{{ $producto->tipo }}</td>
-                <td>{{ $producto->nombre }}</td>
-                <td>{{ $producto->descripcion }}</td>
-                <td>{{ $producto->precio }}</td>
-                <td>
-                    <a href="{{ route('productos.edit', [$producto->id]) }}">Editar</a><span> / </span>
+<div class="table-responsive">
+    <table class="table table-striped table-sm ">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Clave CABMS</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Precio</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach ($productos as $producto)
+        <tr>
+            <th scope="row">{{ $producto->id }}</th>
+            <td>{{ $producto->clave_cabms }}</td>
+            <td>{{ $producto->tipo }}</td>
+            <td>{{ $producto->nombre }}</td>
+            <td>{{ $producto->descripcion }}</td>
+            <td>{{ $producto->precio }}</td>
+            <td>
+                <div class="flex flex-row">
+                    <a href="{{ route('productos.edit', [$producto->id]) }}"
+                       class="text-base no-underline hover:text-[#BC955C]">
+                        @svg('heroicon-m-pencil-square', ['class' => 'h-5 w-5 inline-block'])
+                    </a>{!! "&nbsp;" !!}
                     <form id="producto_destroy_form_{{ $producto->id }}" action="{{ route('productos.destroy', [$producto->id]) }}" method="POST">
                         @method('DELETE')
                         @csrf
                         <a href="{{ route('productos.destroy', [$producto->id]) }}"
-                           onclick="event.preventDefault();document.getElementById('producto_destroy_form_{{ $producto->id }}').submit();">Eliminar</a>
+                           @click="event.preventDefault();document.getElementById('producto_destroy_form_{{ $producto->id }}').submit();"
+                           class="text-base no-underline hover:text-[#BC955C]">
+                            @svg('heroicon-s-trash', ['class' => 'h-5 w-5 inline-block'])
+                        </a>
                     </form>
-                    <span> / </span>
-                    <a href="#">Fotos</a>
-                </td>
-            </tr>
-            @endforeach
-            </tbody>
-        </table>
-    </div>
+                </div>
+            </td>
+        </tr>
+        @endforeach
+        </tbody>
+    </table>
 </div>

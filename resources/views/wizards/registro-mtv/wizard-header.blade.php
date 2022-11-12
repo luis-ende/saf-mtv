@@ -1,6 +1,5 @@
-<label class="text-primary mt-3 text-lg font-bold mx-3">{{ $wizard['title'] }}</label>
+<label class="text-[#BC955C] mt-3 text-2xl font-bold mx-3">{{ $wizard['title'] }}</label>
 <div class="py-3 bg-[#691C32] m-3 mb-4 rounded pl-5 flex flex-row flex-wrap">
-{{--    {{ dd($wizard) }}--}}
     @foreach($wizard['steps'] as $stepData)
         <div class="p-0 flex flex-row">
             <a class="{{ $stepData['active'] ? 'text-[#BC955C] fw-bold' : 'text-slate-200' }} text-base no-underline hover:text-[#BC955C] flex flex-row"

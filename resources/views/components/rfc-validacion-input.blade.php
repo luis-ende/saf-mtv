@@ -10,7 +10,7 @@
           @keyup="rfcInvalido = ''"
           :value="$value"
     />
-    <label x-text="obtenerMensajeError()" class="text-sm text-red-600 space-y-1"></label>
+    <label x-show="mensajeError != '' || rfcInvalido != ''" x-text="obtenerMensajeError()" class="text-sm text-red-600 space-y-1"></label>
     <input type="hidden" id="rfc_completo" name="rfc_completo" x-model="rfcCompleto">
 </div>
 
@@ -44,7 +44,7 @@
 
                 this.rfcCompleto = this.obtieneRFCCompleto();
 
-                if (this.rfcText && this.rfcCompleto !== '') {                    
+                if (this.rfcText && this.rfcCompleto !== '') {
                     this.isLoading = true;
 
                     fetch(this.rfcVerificacionUrl + this.rfcCompleto)
@@ -114,10 +114,10 @@
                 const tipoPersona = document.getElementsByName('tipo_persona')[0].value;
                 if (tipoPersona === 'M') {
                     // Contiene RFC con homoclave
-                    return this.rfcText; 
+                    return this.rfcText;
                 } else if (tipoPersona === 'F') {
                     // Input value contiene solo homoclave
-                    return document.getElementById('rfc_sin_homoclave').value + this.rfcText; 
+                    return document.getElementById('rfc_sin_homoclave').value + this.rfcText;
                 }
 
                 return '';

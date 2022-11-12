@@ -10,13 +10,12 @@
         name="contactos_lista"
         x-bind:value="JSON.stringify(contactos)"
     >
-    <div class="col-md-2 mb-3">
+    <div class="w-full flex flex-col align-items-end px-1">
         <!-- Button trigger modal -->
-        <button type="button"
-                class="btn btn-primary"
-                @click="showFormNew()">
-            Agregar
-        </button>
+        <a href="#"
+           @click="event.preventDefault(); showFormNew()">
+            @svg('heroicon-m-plus-circle', ['class' => 'h-7 w-7 inline-block'])
+        </a>
     </div>
     <div class="table-responsive">
         <table class="table table-striped table-sm ">
@@ -42,8 +41,18 @@
                         <td x-text="contacto.telefono_movil"></td>
                         <td x-text="contacto.email"></td>
                         <td>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#contactosModal" @click="event.preventDefault(); editaContacto(contacto.id)">Editar</a><span> / </span>
-                            <a href="#" @click="event.preventDefault(); eliminaContacto(contacto.id)">Eliminar</a>
+                            <a href="#"
+                               data-bs-toggle="modal"
+                               data-bs-target="#contactosModal"
+                               @click="event.preventDefault(); editaContacto(contacto.id)" aria-label="Editar"
+                               class="text-base no-underline hover:text-[#BC955C]">
+                                @svg('heroicon-m-pencil-square', ['class' => 'h-5 w-5 inline-block'])
+                            </a>{!! "&nbsp;" !!}
+                            <a href="#" @click="event.preventDefault(); eliminaContacto(contacto.id)"
+                               aria-label="Eliminar"
+                               class="text-base no-underline hover:text-[#BC955C]">
+                                @svg('heroicon-s-trash', ['class' => 'h-5 w-5 inline-block'])
+                            </a>
                         </td>
                     <tr>
                 </template>
