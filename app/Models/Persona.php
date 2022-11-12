@@ -21,6 +21,8 @@ class Persona extends Model
      */
     protected $fillable = [
         'id_tipo_persona',
+        'personable_id',
+        'personable_type',
         'rfc',
         'id_asentamiento',
         'id_tipo_vialidad',
@@ -50,7 +52,28 @@ class Persona extends Model
     /**
      * Obtener los contactos asociados a la persona.
      */
-    public function contactos(): HasMany {
+    public function contactos(): HasMany
+    {
         return $this->hasMany(Contacto::class, 'id_persona', 'id');
+    }
+
+//    public function persona_fisica()
+//    {
+//        return $this->hasOne(PersonaFisica::class, 'id');
+//    }
+//
+//    public function persona_moral()
+//    {
+//        return $this->hasOne(PersonaMoral::class, 'id_persona');
+//    }
+
+    /**
+     * Relación polimórfica devuelve PersonaFisca o PersonaMoral según el tipo_persona.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function tipo_persona()
+    {
+        return $this->morphTo('tipo_persona', 'personable_type', 'personable_id');
     }
 }

@@ -13,15 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('personas_fisicas', function (Blueprint $table) {
+        Schema::create('personas_morales', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_persona')->constrained('personas');
-            $table->string('curp', 18);
-            $table->date('fecha_nacimiento');
-            $table->char('genero', 1);
-            $table->string('nombre', 120);
-            $table->string('primer_ap', 60);
-            $table->string('segundo_ap', 60);
+            $table->text('razon_social');
+            $table->date('fecha_constitucion');
             $table->timestamps();
         });
     }
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('personas_fisicas');
+        Schema::dropIfExists('personas_morales');
     }
 };

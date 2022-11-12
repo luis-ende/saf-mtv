@@ -20,19 +20,9 @@ class RegistroPersonaService
     public function registraPersonaMTV(array $personaRegistroDatos): bool
     {
         DB::transaction(function() use($personaRegistroDatos) {
-            $persona = Persona::create([
-                'id_tipo_persona' => $personaRegistroDatos['tipo_persona'],
-                'rfc' => $personaRegistroDatos['rfc_completo'],
-                'id_asentamiento' => $personaRegistroDatos['id_asentamiento'],
-                'id_tipo_vialidad' => $personaRegistroDatos['id_tipo_vialidad'],
-                'vialidad' => $personaRegistroDatos['vialidad'],
-                'num_int' => $personaRegistroDatos['num_int'],
-                'num_ext' => $personaRegistroDatos['num_ext'],
-            ]);
-
-            if ($persona->id_tipo_persona === Persona::TIPO_PERSONA_FISICA_ID) {
-                $personaFisica = PersonaFisica::create([
-                    'id_persona' => $persona->id,
+            $tipo_persona = null;
+            if ($personaRegistroDatos['tipo_persona'] === Persona::TIPO_PERSONA_FISICA_ID) {
+                $tipo_persona = PersonaFisica::create([
                     'curp' => $personaRegistroDatos['curp'],
                     'fecha_nacimiento' => Carbon::createFromFormat('d/m/Y', $personaRegistroDatos['fecha_nacimiento']),
                     'genero' => $personaRegistroDatos['genero'],
@@ -40,13 +30,24 @@ class RegistroPersonaService
                     'primer_ap' => $personaRegistroDatos['primer_ap'],
                     'segundo_ap' => $personaRegistroDatos['segundo_ap'],
                 ]);
-            } elseif ($persona->id_tipo_persona === Persona::TIPO_PERSONA_MORAL_ID) {
-                $personaMoral = PersonaMoral::create([
-                    'id_persona' => $persona->id,
+            } elseif ($personaRegistroDatos['tipo_persona'] === Persona::TIPO_PERSONA_MORAL_ID) {
+                $tipo_persona = PersonaMoral::create([
                     'razon_social' => $personaRegistroDatos['razon_social'],
                     'fecha_constitucion' => $personaRegistroDatos['fecha_constitucion'],
                 ]);
             }
+
+            $persona = Persona::create([
+                'id_tipo_persona' => $personaRegistroDatos['tipo_persona'],
+                'personable_id' => $tipo_persona->id,
+                'personable_type' => get_class($tipo_persona),
+                'rfc' => $personaRegistroDatos['rfc_completo'],
+                'id_asentamiento' => $personaRegistroDatos['id_asentamiento'],
+                'id_tipo_vialidad' => $personaRegistroDatos['id_tipo_vialidad'],
+                'vialidad' => $personaRegistroDatos['vialidad'],
+                'num_int' => $personaRegistroDatos['num_int'],
+                'num_ext' => $personaRegistroDatos['num_ext'],
+            ]);
 
             $contactos = json_decode($personaRegistroDatos['contactos_lista'], true);
             if ($contactos) {

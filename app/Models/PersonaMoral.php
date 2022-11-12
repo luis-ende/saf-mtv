@@ -26,4 +26,9 @@ class PersonaMoral extends Model
         'fecha_constitucion',
         'razon_social',
     ];
+
+    public function persona()
+    {
+        return $this->morphOne(Persona::class, 'tipo_persona');
+    }
 }

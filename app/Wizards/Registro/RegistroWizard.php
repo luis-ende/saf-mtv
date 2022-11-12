@@ -10,7 +10,7 @@ use App\Wizards\Registro\Steps\ProductoInfoStep;
 
 class RegistroWizard extends AbstractWizard
 {
-    public static string $title = 'Registro en Mi Tiendita Virtual';
+    public static string $title = 'Registro Mi Tiendita Virtual';
 
     public static string $slug = 'registro-mtv';
 

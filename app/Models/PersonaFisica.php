@@ -30,4 +30,9 @@ class PersonaFisica extends Model
         'primer_ap',
         'segundo_ap',
     ];
+
+    public function persona()
+    {
+        return $this->morphOne(Persona::class, 'tipo_persona');
+    }
 }
