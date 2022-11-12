@@ -130,8 +130,14 @@
         </div>
         @if ($mode === 'wizard')
             <div class="py-4">
-                <a class="btn btn-primary" href="{{ route('wizard.registro-mtv.show', [$wizard['id'], 'perfil-negocio']) }}">Anterior</a>
-                <button id="btn_siguiente" class="btn btn-primary">Siguiente</button>
+                <a class="btn btn-primary" href="{{ route('wizard.registro-mtv.show', [$wizard['id'], 'perfil-negocio']) }}">
+                    @svg('heroicon-s-arrow-left-circle', ['class' => 'h-5 w-5 inline-block'])
+                    Anterior
+                </a>
+                <button id="btn_siguiente" class="btn btn-primary">
+                    Siguiente
+                    @svg('heroicon-s-arrow-right-circle', ['class' => 'h-5 w-5 inline-block'])
+                </button>
             </div>
         @endif
     </form>

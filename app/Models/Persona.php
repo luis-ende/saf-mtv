@@ -57,16 +57,6 @@ class Persona extends Model
         return $this->hasMany(Contacto::class, 'id_persona', 'id');
     }
 
-//    public function persona_fisica()
-//    {
-//        return $this->hasOne(PersonaFisica::class, 'id');
-//    }
-//
-//    public function persona_moral()
-//    {
-//        return $this->hasOne(PersonaMoral::class, 'id_persona');
-//    }
-
     /**
      * Relación polimórfica devuelve PersonaFisca o PersonaMoral según el tipo_persona.
      *
@@ -75,5 +65,16 @@ class Persona extends Model
     public function tipo_persona()
     {
         return $this->morphTo('tipo_persona', 'personable_type', 'personable_id');
+    }
+
+    public function nombre_o_razon_social(): string {
+//        dd($this->tipo_persona->nombre);
+        if ($this->id_tipo_persona === 'F') {
+            return $this->tipo_persona->nombre . ' ' . $this->tipo_persona->primer_ap . ' ' . $this->tipo_persona->segundo_ap;
+        } elseif ($this->id_tipo_persona === 'M') {
+            return $this->tipo_persona->razon_social;
+        }
+
+        return '';
     }
 }

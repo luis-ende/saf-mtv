@@ -121,8 +121,14 @@
             </button>
         @elseif ($mode === 'wizard')
             <div class="py-4">
-                <a class="btn btn-primary" href="{{ route('wizard.registro-mtv.show', [$wizard['id'], 'descripcion-negocio']) }}">Anterior</a>
-                <button id="btn_siguiente" class="btn btn-primary">Finalizar registro</button>
+                <a class="btn btn-primary" href="{{ route('wizard.registro-mtv.show', [$wizard['id'], 'descripcion-negocio']) }}">
+                    @svg('heroicon-s-arrow-left-circle', ['class' => 'h-5 w-5 inline-block'])
+                    Anterior
+                </a>
+                <button id="btn_siguiente" class="btn btn-primary">
+                    Finalizar registro
+                    @svg('bi-check-circle-fill', ['class' => 'h-4 w-4 inline-block'])
+                </button>
             </div>
         @else
             <button class="btn btn-primary" type="submit">Guardar</button>

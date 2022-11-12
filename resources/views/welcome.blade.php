@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <div class="row">
+    <div class="row h-[48rem]">
         @if (Route::has('login'))
             @auth
                 <div class="col-6">

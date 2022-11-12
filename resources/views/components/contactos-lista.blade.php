@@ -14,7 +14,7 @@
         <!-- Button trigger modal -->
         <a href="#"
            @click="event.preventDefault(); showFormNew()">
-            @svg('heroicon-m-plus-circle', ['class' => 'h-7 w-7 inline-block'])
+           @svg('heroicon-m-plus-circle', ['class' => 'h-7 w-7 inline-block'])
         </a>
     </div>
     <div class="table-responsive">

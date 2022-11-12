@@ -170,7 +170,10 @@
                         <button
                             id="btn_perfil_negocio_siguiente"
                             class="btn btn-primary"
-                            @click="if (!validaPerfilNegocioDatos()) { event.preventDefault() }">Siguiente</button>
+                            @click="if (!validaPerfilNegocioDatos()) { event.preventDefault() }">
+                            Siguiente
+                            @svg('heroicon-s-arrow-right-circle', ['class' => 'h-5 w-5 inline-block'])
+                        </button>
                     </div>
                 @endif
             </div>
