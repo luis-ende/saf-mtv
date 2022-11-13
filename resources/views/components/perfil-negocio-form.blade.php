@@ -50,7 +50,7 @@
                                name="tipo_persona"
                                value="F"
                                @change="onChangeTipoPersona($event.target.value)"
-                               {{ $mode === 'edit' ? 'disabled' : '' }}"
+                               {{ $mode === 'edit' ? 'disabled' : '' }}
                         >
                     </div>
                     <div class="form-check form-check-inline">
@@ -62,7 +62,7 @@
                                name="tipo_persona"
                                value="M"
                                @change="onChangeTipoPersona($event.target.value)"
-                               {{ $mode === 'edit' ? 'disabled' : '' }}"
+                               {{ $mode === 'edit' ? 'disabled' : '' }}
                         >
                     </div>
                 </div>
