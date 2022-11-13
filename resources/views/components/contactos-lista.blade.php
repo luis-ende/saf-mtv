@@ -1,6 +1,6 @@
-@props(['step' => []])
+@props(['step' => null])
 
-@php($contactosLista = isset($persona) ? $persona->contactosLista : ( isset($step) ? $step['contactos_lista'] : old('contactos_lista')))
+@php($contactosLista = isset($persona) ? $persona->contactos() : ( isset($step) ? $step['contactos_lista'] : old('contactos_lista')))
 @php($contactosLista = !$contactosLista ? json_decode('[]') : json_decode($contactosLista))
 
 <div x-data="listaContactos()" x-init="initModalForm()">

@@ -10,3 +10,8 @@
 [type="checkbox"], [type="radio"] {
     color: #691C32
 }
+
+// Workaround for Bootstrap Accordion's issue
+.collapse.show {
+    visibility: visible;
+}

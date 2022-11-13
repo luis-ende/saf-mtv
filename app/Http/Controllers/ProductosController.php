@@ -30,9 +30,6 @@ class ProductosController extends Controller
         return redirect()->route('catalogo-productos');
     }
 
-    /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
     public function update(Request $request, Producto $producto)
     {
         $producto['clave_cabms'] = $request->input('clave_cabms');
@@ -56,9 +53,6 @@ class ProductosController extends Controller
         return view('productos.edit', ['producto' => $producto]);
     }
 
-    /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
     public function destroy(Request $request)
     {
         // TODO: Implementar eliminado de producto del catálogo

@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Services\BusquedaCPService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\App;
 
 class Persona extends Model
 {
@@ -57,6 +59,11 @@ class Persona extends Model
         return $this->hasMany(Contacto::class, 'id_persona', 'id');
     }
 
+    public function perfil_negocio(): HasOne
+    {
+        return $this->hasOne(PerfilNegocio::class, 'id_persona', 'id');
+    }
+
     /**
      * Relación polimórfica devuelve PersonaFisca o PersonaMoral según el tipo_persona.
      *
@@ -67,8 +74,8 @@ class Persona extends Model
         return $this->morphTo('tipo_persona', 'personable_type', 'personable_id');
     }
 
-    public function nombre_o_razon_social(): string {
-//        dd($this->tipo_persona->nombre);
+    public function nombre_o_razon_social(): string
+    {
         if ($this->id_tipo_persona === 'F') {
             return $this->tipo_persona->nombre . ' ' . $this->tipo_persona->primer_ap . ' ' . $this->tipo_persona->segundo_ap;
         } elseif ($this->id_tipo_persona === 'M') {
@@ -76,5 +83,18 @@ class Persona extends Model
         }
 
         return '';
+    }
+
+    public function direccion(): Direccion
+    {
+        return App::makeWith(
+            Direccion::class, [
+                'idAsentamiento' => $this->id_asentamiento,
+                'idTipoVialidad' => $this->id_tipo_vialidad,
+                'vialidad' => $this->vialidad,
+                'numExt' => $this->num_ext,
+                'numInt' => $this->num_int,
+            ]
+        );
     }
 }

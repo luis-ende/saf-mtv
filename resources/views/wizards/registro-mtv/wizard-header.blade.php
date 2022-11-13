@@ -5,22 +5,16 @@
             <a class="{{ $stepData['active'] ? 'text-[#BC955C] fw-bold' : 'text-slate-200' }} text-base no-underline hover:text-[#BC955C] flex flex-row"
                href="{{ $stepData['url'] }}">
                 @if($loop->index === 0)
-                    @svg('icomoon-profile', ['class' => 'h-5 w-5 inline-block'])
+                    @svg('icomoon-profile', ['class' => 'h-5 w-5 inline-block mr-2'])
                 @elseif ($loop->index === 1)
-                    @svg('bytesize-portfolio', ['class' => 'h-5 w-5 inline-block'])
+                    @svg('bytesize-portfolio', ['class' => 'h-5 w-5 inline-block mr-2'])
                 @elseif ($loop->index === 2)
-                    @svg('gmdi-storefront-o', ['class' => 'h-5 w-5 inline-block'])
+                    @svg('gmdi-storefront-o', ['class' => 'h-5 w-5 inline-block mr-2'])
                 @endif
-                {!! "&nbsp;" !!}
+
                 <span>{{ $stepData['title'] }}</span>
                 @if($loop->index + 1 !== $loop->count)
-                    {!! "&nbsp;" !!}
-                    {!! "&nbsp;" !!}
-                    {!! "&nbsp;" !!}
-                    @svg('heroicon-s-arrow-right-circle', ['class' => 'h-5 w-5 inline-block'])
-                    {!! "&nbsp;" !!}
-                    {!! "&nbsp;" !!}
-                    {!! "&nbsp;" !!}
+                    @svg('heroicon-s-arrow-right-circle', ['class' => 'h-5 w-5 inline-block mx-3'])
                 @endif
             </a>
         </div>

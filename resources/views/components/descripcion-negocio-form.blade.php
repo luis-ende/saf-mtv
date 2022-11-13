@@ -1,38 +1,37 @@
-@props(['mode' => 'wizard', 'step' => [], 'wizard', 'grupos_prioritarios' => []])
+@props(['mode' => 'wizard', 'step' => null, 'wizard', 'grupos_prioritarios' => [], 'tipos_pyme' => [], 'sectores' => []])
 
 @php($grupoPrioritarioId = isset($perfilNegocio) ? $perfilNegocio->id_grupo_prioritario : ( isset($step) ? $step['id_grupo_prioritario'] : old('id_grupo_prioritario')))
 @php($tipoPymeId = isset($perfilNegocio) ? $perfilNegocio->id_tipo_pyme : ( isset($step) ? $step['id_tipo_pyme'] : old('id_tipo_pyme')))
 @php($sectorId = isset($perfilNegocio) ? $perfilNegocio->id_sector : ( isset($step) ? $step['id_sector'] : old('id_sector')))
 @php($diferenciadores = isset($perfilNegocio) ? $perfilNegocio->diferenciadores : ( isset($step) ? $step['diferenciadores'] : old('diferenciadores')))
 
-@php($gruposPrioritarios = [])
 @isset ($step)
-    @php($gruposPrioritarios = $step['grupos_prioritarios'])
+    @php($grupos_prioritarios = $step['grupos_prioritarios'])
 @endisset
 
-@php($tiposPyme = [])
 @isset ($step)
-    @php($tiposPyme = $step['tipos_pyme'])
+    @php($tipos_pyme = $step['tipos_pyme'])
 @endisset
 
-@php($sectores = [])
 @isset ($step)
     @php($sectores = $step['sectores'])
 @endisset
 
-<div class="container" x-data="descripcionNegocioReglas()">
-    @if ($mode === 'wizard')
-        @php($wizardId = $wizard['id'])
-    @endif
+@if ($mode === 'wizard')
+    @php($formAction = route('wizard.registro-mtv.update', [$wizard['id'], 'descripcion-negocio']))
+@elseif ($mode === 'edit')
+    @php($formAction = route('descripcion-negocio.update'))
+@endif
 
-    <form method="POST" action="{{ route('wizard.registro-mtv.update', [$wizardId, 'descripcion-negocio']) }}">
+<div class="container" x-data="descripcionNegocioReglas()">
+    <form method="POST" action="{{ $formAction }}">
         @csrf
         <div class="row">
             <div class="form-group col-md-4">
                 <label for="id_grupo_prioritario">¿Perteneces a algún sector prioritario?:</label>
                 <select class="form-control" id="id_grupo_prioritario" name="id_grupo_prioritario" x-model="grupoPrioritario" autofocus required>
                     <option value="0"> -- Ninguno --</option>
-                    @foreach ((array) $gruposPrioritarios as $grupo)
+                    @foreach ((array) $grupos_prioritarios as $grupo)
                         <option
                             value={{ $grupo['id'] }}
                         >{{ $grupo['grupo'] }}</option>
@@ -43,7 +42,7 @@
                 <label for="id_tipo_pyme">Tipo:</label>
                 <select class="form-control" id="id_tipo_pyme" name="id_tipo_pyme" x-model="tipoPyme">
                     <option selected value="0"> -- Seleccionar --</option>
-                    @foreach ((array) $tiposPyme as $tipo)
+                    @foreach ((array) $tipos_pyme as $tipo)
                         <option
                             value={{ $tipo['id'] }}
                         >{{ $tipo['tipo_pyme'] }}</option>

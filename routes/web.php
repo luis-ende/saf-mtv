@@ -33,6 +33,10 @@ Route::get('/catalogo-productos', [CatalogoProductosController::class, 'index'])
 
 Route::get('/perfil-negocio', [PerfilNegocioController::class, 'index'])->middleware(['auth', 'verified'])->name('perfil-negocio');
 
+Route::post('/perfil-negocio/update', [PerfilNegocioController::class, 'update'])->middleware(['auth', 'verified'])->name('perfil-negocio.update');
+
+Route::post('/descripcion-negocio/update', [PerfilNegocioController::class, 'updateDescripcionNegocio'])->middleware(['auth', 'verified'])->name('descripcion-negocio.update');
+
 Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'index'])->middleware(['auth', 'verified'])->name('centro-notificaciones');
 
 Route::post('/productos', [ProductosController::class, 'store'])->middleware(['auth', 'verified'])->name('productos.store');

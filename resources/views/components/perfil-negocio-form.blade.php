@@ -1,16 +1,17 @@
-@props(['mode' => 'wizard', 'step' => [], 'wizard'])
+@props(['mode' => 'wizard', 'step' => null, 'wizard', 'persona' => null])
 
 @php($tiposVialidad = [])
 
-@php($tipoPersona = isset($persona) ? $persona->tipo_persona : (isset($step) ? $step['tipo_persona'] : old('tipo_persona')))
+@php($idTipoPersona = isset($persona) ? $persona->id_tipo_persona : (isset($step) ? $step['tipo_persona'] : old('tipo_persona')))
 @php($rfc = isset($persona) ? $persona->rfc : (isset($step) && isset($step['rfc']) ? $step['rfc'] : old('rfc')))
-@php($rfcSinH = isset($step) && isset($step['rfc_sin_homoclave']) ? $step['rfc_sin_homoclave'] : old('rfc_sin_homoclave'))
-@php($curp = isset($persona) ? $persona->curp : (isset($step) ? $step['curp'] : old('curp')))
-@php($fechaNacimiento = isset($persona) ? $persona->fecha_nacimiento : (isset($step) ? $step['fecha_nacimiento'] : old('fecha_nacimiento')))
-@php($genero = isset($persona) ? $persona->genero : (isset($step) ? $step['genero'] : old('genero')))
-@php($nombre = isset($persona) ? $persona->nombre : (isset($step) ? $step['nombre'] : old('nombre')))
-@php($primerAp = isset($persona) ? $persona->primer_ap : (isset($step) ? $step['primer_ap'] : old('primer_ap')))
-@php($segudoAp = isset($persona) ? $persona->segundo_ap : (isset($step) ? $step['segundo_ap'] : old('segundo_ap')))
+@php($rfcSinH = isset($persona) ? ($persona->id_tipo_persona === 'F' ? $persona->tipo_persona->rfc_sin_homoclave() : '') : (isset($step) && isset($step['rfc_sin_homoclave']) ? $step['rfc_sin_homoclave'] : old('rfc_sin_homoclave')))
+@php($homoclave = isset($persona) ? ($persona->id_tipo_persona === 'F' ? $persona->tipo_persona->homoclave() : '') : '')
+@php($curp = isset($persona) ? ($persona->id_tipo_persona === 'F' ? $persona->tipo_persona->curp : '') : (isset($step) ? $step['curp'] : old('curp')))
+@php($fechaNacimiento = isset($persona) ? ($persona->id_tipo_persona === 'F' ? date('d/m/Y', strtotime($persona->tipo_persona->fecha_nacimiento)) : '') : (isset($step) ? $step['fecha_nacimiento'] : old('fecha_nacimiento')))
+@php($genero = isset($persona) ? ($persona->id_tipo_persona === 'F' ? $persona->tipo_persona->genero : '') : (isset($step) ? $step['genero'] : old('genero')))
+@php($nombre = isset($persona) ? ($persona->id_tipo_persona === 'F' ? $persona->tipo_persona->nombre : '') : (isset($step) ? $step['nombre'] : old('nombre')))
+@php($primerAp = isset($persona) ? ($persona->id_tipo_persona === 'F' ? $persona->tipo_persona->primer_ap : '') : (isset($step) ? $step['primer_ap'] : old('primer_ap')))
+@php($segundoAp = isset($persona) ? ($persona->id_tipo_persona === 'F' ? $persona->tipo_persona->segundo_ap : '') : (isset($step) ? $step['segundo_ap'] : old('segundo_ap')))
 @php($fechaConstitucion = isset($persona) ? $persona->fecha_constitucion : ( isset($step) ? $step['fecha_constitucion'] : old('fecha_constitucion')))
 @php($razonSocial = isset($persona) ? $persona->razon_social : ( isset($step) ? $step['razon_social'] : old('razon_social')))
 
@@ -24,12 +25,15 @@
     @else
         @php($formAction = route('wizard.registro-mtv.store'))
     @endif
+@elseif ($mode === 'edit')
+    @php($formAction = route('perfil-negocio.update'))
 @endif
 
 <div class="container" x-data="perfilNegocioValidaciones()" x-init="onChangeTipoPersona(tipoPersona)">
     <form id="perfil_negocio_form" method="POST" class="row g-3" action="{{ $formAction }}">
         @csrf
 
+        {{-- Los campos de la sección Datos personales de Persona física sólo están habilitados en modo 'wizard'  --}}
         <div class="card p-0">
             <div class="card-header">
                 <label class="text-[#BC955C] font-bold">Datos personales</label>
@@ -46,6 +50,7 @@
                                name="tipo_persona"
                                value="F"
                                @change="onChangeTipoPersona($event.target.value)"
+                               {{ $mode === 'edit' ? 'disabled' : '' }}"
                         >
                     </div>
                     <div class="form-check form-check-inline">
@@ -57,13 +62,18 @@
                                name="tipo_persona"
                                value="M"
                                @change="onChangeTipoPersona($event.target.value)"
+                               {{ $mode === 'edit' ? 'disabled' : '' }}"
                         >
                     </div>
                 </div>
                 <div class="form-group col-md-3" x-show="tipoPersona === 'F'">
                     <label for="curp">CURP:</label>
-                    <x-curp-input value="{{ $curp }}" x-bind:required="tipoPersona === 'F'" />
-                    <x-input-error :messages="$errors->get('curp')" class="mt-2" />
+                    @if ($mode === 'wizard')
+                        <x-curp-input value="{{ $curp }}" x-bind:required="tipoPersona === 'F'"/>
+                        <x-input-error :messages="$errors->get('curp')" class="mt-2"/>
+                    @else
+                        <input type="text" class="form-control" id="curp" value="{{ $curp }}" disabled>
+                    @endif
                 </div>
                 <div class="form-group col-md-3" x-show="tipoPersona === 'F'">
                     <label for="rfc_sin_homoclave">RFC:</label>
@@ -76,28 +86,37 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label for="rfc" x-text="tipoPersona === 'F' ? 'Homoclave:' : 'RFC con homoclave:'"></label>
-                    <x-rfc-validacion-input value="{{ $rfc }}" />
-                    <x-input-error :messages="$errors->get('rfc_completo')" class="mt-2" />
+                    @if ($mode === 'wizard')
+                        <x-rfc-validacion-input value="{{ $rfc }}"/>
+                        <x-input-error :messages="$errors->get('rfc_completo')" class="mt-2"/>
+                    @else
+                        <x-rfc-input value="{{ $idTipoPersona === 'F' ? $homoclave : $rfc }}" disabled />
+                    @endif
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                     <label for="fecha_nacimiento">Fecha de nacimiento:</label>
-                    <input type="text" class="form-control" style="background-color: lightgray" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $fechaNacimiento }}" readonly>
+                    <input type="text" class="form-control" style="background-color: lightgray" id="fecha_nacimiento"
+                           name="fecha_nacimiento" value="{{ $fechaNacimiento }}" readonly>
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                     <label for="genero">Género:</label>
-                    <input type="text" class="form-control" style="background-color: lightgray" id="genero" name="genero" value="{{ $genero }}" readonly>
+                    <input type="text" class="form-control" style="background-color: lightgray" id="genero"
+                           name="genero" value="{{ $genero }}" readonly>
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                     <label for="nombre">Nombre:</label>
-                    <input type="text" class="form-control" style="background-color: lightgray" id="nombre" name="nombre" value="{{ $nombre }}" readonly>
+                    <input type="text" class="form-control" style="background-color: lightgray" id="nombre"
+                           name="nombre" value="{{ $nombre }}" readonly>
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                     <label for="primer_ap">Primer apellido:</label>
-                    <input type="text" class="form-control" style="background-color: lightgray" id="primer_ap" name="primer_ap" value="{{ $primerAp }}" readonly>
+                    <input type="text" class="form-control" style="background-color: lightgray" id="primer_ap"
+                           name="primer_ap" value="{{ $primerAp }}">
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                     <label for="segundo_ap">Segundo apellido:</label>
-                    <input type="text" class="form-control" style="background-color: lightgray" id="segundo_ap" name="segundo_ap" value="{{ $segudoAp }}" readonly>
+                    <input type="text" class="form-control" style="background-color: lightgray" id="segundo_ap"
+                           name="segundo_ap" value="{{ $segundoAp }}" readonly>
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'M'">
                     <label for="fecha_constitucion">Fecha de constitución:</label>
@@ -105,7 +124,7 @@
                            value="{{ $fechaConstitucion }}"
                            x-bind:required="tipoPersona === 'M'"
                     >
-                    <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('rfc')" class="mt-2"/>
                 </div>
                 <div class="form-group col-md-12" x-show="tipoPersona === 'M'">
                     <label for="razon_social">Razón social:</label>
@@ -113,7 +132,7 @@
                            value="{{ $razonSocial }}"
                            x-bind:required="tipoPersona === 'M'"
                     >
-                    <x-input-error :messages="$errors->get('razon_social')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('razon_social')" class="mt-2"/>
                 </div>
             </div>
         </div>
@@ -125,6 +144,7 @@
             <div class="card-body row g-3">
                 <x-direccion-input
                     :step="$step"
+                    :direccion="isset($persona) ? $persona->direccion() : null"
                     :tipos_vialidad="$tiposVialidad"
                 />
             </div>
@@ -150,16 +170,16 @@
                     <x-text-input id="password" class="block mt-1 w-full"
                                   type="password"
                                   name="password"
-                                  required autocomplete="new-password" />
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                  required autocomplete="new-password"/>
+                    <x-input-error :messages="$errors->get('password')" class="mt-2"/>
                 </div>
 
                 <div class="form-group col-md-6">
                     <label for="password_confirmation">Confirmar contraseña:</label>
                     <x-text-input id="password_confirmation" class="block mt-1 w-full"
                                   type="password"
-                                  name="password_confirmation" required />
-                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                                  name="password_confirmation" required/>
+                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2"/>
                 </div>
             </div>
         </div>
@@ -183,12 +203,9 @@
 
 <script>
     function perfilNegocioValidaciones() {
-        document.getElementById('curp').addEventListener('focus', function() { console.log('focus') }, false);
-        document.getElementById('curp').addEventListener('blur', function() { console.log('blur') }, false);
-        //document.getElementById('tipo_persona_fisica').addEventListener('focus', function() { console.log('pf focus'); document.getElementById('curp').focus() }, false);
-
         return {
-            tipoPersona: '{{ $tipoPersona ?? 'F' }}',
+            tipoPersona: '{{ $idTipoPersona ?? 'F' }}',
+            mode: {!! json_encode($mode) !!},
 
             validaPerfilNegocioDatos() {
                 if (this.tipoPersona === 'M') {
@@ -209,16 +226,16 @@
                 return true;
             },
             onChangeTipoPersona(tipoPersona) {
-                let rfcInput = document.getElementById('rfc');
-                let curpInput = document.getElementById('curp');
-                if (tipoPersona === 'F') {
-                    rfcInput.maxLength = 3; // Para homoclave
-                    console.log('curp visible: ' + curpInput.style.visibility);
-                    curpInput.focus();
-                } else if (tipoPersona === 'M') {
-                    console.log('rfc visible: ' + curpInput.style.visibility);
-                    rfcInput.maxLength = 12; // Para RFC con homoclave
-                    rfcInput.focus();
+                if (this.mode === 'wizard') {
+                    let rfcInput = document.getElementById('rfc');
+                    let curpInput = document.getElementById('curp');
+                    if (tipoPersona === 'F') {
+                        rfcInput.maxLength = 3; // Para homoclave
+                        curpInput.focus();
+                    } else if (tipoPersona === 'M') {
+                        rfcInput.maxLength = 12; // Para RFC con homoclave
+                        rfcInput.focus();
+                    }
                 }
             }
         }

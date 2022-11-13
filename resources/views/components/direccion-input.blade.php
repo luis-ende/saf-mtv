@@ -1,10 +1,10 @@
-@props(['tipos_vialidad' => [], 'step' => []])
+@props(['tipos_vialidad' => [], 'step' => [], 'direccion' => null])
 
-@php($cp = isset($persona) ? $persona->cp : ( isset($step) ? $step['cp'] : old('cp')))
-@php($tipoVialidadId = isset($persona) ? $persona->id_tipo_vialidad : ( isset($step) ? $step['id_tipo_vialidad'] : old('id_tipo_vialidad')))
-@php($vialidad = isset($persona) ? $persona->vialidad : ( isset($step) ? $step['vialidad'] : old('vialidad')))
-@php($numExt = isset($persona) ? $persona->num_ext : ( isset($step) ? $step['num_ext'] : old('num_ext')))
-@php($numInt = isset($persona) ? $persona->num_int : ( isset($step) ? $step['num_int'] : old('num_int')))
+@php($cp = isset($direccion) ? $direccion->cp : ( isset($step) ? $step['cp'] : old('cp')))
+@php($tipoVialidadId = isset($direccion) ? $direccion->id_tipo_vialidad : ( isset($step) ? $step['id_tipo_vialidad'] : old('id_tipo_vialidad')))
+@php($vialidad = isset($direccion) ? $direccion->vialidad : ( isset($step) ? $step['vialidad'] : old('vialidad')))
+@php($numExt = isset($direccion) ? $direccion->num_ext : ( isset($step) ? $step['num_ext'] : old('num_ext')))
+@php($numInt = isset($direccion) ? $direccion->num_int : ( isset($step) ? $step['num_int'] : old('num_int')))
 
 <div x-data="domicilioDetalles()" class="row g-3" x-init="refreshCPAsentamiento(); isLoading = false;">
     <input type="hidden" id="id_asentamiento" x-bind:value="asentamientoSeleccion" name="id_asentamiento">

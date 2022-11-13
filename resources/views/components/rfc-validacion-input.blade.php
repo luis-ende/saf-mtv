@@ -1,4 +1,4 @@
-@props(['value', 'modo' => 'registro'])
+@props(['value', 'modo' => 'registro', 'disabled' => false])
 
 @php($url = $modo === 'registro' ? '/api/proveedores/registro/' : '/api/proveedores/login/')
 
@@ -9,6 +9,7 @@
           @blur="verificaRFC()"
           @keyup="rfcInvalido = ''"
           :value="$value"
+          :disabled="$disabled"
     />
     <label x-show="mensajeError != '' || rfcInvalido != ''" x-text="obtenerMensajeError()" class="text-sm text-red-600 space-y-1"></label>
     <input type="hidden" id="rfc_completo" name="rfc_completo" x-model="rfcCompleto">

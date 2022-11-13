@@ -33,6 +33,16 @@ class PersonaFisica extends Model
 
     public function persona()
     {
-        return $this->morphOne(Persona::class, 'tipo_persona');
+        return $this->morphOne(Persona::class, 'tipo_persona', 'personable_type', 'personable_id');
+    }
+
+    public function rfc_sin_homoclave()
+    {
+        return substr($this->persona->rfc, 0, -3);
+    }
+
+    public function homoclave()
+    {
+        return substr($this->persona->rfc, -3);
     }
 }
