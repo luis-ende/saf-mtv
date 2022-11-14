@@ -5,7 +5,7 @@
                 <div class="text-[#BC955C] text-2xl p-6 bg-white border-b border-gray-200">
                     Tu tiendita virtual
                 </div>
-                <div class="p-6 bg-white border-b border-gray-200">
+                <div class="p-6 bg-white border-b border-gray-200 text-base">
                     Completa y actualiza tu catálogo de los bienes o servicios que te gustaría ofrecer a la Ciudad de México.
                 </div>
                 <div class="p-6">

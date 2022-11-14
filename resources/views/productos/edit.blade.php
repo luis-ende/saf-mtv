@@ -1,36 +1,38 @@
-<x-app-layout>
+<x-app-layout>    
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <ul class="nav nav-tabs mb-3" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a
-                        class="nav-link active"
-                        id="tab-detalles"
-                        data-bs-toggle="tab"
-                        href="#tab-content-detalles"
-                        role="tab"
-                        aria-controls="tab-content-detalles"
-                        aria-selected="true">Detalles del producto</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a
-                        class="nav-link"
-                        id="tab-fotos"
-                        data-bs-toggle="tab"
-                        href="#tab-content-fotos"
-                        role="tab"
-                        aria-controls="tab-content-fotos"
-                        aria-selected="false">Fotos</a>
-                    </li>
-                </ul>
-
-                <div class="tab-content" id="producto_tabs_content">
-                    <div class="tab-pane fade show active" id="tab-content-detalles" role="tabpanel" aria-labelledby="tab-detalles">
-                        <x-producto-form :mode="__('edit')" :producto="$producto"/>
-                    </div>
-                    <div class="tab-pane fade" id="tab-content-fotos" role="tabpanel" aria-labelledby="tab-fotos">
-                        <p>Fotos del producto</p>
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="text-[#BC955C] text-2xl p-6 bg-white border-b border-gray-200">
+                    Detalles del producto
+                </div>
+                <div class="row">
+                    <div class="accordion" id="producto-accordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading-datos-contacto">
+                                <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#body-datos-contacto" aria-expanded="true" aria-controls="collapseOne">                                    
+                                    @svg('gmdi-storefront-o', ['class' => 'h-5 w-5 inline-block mr-2'])
+                                    Datos del producto
+                                </button>
+                            </h2>
+                            <div id="body-datos-contacto" class="accordion-collapse collapse show" aria-labelledby="heading-datos-contacto" data-bs-parent="#producto-accordion">
+                                <div class="accordion-body">
+                                <x-producto-form :mode="__('edit')" :producto="$producto"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading-producto-negocio">
+                                <button class="accordion-button fw-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#body-producto-negocio" aria-expanded="false" aria-controls="collapseTwo">
+                                    @svg('bytesize-photo', ['class' => 'h-5 w-5 inline-block mr-3'])                                    
+                                    Imágenes
+                                </button>
+                            </h2>
+                            <div id="body-producto-negocio" class="accordion-collapse collapse" aria-labelledby="heading-producto-negocio" data-bs-parent="#producto-accordion">
+                                <div class="accordion-body">
+                                    <x-producto-photo-gallery/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
