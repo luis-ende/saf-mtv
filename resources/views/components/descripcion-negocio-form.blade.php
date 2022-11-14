@@ -127,18 +127,23 @@
                        value="{{ $step['num_whatsapp'] ?? old('num_whatsapp') }}">
             </div>
         </div>
-        @if ($mode === 'wizard')
-            <div class="py-4">
-                <a class="btn btn-primary" href="{{ route('wizard.registro-mtv.show', [$wizard['id'], 'perfil-negocio']) }}">
-                    @svg('heroicon-s-arrow-left-circle', ['class' => 'h-5 w-5 inline-block'])
-                    Anterior
-                </a>
-                <button id="btn_siguiente" class="btn btn-primary">
-                    Siguiente
-                    @svg('heroicon-s-arrow-right-circle', ['class' => 'h-5 w-5 inline-block'])
-                </button>
+            <div class="py-4 flex justify-content-end">
+                @if ($mode === 'wizard')
+                    <a class="btn btn-primary mr-3" href="{{ route('wizard.registro-mtv.show', [$wizard['id'], 'perfil-negocio']) }}">
+                        @svg('heroicon-s-arrow-left-circle', ['class' => 'h-5 w-5 inline-block'])
+                        Anterior
+                    </a>
+                    <button id="btn_siguiente" class="btn btn-primary">
+                        Siguiente
+                        @svg('heroicon-s-arrow-right-circle', ['class' => 'h-5 w-5 inline-block'])
+                    </button>
+                @elseif ($mode === 'edit')
+                    <button class="btn btn-primary" type="submit">
+                        @svg('gmdi-save-as', ['class' => 'h-5 w-5 inline-block mr-1'])
+                        Guardar
+                    </button>
+                @endif
             </div>
-        @endif
     </form>
 </div>
 

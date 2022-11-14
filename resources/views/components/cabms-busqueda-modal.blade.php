@@ -128,7 +128,10 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-primary"
-                        @click="clickSeleccionar()">Selecionar</button>
+                        @click="clickSeleccionar()">
+                    @svg('bi-check-circle-fill', ['class' => 'h-4 w-4 inline-block mr-1'])
+                    Selecionar
+                </button>
             </div>
         </div>
     </div>

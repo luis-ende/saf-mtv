@@ -18,6 +18,7 @@
                                 <div class="accordion-body">
                                     <x-perfil-negocio-form
                                         :persona="$persona"
+                                        :tipos_vialidad="$tipos_vialidad"
                                         :mode="__('edit')"
                                     />
                                 </div>

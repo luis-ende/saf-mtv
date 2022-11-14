@@ -1,12 +1,21 @@
 @props(['tipos_vialidad' => [], 'step' => [], 'direccion' => null])
 
+@php($idAsentamiento = isset($direccion) ? $direccion->id_asentamiento : (isset($step) ? $step['id_asentamiento'] : old('id_asentamiento')))
 @php($cp = isset($direccion) ? $direccion->cp : ( isset($step) ? $step['cp'] : old('cp')))
 @php($tipoVialidadId = isset($direccion) ? $direccion->id_tipo_vialidad : ( isset($step) ? $step['id_tipo_vialidad'] : old('id_tipo_vialidad')))
 @php($vialidad = isset($direccion) ? $direccion->vialidad : ( isset($step) ? $step['vialidad'] : old('vialidad')))
 @php($numExt = isset($direccion) ? $direccion->num_ext : ( isset($step) ? $step['num_ext'] : old('num_ext')))
 @php($numInt = isset($direccion) ? $direccion->num_int : ( isset($step) ? $step['num_int'] : old('num_int')))
 
-<div x-data="domicilioDetalles()" class="row g-3" x-init="refreshCPAsentamiento(); isLoading = false;">
+@isset($tipoVialidadId)
+    @foreach($tipos_vialidad as $tv)
+        @if($tv['id'] === $tipoVialidadId)
+            @php($tipoVialidad = $tv['tipo_vialidad'])
+        @endif
+    @endforeach
+@endisset
+
+<div x-data="domicilioDetalles()" class="row g-3" x-init="refreshCPAsentamiento(); isLoading = false; ">
     <input type="hidden" id="id_asentamiento" x-bind:value="asentamientoSeleccion" name="id_asentamiento">
     <div class="form-group col-md-3">
         <label for="cp">Código postal:</label>
@@ -43,19 +52,18 @@
     </div>
     <div class="form-group col-md-3">
         <label for="id_tipo_vialidad">Tipo vialidad:</label>
-        <select class="form-control" id="id_tipo_vialidad" name="id_tipo_vialidad"
+        <select class="form-control" id="id_tipo_vialidad" name="id_tipo_vialidad" x-model="idTipoVialidad"
                 x-on:change="tipoVialidad = $event.target.options[$event.target.selectedIndex].text" required>
-            <option selected value="0"> -- Selecciona -- </option>
+            <option value="0"> -- Selecciona -- </option>
             @foreach ((array) $tipos_vialidad as $tipo_vialidad)
-                <option
-                    value={{ $tipo_vialidad['id'] }}
-                    {{ $tipo_vialidad['id'] == $tipoVialidadId ? 'selected' : '' }}
-                >{{ $tipo_vialidad['tipo_vialidad'] }}</option>
+                <option value={{ $tipo_vialidad['id'] }}>
+                    {{ $tipo_vialidad['tipo_vialidad'] }}
+                </option>
             @endforeach
         </select>
     </div>
     <div class="form-group col-md-3">
-        <label for="vialidad" x-text="tipoVialidad.charAt(0).toUpperCase() + tipoVialidad.toLowerCase().slice(1) + ':'"></label>
+        <label for="vialidad" x-text="obtieneTipoVialidadLabel()"></label>
         <input type="text" class="form-control" id="vialidad" name="vialidad" required value="{{ $vialidad }}">
     </div>
     <div class="form-group col-md-3">
@@ -71,14 +79,13 @@
 <script type="text/javascript">
     function domicilioDetalles() {
         return {
-            tipoVialidad: 'Vialidad',
+            idTipoVialidad: {{ $tipoVialidadId ?? '0' }},
+            tipoVialidad: '{{ $tipoVialidad ?? "Vialidad" }}',
             cpText: '{{ $cp }}',
-            fields: [],
             asentamientoSeleccion: null,
             entidades: [],
             alcaldias: [],
             colonias: [],
-            vialidades: [],
             isLoading: false,
             errorMessage: '',
 
@@ -118,12 +125,15 @@
                                     });
                                 }
                                 if (this.colonias.length > 0) {
-                                    this.asentamientoSeleccion = this.colonias[0].id;
+                                    this.asentamientoSeleccion = {{ $idAsentamiento ?? 'null' }};
                                 }
                             });
                         });
                 }
             },
+            obtieneTipoVialidadLabel() {
+                return this.tipoVialidad.charAt(0).toUpperCase() + this.tipoVialidad.toLowerCase().slice(1) + ':';
+            }
         }
     }
 </script>

@@ -1,6 +1,4 @@
-@props(['mode' => 'wizard', 'step' => null, 'wizard', 'persona' => null])
-
-@php($tiposVialidad = [])
+@props(['mode' => 'wizard', 'step' => null, 'wizard', 'persona' => null, 'tipos_vialidad' => null])
 
 @php($idTipoPersona = isset($persona) ? $persona->id_tipo_persona : (isset($step) ? $step['tipo_persona'] : old('tipo_persona')))
 @php($rfc = isset($persona) ? $persona->rfc : (isset($step) && isset($step['rfc']) ? $step['rfc'] : old('rfc')))
@@ -16,7 +14,7 @@
 @php($razonSocial = isset($persona) ? $persona->razon_social : ( isset($step) ? $step['razon_social'] : old('razon_social')))
 
 @isset ($step)
-    @php($tiposVialidad = $step['tipos_vialidad'])
+    @php($tipos_vialidad = $step['tipos_vialidad'])
 @endisset
 
 @if ($mode === 'wizard')
@@ -145,7 +143,7 @@
                 <x-direccion-input
                     :step="$step"
                     :direccion="isset($persona) ? $persona->direccion() : null"
-                    :tipos_vialidad="$tiposVialidad"
+                    :tipos_vialidad="$tipos_vialidad"
                 />
             </div>
         </div>
@@ -155,6 +153,7 @@
             </div>
             <div class="card-body row g-3">
                 <x-contactos-lista
+                    :persona="$persona"
                     :step="$step"
                 />
             </div>
@@ -170,7 +169,9 @@
                     <x-text-input id="password" class="block mt-1 w-full"
                                   type="password"
                                   name="password"
-                                  required autocomplete="new-password"/>
+                                  autocomplete="new-password"
+                                  :is_required="$mode === 'wizard'"
+                    />
                     <x-input-error :messages="$errors->get('password')" class="mt-2"/>
                 </div>
 
@@ -178,25 +179,28 @@
                     <label for="password_confirmation">Confirmar contraseña:</label>
                     <x-text-input id="password_confirmation" class="block mt-1 w-full"
                                   type="password"
-                                  name="password_confirmation" required/>
+                                  name="password_confirmation"
+                                  :is_required="$mode === 'wizard'"
+                    />
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2"/>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                @if ($mode === 'wizard')
-                    <div class="py-4">
-                        <button
-                            id="btn_perfil_negocio_siguiente"
-                            class="btn btn-primary"
-                            @click="if (!validaPerfilNegocioDatos()) { event.preventDefault() }">
-                            Siguiente
-                            @svg('heroicon-s-arrow-right-circle', ['class' => 'h-5 w-5 inline-block'])
-                        </button>
-                    </div>
-                @endif
-            </div>
+        <div class="py-4 flex justify-content-end">
+            @if ($mode === 'wizard')
+                <button
+                    id="btn_perfil_negocio_siguiente"
+                    class="btn btn-primary"
+                    @click="if (!validaPerfilNegocioDatos()) { event.preventDefault() }">
+                    Siguiente
+                    @svg('heroicon-s-arrow-right-circle', ['class' => 'h-5 w-5 inline-block'])
+                </button>
+            @elseif ($mode === 'edit')
+                <button class="btn btn-primary" type="submit">
+                    @svg('gmdi-save-as', ['class' => 'h-5 w-5 inline-block mr-1'])
+                    Guardar
+                </button>
+            @endif
         </div>
     </form>
 </div>
