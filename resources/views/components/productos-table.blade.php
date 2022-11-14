@@ -29,12 +29,12 @@
         <tr>
             <th scope="row">{{ $producto->id }}</th>
             <td>{{ $producto->clave_cabms }}</td>
-            <td>{{ $producto->tipo }}</td>
+            <td>{{ $producto->tipo === 'B' ? 'Bien' : ($producto->tipo === 'S' ? 'Servicio' : '') }}</td>
             <td>{{ $producto->nombre }}</td>
             <td>{{ $producto->descripcion }}</td>
-            <td>{{ $producto->precio }}</td>
+            <td class="text-right">{{ $producto->precio }}</td>
             <td>
-                <div class="flex flex-row">
+                <div class="flex flex-row justify-end">
                     <a href="{{ route('productos.edit', [$producto->id]) }}"
                        class="text-base no-underline hover:text-[#BC955C]">
                         @svg('heroicon-m-pencil-square', ['class' => 'h-5 w-5 inline-block'])

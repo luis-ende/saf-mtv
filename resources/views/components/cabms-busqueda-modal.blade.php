@@ -200,7 +200,7 @@
             search(value) {
                 if (value.length > 1) {
                     this.loading = true;
-                    // TODO: Usar variable para tipo de producto: 'B', 'S'
+                    // TODO: Usar variable según tipo de producto: 'B', 'S'
                     fetch('/api/catalogo_cabms/' + 'B/' + value)
                         .then((res) => res.json())
                         .then((json) => {
