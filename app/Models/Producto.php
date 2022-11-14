@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Producto extends Model
+class Producto extends Model implements HasMedia
 {
     use HasFactory;
+    use InteractsWithMedia;
 
     public const TIPO_PRODUCTO_BIEN_ID = 'B';
     public const TIPO_PRODUCTO_SERVICIO_ID = 'S';

@@ -2,7 +2,8 @@
 
 namespace App\Repositories;
 
-class VialidadRepository {
+class VialidadRepository
+{
     private const VIALIDADES = [
         [
             'id' => 1,

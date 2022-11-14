@@ -4,6 +4,13 @@
 @php($tipoPymeId = isset($perfilNegocio) ? $perfilNegocio->id_tipo_pyme : ( isset($step) ? $step['id_tipo_pyme'] : old('id_tipo_pyme')))
 @php($sectorId = isset($perfilNegocio) ? $perfilNegocio->id_sector : ( isset($step) ? $step['id_sector'] : old('id_sector')))
 @php($diferenciadores = isset($perfilNegocio) ? $perfilNegocio->diferenciadores : ( isset($step) ? $step['diferenciadores'] : old('diferenciadores')))
+@php($lema = isset($perfilNegocio) ? $perfilNegocio->lema_negocio : ( isset($step) ? $step['lema_negocio'] : old('lema_negocio')))
+@php($descripcionNegocio = isset($perfilNegocio) ? $perfilNegocio->descripcion_negocio : ( isset($step) ? $step['descripcion_negocio'] : old('descripcion_negocio')))
+@php($sitio_web = isset($perfilNegocio) ? $perfilNegocio->sitio_web : ( isset($step) ? $step['sitio_web'] : old('sitio_web')))
+@php($cuenta_facebook = isset($perfilNegocio) ? $perfilNegocio->cuenta_facebook : ( isset($step) ? $step['cuenta_facebook'] : old('cuenta_facebook')))
+@php($cuenta_twitter = isset($perfilNegocio) ? $perfilNegocio->cuenta_twitter : ( isset($step) ? $step['cuenta_twitter'] : old('cuenta_twitter')))
+@php($cuenta_linkedin = isset($perfilNegocio) ? $perfilNegocio->cuenta_linkedin : ( isset($step) ? $step['cuenta_linkedin'] : old('cuenta_linkedin')))
+@php($num_whatsapp = isset($perfilNegocio) ? $perfilNegocio->num_whatsapp : ( isset($step) ? $step['num_whatsapp'] : old('num_whatsapp')))
 
 @isset ($step)
     @php($grupos_prioritarios = $step['grupos_prioritarios'])
@@ -69,7 +76,7 @@
             <div class="form-group col-md-4">
                 <label for="lema_negocio">Lema del negocio:</label>
                 <input type="text" class="form-control" id="lema_negocio" name="lema_negocio"
-                       value="{{ $step['lema_negocio'] ?? old('lema_negocio') }}">
+                       value="{{ $lema }}">
                 <x-input-error :messages="$errors->get('lema_negocio')" class="mt-2"/>
             </div>
             <div class="form-group col-md-4">
@@ -79,9 +86,7 @@
         <div class="row">
             <div class="form-group col-md-12">
                 <label for="descripcion_negocio">Descripción del negocio:</label>
-                <textarea class="form-control" id="descripcion_negocio" name="descripcion_negocio">
-                    {{ $step['descripcion_negocio'] ?? old('descripcion_negocio') }}
-                </textarea>
+                <textarea class="form-control" id="descripcion_negocio" name="descripcion_negocio">{{ $descripcionNegocio }}</textarea>
                 <x-input-error :messages="$errors->get('descripcion_negocio')" class="mt-2"/>
             </div>
         </div>
@@ -92,7 +97,7 @@
                     <label for="sitio_web">Sitio Web:</label>
                 </div>
                 <input type="text" class="form-control" id="sitio_web" name="sitio_web"
-                       value="{{ $step['sitio_web'] ?? old('sitio_web') }}">
+                       value="{{ $sitio_web }}">
             </div>
             <div class="form-group col-md-4">
                 <div class="flex flex-row space-x-2 my-2">
@@ -100,7 +105,7 @@
                     <label for="cuenta_facebook">Facebook:</label>
                 </div>
                 <input type="text" class="form-control" id="cuenta_facebook" name="cuenta_facebook"
-                       value="{{ $step['cuenta_facebook'] ?? old('cuenta_facebook') }}">
+                       value="{{ $cuenta_facebook }}">
             </div>
             <div class="form-group col-md-4">
                 <div class="flex flex-row space-x-2 my-2">
@@ -108,7 +113,7 @@
                     <label for="cuenta_twitter">Twitter:</label>
                 </div>
                 <input type="text" class="form-control" id="cuenta_twitter" name="cuenta_twitter"
-                       value="{{ $step['cuenta_twitter'] ?? old('cuenta_twitter') }}">
+                       value="{{ $cuenta_twitter }}">
             </div>
             <div class="form-group col-md-4">
                 <div class="flex flex-row space-x-2 my-2">
@@ -116,7 +121,7 @@
                     <label for="cuenta_linkedin">LinkedIn:</label>
                 </div>
                 <input type="text" class="form-control" id="cuenta_linkedin" name="cuenta_linkedin"
-                       value="{{ $step['cuenta_linkedin'] ?? old('cuenta_linkedin') }}">
+                       value="{{ $cuenta_linkedin }}">
             </div>
             <div class="form-group col-md-4">
                 <div class="flex flex-row space-x-2 my-2">
@@ -124,7 +129,7 @@
                     <label for="num_whatsapp">Whatsapp:</label>
                 </div>
                 <input type="text" class="form-control" id="num_whatsapp" name="num_whatsapp"
-                       value="{{ $step['num_whatsapp'] ?? old('num_whatsapp') }}">
+                       value="{{ $num_whatsapp }}">
             </div>
         </div>
             <div class="py-4 flex justify-content-end">

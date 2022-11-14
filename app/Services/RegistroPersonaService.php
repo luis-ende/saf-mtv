@@ -10,6 +10,7 @@ use App\Models\PersonaFisica;
 use App\Models\PersonaMoral;
 use App\Models\Producto;
 use App\Models\User;
+use App\Repositories\PersonaRepository;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +18,9 @@ use Illuminate\Support\Facades\DB;
 
 class RegistroPersonaService
 {
-    public function registraPersonaMTV(array $personaRegistroDatos): bool
+    public function registraPersonaMTV(array $personaRegistroDatos, PersonaRepository $personaRepository): bool
     {
-        DB::transaction(function() use($personaRegistroDatos) {
+        DB::transaction(function() use($personaRegistroDatos, $personaRepository) {
             $tipo_persona = null;
             if ($personaRegistroDatos['tipo_persona'] === Persona::TIPO_PERSONA_FISICA_ID) {
                 $tipo_persona = PersonaFisica::create([
@@ -49,22 +50,7 @@ class RegistroPersonaService
                 'num_ext' => $personaRegistroDatos['num_ext'],
             ]);
 
-            $contactos = json_decode($personaRegistroDatos['contactos_lista'], true);
-            if ($contactos) {
-                foreach ($contactos as $contacto) {
-                    Contacto::create([
-                        'id_persona' => $persona->id,
-                        'nombre' => $contacto['nombre'],
-                        'primer_ap' => $contacto['primer_ap'],
-                        'segundo_ap' => $contacto['segundo_ap'],
-                        'cargo' => $contacto['cargo'],
-                        'telefono_oficina' => $contacto['telefono_oficina'],
-                        'extension' => $contacto['extension'],
-                        'telefono_movil' => $contacto['telefono_movil'],
-                        'email' => $contacto['email'],
-                    ]);
-                }
-            }
+            $personaRepository->updateContactos($persona, $personaRegistroDatos['contactos_lista']);
 
             PerfilNegocio::create([
                 'id_persona' => $persona->id,

@@ -2,7 +2,8 @@
 
 namespace App\Repositories;
 
-class TipoPymeRepository {
+class TipoPymeRepository
+{
     private const TIPOS_PYME = [
         [
             'id' => 1,

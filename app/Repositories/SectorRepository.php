@@ -2,7 +2,8 @@
 
 namespace App\Repositories;
 
-class SectorRepository {
+class SectorRepository
+{
     private const SECTORES = [
         [
             'id' => 1,

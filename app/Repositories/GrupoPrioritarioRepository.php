@@ -2,7 +2,8 @@
 
 namespace App\Repositories;
 
-class GrupoPrioritarioRepository {
+class GrupoPrioritarioRepository
+{
     private const GRUPOS_PRIORITARIOS = [
         [
             'id' => 1,
