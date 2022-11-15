@@ -33,63 +33,70 @@
 <div class="container" x-data="descripcionNegocioReglas()">
     <form method="POST" action="{{ $formAction }}">
         @csrf
+        <div class="flex flex-row">     
+            <div class="border rounded border-gray-200 bg-gray-100 mr-3 flex justify-center">
+                <div style="width: 200px; height: 200px;">
+                @svg('ri-image-add-fill', ['class' => 'h-10 w-10 inline-block'])
+                </div>
+            </div>                    
+            <div class="row">                           
+                <div class="form-group col-md-4">
+                    <label for="id_grupo_prioritario">¿Perteneces a algún sector prioritario?:</label>
+                    <select class="form-control" id="id_grupo_prioritario" name="id_grupo_prioritario" x-model="grupoPrioritario" autofocus required>
+                        <option value="0"> -- Ninguno --</option>
+                        @foreach ((array) $grupos_prioritarios as $grupo)
+                            <option
+                                value={{ $grupo['id'] }}
+                            >{{ $grupo['grupo'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-4" x-show="grupoPrioritario == grupoPrioritarioMIPYMEId">
+                    <label for="id_tipo_pyme">Tipo:</label>
+                    <select class="form-control" id="id_tipo_pyme" name="id_tipo_pyme" x-model="tipoPyme">
+                        <option selected value="0"> -- Seleccionar --</option>
+                        @foreach ((array) $tipos_pyme as $tipo)
+                            <option
+                                value={{ $tipo['id'] }}
+                            >{{ $tipo['tipo_pyme'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="id_sector">Sector:</label>
+                    <select class="form-control" id="id_sector" name="id_sector" x-model="sector">
+                        <option selected value="0"> -- Seleccionar --</option>
+                        @foreach ((array) $sectores as $sector)
+                            <option
+                                value={{ $sector['id'] }}
+                            >{{ $sector['sector'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="id_categoria_scian">Categoría:</label>
+                    <select class="form-control" id="id_categoria_scian" name="id_categoria_scian">
+                        <option selected value="0"> -- Seleccionar --</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="lema_negocio">Lema del negocio:</label>
+                    <input type="text" class="form-control" id="lema_negocio" name="lema_negocio"
+                        value="{{ $lema }}">
+                    <x-input-error :messages="$errors->get('lema_negocio')" class="mt-2"/>
+                </div>
+                <div class="form-group col-md-4">
+                    <x-diferenciadores-input :diferenciadores="$diferenciadores" />
+                </div>
+            </div>            
+        </div>    
         <div class="row">
-            <div class="form-group col-md-4">
-                <label for="id_grupo_prioritario">¿Perteneces a algún sector prioritario?:</label>
-                <select class="form-control" id="id_grupo_prioritario" name="id_grupo_prioritario" x-model="grupoPrioritario" autofocus required>
-                    <option value="0"> -- Ninguno --</option>
-                    @foreach ((array) $grupos_prioritarios as $grupo)
-                        <option
-                            value={{ $grupo['id'] }}
-                        >{{ $grupo['grupo'] }}</option>
-                    @endforeach
-                </select>
+                <div class="form-group col-md-12">
+                    <label for="descripcion_negocio">Descripción del negocio:</label>
+                    <textarea class="form-control" id="descripcion_negocio" name="descripcion_negocio">{{ $descripcionNegocio }}</textarea>
+                    <x-input-error :messages="$errors->get('descripcion_negocio')" class="mt-2"/>
+                </div>
             </div>
-            <div class="form-group col-md-4" x-show="grupoPrioritario == grupoPrioritarioMIPYMEId">
-                <label for="id_tipo_pyme">Tipo:</label>
-                <select class="form-control" id="id_tipo_pyme" name="id_tipo_pyme" x-model="tipoPyme">
-                    <option selected value="0"> -- Seleccionar --</option>
-                    @foreach ((array) $tipos_pyme as $tipo)
-                        <option
-                            value={{ $tipo['id'] }}
-                        >{{ $tipo['tipo_pyme'] }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="id_sector">Sector:</label>
-                <select class="form-control" id="id_sector" name="id_sector" x-model="sector">
-                    <option selected value="0"> -- Seleccionar --</option>
-                    @foreach ((array) $sectores as $sector)
-                        <option
-                            value={{ $sector['id'] }}
-                        >{{ $sector['sector'] }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="id_categoria_scian">Categoría:</label>
-                <select class="form-control" id="id_categoria_scian" name="id_categoria_scian">
-                    <option selected value="0"> -- Seleccionar --</option>
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="lema_negocio">Lema del negocio:</label>
-                <input type="text" class="form-control" id="lema_negocio" name="lema_negocio"
-                       value="{{ $lema }}">
-                <x-input-error :messages="$errors->get('lema_negocio')" class="mt-2"/>
-            </div>
-            <div class="form-group col-md-4">
-                <x-diferenciadores-input :diferenciadores="$diferenciadores" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-12">
-                <label for="descripcion_negocio">Descripción del negocio:</label>
-                <textarea class="form-control" id="descripcion_negocio" name="descripcion_negocio">{{ $descripcionNegocio }}</textarea>
-                <x-input-error :messages="$errors->get('descripcion_negocio')" class="mt-2"/>
-            </div>
-        </div>
         <div class="row">
             <div class="form-group col-md-4">
                 <div class="flex flex-row space-x-2 my-2">

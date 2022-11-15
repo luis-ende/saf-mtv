@@ -14,25 +14,8 @@
     </head>
     <body class="font-sans antialiased">
         <!-- Page Heading -->
-        <header class="bg-white shadow">
-            <div class="container py-3">
-                <div class="row">
-                    <div class="col-9">
-                        <x-application-logo />
-                    </div>
-                    @if (Route::has('login'))
-                        @auth
-{{--                            <div class="col-6">--}}
-{{--                                <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Escritorio</a>--}}
-{{--                            </div>--}}
-                        @else
-                            <div class="col-3">
-                                <a class="btn btn-primary" href="{{ route('login') }}">Ingresa</a>
-                            </div>
-                        @endauth
-                    @endif
-                </div>
-            </div>
+        <header class="bg-white shadow">        
+            @include('layouts.navigation-guest')
         </header>
 
         <!-- Page Content -->

@@ -3,7 +3,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="text-[#BC955C] text-2xl p-6 bg-white border-b border-gray-200">
-                    Mi Tiendita Virtual - Perfil de tu Negocio
+                    @svg('fas-user-pen', ['class' => 'h-7 w-7 inline-block mr-1'])
+                    Perfil de negocio
                 </div>
                 <div class="row">
                     <div class="accordion" id="perfil-accordion">
