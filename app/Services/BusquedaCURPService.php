@@ -73,9 +73,4 @@ class BusquedaCURPService
 
         return $responseData;
     }
-
-    protected function obtenerCURPResponse()
-    {
-
-    }
 }

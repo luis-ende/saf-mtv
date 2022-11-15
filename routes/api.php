@@ -30,7 +30,7 @@ Route::get('catalogo_cabms/{tipo_producto}/{criterio_busqueda}', [\App\Http\Cont
 
 // TODO: API Endpoints de prueba para modo local de desarrollo, remover...
 
-Route::get('consulta_curp/{curp}', function(Request $request) {
+Route::get('consulta_curp/{curp}', function(Request $request, string $curp) {    
     if (env('APP_ENV') === 'local') {
         return response()->json([
             'error' => [
@@ -38,7 +38,7 @@ Route::get('consulta_curp/{curp}', function(Request $request) {
                 'code' => 0,
             ],
             'data' => [[
-                'CURP' => 'JUAA810316HDFLRL02',
+                'CURP' => $curp,
                 'nombres' => 'NOMBRE PRUEBA',
                 'apellido1' => 'APELLIDO 1',
                 'apellido2' => 'APELLIDO 2',
