@@ -27,7 +27,8 @@ class ProductosController extends Controller
             'material' => $request->input('material'),
         ]);
 
-        return redirect()->route('catalogo-productos');
+        return redirect()->route('catalogo-productos')
+            ->with('success', 'Nuevo producto agregado al catálogo de productos.');
     }
 
     public function update(Request $request, Producto $producto)
@@ -42,7 +43,8 @@ class ProductosController extends Controller
         $producto['material'] = $request->input('material');
         $producto->save();
 
-        return redirect()->route('catalogo-productos');
+        return redirect()->route('catalogo-productos')
+            ->with('success', 'Producto actualizado.');
     }
 
     /**

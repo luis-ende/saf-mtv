@@ -22,6 +22,9 @@
             <!-- Page Content -->
             <main>
                 <div class="container">
+                    <div class="row mt-3">
+                        @include('layouts.alert-notification')
+                    </div>
                     {{ $slot }}
                 </div>
             </main>
