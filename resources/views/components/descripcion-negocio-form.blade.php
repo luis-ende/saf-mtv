@@ -31,15 +31,17 @@
 @endif
 
 <div class="container" x-data="descripcionNegocioReglas()">
-    <form method="POST" action="{{ $formAction }}">
+    <form method="POST" enctype="multipart/form-data" action="{{ $formAction }}">
         @csrf
-        <div class="flex flex-row">     
-            <div class="border rounded border-gray-200 bg-gray-100 mr-3 flex justify-center">
-                <div style="width: 200px; height: 200px;">
-                @svg('ri-image-add-fill', ['class' => 'h-10 w-10 inline-block'])
-                </div>
-            </div>                    
-            <div class="row">                           
+        <div class="flex flex-row">
+            <div class="form-group">
+                <label>Logotipo:</label>
+                <x-input-image-viewer
+                    :id="__('logotipo')"
+                    :name="__('logotipo')"
+                />
+            </div>
+            <div class="row">
                 <div class="form-group col-md-4">
                     <label for="id_grupo_prioritario">¿Perteneces a algún sector prioritario?:</label>
                     <select class="form-control" id="id_grupo_prioritario" name="id_grupo_prioritario" x-model="grupoPrioritario" autofocus required>
@@ -88,8 +90,8 @@
                 <div class="form-group col-md-4">
                     <x-diferenciadores-input :diferenciadores="$diferenciadores" />
                 </div>
-            </div>            
-        </div>    
+            </div>
+        </div>
         <div class="row">
                 <div class="form-group col-md-12">
                     <label for="descripcion_negocio">Descripción del negocio:</label>

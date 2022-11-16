@@ -6,8 +6,10 @@ use App\Repositories\GrupoPrioritarioRepository;
 use App\Repositories\SectorRepository;
 use App\Repositories\TipoPymeRepository;
 use Arcanist\Field;
+use Arcanist\StepResult;
 use Arcanist\WizardStep;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DescripcionNegocioStep extends WizardStep
 {
@@ -40,6 +42,14 @@ class DescripcionNegocioStep extends WizardStep
             Field::make('cuenta_twitter'),
             Field::make('cuenta_linkedin'),
             Field::make('num_whatsapp'),
+            Field::make('logotipo'),
         ];
+    }
+    public function process(Request $request): StepResult
+    {
+        // TODO: Guardar imagen temporalmente hasta completa registro (después mover a carpeta de media)
+        //$path = $request->file('logotipo')->store('logotipos_tmp');
+
+        return parent::process($request);
     }
 }
