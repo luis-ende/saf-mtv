@@ -42,13 +42,17 @@ class DescripcionNegocioStep extends WizardStep
             Field::make('cuenta_twitter'),
             Field::make('cuenta_linkedin'),
             Field::make('num_whatsapp'),
-            Field::make('logotipo'),
+            Field::make('logotipo_path'),
         ];
     }
     public function process(Request $request): StepResult
     {
-        // TODO: Guardar imagen temporalmente hasta completa registro (después mover a carpeta de media)
-        //$path = $request->file('logotipo')->store('logotipos_tmp');
+        // Guarda imagen temporalmente mientras se completa el registro (después se mueve a carpeta de media)
+        if ($request->file('logotipo')) {
+            $file = $request->file('logotipo');
+            $path = $file->storeAs('logotipos_tmp', $file->hashName());
+            $request->merge(['logotipo_path' => basename($path)]);
+        }
 
         return parent::process($request);
     }

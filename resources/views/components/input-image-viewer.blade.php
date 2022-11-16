@@ -1,10 +1,10 @@
-@props(['id' => 'input-image', 'name' => 'input-image'])
+@props(['id' => 'input-image', 'name' => 'input-image', 'image_url' => null])
 
 <div class="mr-3 mb-2" x-data="imageViewer()">
     <div class="border rounded border-gray-200 bg-gray-100 mr-3 flex justify-center">
         <div class="h-44 w-44 flex place-content-center place-items-center">
             @svg('ri-image-add-fill', ['x-show' => '!imageUrl','class' => 'absolute h-10 w-10 text-slate-600'])
-            <img x-show="imageUrl" :src="imageUrl"
+            <img x-show="imageUrl" :src="imageUrl" alt="Logotipo"
                  class="absolute object-scale-down rounded border border-gray-200 h-44 w-44 p-3"
             >
             <input id="{{ $id }}" name="{{ $name }}"
@@ -17,7 +17,8 @@
 <script type="text/javascript">
     function imageViewer() {
         return {
-            imageUrl: '',
+            imageUrl: '{{ $image_url ? url($image_url) : "" }}',
+            {{--imageUrl: '{{ storage_path('logotipos_tmp/OpYTpxrI8FSMkIr8jzM0BXjGnviTIKOVFD8CIGSp.png') }}',--}}
 
             fileChosen(event) {
                 this.fileToDataUrl(event, src => this.imageUrl = src)
