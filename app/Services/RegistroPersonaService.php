@@ -52,7 +52,7 @@ class RegistroPersonaService
 
             $personaRepository->updateContactos($persona, $personaRegistroDatos['contactos_lista']);
 
-            PerfilNegocio::create([
+            $perfilNegocio = PerfilNegocio::create([
                 'id_persona' => $persona->id,
                 'id_grupo_prioritario' => $personaRegistroDatos['id_grupo_prioritario'],
                 'id_tipo_pyme' => $personaRegistroDatos['id_tipo_pyme'],
@@ -67,6 +67,9 @@ class RegistroPersonaService
                 'cuenta_linkedin' => $personaRegistroDatos['cuenta_linkedin'],
                 'num_whatsapp' => $personaRegistroDatos['num_whatsapp'],
             ]);
+
+            $perfilNegocio->addMedia(storage_path('app/public/logotipos_tmp/' . basename($personaRegistroDatos['logotipo_path'])))
+                            ->toMediaCollection('logotipos');
 
             $catalogoProductos = CatalogoProductos::create([
                 'nombre_catalogo' => 'Catálogo principal',

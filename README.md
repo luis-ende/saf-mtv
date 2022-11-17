@@ -19,4 +19,4 @@
 
 - En modo de desarrollo ejecutar `npm run dev` para ver reflejados inmediatamente los cambios en archivos css y js
 
-- En Windows, crear symlink en `public\images` para la carpeta de imagenes de logotipos temporales, por ejemplo (en una ventana de comando): `mklink /D logotipos_tmp ..\..\storage\logotipos_tmp`
+- En Windows, crear symlink en `public` para la carpeta de imagenes de logotipos temporales, por ejemplo (en una ventana de comando): `mklink /D storage ..\..\storage`

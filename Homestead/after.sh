@@ -47,3 +47,6 @@ composer install
 php artisan migrate
 
 npm install && npm run build
+
+# Crear link a carpeta de assets públicos
+php artisan storage:link

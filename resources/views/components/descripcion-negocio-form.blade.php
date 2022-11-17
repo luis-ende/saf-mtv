@@ -11,11 +11,7 @@
 @php($cuenta_twitter = isset($perfilNegocio) ? $perfilNegocio->cuenta_twitter : ( isset($step) ? $step['cuenta_twitter'] : old('cuenta_twitter')))
 @php($cuenta_linkedin = isset($perfilNegocio) ? $perfilNegocio->cuenta_linkedin : ( isset($step) ? $step['cuenta_linkedin'] : old('cuenta_linkedin')))
 @php($num_whatsapp = isset($perfilNegocio) ? $perfilNegocio->num_whatsapp : ( isset($step) ? $step['num_whatsapp'] : old('num_whatsapp')))
-@php($logotipoUrl = isset($perfilNegocio) ? $perfilNegocio->logotipo_path : ( isset($step) ? $step['logotipo_path'] : null))
-
-@isset($logotipoUrl)
-    @php($logotipoUrl = 'images/logotipos_tmp/' . $logotipoUrl)
-@endisset
+@php($logotipoUrl = isset($perfilNegocio) ? $perfilNegocio->getFirstMediaUrl('logotipos') : ( isset($step) ? $step['logotipo_path'] : null))
 
 @isset ($step)
     @php($grupos_prioritarios = $step['grupos_prioritarios'])
