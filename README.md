@@ -5,6 +5,11 @@
 - Laravel 9
 - PostgreSQL 13
 
+## Dependencias:
+
+- Consulta de RFC en Padrón de Proveedores mediante API 
+- Consulta de CURP mediante API
+
 ## Ambiente local de desarrollo
 
 - VirtualBox 6.1
