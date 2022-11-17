@@ -43,6 +43,9 @@ sudo systemctl restart nginx
 set -e
 
 cd /var/www/saf-mtv
+
+cp .env.example .env
+
 composer install
 php artisan migrate
 
