@@ -5,6 +5,7 @@ use App\Http\Controllers\CatalogoProductosController;
 use App\Http\Controllers\PerfilNegocioController;
 use App\Http\Controllers\CentroNotificacionesController;
 use App\Http\Controllers\ProductosController;
+use RoachPHP\Roach;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,15 @@ Route::get('/', function () {
 
 Route::get('/info-venderle-a-cdmx', function() {
     return view('info.show');
+});
+
+Route::get('/oportunidades-de-negocio', function() {
+    Roach::startSpider(\App\Spiders\ConvocatoriasOportunidadesSpider::class);
+    $convocatorias = Roach::collectSpider(\App\Spiders\ConvocatoriasOportunidadesSpider::class);
+
+    return view('oportunidades.show', [
+        'convocatorias' => $convocatorias
+    ]);
 });
 
 Route::get('/dashboard', function () {
