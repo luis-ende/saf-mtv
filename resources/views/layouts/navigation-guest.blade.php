@@ -13,7 +13,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="#">
-                        {{ __('Menu 1') }}
+                        {{ __('Oportunidades de negocio') }}
                     </x-nav-link>
                     <x-nav-link href="#">
                         {{ __('Menu 2') }}
@@ -67,7 +67,7 @@
                 {{ __('Ingresa') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="#">
-                {{ __('Menu 1') }}
+                {{ __('Oportunidades de negocio') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="#">
                 {{ __('Menu 2') }}

@@ -8,7 +8,7 @@
                 <div class="p-6">
                     <div class="card p-0 mb-5">
                         <div class="card-header">
-                            <label class="text-[#691C32] font-bold">Oportunidades de negocio</label>
+                            <label class="text-[#691C32] font-bold">Oportunidades de negocio para ti</label>
                         </div>
                         <div class="card-body row g-3">
                         </div>

@@ -108,23 +108,34 @@
                     @svg('iconoir-internet', ['class' => 'h-5 w-5 inline-block'])
                     <label for="sitio_web">Sitio Web:</label>
                 </div>
-                <input type="text" class="form-control" id="sitio_web" name="sitio_web"
-                       value="{{ $sitio_web }}">
+                <x-input-url-link 
+                    :id="__('sitio_web')"
+                    :name="__('sitio_web')"
+                    :value="$sitio_web"
+                    :placeholder="__('https://example.com')" 
+                    :input_url="$sitio_web" 
+                />
             </div>
             <div class="form-group col-md-4">
                 <div class="flex flex-row space-x-2 my-2">
                     @svg('iconpark-facebookone-o', ['class' => 'h-5 w-5 inline-block'])
                     <label for="cuenta_facebook">Facebook:</label>
-                </div>
-                <input type="text" class="form-control" id="cuenta_facebook" name="cuenta_facebook"
-                       value="{{ $cuenta_facebook }}">
+                </div>                
+                <x-input-url-link 
+                    :id="__('cuenta_facebook')"
+                    :name="__('cuenta_facebook')"
+                    :value="$cuenta_facebook"
+                    :placeholder="__('https://facebook.com')" 
+                    :input_url="$cuenta_facebook" 
+                />
             </div>
             <div class="form-group col-md-4">
                 <div class="flex flex-row space-x-2 my-2">
                     @svg('bi-twitter', ['class' => 'h-5 w-5 inline-block'])
                     <label for="cuenta_twitter">Twitter:</label>
                 </div>
-                <input type="text" class="form-control" id="cuenta_twitter" name="cuenta_twitter"
+                <input type="url" class="form-control" id="cuenta_twitter" name="cuenta_twitter"
+                       placeholder="https://twitter.com"
                        value="{{ $cuenta_twitter }}">
             </div>
             <div class="form-group col-md-4">
@@ -132,7 +143,8 @@
                     @svg('antdesign-linkedin-o', ['class' => 'h-5 w-5 inline-block'])
                     <label for="cuenta_linkedin">LinkedIn:</label>
                 </div>
-                <input type="text" class="form-control" id="cuenta_linkedin" name="cuenta_linkedin"
+                <input type="url" class="form-control" id="cuenta_linkedin" name="cuenta_linkedin"
+                       placeholder="https://linkedin.com" 
                        value="{{ $cuenta_linkedin }}">
             </div>
             <div class="form-group col-md-4">
@@ -172,6 +184,7 @@
             tipoPyme: {{ $tipoPymeId ?? 0 }},
             sector: {{ $sectorId ?? 0 }},
             diferenciadores: '',
+            
         }
     }
 </script>
