@@ -11,7 +11,7 @@
 @php($cuenta_twitter = isset($perfilNegocio) ? $perfilNegocio->cuenta_twitter : ( isset($step) ? $step['cuenta_twitter'] : old('cuenta_twitter')))
 @php($cuenta_linkedin = isset($perfilNegocio) ? $perfilNegocio->cuenta_linkedin : ( isset($step) ? $step['cuenta_linkedin'] : old('cuenta_linkedin')))
 @php($num_whatsapp = isset($perfilNegocio) ? $perfilNegocio->num_whatsapp : ( isset($step) ? $step['num_whatsapp'] : old('num_whatsapp')))
-@php($logotipoUrl = isset($perfilNegocio) ? $perfilNegocio->getFirstMediaUrl('logotipos') : ( isset($step) ? $step['logotipo_path'] : null))
+@php($logotipoUrl = isset($perfilNegocio) ? $perfilNegocio->getFirstMediaUrl('logotipos') : ( isset($step) ? '/storage/logotipos_tmp/' . $step['logotipo_path'] : null))
 
 @isset ($step)
     @php($grupos_prioritarios = $step['grupos_prioritarios'])
@@ -87,7 +87,7 @@
                 <div class="form-group col-md-4">
                     <label for="lema_negocio">Lema del negocio:</label>
                     <input type="text" class="form-control" id="lema_negocio" name="lema_negocio"
-                        value="{{ $lema }}">
+                        value="{{ $lema }}" required>
                     <x-input-error :messages="$errors->get('lema_negocio')" class="mt-2"/>
                 </div>
                 <div class="form-group col-md-4">
@@ -98,7 +98,7 @@
         <div class="row">
                 <div class="form-group col-md-12">
                     <label for="descripcion_negocio">Descripción del negocio:</label>
-                    <textarea class="form-control" id="descripcion_negocio" name="descripcion_negocio">{{ $descripcionNegocio }}</textarea>
+                    <textarea class="form-control" id="descripcion_negocio" name="descripcion_negocio" required>{{ $descripcionNegocio }}</textarea>
                     <x-input-error :messages="$errors->get('descripcion_negocio')" class="mt-2"/>
                 </div>
             </div>

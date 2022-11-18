@@ -18,7 +18,6 @@
     function imageViewer() {
         return {
             imageUrl: '{{ $image_url ? url($image_url) : "" }}',
-            {{--imageUrl: '{{ storage_path('logotipos_tmp/OpYTpxrI8FSMkIr8jzM0BXjGnviTIKOVFD8CIGSp.png') }}',--}}
 
             fileChosen(event) {
                 this.fileToDataUrl(event, src => this.imageUrl = src)

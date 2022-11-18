@@ -48,7 +48,7 @@ class DescripcionNegocioStep extends WizardStep
     public function process(Request $request): StepResult
     {
         // Guarda imagen temporalmente mientras se completa el registro (después se mueve a carpeta de media)
-        if ($request->file('logotipo')) {
+        if ($request->file('logotipo') && $this->validate($request, ['logotipo' => 'mimes:jpg,bmp,png'])) {
             $file = $request->file('logotipo');
             $path = $file->storeAs('public/logotipos_tmp', $file->hashName());
             $request->merge(['logotipo_path' => basename($path)]);

@@ -14,12 +14,15 @@
     </head>
     <body class="font-sans antialiased">
         <!-- Page Heading -->
-        <header class="bg-white shadow">        
+        <header class="bg-white shadow">
             @include('layouts.navigation-guest')
         </header>
 
         <!-- Page Content -->
         <div class="container font-sans text-gray-900 antialiased overflow-auto">
+            <div class="row mt-3">
+                @include('layouts.alert-notification')
+            </div>
             {{ $slot }}
         </div>
 

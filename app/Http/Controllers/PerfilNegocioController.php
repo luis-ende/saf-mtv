@@ -66,6 +66,12 @@ class PerfilNegocioController extends Controller
         $perfilNegocio['num_whatsapp'] = $request->input('num_whatsapp');
         $perfilNegocio->save();
 
+        if ($request->file('logotipo') && $this->validate($request, ['logotipo' => 'mimes:jpg,bmp,png'])) {
+            $path = $request->file('logotipo')->store('public/logotipos');
+            $perfilNegocio->clearMediaCollection('logotipos');
+            $perfilNegocio->addMedia(storage_path('app') . '/' . $path)->toMediaCollection('logotipos');
+        }
+
         return redirect()->route('dashboard');
     }
 }
