@@ -9,7 +9,7 @@
                     <div class="accordion" id="producto-accordion">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading-datos-contacto">
-                                <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#body-datos-contacto" aria-expanded="true" aria-controls="collapseOne">                                    
+                                <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#body-datos-contacto" aria-expanded="true" aria-controls="collapseOne">
                                     @svg('gmdi-storefront-o', ['class' => 'h-5 w-5 inline-block mr-2'])
                                     Datos del producto
                                 </button>
@@ -23,13 +23,15 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading-producto-negocio">
                                 <button class="accordion-button fw-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#body-producto-negocio" aria-expanded="false" aria-controls="collapseTwo">
-                                    @svg('bytesize-photo', ['class' => 'h-5 w-5 inline-block mr-3'])                                    
-                                    Imágenes
+                                    @svg('bytesize-photo', ['class' => 'h-5 w-5 inline-block mr-3'])
+                                    Imágenes y medios
                                 </button>
                             </h2>
                             <div id="body-producto-negocio" class="accordion-collapse collapse" aria-labelledby="heading-producto-negocio" data-bs-parent="#producto-accordion">
                                 <div class="accordion-body">
-                                    <x-producto-photo-gallery/>
+                                    <x-producto-galeria-medios
+                                        :media="$producto->getMedia('fotos')"
+                                    />
                                 </div>
                             </div>
                         </div>

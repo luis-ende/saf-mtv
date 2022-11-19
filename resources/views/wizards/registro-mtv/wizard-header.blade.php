@@ -12,7 +12,7 @@
                     @svg('gmdi-storefront-o', ['class' => 'h-5 w-5 inline-block mr-2'])
                 @endif
 
-                <span>{{ $stepData['title'] }}</span>
+                <span>{{ $loop->index + 1 . '. ' . $stepData['title'] }}</span>
                 @if($loop->index + 1 !== $loop->count)
                     @svg('heroicon-s-arrow-right-circle', ['class' => 'h-5 w-5 inline-block mx-3 text-slate-200'])
                 @endif

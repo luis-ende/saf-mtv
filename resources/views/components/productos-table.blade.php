@@ -5,6 +5,7 @@
         <thead>
         <tr>
             <th scope="col">#</th>
+            <th scope="col">Medios</th>
             <th scope="col">Clave CABMS</th>
             <th scope="col">Tipo</th>
             <th scope="col">Nombre</th>
@@ -15,7 +16,12 @@
         <tbody>
         @foreach ($productos as $producto)
         <tr>
-            <th scope="row">{{ $producto->id }}</th>
+            <td class="font-bold">{{ $loop->index + 1 }}</td>
+            <td class="text-center">
+                <a href="#">
+                    @svg('entypo-camera', ['class' => 'h-5 w-5 inline-block'])
+                </a>
+            </td>
             <td>{{ $producto->clave_cabms }}</td>
             <td>{{ $producto->tipo === 'B' ? 'Bien' : ($producto->tipo === 'S' ? 'Servicio' : '') }}</td>
             <td>{{ $producto->nombre }}</td>
