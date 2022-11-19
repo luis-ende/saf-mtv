@@ -11,7 +11,7 @@
 @php($cuenta_twitter = isset($perfilNegocio) ? $perfilNegocio->cuenta_twitter : ( isset($step) ? $step['cuenta_twitter'] : old('cuenta_twitter')))
 @php($cuenta_linkedin = isset($perfilNegocio) ? $perfilNegocio->cuenta_linkedin : ( isset($step) ? $step['cuenta_linkedin'] : old('cuenta_linkedin')))
 @php($num_whatsapp = isset($perfilNegocio) ? $perfilNegocio->num_whatsapp : ( isset($step) ? $step['num_whatsapp'] : old('num_whatsapp')))
-@php($logotipoUrl = isset($perfilNegocio) ? $perfilNegocio->getFirstMediaUrl('logotipos') : ( isset($step) ? '/storage/logotipos_tmp/' . $step['logotipo_path'] : null))
+@php($logotipoUrl = isset($perfilNegocio) ? $perfilNegocio->getFirstMediaUrl('logotipos') : ( isset($step) ? $step['logotipo_path'] : null))
 
 @isset ($step)
     @php($grupos_prioritarios = $step['grupos_prioritarios'])
@@ -108,25 +108,25 @@
                     @svg('iconoir-internet', ['class' => 'h-5 w-5 inline-block'])
                     <label for="sitio_web">Sitio Web:</label>
                 </div>
-                <x-input-url-link 
+                <x-input-url-link
                     :id="__('sitio_web')"
                     :name="__('sitio_web')"
                     :value="$sitio_web"
-                    :placeholder="__('https://example.com')" 
-                    :input_url="$sitio_web" 
+                    :placeholder="__('https://example.com')"
+                    :input_url="$sitio_web"
                 />
             </div>
             <div class="form-group col-md-4">
                 <div class="flex flex-row space-x-2 my-2">
                     @svg('iconpark-facebookone-o', ['class' => 'h-5 w-5 inline-block'])
                     <label for="cuenta_facebook">Facebook:</label>
-                </div>                
-                <x-input-url-link 
+                </div>
+                <x-input-url-link
                     :id="__('cuenta_facebook')"
                     :name="__('cuenta_facebook')"
                     :value="$cuenta_facebook"
-                    :placeholder="__('https://facebook.com')" 
-                    :input_url="$cuenta_facebook" 
+                    :placeholder="__('https://facebook.com')"
+                    :input_url="$cuenta_facebook"
                 />
             </div>
             <div class="form-group col-md-4">
@@ -134,18 +134,26 @@
                     @svg('bi-twitter', ['class' => 'h-5 w-5 inline-block'])
                     <label for="cuenta_twitter">Twitter:</label>
                 </div>
-                <input type="url" class="form-control" id="cuenta_twitter" name="cuenta_twitter"
-                       placeholder="https://twitter.com"
-                       value="{{ $cuenta_twitter }}">
+                <x-input-url-link
+                    :id="__('cuenta_twitter')"
+                    :name="__('cuenta_twitter')"
+                    :value="$cuenta_twitter"
+                    :placeholder="__('https://twitter.com')"
+                    :input_url="$cuenta_twitter"
+                />
             </div>
             <div class="form-group col-md-4">
                 <div class="flex flex-row space-x-2 my-2">
                     @svg('antdesign-linkedin-o', ['class' => 'h-5 w-5 inline-block'])
                     <label for="cuenta_linkedin">LinkedIn:</label>
                 </div>
-                <input type="url" class="form-control" id="cuenta_linkedin" name="cuenta_linkedin"
-                       placeholder="https://linkedin.com" 
-                       value="{{ $cuenta_linkedin }}">
+                <x-input-url-link
+                    :id="__('cuenta_linkedin')"
+                    :name="__('cuenta_linkedin')"
+                    :value="$cuenta_linkedin"
+                    :placeholder="__('https://linkedin.com')"
+                    :input_url="$cuenta_linkedin"
+                />
             </div>
             <div class="form-group col-md-4">
                 <div class="flex flex-row space-x-2 my-2">
@@ -184,7 +192,7 @@
             tipoPyme: {{ $tipoPymeId ?? 0 }},
             sector: {{ $sectorId ?? 0 }},
             diferenciadores: '',
-            
+
         }
     }
 </script>
