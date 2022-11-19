@@ -68,6 +68,7 @@
                                         if (this.rfcExisteEnPadronProveedores) {
                                             Swal.fire({
                                                 title: this.rfcInvalido,
+                                                confirmButtonColor: '#691C32',
                                                 html: "Ya cuentas con un registro en el Padrón de Proveedores ("
                                                     + this.rfcEtapaEnPadronProveedores + "). " +
                                                     "Puedes enviar la información de tu catálogo en el perfil de tu negocio. " +
@@ -86,6 +87,7 @@
                                                 title: this.rfcInvalido,
                                                 html: 'Ya cuentas con un registro en Mi Tiendita Virtual. <br><a href="{{ route('login') }}">Inicia sesión</a> para acceder al portal.',
                                                 icon: "warning",
+                                                confirmButtonColor: '#691C32',
                                                 allowOutsideClick: false,
                                             }).then((result) => {
                                                 if (result.isConfirmed) {
