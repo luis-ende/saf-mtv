@@ -25,3 +25,9 @@
 - En modo de desarrollo ejecutar `npm run dev` para ver reflejados inmediatamente los cambios en archivos css y js
 
 - En Windows, crear symlink en `public` para la carpeta de imagenes de logotipos temporales, por ejemplo (en una ventana de comando): `mklink /D storage ..\..\storage`
+
+## MTV en Docker
+
+- Generar imagen en directorio raíz del proyecto: `docker compose build app`
+- Levantar servidor y servicios: `docker compose up -d`
+- Ejecutar comandos en contenedor de la aplicación (ejemplo): `docker-compose exec app ls -l'`, `docker-compose exec app composer install`
