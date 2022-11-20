@@ -53,6 +53,12 @@ Route::post('/productos', [ProductosController::class, 'store'])->middleware(['a
 
 Route::post('/productos/edit/{producto}', [ProductosController::class, 'update'])->middleware(['auth', 'verified'])->name('productos.update');
 
+Route::get('/productos/{producto}/archivos', [ProductosController::class, 'showArchivos'])->middleware(['auth', 'verified'])->name('productos-archivos.show');
+
+Route::post('/productos/{producto}/archivos', [ProductosController::class, 'storeFiles'])->middleware(['auth', 'verified'])->name('productos-archivos.store');
+
+Route::delete('/productos/archivos/{id}', [ProductosController::class, 'deleteFile'])->middleware(['auth', 'verified'])->name('productos-archivos.delete');
+
 Route::get('/productos/edit/{producto}', [ProductosController::class, 'show'])->middleware(['auth', 'verified'])->name('productos.edit');
 
 Route::delete('/productos/delete/{producto}', [ProductosController::class, 'destroy'])->middleware(['auth', 'verified'])->name('productos.destroy');

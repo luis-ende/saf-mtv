@@ -29,8 +29,16 @@
                             </h2>
                             <div id="body-producto-negocio" class="accordion-collapse collapse" aria-labelledby="heading-producto-negocio" data-bs-parent="#producto-accordion">
                                 <div class="accordion-body">
-                                    <x-producto-galeria-medios
-                                        :media="$producto->getMedia('fotos')"
+                                    <x-producto-files-upload
+                                        :producto_id="$producto->id"
+                                    />
+                                    <div class="text-xl text-[#BC955C] my-3">
+                                        @svg('grommet-gallery', ['class' => 'h-5 w-5 inline-block mr-1'])
+                                        Galería de archivos
+                                    </div>
+                                    <x-producto-media-gallery
+                                        :producto_id="$producto->id"
+                                        :media_items="$producto->getAllMedia()"
                                     />
                                 </div>
                             </div>

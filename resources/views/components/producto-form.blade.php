@@ -9,6 +9,7 @@
 @php($modelo = isset($producto) ? $producto->modelo : ( isset($step) ? $step['modelo'] : old('modelo')))
 @php($color = isset($producto) ? $producto->color : ( isset($step) ? $step['color'] : old('color')))
 @php($material = isset($producto) ? $producto->material : ( isset($step) ? $step['material'] : old('material')))
+@php($coverFotoUrl = isset($producto) ? $producto->getFirstMediaUrl('fotos') : null )
 
 @if ($mode === 'add')
     @php($formAction = route('productos.store'))
@@ -18,19 +19,20 @@
     @php($formAction = route('productos.update', $producto->id))
 @endif
 
+@php($showImageViewer = $mode !== 'wizard' && $mode !== 'add')
+
 <div x-data="{ tipoProducto: '{{ $tipoProducto ?? 'B' }}' }">
     <form method="POST" action="{{ $formAction }}">
         @csrf
-        <div class="flex flex-row flex-wrap">
-            <div class="basis-1/3 mb-3">
-                <label>Fotos:</label>
-                <x-input-image-viewer
-                    :id="__('foto')"
-                    :name="__('foto')"
-{{--                    :image_url="$logotipoUrl"--}}
+        <div class="{{ $showImageViewer ? 'flex flex-row flex-wrap' : '' }}">
+            @if ($showImageViewer)
+            <div class="md:basis-1/3 sm:basis-full md:mb-0 sm:mb-5">
+                <x-producto-image-viewer
+                    :image_url="$coverFotoUrl"
                 />
             </div>
-            <div class="basis-2/3">
+            @endif
+            <div class="{{ $showImageViewer ? 'basis-2/3' : '' }}">
                 <div class="row">
                     <div class="form-group col-md-12 mb-3">
                         <label class="mr-5">¿Qué producto ofreces?</label>

@@ -35,4 +35,9 @@ class CatalogoProductos extends Model
     {
         return $this->hasMany(Producto::class, 'id_cat_productos', 'id');
     }
+
+    public function persona()
+    {
+        return $this->belongsTo(Persona::class, 'id_persona');
+    }
 }
