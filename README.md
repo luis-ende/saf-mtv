@@ -28,6 +28,6 @@
 
 ## MTV en Docker
 
-- Generar imagen en directorio raíz del proyecto: `docker compose build --build-arg user="$(whoami)" --build-arg uid="$(id -u)" app`
-- Levantar servidor y servicios: `docker compose up -d`
-- Ejecutar comandos en contenedor de la aplicación (ejemplo): `docker compose exec app ls -l'`, `docker compose exec app composer install`
+- Instrucciones para instalar Docker y Docker Compose en Linux: [https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+  - En Windows [https://docs.docker.com/desktop/install/windows-install/](https://docs.docker.com/desktop/install/windows-install/)
+- Desde la carpeta raíz del proyecto, rr al subdirectorio `scripts` y ejecutar `docker-build.sh` para generar la imagen de Docker y levantar los contenedores del proyecto
