@@ -2,9 +2,9 @@ version: "3.7"
 services:
   app:
       build:
-        args:
-          user: luis
-          uid: 1000
+#        args:
+#          user: "$(whoami)"
+#          uid: "$(id -u)"
         context: ./
         dockerfile: app.dockerfile
       image: safmtv
