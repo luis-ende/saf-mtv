@@ -21,10 +21,10 @@ class ProductoInfoStep extends WizardStep
     {
         return [
             Field::make('tipo_producto'),
-            Field::make('clave_cabms'),
-            Field::make('nombre_producto'),
-            Field::make('descripcion_producto'),
-            Field::make('precio'),
+            Field::make('clave_cabms')->rules(['required']),
+            Field::make('nombre_producto')->rules(['required']),
+            Field::make('descripcion_producto')->rules(['required']),
+            Field::make('precio')->rules(['required']),
             Field::make('marca'),
             Field::make('modelo'),
             Field::make('color'),

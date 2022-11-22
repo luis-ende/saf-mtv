@@ -16,6 +16,13 @@ class ProductosController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $request->validate([
+            'clave_cabms' => 'required',
+            'nombre' => 'required',
+            'descripcion' => 'required',
+            'precio' => 'required'
+        ]);
+
         Producto::create([
             'id_cat_productos' => Auth::user()->persona->catalogoProductos->id,
             'clave_cabms' => $request->input('clave_cabms'),
@@ -56,10 +63,21 @@ class ProductosController extends Controller
         return view('productos.edit', ['producto' => $producto]);
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, Producto $producto)
     {
         // TODO: Implementar eliminado de producto del catálogo
-        return redirect()->route('catalogo-productos')->with('success', 'Producto eliminado del catalogo.');
+        if ($producto) {
+            if ($producto->catalogo->persona->id === Auth::user()->id_persona) {
+                $producto->delete();
+
+                return redirect()->route('catalogo-productos')->with('success', 'Producto eliminado del catalogo.');
+            } else {
+                return redirect()->route('catalogo-productos')->with('error', 'No es posible eliminar el producto.');
+            }
+        }
+    
+
+        return redirect()->route('catalogo-productos');
     }
 
     public function storeFiles(Request $request, Producto $producto) {

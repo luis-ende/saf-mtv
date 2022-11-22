@@ -1,6 +1,6 @@
 @props(['productos' => []])
 
-<div class="table-responsive">
+<div x-data="columnActions()" class="table-responsive">
     <table class="table table-striped table-sm ">
         <thead>
         <tr>
@@ -31,7 +31,7 @@
                         @method('DELETE')
                         @csrf
                         <a href="{{ route('productos.destroy', [$producto->id]) }}"
-                           @click="event.preventDefault();document.getElementById('producto_destroy_form_{{ $producto->id }}').submit();"
+                           @click="removeRow($event, {{ $producto->id }}); $event.preventDefault()"
                            class="text-base no-underline hover:text-[#BC955C]">
                             @svg('heroicon-s-trash', ['class' => 'h-5 w-5 inline-block'])
                         </a>
@@ -43,3 +43,28 @@
         </tbody>
     </table>
 </div>
+
+<script type="text/javascript">
+    function columnActions() {
+        return {
+            removeRow(e, id) {                
+                Swal.fire({
+                    title: '¿Desea eliminar el producto',
+                    showDenyButton: false,
+                    showCancelButton: true,
+                    confirmButtonColor: '#691C32',
+                    confirmButtonText: 'Eliminar',
+                    cancelButtonText: `Cancelar`,
+                }).then((result) => {                    
+                    if (result.isConfirmed) {                        
+                        this.sendDeleteRequest(e, id);                                                                       
+                    }                    
+                });
+            },
+            sendDeleteRequest(e, id) {                
+                document.getElementById('producto_destroy_form_' + id).submit();                
+            }
+            
+        }
+    }
+</script>

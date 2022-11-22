@@ -3,6 +3,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="text-[#BC955C] text-2xl p-6 bg-white border-b border-gray-200">
+                    @svg('heroicon-m-pencil-square', ['class' => 'h-7 w-7 inline-block mr-1'])
                     Detalles del producto
                 </div>
                 <div class="row">
@@ -24,7 +25,7 @@
                             <h2 class="accordion-header" id="heading-producto-negocio">
                                 <button class="accordion-button fw-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#body-producto-negocio" aria-expanded="false" aria-controls="collapseTwo">
                                     @svg('bytesize-photo', ['class' => 'h-5 w-5 inline-block mr-3'])
-                                    Imágenes y medios
+                                    Imágenes y archivos
                                 </button>
                             </h2>
                             <div id="body-producto-negocio" class="accordion-collapse collapse" aria-labelledby="heading-producto-negocio" data-bs-parent="#producto-accordion">
