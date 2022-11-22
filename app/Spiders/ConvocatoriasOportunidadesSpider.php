@@ -12,6 +12,15 @@ use RoachPHP\Spider\ParseResult;
 
 class ConvocatoriasOportunidadesSpider extends BasicSpider
 {
+    private const FIELD_MAPPINGS = [
+        'Fecha de publicación' => 'fecha_publicacion',
+        'Tipo de contratación' => 'tipo_contratacion',
+        'Carácter' => 'caracter',
+        'Método de contratación' => 'metodo_contratacion',
+        'Entidad convocante' => 'entidad_convocante',
+        'Presentación de propuestas' => 'fecha_presentacion_propuestas',
+    ];
+
     public array $startUrls = [
         'https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas'
     ];
@@ -53,15 +62,22 @@ class ConvocatoriasOportunidadesSpider extends BasicSpider
             $formFields = $item->children()->filter('div.card-body')->children()->filter('div.form-row');
 
             $formFields->each(function($f) use(&$cardInfo) {
-                $cardInfo[$f->first()->children()->first()->children()->eq(0)->text()] =
-                        $f->first()->children()->first()->children()->eq(1)->text();
+                $fieldLabel = $f->first()->children()->first()->children()->eq(0)->text();
+                $field = self::FIELD_MAPPINGS[$fieldLabel] ?? $fieldLabel;
+                $fieldValue = $f->first()->children()->first()->children()->eq(1)->text();
+                $cardInfo[$field] = $fieldValue;
+
+                if ($field === 'fecha_publicacion') {
+                    $fieldLabel = $f->first()->children()->eq(1)->children()->eq(0)->text();
+                    $field = self::FIELD_MAPPINGS[$fieldLabel] ?? $fieldLabel;
+                    $fieldValue = $f->first()->children()->eq(1)->children()->eq(1)->text();
+                    $cardInfo[$field] = $fieldValue;
+                }
             });
 
             $items[] = $cardInfo;
         });
 
-//        var_dump($items);
-
-        yield $this->item(['convocatorias' => $items]);
+        yield $this->item($items);
     }
 }

@@ -10,7 +10,7 @@
                     <div class="accordion" id="perfil-accordion">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading-datos-contacto">
-                                <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#body-datos-contacto" aria-expanded="true" aria-controls="collapseOne">
+                                <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#body-datos-contacto" aria-expanded="true" aria-controls="body-datos-contacto">
                                     @svg('icomoon-profile', ['class' => 'h-5 w-5 inline-block mr-3'])
                                     Datos de contacto
                                 </button>
