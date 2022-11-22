@@ -41,6 +41,14 @@ class ProductosController extends Controller
 
     public function update(Request $request, Producto $producto)
     {
+        // TODO: Crear validador para reutilizar 
+        $request->validate([
+            'clave_cabms' => 'required',
+            'nombre' => 'required',
+            'descripcion' => 'required',
+            'precio' => 'required'
+        ]);
+
         $producto['clave_cabms'] = $request->input('clave_cabms');
         $producto['nombre'] = $request->input('nombre_producto');
         $producto['descripcion'] = $request->input('descripcion_producto');
