@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <div class="min-h-screen">
+    <div x-data="oportunidadesPagina()" class="min-h-screen">
         <form>
             <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Buscar</label>
             <div class="relative">
@@ -71,12 +71,12 @@
                         Descargar
                     </div>
                     <div class="rounded border border-slate-600 p-2">
-                        <a href="#" title="Expandir categorías">
+                        <a href="#" title="Expandir categorías" @click="$event.preventDefault(); expandAll()">
                             @svg('carbon-expand-categories', ['class' => 'h-5 w-5 inline-block'])
                         </a>
                     </div>
                     <div class="rounded border border-slate-600 p-2">
-                        <a href="#" title="Cerrar categorías">
+                        <a href="#" title="Cerrar categorías" @click="$event.preventDefault(); collapseAll()">
                             @svg('carbon-collapse-categories', ['class' => 'h-5 w-5 inline-block'])
                         </a>
                     </div>
@@ -86,12 +86,12 @@
                     @foreach($categorias as $categoria => $oportunidades)
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="heading-oportunidad-{{ $loop->index }}">
-                            <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#body-oportunidad-{{ $loop->index }}" aria-expanded="true" aria-controls="body-oportunidad-{{ $loop->index }}">
+                            <button class="accordion-button fw-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#body-oportunidad-{{ $loop->index }}" aria-expanded="true" aria-controls="body-oportunidad-{{ $loop->index }}">
                                 @svg('govicon-building', ['class' => 'h-5 w-5 inline-block mr-3'])
                                 {{ $categoria }} ({{ count($oportunidades) }} Procedimiento{{ count($oportunidades) > 1 ? 's' : '' }})
                             </button>
                         </h2>
-                        <div id="body-oportunidad-{{ $loop->index }}" class="accordion-collapse collapse show" aria-labelledby="heading-oportunidad-{{ $loop->index }}" data-bs-parent="#oportunidades-accordion">
+                        <div id="body-oportunidad-{{ $loop->index }}" class="accordion-collapse collapse" aria-labelledby="heading-oportunidad-{{ $loop->index }}" data-bs-parent="#oportunidades-accordion">
                             <div class="accordion-body flex flex-row flex-wrap">
                                 @foreach($oportunidades as $oportunidad)
                                 <div class="w-full rounded border border-dashed border-gray-200 p-2 mb-3">
@@ -112,7 +112,7 @@
                                             <div><p class="basis-1/5 border rounded text-sm text-center p-3">Oportunidades de negocio</p></div>
                                             <div><p class="basis-1/5 border rounded text-sm text-center p-3">Pre-cotizar</p></div>
                                             <div class="basis-1/5 text-center">
-                                                @svg('lucide-bell-plus', ['class' => 'h-7 w-7 inline-block mr-3'])
+                                                @svg('lucide-bell-plus', ['class' => 'h-7 w-7 inline-block mr-3 cursor-pointer'])
                                             </div>
                                         </div>
                                     </div>
@@ -126,4 +126,27 @@
             </div>
         </div>
     </div>
+
+<script type="text/javascript">
+    function oportunidadesPagina() {
+        return {
+            accordionMode: 'expand',
+
+            expandAll() {
+                const collapseElementList = document.querySelectorAll('.collapse');
+                [...collapseElementList].forEach(collapseEl => {
+                    let bsCollapse = new bootstrap.Collapse(collapseEl, { toggle: false });
+                    bsCollapse.show();
+                });
+            },
+            collapseAll() {
+                const collapseElementList = document.querySelectorAll('.collapse');
+                [...collapseElementList].forEach(collapseEl => {
+                    let bsCollapse = new bootstrap.Collapse(collapseEl, { toggle: false });
+                    bsCollapse.hide();
+                });
+            },
+        }
+    }
+</script>
 </x-guest-layout>
