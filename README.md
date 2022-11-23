@@ -30,4 +30,4 @@
 
 - Instrucciones para instalar Docker y Docker Compose en Linux: [https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
   - En Windows [https://docs.docker.com/desktop/install/windows-install/](https://docs.docker.com/desktop/install/windows-install/)
-- Desde la carpeta raíz del proyecto, rr al subdirectorio `scripts` y ejecutar `docker-build.sh` para generar la imagen de Docker y levantar los contenedores del proyecto
+- Desde la carpeta raíz del proyecto, ir al subdirectorio `scripts` y ejecutar `docker-build.sh` para generar la imagen de Docker y levantar los contenedores del proyecto
