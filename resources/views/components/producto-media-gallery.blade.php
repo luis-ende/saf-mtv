@@ -2,7 +2,11 @@
 
 <div x-data="{ imgModal : false, imgModalSrc : '', imgModalDesc : '' }">
     <div x-show="imgModal" @img-modal.window="imgModal = true; imgModalSrc = $event.detail.imgModalSrc; imgModalDesc = $event.detail.imgModalDesc;">
-        <div x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-90" x-on:click.away="imgModalSrc = ''" class="p-2 fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center bg-black bg-opacity-75">
+        <div x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90"
+             x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-300"
+             x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-90"
+             x-on:click.away="imgModalSrc = ''"
+             class="p-2 fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center bg-black bg-opacity-75">
             <div @click.away="imgModal = ''" class="flex flex-col max-w-3xl max-h-full overflow-auto">
                 <div class="z-50">
                     <button @click="imgModal = ''" class="float-right pt-2 pr-2 outline-none focus:outline-none">
@@ -36,10 +40,10 @@
                     <source :src="item.original_url" :type="item.mime_type">
                 </video>
                 <a x-show="item.mime_type.startsWith('image')"
-                   @click="$dispatch('img-modal', {  imgModalSrc: item.original_url, imgModalDesc: '' })" class="cursor-pointer">
+                   @click="$dispatch('img-modal', {  imgModalSrc: item.original_url, imgModalDesc: item.name })" class="cursor-pointer">
                     <img class="rounded-t-lg" :src="item.original_url" :alt="item.name">
                 </a>
-                <div x-show="!item.mime_type.startsWith('image')" class="flex flex-row justify-content-center">
+                <div x-show="!item.mime_type.startsWith('image') && !item.mime_type.startsWith('video')" class="flex flex-row justify-content-center">
                     @svg('bx-file', ['class' => 'h-12 w-12 mt-5 text-slate-600'])
                 </div>
                 <div class="p-3">

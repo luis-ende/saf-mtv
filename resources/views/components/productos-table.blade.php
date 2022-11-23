@@ -47,24 +47,24 @@
 <script type="text/javascript">
     function columnActions() {
         return {
-            removeRow(e, id) {                
+            removeRow(e, id) {
                 Swal.fire({
-                    title: '¿Desea eliminar el producto',
+                    title: '¿Desea eliminar el producto?',
                     showDenyButton: false,
                     showCancelButton: true,
                     confirmButtonColor: '#691C32',
                     confirmButtonText: 'Eliminar',
                     cancelButtonText: `Cancelar`,
-                }).then((result) => {                    
-                    if (result.isConfirmed) {                        
-                        this.sendDeleteRequest(e, id);                                                                       
-                    }                    
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.sendDeleteRequest(e, id);
+                    }
                 });
             },
-            sendDeleteRequest(e, id) {                
-                document.getElementById('producto_destroy_form_' + id).submit();                
+            sendDeleteRequest(e, id) {
+                document.getElementById('producto_destroy_form_' + id).submit();
             }
-            
+
         }
     }
 </script>

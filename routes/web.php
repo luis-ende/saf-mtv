@@ -26,7 +26,7 @@ Route::get('/info-venderle-a-cdmx', function() {
     return view('info.show');
 });
 
-Route::get('/oportunidades-de-negocio', [OportunidadesController::class, 'show'])->name('oportunidades-negocio.show');
+Route::get('/oportunidades-de-negocio', [OportunidadesController::class, 'index'])->name('oportunidades-negocio');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

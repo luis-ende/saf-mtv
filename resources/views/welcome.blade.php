@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <div class="row h-[48rem]">
         @if (Route::has('login'))
             @auth
@@ -14,4 +14,4 @@
             @endauth
         @endif
     </div>
-</x-guest-layout>
+</x-app-layout>

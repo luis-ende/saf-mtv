@@ -15,7 +15,11 @@
     </head>
     <body class="font-sans antialiased">
         <header class="bg-white shadow">
-            @include('layouts.navigation')
+            @if (Auth::user())
+                @include('layouts.navigation')
+            @else
+                @include('layouts.navigation-guest')
+            @endif
         </header>
 
         <div class="min-h-screen bg-gray-100">

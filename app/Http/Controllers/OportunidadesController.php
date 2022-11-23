@@ -11,7 +11,7 @@ use RoachPHP\Roach;
 
 class OportunidadesController extends Controller
 {
-    public function show(Request $request)
+    public function index(Request $request)
     {
         Roach::startSpider(ConvocatoriasOportunidadesSpider::class);
         $convocatorias = Roach::collectSpider(ConvocatoriasOportunidadesSpider::class);

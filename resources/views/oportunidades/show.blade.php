@@ -1,5 +1,13 @@
-<x-guest-layout>
+<x-app-layout>
     <div x-data="oportunidadesPagina()" class="min-h-screen">
+        <div class="text-slate-800 font-bold text-2xl p-6 bg-white border-b border-gray-200">
+            @svg('lineawesome-business-time-solid', ['class' => 'h-7 w-7 inline-block mr-1'])
+            Oportunidades de negocio
+        </div>
+        <div class="p-6 bg-[#F7F3ED] border-b border-gray-200 text-base mb-2">
+            Utiliza este buscador con palabras clave y descubre nuevas oportunidades para tu negocio. Si eres un usuario registrado, activa la campana y recibe notificaciones.
+        </div>
+
         <form>
             <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Buscar</label>
             <div class="relative">
@@ -13,7 +21,8 @@
 
         <div class="flex flex-row">
             <div class="basis-3/12 p-5">
-                <p>Filtros</p>
+                <p class="font-bold">Filtros (búsqueda avanzada)</p>
+                <div class="alert alert-info text-sm-center">Si estas familiarizado con las compras públicas, la búsqueda avanzada te servirá para encontrar con mayor precisión los procedimientos que te interesan.</div>
                 <label for="urg">Unidad Responsable de Gasto</label>
                 <select class="form-select" id="urg" name="urg">
                     <option>Alcaldía Álvaro Obregón</option>
@@ -127,26 +136,26 @@
         </div>
     </div>
 
-<script type="text/javascript">
-    function oportunidadesPagina() {
-        return {
-            accordionMode: 'expand',
+    <script type="text/javascript">
+        function oportunidadesPagina() {
+            return {
+                accordionMode: 'expand',
 
-            expandAll() {
-                const collapseElementList = document.querySelectorAll('.collapse');
-                [...collapseElementList].forEach(collapseEl => {
-                    let bsCollapse = new bootstrap.Collapse(collapseEl, { toggle: false });
-                    bsCollapse.show();
-                });
-            },
-            collapseAll() {
-                const collapseElementList = document.querySelectorAll('.collapse');
-                [...collapseElementList].forEach(collapseEl => {
-                    let bsCollapse = new bootstrap.Collapse(collapseEl, { toggle: false });
-                    bsCollapse.hide();
-                });
-            },
+                expandAll() {
+                    const collapseElementList = document.querySelectorAll('.collapse');
+                    [...collapseElementList].forEach(collapseEl => {
+                        let bsCollapse = new bootstrap.Collapse(collapseEl, { toggle: false });
+                        bsCollapse.show();
+                    });
+                },
+                collapseAll() {
+                    const collapseElementList = document.querySelectorAll('.collapse');
+                    [...collapseElementList].forEach(collapseEl => {
+                        let bsCollapse = new bootstrap.Collapse(collapseEl, { toggle: false });
+                        bsCollapse.hide();
+                    });
+                },
+            }
         }
-    }
-</script>
-</x-guest-layout>
+    </script>
+</x-app-layout>

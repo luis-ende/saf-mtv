@@ -22,7 +22,7 @@
                     </div>
                     <div class="card p-0 mb-5">
                         <div class="card-header">
-                            <label class="text-[#691C32] font-bold">Otros</label>
+                            <label class="text-[#691C32] font-bold">Otros avisos</label>
                         </div>
                         <div class="card-body row g-3">
                         </div>

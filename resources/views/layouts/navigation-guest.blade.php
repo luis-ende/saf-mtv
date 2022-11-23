@@ -34,8 +34,8 @@
                             </x-dropdown-link>
                         </x-slot>
                     </x-dropdown>
-                    <x-nav-link href="{{ route('oportunidades-negocio.show') }}">
-                        {{ __('Oportunidades de negocio') }}
+                    <x-nav-link :href="route('oportunidades-negocio')" :active="request()->routeIs('oportunidades-negocio')">
+                        {{ __('Oportunidades') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -57,11 +57,14 @@
                         </button>
                     </x-slot>
                     <x-slot name="content">
+                        <x-dropdown-link href="https://www.tianguisdigital.cdmx.gob.mx/" target="_blank">
+                            {{ __('Tianguis Digital') }}
+                        </x-dropdown-link>
                         <x-dropdown-link href="#">
                             {{ __('Preguntas frecuentes') }}
                         </x-dropdown-link>
-                        <x-dropdown-link href="https://www.tianguisdigital.cdmx.gob.mx/" target="_blank">
-                            {{ __('Tianguis Digital') }}
+                        <x-dropdown-link href="#">
+                            {{ __('Directorio') }}
                         </x-dropdown-link>
                     </x-slot>
                 </x-dropdown>
@@ -85,8 +88,8 @@
             <x-responsive-nav-link :href="route('login')">
                 {{ __('Ingresa') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="#">
-                {{ __('Oportunidades de negocio') }}
+            <x-responsive-nav-link :href="route('oportunidades-negocio')">
+                {{ __('Oportunidades') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="#">
                 {{ __('Menu 2') }}

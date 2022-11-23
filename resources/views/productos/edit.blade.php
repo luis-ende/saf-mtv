@@ -2,7 +2,7 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="text-[#BC955C] text-2xl p-6 bg-white border-b border-gray-200">
+                <div class="text-slate-800 font-bold text-2xl p-6 bg-white border-b border-gray-200">
                     @svg('heroicon-m-pencil-square', ['class' => 'h-7 w-7 inline-block mr-1'])
                     Detalles del producto
                 </div>
@@ -33,7 +33,7 @@
                                     <x-producto-files-upload
                                         :producto_id="$producto->id"
                                     />
-                                    <div class="text-xl text-[#BC955C] my-3">
+                                    <div class="text-slate-900 font-bold text-xl my-3">
                                         @svg('grommet-gallery', ['class' => 'h-5 w-5 inline-block mr-1'])
                                         Galería de archivos
                                     </div>
