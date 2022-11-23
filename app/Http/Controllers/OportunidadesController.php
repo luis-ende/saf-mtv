@@ -17,13 +17,30 @@ class OportunidadesController extends Controller
         $convocatorias = Roach::collectSpider(ConvocatoriasOportunidadesSpider::class);
         $convocatorias = $convocatorias[0]->all();
 
-        $oportunidades = [];
+        $categorias = [];
+        $numInvRestringidas = 0;
+        $numAdjDirectas = 0;
+        $numLicitacionesPublicas = 0;
         foreach($convocatorias as $convocatoria) {
-            $oportunidades[$convocatoria['entidad_convocante']][] = $convocatoria;
+            $categorias[$convocatoria['entidad_convocante']][] = $convocatoria;
+            if ($convocatoria['metodo_contratacion'] === 'Invitación restringida') {
+                $numInvRestringidas++;
+            }
+            if ($convocatoria['metodo_contratacion'] === 'Adjudicación directa') {
+                $numAdjDirectas++;
+            }
+            if ($convocatoria['metodo_contratacion'] === 'LP - Licitación Pública') {
+                $numLicitacionesPublicas++;
+            }
         }
 
         return view('oportunidades.show', [
-            'categorias' => $oportunidades,
+            'categorias' => $categorias,
+            'entidades_convocantes' => count($categorias),
+            'procedimientos_proximos' => count($convocatorias),
+            'invitaciones_restringidas' => $numInvRestringidas,
+            'adjudicaciones_directas' => $numAdjDirectas,
+            'licitaciones_publicas' => $numLicitacionesPublicas,
         ]);
     }
 }
