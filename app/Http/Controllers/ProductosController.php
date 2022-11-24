@@ -18,8 +18,8 @@ class ProductosController extends Controller
     {
         $request->validate([
             'clave_cabms' => 'required',
-            'nombre' => 'required',
-            'descripcion' => 'required',
+            'nombre_producto' => 'required',
+            'descripcion_producto' => 'required',
             'precio' => 'required'
         ]);
 
@@ -44,8 +44,8 @@ class ProductosController extends Controller
         // TODO: Crear validador para reutilizar 
         $request->validate([
             'clave_cabms' => 'required',
-            'nombre' => 'required',
-            'descripcion' => 'required',
+            'nombre_producto' => 'required',
+            'descripcion_producto' => 'required',
             'precio' => 'required'
         ]);
 
