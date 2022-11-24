@@ -129,8 +129,7 @@
                                 }
                             });
 
-                            if (res.length >= 1) {
-                                alert(res[0]['id']);
+                            if (res.length >= 1) {                                
                                 this.asentamientoSeleccion = res[0]['id'];
                             }
                         });
