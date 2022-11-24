@@ -68,8 +68,10 @@ class RegistroPersonaService
                 'num_whatsapp' => $personaRegistroDatos['num_whatsapp'],
             ]);
 
-            $perfilNegocio->addMedia(storage_path('app/public/logotipos_tmp/' . basename($personaRegistroDatos['logotipo_path'])))
-                            ->toMediaCollection('logotipos');
+            if ($personaRegistroDatos['logotipo_path'] && $personaRegistroDatos['logotipo_path'] !== '') {
+                $perfilNegocio->addMedia(storage_path('app/public/logotipos_tmp/' . basename($personaRegistroDatos['logotipo_path'])))
+                ->toMediaCollection('logotipos');
+            }            
 
             $catalogoProductos = CatalogoProductos::create([
                 'nombre_catalogo' => 'Catálogo principal',

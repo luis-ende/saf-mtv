@@ -128,6 +128,11 @@
                                     this.asentamientoSeleccion = {{ $idAsentamiento ?? 'null' }};
                                 }
                             });
+
+                            if (res.length >= 1) {
+                                alert(res[0]['id']);
+                                this.asentamientoSeleccion = res[0]['id'];
+                            }
                         });
                 }
             },
