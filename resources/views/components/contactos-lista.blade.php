@@ -19,7 +19,7 @@
     </div>
     <div class="table-responsive">
         <table class="table table-striped table-sm ">
-            <thead>
+            <thead class="table-light">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nombre completo</th>
@@ -28,6 +28,7 @@
                 <th scope="col">Extensión</th>
                 <th scope="col">Teléfono móvil</th>
                 <th scope="col">Correo electrónico</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>

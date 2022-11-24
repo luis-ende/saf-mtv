@@ -11,6 +11,6 @@ class CentroNotificacionesController extends Controller
      */
     public function index()
     {
-        return view('centro-notificaciones');
+        return view('notificaciones.index');
     }
 }

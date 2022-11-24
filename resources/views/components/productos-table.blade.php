@@ -2,7 +2,7 @@
 
 <div x-data="columnActions()" class="table-responsive">
     <table class="table table-striped table-sm ">
-        <thead>
+        <thead class="table-light">
         <tr>
             <th scope="col">#</th>
             <th scope="col">Clave CABMS</th>
@@ -10,6 +10,7 @@
             <th scope="col">Nombre</th>
             <th scope="col">Descripcion</th>
             <th scope="col">Precio</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -25,8 +26,8 @@
                 <div class="flex flex-row justify-end">
                     <a href="{{ route('productos.edit', [$producto->id]) }}"
                        class="text-base no-underline hover:text-[#BC955C]">
-                        @svg('heroicon-m-pencil-square', ['class' => 'h-5 w-5 inline-block'])
-                    </a>{!! "&nbsp;" !!}
+                        @svg('heroicon-m-pencil-square', ['class' => 'h-5 w-5 inline-block mr-1'])
+                    </a>
                     <form id="producto_destroy_form_{{ $producto->id }}" action="{{ route('productos.destroy', [$producto->id]) }}" method="POST">
                         @method('DELETE')
                         @csrf
