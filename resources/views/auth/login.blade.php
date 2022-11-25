@@ -4,8 +4,8 @@
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
         <div class="text-slate-800 font-bold text-lg p-6 bg-white border-b border-gray-200">
-            @svg('entypo-login', ['class' => 'h-7 w-7 inline-block mr-1'])
             Inicio de sesión en Mi Tiendita Virtual
+            @svg('entypo-login', ['class' => 'h-7 w-7 inline-block ml-1'])
         </div>
         <div class="p-6 bg-[#F7F3ED] rounded border-b border-gray-200 text-base text-center mb-3">
             Inicia sesión para actualizar tus datos, dar a conocer tus productos, y consultar tus notificaciones de oportunidades de negocio.

@@ -28,15 +28,15 @@
 <div x-data="mediaGallery()"
      x-init="$watch('$store.filesUploaded.hasFilesUploaded', value => { $store.filesUploaded.hasFilesUploaded = false; reloadView() })">
 
-    <div class="flex flex-wrap">
+    <div class="flex flex-wrap space-x-3 space-y-3 place-content-center">
         <div x-show="loading" class="basis-full flex flex-row justify-center my-5">
             <div class="spinner-grow text-secondary" role="status">
                 <span class="visually-hidden">Cargando...</span>
             </div>
         </div>
         <template x-for="(item, index) in mediaItems" :key="index">
-            <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-2 md:basis-1/4 sm:basis-full">
-                <video x-show="item.mime_type.startsWith('video')" controls>
+            <div class="max-w-xs bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 md:basis-1/5 sm:basis-full">
+                <video x-show="item.mime_type.startsWith('video')" class="rounded object-cover" controls>
                     <source :src="item.original_url" :type="item.mime_type">
                 </video>
                 <a x-show="item.mime_type.startsWith('image')"
@@ -44,12 +44,12 @@
                     <img class="rounded-t-lg" :src="item.original_url" :alt="item.name">
                 </a>
                 <div x-show="!item.mime_type.startsWith('image') && !item.mime_type.startsWith('video')" class="flex flex-row justify-content-center">
-                    @svg('bx-file', ['class' => 'h-12 w-12 mt-5 text-slate-600'])
+                    @svg('bx-file', ['class' => 'h-12 w-12 mt-5 text-slate-600 h-28'])
                 </div>
                 <div class="p-3">
                     <a :href="item.original_url"
-                       class="mb-3 font-normal text-gray-700 dark:text-gray-400 no-underline"
-                       x-text="item.name" target="_blank"></a>
+                       class="mb-3 font-normal text-gray-700 dark:text-gray-400 no-underline h-8"
+                       x-text="shortFileName(item.name, 20)" target="_blank"></a>
                     <div class="flex flex-row mt-3 justify-content-center">
                         <a :href="item.original_url" class="btn btn-secondary mr-3" :download="item.name" title="Descargar">
                             @svg('icomoon-download', ['class' => 'h-5 w-5'])
@@ -148,6 +148,16 @@
                         this.loading = false;
                         this.mediaItems = res;
                     });
+            },
+            shortFileName(fileName, shortLength) {
+                let split = fileName.split('.');
+                let filename = split[0];
+
+                if (filename.length > shortLength) {
+                    return filename.substring(0, shortLength) + '...';
+                }
+
+                return fileName;
             }
         }
     }

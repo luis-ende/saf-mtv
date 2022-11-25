@@ -7,7 +7,7 @@
                     Centro de notificaciones
                 </div>
                 <div class="p-6 bg-[#F7F3ED] border-b border-gray-200 text-base">
-                    Con la información que proporcionaste, seleccionamos notificaciones que te pueden interesar.
+                    Con la información que proporcionaste, seleccionamos notificaciones que pueden interesarte.
                 </div>
                 <div class="px-5">
                     <div class="text-xl text-slate-900 font-bold mt-3">

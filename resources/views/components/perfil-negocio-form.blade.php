@@ -76,7 +76,7 @@
                 <div class="form-group col-md-3" x-show="tipoPersona === 'F'">
                     <label for="rfc_sin_homoclave">RFC:</label>
                     <input type="text" class="form-control"
-                           style="background-color: lightgray"
+                           style="background-color: #efefef"
                            id="rfc_sin_homoclave"
                            name="rfc_sin_homoclave"
                            value="{{ $rfcSinH ?? '' }}"
@@ -93,27 +93,27 @@
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                     <label for="fecha_nacimiento">Fecha de nacimiento:</label>
-                    <input type="text" class="form-control" style="background-color: lightgray" id="fecha_nacimiento"
+                    <input type="text" class="form-control" style="background-color: #efefef" id="fecha_nacimiento"
                            name="fecha_nacimiento" value="{{ $fechaNacimiento }}" readonly>
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                     <label for="genero">Género:</label>
-                    <input type="text" class="form-control" style="background-color: lightgray" id="genero"
+                    <input type="text" class="form-control" style="background-color: #efefef" id="genero"
                            name="genero" value="{{ $genero }}" readonly>
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                     <label for="nombre">Nombre:</label>
-                    <input type="text" class="form-control" style="background-color: lightgray" id="nombre"
+                    <input type="text" class="form-control" style="background-color: #efefef" id="nombre"
                            name="nombre" value="{{ $nombre }}" readonly>
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                     <label for="primer_ap">Primer apellido:</label>
-                    <input type="text" class="form-control" style="background-color: lightgray" id="primer_ap"
+                    <input type="text" class="form-control" style="background-color: #efefef" id="primer_ap"
                            name="primer_ap" value="{{ $primerAp }}">
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
                     <label for="segundo_ap">Segundo apellido:</label>
-                    <input type="text" class="form-control" style="background-color: lightgray" id="segundo_ap"
+                    <input type="text" class="form-control" style="background-color: #efefef" id="segundo_ap"
                            name="segundo_ap" value="{{ $segundoAp }}" readonly>
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'M'">

@@ -26,7 +26,7 @@
         @csrf
         <div class="{{ $showImageViewer ? 'flex flex-row flex-wrap' : '' }}">
             @if ($showImageViewer)
-            <div class="md:basis-1/3 sm:basis-full md:mb-0 sm:mb-5">
+            <div class="md:basis-1/3 sm:basis-full xs:basis-full md:mb-0 sm:mb-5">
                 <x-producto-image-viewer
                     :image_url="$coverFotoUrl"
                 />
@@ -64,7 +64,7 @@
                         <div class="flex flex-row">
                             <input type="text"
                                    class="form-control"
-                                   style="background-color: lightgray"
+                                   style="background-color: #efefef"
                                    id="clave_cabms"
                                    name="clave_cabms"
                                    placeholder="Buscar clave CABMS..."

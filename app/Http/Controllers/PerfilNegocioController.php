@@ -46,7 +46,8 @@ class PerfilNegocioController extends Controller
 
         $personaRepository->updateContactos($persona, $request->input('contactos_lista'));
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')
+            ->with('success', 'Datos de contacto actualizados.');
     }
 
     public function updateDescripcionNegocio(Request $request)
@@ -72,6 +73,7 @@ class PerfilNegocioController extends Controller
             $perfilNegocio->addMedia(storage_path('app') . '/' . $path)->toMediaCollection('logotipos');
         }
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')
+            ->with('success', 'Perfil de negocio actualizado.');
     }
 }

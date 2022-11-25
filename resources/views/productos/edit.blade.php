@@ -33,7 +33,7 @@
                                     <x-producto-files-upload
                                         :producto_id="$producto->id"
                                     />
-                                    <div class="text-slate-900 font-bold text-xl my-3">
+                                    <div class="text-slate-900 font-bold text-xl mt-3 mb-2">
                                         @svg('grommet-gallery', ['class' => 'h-5 w-5 inline-block mr-1'])
                                         Galería de archivos
                                     </div>

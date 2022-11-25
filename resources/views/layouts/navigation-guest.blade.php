@@ -91,8 +91,11 @@
             <x-responsive-nav-link :href="route('oportunidades-negocio')">
                 {{ __('Oportunidades') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="#">
-                {{ __('Menu 2') }}
+            <x-responsive-nav-link href="https://tianguisdigital.finanzas.cdmx.gob.mx/login">
+                {{ __('Inicia sesión en Padrón de Proveedores') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="https://tianguisdigital.finanzas.cdmx.gob.mx/requisitos">
+                {{ __('Regístrate en Padrón de Proveedores') }}
             </x-responsive-nav-link>
         </div>
     </div>
