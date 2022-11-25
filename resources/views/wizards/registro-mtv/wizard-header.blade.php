@@ -3,7 +3,7 @@
     {{ $wizard['title'] }}
 </div>
 <div class="p-6 bg-[#F7F3ED] border-b border-gray-200 text-base">
-    Crea una cuenta de manera sencilla y ofrece tus productos para recibir notificaciones.
+    Crea una cuenta de manera sencilla y ofrece tus productos para recibir notificaciones personalizadas.
 </div>
 <div class="py-3 bg-[#691C32] m-3 mb-4 rounded pl-5 flex flex-row flex-wrap">
     @foreach($wizard['steps'] as $stepData)

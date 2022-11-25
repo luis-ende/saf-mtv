@@ -4,7 +4,7 @@
 
 <style>
     .tags-input-wrapper{
-        background: transparent;
+        background: #f8fafc;
         padding: 6px;
         border-radius: 4px;
         border: 1px solid #ccc
@@ -32,7 +32,7 @@
     }
 </style>
 
-<label for="diferenciadores">Diferenciadores empresariales (separados con comas):</label>
+<label for="diferenciadores">Diferenciadores empresariales:</label>
 <input
     x-data="diferenciadoresLista()"
     x-init="inicializaLista()"
@@ -41,6 +41,7 @@
     id="diferenciadores"
     name="diferenciadores"
 >
+<label class="text-xs text-slate-500" for="diferenciadores">Separar con comas.</label>
 
 <script type="text/javascript">
     (function(){

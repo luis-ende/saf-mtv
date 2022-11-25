@@ -1,8 +1,14 @@
 <x-app-layout>
-    @include('wizards.registro-mtv.wizard-header')
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-4">
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            @include('wizards.registro-mtv.wizard-header')
 
-    <x-perfil-negocio-form
-        :mode="__('wizard')"
-        :wizard="$wizard"
-        :step="$step" />
+            <div class="px-6">
+                <x-perfil-negocio-form
+                    :mode="__('wizard')"
+                    :wizard="$wizard"
+                    :step="$step" />
+            </div>
+        </div>
+    </div>
 </x-app-layout>
