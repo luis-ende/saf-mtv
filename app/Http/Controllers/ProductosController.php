@@ -73,7 +73,6 @@ class ProductosController extends Controller
 
     public function destroy(Request $request, Producto $producto)
     {
-        // TODO: Implementar eliminado de producto del catálogo
         if ($producto) {
             if ($producto->catalogo->persona->id === Auth::user()->id_persona) {
                 $producto->delete();

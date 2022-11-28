@@ -128,6 +128,8 @@
         </div>
         <div class="py-4 flex justify-content-end">
             @if ($mode === 'add')
+                <x-producto-importacion-button />
+                
                 <button class="btn btn-primary"
                         type="submit">
                     @svg('heroicon-m-plus-circle', ['class' => 'h-7 w-7 inline-block'])
