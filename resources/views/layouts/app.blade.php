@@ -36,5 +36,7 @@
             <!-- Page Footer -->
             <x-site-footer />
         </div>
+
+        @yield('scripts')
     </body>
 </html>
