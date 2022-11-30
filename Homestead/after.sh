@@ -52,4 +52,6 @@ php artisan migrate
 npm install && npm run build
 
 # Crear link a carpeta de assets públicos
+# Este paso falla en hosts con Windows, ejecutar manualmente:
+#   Crear symlink en la carpeta `public` en una terminal con permiso de Administrador: `mklink /D storage ..\..\storage`
 php artisan storage:link

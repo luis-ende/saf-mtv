@@ -2,7 +2,7 @@
 
 ## Requerimientos
 
-- Laravel 9 (Vite)
+- Laravel 9 (Vite) / Blade Components
 - PostgreSQL 13
 - Bootstrap 5 
 - Tailwind 3
@@ -13,13 +13,15 @@
 - Consulta de RFC en Padrón de Proveedores mediante API 
 - Consulta de CURP mediante API
 
+**IMPORTANTE:** El archivo .env contiene las variables TEST_MODE, API_URL_BUSQUEDA_RFC_PADRON_PROVEEDORES, API_URL_BUSQUEDA_CURP, las cuales apuntan a endpoints de prueba. En modo producción TEST_MODE debe ser `false` y las URLs de las APIs deben apuntar a direcciones en producción.
+
 ## Ambiente local de desarrollo
 
 - VirtualBox 6.1
 - Vagrant 2.3.1
 - Laravel Homestead (ver servicios que se instalan por default en el ambiente de desarrollo en: https://laravel.com/docs/9.x/homestead#included-software)
  
-- Para levantar el proyecto en modo local ir a la carpeta `Homestead`
+- Para levantar el proyecto en modo local ir a la carpeta `Homestead` de la carpeta del repositorio MTV
 - Copiar el archivo `Homestead.example.yaml` como `Homestead.yaml` y ajustar rutas de directorios locales (en Windows el formato de las rutas debe ajustarse, ver https://laravel.com/docs/9.x/homestead#configuring-shared-folders)
 - Ejecutar `composer install` (es necesario tener instalado Composer)
 - Es necesario agregar el DNS local (saf-mtv.test) `hosts` (Agregar línea 192.168.56.56	saf-mtv.test)
@@ -30,8 +32,12 @@
 
 - En Windows, crear symlink en `public` para la carpeta de imagenes de logotipos temporales, por ejemplo (en una ventana de comando): `mklink /D storage ..\..\storage`
 
-- Para detener la máquina virtual: `vagrant halt`
-- Para eliminar la máquina virtual: `vagrant destroy`
+- Desde la carpeta `Homestead` del proyecto
+  - Para detener la máquina virtual: `vagrant halt`
+  - Para eliminar la máquina virtual: `vagrant destroy`
+  - Para loggearse via SSH a la máquina virtual: `vagrant ssh`
+
+- La máquina virtual ejecuta un script bash (ver `Homestead/after.ssh`) después de arrancar para ejecutar algunos comandos adicionales para el sitio MTV.
 
 ### Compilación de assets
 
