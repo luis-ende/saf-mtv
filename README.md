@@ -2,8 +2,11 @@
 
 ## Requerimientos
 
-- Laravel 9
+- Laravel 9 (Vite)
 - PostgreSQL 13
+- Bootstrap 5 
+- Tailwind 3
+- Alpine.js
 
 ## Dependencias:
 
@@ -18,13 +21,22 @@
  
 - Para levantar el proyecto en modo local ir a la carpeta `Homestead`
 - Copiar el archivo `Homestead.example.yaml` como `Homestead.yaml` y ajustar rutas de directorios locales (en Windows el formato de las rutas debe ajustarse, ver https://laravel.com/docs/9.x/homestead#configuring-shared-folders)
+- Ejecutar `composer install` (es necesario tener instalado Composer)
 - Es necesario agregar el DNS local (saf-mtv.test) `hosts` (Agregar línea 192.168.56.56	saf-mtv.test)
 - Ejecutar `vagrant up`
-- El sitio local debe estar disponible en el url `saf-mtv.test`
+- El sitio local debe estar disponible al abrir la url `saf-mtv.test` en el navegador
 
 - En modo de desarrollo ejecutar `npm run dev` para ver reflejados inmediatamente los cambios en archivos css y js
 
 - En Windows, crear symlink en `public` para la carpeta de imagenes de logotipos temporales, por ejemplo (en una ventana de comando): `mklink /D storage ..\..\storage`
+
+- Para detener la máquina virtual: `vagrant halt`
+- Para eliminar la máquina virtual: `vagrant destroy`
+
+### Compilación de assets
+
+- Para generar los assets desde la carpeta raíz del proyecto ejecutar: `npm run build`
+- `npm run dev` permite escuchar los cambios realizados en el código para refrescar el navegador sin tener que compilar los assets cada vez
 
 ## MTV en Docker
 
