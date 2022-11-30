@@ -14,19 +14,17 @@
     </head>
     <body class="font-sans antialiased">
         <!-- Page Heading -->
-        <header class="bg-white shadow">
+        <header class="bg-white">
             @include('layouts.navigation-guest')
         </header>
 
         <div class="min-h-screen bg-gray-100">
             <!-- Page Content -->
             <main>
-                <div class="container">
-                    <div class="row mt-3">
-                        @include('layouts.alert-notification')
-                    </div>
-                    {{ $slot }}
+                <div class="row">
+                    @include('layouts.alert-notification')
                 </div>
+                {{ $slot }}
             </main>
         </div>
 
