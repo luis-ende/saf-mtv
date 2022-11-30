@@ -1,11 +1,11 @@
 <x-guest-layout>
     <div class="flex flex-col">
         <!-- Menú de preguntas -->
-        <div class="flex flex-row bg-[#691C32] space-x-7 py-3 pr-5 justify-end flex-wrap">
-            <a class="text-[#BC955C] hover:text-[#BC955C] no-underline font-bold" href="#">¿Qué es Mi Tiendita Virtual?</a>
-            <a class="text-[#BC955C] hover:text-[#BC955C] no-underline font-bold" href="#">¿Para quién es?</a>
-            <a class="text-[#BC955C] hover:text-[#BC955C] no-underline font-bold" href="#">¿Cómo formo parte?</a>
-            <a class="text-[#BC955C] hover:text-[#BC955C] no-underline font-bold" href="#">¿Tienes dudas?</a>
+        <div class="flex flex-row bg-[#691C32] space-x-7 py-3 px-5 md:justify-end md:flex-wrap">
+            <a class="text-[#BC955C] hover:text-[#BC955C] no-underline font-bold text-center" href="#">¿Qué es Mi Tiendita Virtual?</a>
+            <a class="text-[#BC955C] hover:text-[#BC955C] no-underline font-bold text-center" href="#">¿Para quién es?</a>
+            <a class="text-[#BC955C] hover:text-[#BC955C] no-underline font-bold text-center" href="#">¿Cómo formo parte?</a>
+            <a class="text-[#BC955C] hover:text-[#BC955C] no-underline font-bold text-center" href="#">¿Tienes dudas?</a>
         </div>
 
         <!-- Carousel -->
