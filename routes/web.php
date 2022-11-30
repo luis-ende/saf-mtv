@@ -54,6 +54,8 @@ Route::get('/productos/edit/{producto}', [ProductosController::class, 'show'])->
 
 Route::delete('/productos/delete/{producto}', [ProductosController::class, 'destroy'])->middleware(['auth', 'verified'])->name('productos.destroy');
 
+Route::post('/productos/importacion', [ProductosController::class, 'importProductos'])->middleware(['auth', 'verified'])->name('productos.import');
+
 Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'index'])->middleware(['auth', 'verified'])->name('centro-notificaciones');
 
 require __DIR__.'/auth.php';

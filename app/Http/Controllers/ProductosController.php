@@ -125,4 +125,28 @@ class ProductosController extends Controller
     public function showArchivos(Request $request, Producto $producto) {
         return $producto->getAllMedia();
     }
+
+    public function importProductos(Request $request) {        
+        $rules = [
+            'map_clave_cabms' => 'required', 
+            'map_nombre' => 'required', 
+            'map_descripcion' => 'required', 
+            'map_precio' => 'required',
+            'productos_archivo' => 'required',
+        ];
+
+        $archivoImportacionPath = '';
+        if ($this->validate($request, $rules)) {
+            $opciones = $request->only(['map_clave_cabms', 'map_nombre', 'map_descripcion', 'map_precio',]);
+            $archivoImportacion = $request->file('productos_archivo');
+            $archivoImportacionPath = $archivoImportacion->store('public/producto_importaciones');
+    
+            (new (ProductosImportadorService))->importarProductos($archivoImportacionPath, $opciones);
+        }
+        
+        $all = array_keys($request->all()); // TODO: TEST
+        $all['import_path'] = $archivoImportacionPath;
+
+        return [$all];
+    }
 }

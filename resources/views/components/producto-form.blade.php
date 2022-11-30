@@ -44,6 +44,7 @@
                                    x-model="tipoProducto"
                                    name="tipo_producto"
                                    value="B"
+                                   checked
                             >
                         </div>
                         <div class="form-check form-check-inline">
