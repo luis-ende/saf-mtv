@@ -10,19 +10,38 @@
             </div>
 
             <div class="p-6">
-                <form>
+                <form method="POST" action="{{ route('oportunidades-negocio.search') }}">
+                    @csrf
                     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Buscar</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
-                        <input type="search" id="default-search" class="block w-full pt-3 pb-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-[#691C32] focus:border-[#691C32]" placeholder="Buscar oportunidades por palabras clave..." required>
+                        <input type="search" 
+                               id="oportunidades-search" name="oportunidades-search" 
+                               class="block w-full pt-3 pb-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-[#691C32] focus:border-[#691C32]" 
+                               placeholder="Buscar oportunidades por palabras clave..."
+                               autofocus
+                               value="{{ $term_busqueda ?? '' }}"
+                               >
                         <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-[#691C32] hover:bg-[#691C32] focus:ring-4 focus:outline-none focus:ring-[#691C32] font-medium rounded-lg text-sm px-4 py-2">Buscar</button>
                     </div>
                 </form>
+                @isset($num_resultados)
+                    @if($num_resultados === 0 and !empty($term_busqueda)) 
+                        <div class="p-0 mt-2 text-slate-700">
+                            No se encontraron oportunidades con el término <span class="font-bold">"{{ $term_busqueda }}</span>".
+                        </div>                        
+                    @endif
+                    @if($num_resultados > 0 && !empty($term_busqueda))
+                        <div class="p-0 mt-2 text-slate-700">
+                            <span class="font-bold">{{ $num_resultados }}</span> Oportunidades encontradas con el término <span class="font-bold">"{{ $term_busqueda }}</span>".
+                        </div>
+                    @endif
+                @endisset
 
                 <div class="flex flex-row">
-                    <div class="basis-3/12 p-5">
+                    <div class="basis-3/12 pt-5 pr-5">
                         <p class="font-bold">Filtros (búsqueda avanzada)</p>
                         <div class="alert alert-info text-sm-center">Si estas familiarizado con las compras públicas, la búsqueda avanzada te servirá para encontrar con mayor precisión los procedimientos que te interesan.</div>
                         <label for="urg">Unidad Responsable de Gasto</label>
@@ -56,21 +75,41 @@
                         <input class="form-control" type="date" id="fecha_hasta" name="fecha_hasta">
                     </div>
                     <div class="basis-9/12">
-                        <div class="flex flex-row flex-nowrap space-x-4 my-3">
-                            <div class="rounded border border-gray-200 bg-gray-300 shadow-md basis-1/5 p-3 text-center font-bold">
-                                <span class="text-lg">{{ $entidades_convocantes }}</span><p class="m-0"> Dependencias</p>
+                        <div class="flex flex-row flex-wrap mt-5">
+                            <div class="basis-1/5 p-1 text-center font-bold flex flex-column">
+                                @svg('govicon-building', ['class' => 'h-20 w-20 p-3 mb-2 inline-block border-4 border-[#BC955C] text-slate-800 rounded-full self-center'])
+                                <div class="flex flex-column">
+                                    <span class="text-xl">{{ $entidades_convocantes }}</span>
+                                    <p class="m-0 text-slate-700 text-base">Dependencias</p>
+                                </div>                                
                             </div>
-                            <div class="rounded border border-gray-200 bg-gray-300 shadow-md basis-1/5 p-3 text-center font-bold">
-                                <span class="text-lg">{{ $procedimientos_proximos }}</span><p class="m-0"> Procedimientos próximos</p>
+                            <div class="basis-1/5 p-1 text-center font-bold flex flex-column">
+                                @svg('carbon-view-next', ['class' => 'basis-1/2 h-20 w-20 p-3 mb-2 inline-block mr-3 border-4 border-[#BC955C] text-slate-800 rounded-full self-center'])
+                                <div class="basis-1/2 flex flex-column">
+                                    <span class="text-xl">{{ $procedimientos_proximos }}</span>
+                                    <p class="m-0 text-slate-700 text-base">Procedimientos próximos</p>
+                                </div>
                             </div>
-                            <div class="rounded border border-gray-200 bg-gray-300 shadow-md basis-1/5 p-3 text-center font-bold">
-                                <span class="text-lg">{{ $licitaciones_publicas }}</span><p class="m-0"> Licitaciones públicas</p>
+                            <div class="basis-1/5 p-1 text-center font-bold flex flex-column">
+                                @svg('gmdi-public', ['class' => 'basis-1/2 h-20 w-20 p-3 mb-2 inline-block mr-3 border-4 border-[#BC955C] text-slate-800 rounded-full self-center'])
+                                <div class="basis-1/2 flex flex-column">
+                                    <span class="text-xl">{{ $licitaciones_publicas }}</span>
+                                    <p class="m-0 text-slate-700 text-base">Licitaciones públicas</p>
+                                </div>
                             </div>
-                            <div class="rounded border border-gray-200 bg-gray-300 shadow-md basis-1/5 p-3 text-center font-bold">
-                                <span class="text-lg">{{ $invitaciones_restringidas }}</span><p class="m-0"> Invitaciones restringidas</p>
+                            <div class="basis-1/5 p-1 text-center font-bold flex flex-column">
+                                @svg('ri-chat-private-line', ['class' => 'basis-1/2 h-20 w-20 p-3 mb-2 inline-block mr-3 border-4 border-[#BC955C] text-slate-800 rounded-full self-center'])                                
+                                <div class="basis-1/2 flex flex-column">
+                                    <span class="text-xl">{{ $invitaciones_restringidas }}</span>
+                                    <p class="m-0 text-slate-700 text-base">Invitaciones restringidas</p>
+                                </div>
                             </div>
-                            <div class="rounded border border-gray-200 bg-gray-300 shadow-md basis-1/5 p-3 text-center font-bold">
-                                <span class="text-lg">{{ $adjudicaciones_directas }}</span><p class="m-0"> Adjudicaciones directas</p>
+                            <div class="basis-1/5 p-1 text-center font-bold flex flex-column">
+                                @svg('eos-assignment-ind-o', ['class' => 'basis-1/2 h-20 w-20 p-3 mb-2 inline-block mr-3 border-4 border-[#BC955C] text-slate-800 rounded-full self-center'])                                                                
+                                <div class="basis-1/2 flex flex-column">
+                                    <span class="text-xl">{{ $adjudicaciones_directas }}</span>
+                                    <p class="m-0 text-slate-700 text-base">Adjudicaciones directas</p>
+                                </div>    
                             </div>
                         </div>
 
@@ -93,47 +132,9 @@
                             </div>
                         </div>
 
-                        <div class="accordion" id="oportunidades-accordion">
-                            @foreach($categorias as $categoria => $oportunidades)
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading-oportunidad-{{ $loop->index }}">
-                                    <button class="accordion-button fw-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#body-oportunidad-{{ $loop->index }}" aria-expanded="true" aria-controls="body-oportunidad-{{ $loop->index }}">
-                                        @svg('govicon-building', ['class' => 'h-5 w-5 inline-block mr-3'])
-                                        {{ $categoria }} ({{ count($oportunidades) }} Procedimiento{{ count($oportunidades) > 1 ? 's' : '' }})
-                                    </button>
-                                </h2>
-                                <div id="body-oportunidad-{{ $loop->index }}" class="accordion-collapse collapse" aria-labelledby="heading-oportunidad-{{ $loop->index }}" data-bs-parent="#oportunidades-accordion">
-                                    <div class="accordion-body flex flex-row flex-wrap">
-                                        @foreach($oportunidades as $oportunidad)
-                                        <div class="w-full rounded border border-dashed border-gray-200 p-2 mb-3">
-                                            <div class="block bg-gray-300 rounded font-bold m-0 text-[#691C32] p-2 mb-2">
-                                                {{ $oportunidad['nombre_procedimiento'] }}
-                                            </div>
-                                            <div class="w-full p-2 flex flex-row">
-                                                <div class="basis-1/2">
-                                                    <p class="m-0"><span class="font-bold">Fecha de publicación:</span> {{ $oportunidad['fecha_publicacion'] }}</p>
-                                                    <p class="m-0"><span class="font-bold">Presentación de propuestas:</span> {{ $oportunidad['fecha_presentacion_propuestas'] }}</p>
-                                                    <p class="m-0"><span class="font-bold">Tipo de contratación:</span> {{ $oportunidad['tipo_contratacion'] }}</p>
-                                                    <p class="m-0"><span class="font-bold">Modo de contratación:</span> {{ $oportunidad['metodo_contratacion'] }}</p>
-                                                    <p class="m-0"><span class="text-sm text-slate-600">*Para poder cotizar necesitas registrarte o iniciar sesión si ya cuentas con un registro en el Padrón de Proveedores</p>
-                                                </div>
-                                                <div class="basis-1/2 flex flex-row items-center space-x-4">
-                                                    <div><p class="basis-1/5 border rounded bg-[#691C32] text-slate-200 text-sm text-center p-3">Programado próximamente</p></div>
-                                                    <div><p class="basis-1/5 border rounded text-sm text-center p-3">Prebases</p></div>
-                                                    <div><p class="basis-1/5 border rounded text-sm text-center p-3">Oportunidades de negocio</p></div>
-                                                    <div><p class="basis-1/5 border rounded text-sm text-center p-3">Pre-cotizar</p></div>
-                                                    <div class="basis-1/5 text-center">
-                                                        @svg('lucide-bell-plus', ['class' => 'h-7 w-7 inline-block mr-3 cursor-pointer'])
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
+                        <x-oportunidades-listado
+                            :categorias="$categorias"                            
+                         />
                     </div>
                 </div>
             </div>

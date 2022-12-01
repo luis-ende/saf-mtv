@@ -51,6 +51,18 @@ class ConvocatoriasOportunidadesSpider extends BasicSpider
      */
     public function parse(Response $response): Generator
     {
+        $concursos = $this->extraerConcursos($response);
+        yield $this->item($concursos);
+
+        $entidadesConvocantes = $this->extraerEntidadesConvocantes($response);
+        yield $this->item($entidadesConvocantes);
+    }
+
+    /**
+     * Obtiene datos de concursos vigentes
+     */
+    private function extraerConcursos(Response $response): array
+    {
         $cards = $response->filter('div.card');
 
         $items = [];
@@ -78,6 +90,18 @@ class ConvocatoriasOportunidadesSpider extends BasicSpider
             $items[] = $cardInfo;
         });
 
-        yield $this->item($items);
+        return $items;
+    }
+
+    /**
+     * Obtiene lista de entidades convocantes
+     */
+    private function extraerEntidadesConvocantes(Response $response) 
+    {
+        $select = $response->filter('#areas_requirentes_select');
+        // TODO: Obtener lista de entidades convocantes
+        
+
+        return [];
     }
 }

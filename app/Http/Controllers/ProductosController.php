@@ -131,8 +131,7 @@ class ProductosController extends Controller
         return $producto->getAllMedia();
     }
 
-    public function importProductos(Request $request) {
-        sleep(5);
+    public function importProductos(Request $request) {        
         if (!Auth::user()) {
             return response()
                 ->json(['error' => 'Importación de productos disponible únicamente para usuarios registrados.'], 401);

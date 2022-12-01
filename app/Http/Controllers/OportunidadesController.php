@@ -2,45 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Spiders\ConvocatoriasOportunidadesSpider;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-use RoachPHP\Roach;
+use App\Repositories\OportunidadRepository;
 
 class OportunidadesController extends Controller
 {
     public function index(Request $request)
     {
-        Roach::startSpider(ConvocatoriasOportunidadesSpider::class);
-        $convocatorias = Roach::collectSpider(ConvocatoriasOportunidadesSpider::class);
-        $convocatorias = $convocatorias[0]->all();
-
-        $categorias = [];
-        $numInvRestringidas = 0;
-        $numAdjDirectas = 0;
-        $numLicitacionesPublicas = 0;
-        foreach($convocatorias as $convocatoria) {
-            $categorias[$convocatoria['entidad_convocante']][] = $convocatoria;
-            if ($convocatoria['metodo_contratacion'] === 'Invitación restringida') {
-                $numInvRestringidas++;
-            }
-            if ($convocatoria['metodo_contratacion'] === 'Adjudicación directa') {
-                $numAdjDirectas++;
-            }
-            if ($convocatoria['metodo_contratacion'] === 'LP - Licitación Pública') {
-                $numLicitacionesPublicas++;
-            }
-        }
+        $oportunidadesRepository = new OportunidadRepository();
+        $convocatorias = $oportunidadesRepository->extraerConvocatorias();
+        $categorias = $oportunidadesRepository->agruparConvocatoriasPorCategoria($convocatorias);
+        $estadisticas = $oportunidadesRepository->obtenerConvocatoriasEstadisticas($convocatorias);        
 
         return view('oportunidades.show', [
             'categorias' => $categorias,
             'entidades_convocantes' => count($categorias),
-            'procedimientos_proximos' => count($convocatorias),
-            'invitaciones_restringidas' => $numInvRestringidas,
-            'adjudicaciones_directas' => $numAdjDirectas,
-            'licitaciones_publicas' => $numLicitacionesPublicas,
+            ...$estadisticas,
         ]);
     }
+
+    public function search(Request $request) 
+    {            
+        $oportunidadesRepository = new OportunidadRepository();
+        $convocatorias = $oportunidadesRepository->extraerConvocatorias($request->input('oportunidades-search'));
+        $categorias = $oportunidadesRepository->agruparConvocatoriasPorCategoria($convocatorias);
+        $estadisticas = $oportunidadesRepository->obtenerConvocatoriasEstadisticas($convocatorias);        
+
+        return view('oportunidades.show', [
+            'term_busqueda' => $request->input('oportunidades-search'),
+            'num_resultados' => count($convocatorias),
+            'categorias' => $categorias,
+            'entidades_convocantes' => count($categorias),
+            ...$estadisticas,
+        ]);
+    }    
 }
