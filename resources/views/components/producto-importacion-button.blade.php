@@ -15,23 +15,32 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div id="opcionesFormContainer" class="modal-body">
-                    <form id="importacion-opciones">
+                    <div x-show="processing">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-grow text-danger" role="status">
+                                <span class="visually-hidden">Importando...</span>
+                            </div>
+                            <p class="ml-3 mt-1">Importando, espere un momento...</p>
+                        </div>
+                    </div>
+                    <div x-show="!processing" id="importacion-opciones">
                         <div class="form-group col-md-12 mb-3">
                             <label class="mr-5">Importar</label>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label" for="tipo_producto_bien">Bienes</label>
                                 <input type="radio"
                                     class="form-check-input"
-                                    id="tipo_producto_bien"                                   
+                                    id="tipo_producto_bien"
                                     name="map_tipo_producto"
                                     value="B"
+                                    checked
                                 >
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label" for="tipo_producto_servicio">Servicios</label>
                                 <input type="radio"
                                     class="form-check-input"
-                                    id="tipo_producto_servicio"                                   
+                                    id="tipo_producto_servicio"
                                     name="map_tipo_producto"
                                     value="S"
                                 >
@@ -40,8 +49,8 @@
                         <p class="mt-3">Relacione las columnas del archivo a importar.</p>
                         <table class="table table-striped table-sm ">
                             <thead class="table-light">
-                            <tr>                            
-                                <th scope="col">Clave CABMS</th>                            
+                            <tr>
+                                <th scope="col">Clave CABMS</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Descripcion</th>
                                 <th scope="col">Precio</th>
@@ -56,7 +65,7 @@
                                             <option :value="column" x-text="column"></option>
                                         </template>
                                     </select>
-                                </td>                            
+                                </td>
                                 <td>
                                     <select id="map_nombre" name="map_nombre" class="form-control" required>
                                         <template x-for="column in previewExcelColumns" :key="column">
@@ -81,11 +90,11 @@
                             </tr>
                             </tbody>
                         </table>
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" @click="importarProductos()">Continuar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" :disabled="processing">Cancelar</button>
+                    <button type="button" class="btn btn-primary" @click="importarProductos()" :disabled="processing">Continuar</button>
                 </div>
             </div>
         </div>
@@ -100,10 +109,12 @@
                 importacionModalForm: null,
                 previewExcelColumns: null,
                 importacionArchivo: null,
+                processing: false,
 
                 async clickImportacionButton () {
                     const { value: file } = await Swal.fire({
-                        title: 'Seleccione el archivo a importar',
+                        title: 'Importación de productos',
+                        html: 'Seleccione el archivo a importar.',
                         input: 'file',
                         showCancelButton: true,
                         confirmButtonColor: '#691C32',
@@ -117,8 +128,7 @@
 
                         this.importacionArchivo = null;
                         // Opciones antes de iniciar la importación
-                        if (file) {     
-                            console.log(file);
+                        if (file) {
                             this.importacionModalForm.show();
                             const reader = new FileReader();
                             reader.onload = e => {
@@ -143,14 +153,13 @@
                                     'error'
                                 )
                             };
-                            
-                            
+
+
                             this.importacionArchivo = file;
                             reader.readAsBinaryString(file)
                         }
                 },
-                importarProductos () {                                        
-                    const importOpcionesForm = document.getElementById('importacion-opciones');
+                importarProductos () {
                     const formData = new FormData();
 
                     formData.append('productos_archivo', this.importacionArchivo, this.importacionArchivo.name);
@@ -158,20 +167,58 @@
                     formData.append('map_nombre', document.getElementById('map_nombre').value);
                     formData.append('map_descripcion', document.getElementById('map_descripcion').value);
                     formData.append('map_precio', document.getElementById('map_precio').value);
-                    
+                    formData.append('map_tipo_producto', document.getElementsByName('map_tipo_producto')[0].value);
+
+                    this.processing = true;
                     fetch('{{ route('productos.import') }}', {
-                            method: "POST", 
+                            method: "POST",
                             credentials: 'same-origin',
                             headers: {
                                 "X-CSRF-Token": '{{ csrf_token() }}',
                             },
                             body: formData,
+                        }).then(response => {
+                            this.processing = false;
+                            if (response.ok) {
+                                sessionStorage.setItem('productosImportados', 'true');
+                                this.importacionModalForm.hide();
+                                document.location.reload();
+                            } else {
+                                response.json().then(json => {
+                                    Swal.fire({
+                                        confirmButtonColor: '#691C32',
+                                        confirmButtonText: 'Aceptar',
+                                        icon: "error",
+                                        title: 'Error de importación',
+                                        html: 'Ocurrió un error al realizar la importación: ' + json.error,
+                                    })
+                                })
+                            }
                         });
-                    this.importacionModalForm.hide();
                 },
                 initData () {
-                    const importOpcionesModal = document.getElementById('importOpcionesModal');                    
-                    this.importacionModalForm = new bootstrap.Modal(importOpcionesModal, { keyboard: true });                    
+                    const importOpcionesModal = document.getElementById('importOpcionesModal');
+                    this.importacionModalForm = new bootstrap.Modal(importOpcionesModal, { keyboard: true });
+
+                    if (sessionStorage.getItem('productosImportados')) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: false,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        });
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Productos importados exitósamente.'
+                        });
+                        sessionStorage.removeItem('productosImportados');
+                    }
                 }
             }
         }

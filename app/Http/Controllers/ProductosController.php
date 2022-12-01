@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
+use App\Imports\ProductosImport;
 use App\Models\Producto;
+
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Throwable;
 
 class ProductosController extends Controller
 {
@@ -41,7 +46,7 @@ class ProductosController extends Controller
 
     public function update(Request $request, Producto $producto)
     {
-        // TODO: Crear validador para reutilizar 
+        // TODO: Crear validador para reutilizar
         $request->validate([
             'clave_cabms' => 'required',
             'nombre_producto' => 'required',
@@ -82,7 +87,7 @@ class ProductosController extends Controller
                 return redirect()->route('catalogo-productos')->with('error', 'No es posible eliminar el producto.');
             }
         }
-    
+
 
         return redirect()->route('catalogo-productos');
     }
@@ -126,27 +131,46 @@ class ProductosController extends Controller
         return $producto->getAllMedia();
     }
 
-    public function importProductos(Request $request) {        
+    public function importProductos(Request $request) {
+        sleep(5);
+        if (!Auth::user()) {
+            return response()
+                ->json(['error' => 'Importación de productos disponible únicamente para usuarios registrados.'], 401);
+        }
+
+        $catalogoId = Auth::user()->persona->catalogoProductos->id;
         $rules = [
-            'map_clave_cabms' => 'required', 
-            'map_nombre' => 'required', 
-            'map_descripcion' => 'required', 
+            'map_clave_cabms' => 'required',
+            'map_nombre' => 'required',
+            'map_descripcion' => 'required',
             'map_precio' => 'required',
             'productos_archivo' => 'required',
+            'map_tipo_producto' => ['required', Rule::in(['B', 'S'])],
         ];
 
-        $archivoImportacionPath = '';
-        if ($this->validate($request, $rules)) {
-            $opciones = $request->only(['map_clave_cabms', 'map_nombre', 'map_descripcion', 'map_precio',]);
-            $archivoImportacion = $request->file('productos_archivo');
-            $archivoImportacionPath = $archivoImportacion->store('public/producto_importaciones');
-    
-            (new (ProductosImportadorService))->importarProductos($archivoImportacionPath, $opciones);
-        }
-        
-        $all = array_keys($request->all()); // TODO: TEST
-        $all['import_path'] = $archivoImportacionPath;
+        try {
+            if ($this->validate($request, $rules)) {
+                $opciones = $request->only([
+                    'map_clave_cabms',
+                    'map_nombre',
+                    'map_descripcion',
+                    'map_precio',
+                    'map_tipo_producto',
+                ]);
+                $archivoImportacion = $request->file('productos_archivo');
+                $archivoImportacionPath = $archivoImportacion->store('public/producto_importaciones');
 
-        return [$all];
+                Excel::import(new ProductosImport($catalogoId, $opciones), $archivoImportacionPath);
+
+                return response()
+                    ->json(['message' => 'Productos importados.'], 201);
+            }
+        } catch (\Throwable $e) {
+            return response()
+                ->json(['error' => $e->getMessage()], 500);
+        }
+
+        return response()
+            ->json(['error' => 'Ocurrió un error al importar los productos.'], 500);
     }
 }

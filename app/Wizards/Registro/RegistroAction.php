@@ -35,7 +35,7 @@ class RegistroAction extends WizardAction
 
         try {
             $registroService->registraPersonaMTV($payload, $personaRepository);
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             return $this->failure(
                 'El proceso de registro no pudo ser completado debido a un error interno.'
             );
