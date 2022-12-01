@@ -6,6 +6,7 @@ use App\Http\Controllers\CatalogoProductosController;
 use App\Http\Controllers\PerfilNegocioController;
 use App\Http\Controllers\CentroNotificacionesController;
 use App\Http\Controllers\ProductosController;
+use App\Http\Controllers\ProgramacionAnualController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,5 +60,7 @@ Route::delete('/productos/delete/{producto}', [ProductosController::class, 'dest
 Route::post('/productos/importacion', [ProductosController::class, 'importProductos'])->middleware(['auth', 'verified'])->name('productos.import');
 
 Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'index'])->middleware(['auth', 'verified'])->name('centro-notificaciones');
+
+Route::get('/programacion-anual', [ProgramacionAnualController::class, 'index'])->name('programacion-anual');
 
 require __DIR__.'/auth.php';
