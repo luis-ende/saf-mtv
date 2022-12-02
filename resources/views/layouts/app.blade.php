@@ -7,8 +7,8 @@
 
         <title>Mi Tiendita Virtual CDMX</title>
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
+        <!-- Fonts (Ver fuente predeterminada en config/google-fonts.php) -->
+        @googlefonts        
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
