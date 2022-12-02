@@ -22,7 +22,7 @@ class OportunidadRepository
 
         if ($filtro && $filtro !== '') {
             $convocatorias = array_filter($convocatorias, function($c) use($filtro) {
-                return str_contains($c['nombre_procedimiento'], $filtro);
+                return str_contains(strtolower($c['nombre_procedimiento']), strtolower($filtro));
             });
         }
 
