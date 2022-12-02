@@ -2,66 +2,56 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-use App\Imports\ProductosImport;
 use App\Models\Producto;
+use App\Imports\ProductosImport;
 
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\ProductoRequest;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Throwable;
 
 class ProductosController extends Controller
 {
     /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function store(Request $request): RedirectResponse
+    public function store(ProductoRequest $request): RedirectResponse
     {
-        $request->validate([
-            'clave_cabms' => 'required',
-            'nombre_producto' => 'required',
-            'descripcion_producto' => 'required',
-            'precio' => 'required'
-        ]);
-
+        $productoFields = $request->validated();
         Producto::create([
             'id_cat_productos' => Auth::user()->persona->catalogoProductos->id,
-            'clave_cabms' => $request->input('clave_cabms'),
-            'nombre' => $request->input('nombre_producto'),
-            'descripcion' => $request->input('descripcion_producto'),
-            'tipo' => $request->input('tipo_producto'),
-            'precio' => $request->input('precio'),
-            'marca' => $request->input('modelo'),
-            'color' => $request->input('color'),
-            'material' => $request->input('material'),
+            'clave_cabms' => $productoFields['clave_cabms'],
+            'nombre' => $productoFields['nombre_producto'],
+            'descripcion' => $productoFields['descripcion_producto'],
+            'tipo' => $productoFields['tipo_producto'],
+            'precio' => $productoFields['precio'],
+            'marca' => $productoFields['marca'],
+            'modelo' => $productoFields['modelo'],
+            'color' => $productoFields['color'],
+            'material' => $productoFields['material'],
         ]);
 
         return redirect()->route('catalogo-productos')
             ->with('success', 'Nuevo producto agregado al catálogo de productos.');
     }
 
-    public function update(Request $request, Producto $producto)
+    public function update(ProductoRequest $request, Producto $producto)
     {
-        // TODO: Crear validador para reutilizar
-        $request->validate([
-            'clave_cabms' => 'required',
-            'nombre_producto' => 'required',
-            'descripcion_producto' => 'required',
-            'precio' => 'required'
-        ]);
-
-        $producto['clave_cabms'] = $request->input('clave_cabms');
-        $producto['nombre'] = $request->input('nombre_producto');
-        $producto['descripcion'] = $request->input('descripcion_producto');
-        $producto['tipo'] = $request->input('tipo_producto');
-        $producto['precio'] = $request->input('precio');
-        $producto['marca'] = $request->input('modelo');
-        $producto['color'] = $request->input('color');
-        $producto['material'] = $request->input('material');
+        $productoFields = $request->validated();
+        $producto['clave_cabms'] = $productoFields['clave_cabms'];
+        $producto['nombre'] = $productoFields['nombre_producto'];
+        $producto['descripcion'] = $productoFields['descripcion_producto'];
+        $producto['tipo'] = $productoFields['tipo_producto'];
+        $producto['precio'] = $productoFields['precio'];
+        $producto['marca'] = $productoFields['marca'];
+        $producto['modelo'] = $productoFields['modelo'];
+        $producto['color'] = $productoFields['color'];
+        $producto['material'] = $productoFields['material'];
         $producto->save();
 
         return redirect()->route('catalogo-productos')
@@ -144,7 +134,10 @@ class ProductosController extends Controller
             'map_descripcion' => 'required',
             'map_precio' => 'required',
             'productos_archivo' => 'required',
-            'map_tipo_producto' => ['required', Rule::in(['B', 'S'])],
+            'map_tipo_producto' => ['required', Rule::in([                
+                    Producto::TIPO_PRODUCTO_BIEN_ID, 
+                    Producto::TIPO_PRODUCTO_SERVICIO_ID,                
+                ])],
         ];
 
         try {
