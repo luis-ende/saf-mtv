@@ -8,7 +8,7 @@
 - Tailwind 3
 - Alpine.js
 
-## Dependencias:
+## Dependencias externas:
 
 - Consulta de RFC en Padrón de Proveedores mediante API 
 - Consulta de CURP mediante API
@@ -23,8 +23,8 @@
  
 - Para levantar el proyecto en modo local ir a la carpeta `Homestead` de la carpeta del repositorio MTV
 - Copiar el archivo `Homestead.example.yaml` como `Homestead.yaml` y ajustar rutas de directorios locales (en Windows el formato de las rutas debe ajustarse, ver https://laravel.com/docs/9.x/homestead#configuring-shared-folders)
-- Ejecutar `composer install` (es necesario tener instalado Composer)
-- Es necesario agregar el DNS local (saf-mtv.test) `hosts` (Agregar línea 192.168.56.56	saf-mtv.test)
+- Ejecutar `composer install` (es necesario tener instalados PHP y Composer en la máquina host)
+- Es necesario agregar el DNS local (saf-mtv.test) `hosts` (Por ejemplo, agregar la línea: 192.168.56.56	saf-mtv.test)
 - Ejecutar `vagrant up`
 - El sitio local debe estar disponible al abrir la url `saf-mtv.test` en el navegador
 
@@ -49,4 +49,4 @@
 - Instrucciones para instalar Docker y Docker Compose en Linux: [https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
   - En Windows [https://docs.docker.com/desktop/install/windows-install/](https://docs.docker.com/desktop/install/windows-install/) 
 - Desde la carpeta raíz del proyecto, ir al subdirectorio `scripts` y ejecutar `docker-build.sh` para generar la imagen de Docker y levantar los contenedores del proyecto
-	- En Windows: Abrir el archivo docker-build.sh y comentar o descomentar líneas según el sistema operativo (Windows/Linux). Ejecutar en PowerShell como Administrador
+	- En Windows: Abrir el archivo docker-build.sh y comentar o descomentar líneas según el sistema operativo (Windows/Linux). Ejecutar en una terminal (preferiblemente PowerShell) como Administrador
