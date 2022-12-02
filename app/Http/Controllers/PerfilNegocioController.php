@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\GrupoPrioritarioRepository;
-use App\Repositories\PersonaRepository;
-use App\Repositories\SectorRepository;
-use App\Repositories\TipoPymeRepository;
 use Illuminate\Http\Request;
-
-use App\Repositories\VialidadRepository;
-
 use Illuminate\Support\Facades\Auth;
+
+use App\Repositories\SectorRepository;
+use App\Repositories\PersonaRepository;
+use App\Repositories\TipoPymeRepository;
+use App\Repositories\VialidadRepository;
+use App\Http\Requests\DescripcionNegocioRequest;
+use App\Repositories\GrupoPrioritarioRepository;
 
 class PerfilNegocioController extends Controller
 {
@@ -52,6 +52,8 @@ class PerfilNegocioController extends Controller
 
     public function updateDescripcionNegocio(Request $request)
     {
+        //$descripcionNegocioFields = $request->validated();
+
         $perfilNegocio = Auth::user()->persona->perfil_negocio;
         $perfilNegocio['id_grupo_prioritario'] = $request->input('id_grupo_prioritario');
         $perfilNegocio['id_tipo_pyme'] = $request->input('id_tipo_pyme');
