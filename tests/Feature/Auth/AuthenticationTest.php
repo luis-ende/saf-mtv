@@ -2,10 +2,12 @@
 
 namespace Tests\Feature\Auth;
 
+use Tests\TestCase;
 use App\Models\User;
+use App\Models\Persona;
+use App\Models\PersonaFisica;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {
@@ -20,10 +22,10 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen()
     {
-        $user = User::factory()->create();
+        $user = $this->createTestUser();
 
         $response = $this->post('/login', [
-            'email' => $user->email,
+            'rfc' => $user->rfc,
             'password' => 'password',
         ]);
 
@@ -33,13 +35,24 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_not_authenticate_with_invalid_password()
     {
-        $user = User::factory()->create();
+        $user = $this->createTestUser();
 
         $this->post('/login', [
-            'email' => $user->email,
+            'rfc' => $user->rfc,
             'password' => 'wrong-password',
         ]);
 
         $this->assertGuest();
+    }
+
+    private function createTestUser()
+    {
+        $personaFisica = PersonaFisica::factory()->create();
+        $persona = Persona::factory()->create([
+            'personable_id' => $personaFisica->id, 
+            'personable_type' => gettype($personaFisica)
+        ]);
+
+        return User::factory()->create(['id_persona' => $persona->id]);
     }
 }
