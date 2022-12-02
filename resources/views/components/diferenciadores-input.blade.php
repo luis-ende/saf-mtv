@@ -32,7 +32,7 @@
     }
 </style>
 
-<label for="diferenciadores">Diferenciadores empresariales:</label>
+<label class="font-medium" for="diferenciadores">Diferenciadores empresariales:</label>
 <input
     x-data="diferenciadoresLista()"
     x-init="inicializaLista()"

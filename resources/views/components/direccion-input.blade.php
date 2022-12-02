@@ -18,7 +18,7 @@
 <div x-data="domicilioDetalles()" class="row g-3" x-init="refreshCPAsentamiento(); isLoading = false; ">
     <input type="hidden" id="id_asentamiento" x-bind:value="asentamientoSeleccion" name="id_asentamiento">
     <div class="form-group col-md-3">
-        <label for="cp">Código postal:</label>
+        <label class="font-medium" for="cp">Código postal:</label>
         <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
         <input type="text" class="form-control" maxlength="8" id="cp" name="cp" x-model="cpText" required
                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
@@ -27,7 +27,7 @@
         <label x-show="errorMessage != ''" x-text="errorMessage" class="text-sm text-red-600 space-y-1"></label>
     </div>
     <div class="form-group col-md-3">
-        <label for="entidad_federativa">Entidad federativa:</label>
+        <label class="font-medium" for="entidad_federativa">Entidad federativa:</label>
         <select x-model="asentamientoSeleccion" class="form-control" id="entidad_federativa" name="entidad_federativa" required>
             <template x-for="entidad in entidades" :key="entidad.id">
                 <option :value="entidad.id" x-text="entidad.nombre"></option>
@@ -35,7 +35,7 @@
         </select>
     </div>
     <div class="form-group col-md-3">
-        <label for="alcaldia">Alcaldía:</label>
+        <label class="font-medium" for="alcaldia">Alcaldía:</label>
         <select x-model="asentamientoSeleccion" class="form-control" id="alcaldia" name="alcaldia" required>
             <template x-for="alcaldia in alcaldias" :key="alcaldia.id">
                 <option :value="alcaldia.id" x-text="alcaldia.nombre"></option>
@@ -43,7 +43,7 @@
         </select>
     </div>
     <div class="form-group col-md-3">
-        <label for="colonia">Colonia:</label>
+        <label class="font-medium" for="colonia">Colonia:</label>
         <select x-model="asentamientoSeleccion" class="form-control" id="colonia" name="colonia" required>
             <template x-for="colonia in colonias" :key="colonia.id">
                 <option :value="colonia.id" x-text="colonia.nombre"></option>
@@ -51,7 +51,7 @@
         </select>
     </div>
     <div class="form-group col-md-3">
-        <label for="id_tipo_vialidad">Tipo vialidad:</label>
+        <label class="font-medium" for="id_tipo_vialidad">Tipo vialidad:</label>
         <select class="form-control" id="id_tipo_vialidad" name="id_tipo_vialidad" x-model="idTipoVialidad"
                 x-on:change="tipoVialidad = $event.target.options[$event.target.selectedIndex].text" required>
             <option value="0"> -- Selecciona -- </option>
@@ -63,15 +63,15 @@
         </select>
     </div>
     <div class="form-group col-md-3">
-        <label for="vialidad" x-text="obtieneTipoVialidadLabel()"></label>
+        <label class="font-medium" for="vialidad" x-text="obtieneTipoVialidadLabel()"></label>
         <input type="text" class="form-control" id="vialidad" name="vialidad" required value="{{ $vialidad }}">
     </div>
     <div class="form-group col-md-3">
-        <label for="num_ext">Número exterior:</label>
+        <label class="font-medium" for="num_ext">Número exterior:</label>
         <input type="text" class="form-control" id="num_ext" name="num_ext" required value="{{ $numExt }}">
     </div>
     <div class="form-group col-md-3">
-        <label for="num_int">Número interior:</label>
+        <label class="font-medium" for="num_int">Número interior:</label>
         <input type="text" class="form-control" id="num_int" name="num_int" value="{{ $numInt }}">
     </div>
 </div>

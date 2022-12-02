@@ -36,7 +36,7 @@
         @csrf
         <div class="flex flex-row">
             <div class="form-group">
-                <label>Logotipo:</label>
+                <label class="font-medium" for="logotipo">Logotipo:</label>
                 <x-input-image-viewer
                     :id="__('logotipo')"
                     :name="__('logotipo')"
@@ -46,7 +46,7 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label for="id_grupo_prioritario">¿Perteneces a algún sector prioritario?:</label>
+                    <label class="font-medium" for="id_grupo_prioritario">¿Perteneces a algún sector prioritario?:</label>
                     <select class="form-control" id="id_grupo_prioritario" name="id_grupo_prioritario" x-model="grupoPrioritario" autofocus required>
                         <option value="0"> -- Ninguno --</option>
                         @foreach ((array) $grupos_prioritarios as $grupo)
@@ -57,7 +57,7 @@
                     </select>
                 </div>
                 <div class="form-group col-md-4" x-show="grupoPrioritario == grupoPrioritarioMIPYMEId">
-                    <label for="id_tipo_pyme">Tipo:</label>
+                    <label class="font-medium" for="id_tipo_pyme">Tipo:</label>
                     <select class="form-control" id="id_tipo_pyme" name="id_tipo_pyme" x-model="tipoPyme">
                         <option selected value="0"> -- Seleccionar --</option>
                         @foreach ((array) $tipos_pyme as $tipo)
@@ -68,7 +68,7 @@
                     </select>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="id_sector">Sector:</label>
+                    <label class="font-medium" for="id_sector">Sector:</label>
                     <select class="form-control" id="id_sector" name="id_sector" x-model="sector">
                         <option selected value="0"> -- Seleccionar --</option>
                         @foreach ((array) $sectores as $sector)
@@ -79,13 +79,13 @@
                     </select>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="id_categoria_scian">Categoría:</label>
+                    <label class="font-medium" for="id_categoria_scian">Categoría:</label>
                     <select class="form-control" id="id_categoria_scian" name="id_categoria_scian">
                         <option selected value="0"> -- Seleccionar --</option>
                     </select>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="lema_negocio">Lema del negocio:</label>
+                    <label class="font-medium" for="lema_negocio">Lema del negocio:</label>
                     <input type="text" class="form-control" id="lema_negocio" name="lema_negocio"
                         value="{{ $lema }}" required>
                     <x-input-error :messages="$errors->get('lema_negocio')" class="mt-2"/>
@@ -97,7 +97,7 @@
         </div>
         <div class="row">
                 <div class="form-group col-md-12">
-                    <label for="descripcion_negocio">Descripción del negocio:</label>
+                    <label class="font-medium" for="descripcion_negocio">Descripción del negocio:</label>
                     <textarea class="form-control" id="descripcion_negocio" name="descripcion_negocio" required>{{ $descripcionNegocio }}</textarea>
                     <x-input-error :messages="$errors->get('descripcion_negocio')" class="mt-2"/>
                 </div>
@@ -106,7 +106,7 @@
             <div class="form-group col-md-4">
                 <div class="flex flex-row space-x-2 my-2">
                     @svg('iconoir-internet', ['class' => 'h-5 w-5 inline-block'])
-                    <label for="sitio_web">Sitio Web:</label>
+                    <label class="font-medium" for="sitio_web">Sitio Web:</label>
                 </div>
                 <x-input-url-link
                     :id="__('sitio_web')"
@@ -119,7 +119,7 @@
             <div class="form-group col-md-4">
                 <div class="flex flex-row space-x-2 my-2">
                     @svg('iconpark-facebookone-o', ['class' => 'h-5 w-5 inline-block'])
-                    <label for="cuenta_facebook">Facebook:</label>
+                    <label class="font-medium" for="cuenta_facebook">Facebook:</label>
                 </div>
                 <x-input-url-link
                     :id="__('cuenta_facebook')"
@@ -132,7 +132,7 @@
             <div class="form-group col-md-4">
                 <div class="flex flex-row space-x-2 my-2">
                     @svg('bi-twitter', ['class' => 'h-5 w-5 inline-block'])
-                    <label for="cuenta_twitter">Twitter:</label>
+                    <label class="font-medium" for="cuenta_twitter">Twitter:</label>
                 </div>
                 <x-input-url-link
                     :id="__('cuenta_twitter')"
@@ -145,7 +145,7 @@
             <div class="form-group col-md-4">
                 <div class="flex flex-row space-x-2 my-2">
                     @svg('antdesign-linkedin-o', ['class' => 'h-5 w-5 inline-block'])
-                    <label for="cuenta_linkedin">LinkedIn:</label>
+                    <label class="font-medium" for="cuenta_linkedin">LinkedIn:</label>
                 </div>
                 <x-input-url-link
                     :id="__('cuenta_linkedin')"
@@ -158,7 +158,7 @@
             <div class="form-group col-md-4">
                 <div class="flex flex-row space-x-2 my-2">
                     @svg('ri-whatsapp-line', ['class' => 'h-5 w-5 inline-block'])
-                    <label for="num_whatsapp">Whatsapp:</label>
+                    <label class="font-medium" for="num_whatsapp">Whatsapp:</label>
                 </div>
                 <input type="text" class="form-control" id="num_whatsapp" name="num_whatsapp"
                        value="{{ $num_whatsapp }}">

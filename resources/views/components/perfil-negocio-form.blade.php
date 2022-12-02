@@ -38,7 +38,7 @@
             </div>
             <div class="card-body row g-3">
                 <div class="form-group col-md-3">
-                    <label class="mr-5">Eres persona</label>
+                    <label class="mr-5 font-medium">Eres persona</label>
                     <div class="form-check form-check-inline">
                         <label class="form-check-label" for="tipo_persona_fisica">física</label>
                         <input type="radio"
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="form-group col-md-3" x-show="tipoPersona === 'F'">
-                    <label for="curp">CURP:</label>
+                    <label class="font-medium" for="curp">CURP:</label>
                     @if ($mode === 'wizard')
                         <x-curp-input value="{{ $curp }}" x-bind:required="tipoPersona === 'F'"/>
                         <x-input-error :messages="$errors->get('curp')" class="mt-2"/>
@@ -74,7 +74,7 @@
                     @endif
                 </div>
                 <div class="form-group col-md-3" x-show="tipoPersona === 'F'">
-                    <label for="rfc_sin_homoclave">RFC:</label>
+                    <label class="font-medium" for="rfc_sin_homoclave">RFC:</label>
                     <input type="text" class="form-control"
                            style="background-color: #efefef"
                            id="rfc_sin_homoclave"
@@ -83,7 +83,7 @@
                            readonly>
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="rfc" x-text="tipoPersona === 'F' ? 'Homoclave:' : 'RFC con homoclave:'"></label>
+                    <label class="font-medium" for="rfc" x-text="tipoPersona === 'F' ? 'Homoclave:' : 'RFC con homoclave:'"></label>
                     @if ($mode === 'wizard')
                         <x-rfc-validacion-input value="{{ $rfc }}"/>
                         <x-input-error :messages="$errors->get('rfc_completo')" class="mt-2"/>
@@ -92,32 +92,32 @@
                     @endif
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
-                    <label for="fecha_nacimiento">Fecha de nacimiento:</label>
+                    <label class="font-medium" for="fecha_nacimiento">Fecha de nacimiento:</label>
                     <input type="text" class="form-control" style="background-color: #efefef" id="fecha_nacimiento"
                            name="fecha_nacimiento" value="{{ $fechaNacimiento }}" readonly>
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
-                    <label for="genero">Género:</label>
+                    <label class="font-medium" for="genero">Género:</label>
                     <input type="text" class="form-control" style="background-color: #efefef" id="genero"
                            name="genero" value="{{ $genero }}" readonly>
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
-                    <label for="nombre">Nombre:</label>
+                    <label class="font-medium" for="nombre">Nombre:</label>
                     <input type="text" class="form-control" style="background-color: #efefef" id="nombre"
                            name="nombre" value="{{ $nombre }}" readonly>
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
-                    <label for="primer_ap">Primer apellido:</label>
+                    <label class="font-medium" for="primer_ap">Primer apellido:</label>
                     <input type="text" class="form-control" style="background-color: #efefef" id="primer_ap"
                            name="primer_ap" value="{{ $primerAp }}">
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
-                    <label for="segundo_ap">Segundo apellido:</label>
+                    <label class="font-medium" for="segundo_ap">Segundo apellido:</label>
                     <input type="text" class="form-control" style="background-color: #efefef" id="segundo_ap"
                            name="segundo_ap" value="{{ $segundoAp }}" readonly>
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'M'">
-                    <label for="fecha_constitucion">Fecha de constitución:</label>
+                    <label class="font-medium" for="fecha_constitucion">Fecha de constitución:</label>
                     <input type="date" class="form-control" id="fecha_constitucion" name="fecha_constitucion"
                            value="{{ $fechaConstitucion }}"
                            x-bind:required="tipoPersona === 'M'"
@@ -125,7 +125,7 @@
                     <x-input-error :messages="$errors->get('rfc')" class="mt-2"/>
                 </div>
                 <div class="form-group col-md-12" x-show="tipoPersona === 'M'">
-                    <label for="razon_social">Razón social:</label>
+                    <label class="font-medium" for="razon_social">Razón social:</label>
                     <input type="text" class="form-control" id="razon_social" name="razon_social"
                            value="{{ $razonSocial }}"
                            x-bind:required="tipoPersona === 'M'"
@@ -165,7 +165,7 @@
             </div>
             <div class="card-body row g-3">
                 <div class="form-group col-md-6">
-                    <label for="password">Contraseña:</label>
+                    <label class="font-medium" for="password">Contraseña:</label>
                     <x-text-input id="password" class="block mt-1 w-full"
                                   type="password"
                                   name="password"
@@ -176,7 +176,7 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="password_confirmation">Confirmar contraseña:</label>
+                    <label class="font-medium" for="password_confirmation">Confirmar contraseña:</label>
                     <x-text-input id="password_confirmation" class="block mt-1 w-full"
                                   type="password"
                                   name="password_confirmation"

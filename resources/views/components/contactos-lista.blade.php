@@ -72,41 +72,41 @@
                 <div id="contactoFormContainer" class="modal-body">
                     <input type="hidden" id="contacto_id" name="contacto_id">
                     <div class="form-group">
-                        <label for="contacto_nombre">Nombre:</label>
+                        <label class="font-medium" for="contacto_nombre">Nombre:</label>
                         <input type="text" class="form-control" id="contacto_nombre" name="contacto_nombre" maxlength="120" data-contacto-campo-requerido="1">
                         <label x-show="errors['contacto_nombre']" x-text="errors['contacto_nombre']" class="text-sm text-red-600 space-y-1"></label>
                     </div>
                     <div class="form-group">
-                        <label for="contacto_primer_ap">Primer apellido:</label>
+                        <label class="font-medium" for="contacto_primer_ap">Primer apellido:</label>
                         <input type="text" class="form-control" id="contacto_primer_ap" name="contacto_primer_ap" maxlength="60" data-contacto-campo-requerido="1">
                         <label x-show="errors['contacto_primer_ap']" x-text="errors['contacto_primer_ap']" class="text-sm text-red-600 space-y-1"></label>
                     </div>
                     <div class="form-group">
-                        <label for="contacto_segundo_ap">Segundo apellido:</label>
+                        <label class="font-medium" for="contacto_segundo_ap">Segundo apellido:</label>
                         <input type="text" class="form-control" id="contacto_segundo_ap" name="contacto_segundo_ap" maxlength="60" data-contacto-campo-requerido="1">
                         <label x-show="errors['contacto_segundo_ap']" x-text="errors['contacto_segundo_ap']" class="text-sm text-red-600 space-y-1"></label>
                     </div>
                     <div class="form-group">
-                        <label for="contacto_cargo">Cargo:</label>
+                        <label class="font-medium" for="contacto_cargo">Cargo:</label>
                         <input type="text" class="form-control" id="contacto_cargo" name="contacto_cargo" data-contacto-campo-requerido="1">
                         <label x-show="errors['contacto_cargo']" x-text="errors['contacto_cargo']" class="text-sm text-red-600 space-y-1"></label>
                     </div>
                     <div class="form-group">
-                        <label for="contacto_telefono_oficina">Teléfono oficina:</label>
+                        <label class="font-medium" for="contacto_telefono_oficina">Teléfono oficina:</label>
                         <input type="text" class="form-control" id="contacto_telefono_oficina" name="contacto_telefono_oficina" maxlength="15" data-contacto-campo-requerido="1">
                         <label x-show="errors['contacto_telefono_oficina']" x-text="errors['contacto_telefono_oficina']" class="text-sm text-red-600 space-y-1"></label>
                     </div>
                     <div class="form-group">
-                        <label for="contacto_extension">Extensión:</label>
+                        <label class="font-medium" for="contacto_extension">Extensión:</label>
                         <input type="text" class="form-control" id="contacto_extension" name="contacto_extension" maxlength="8">
                     </div>
                     <div class="form-group">
-                        <label for="contacto_telefono_movil">Teléfono móvil:</label>
+                        <label class="font-medium" for="contacto_telefono_movil">Teléfono móvil:</label>
                         <input type="text" class="form-control" id="contacto_telefono_movil" name="contacto_telefono_movil" maxlength="12" data-contacto-campo-requerido="1">
                         <label x-show="errors['contacto_telefono_movil']" x-text="errors['contacto_telefono_movil']" class="text-sm text-red-600 space-y-1"></label>
                     </div>
                     <div class="form-group">
-                        <label for="contacto_email">Correo electrónico:</label>
+                        <label class="font-medium" for="contacto_email">Correo electrónico:</label>
                         <input type="email" class="form-control" id="contacto_email" name="contacto_email" data-contacto-campo-requerido="1" placeholder="contacto@ejemplo.com">
                         <label x-show="errors['contacto_email']" x-text="errors['contacto_email']" class="text-sm text-red-600 space-y-1"></label>
                     </div>

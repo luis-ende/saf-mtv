@@ -35,7 +35,7 @@
             <div class="{{ $showImageViewer ? 'basis-2/3' : '' }}">
                 <div class="row">
                     <div class="form-group col-md-12 mb-3">
-                        <label class="mr-5">¿Qué producto ofreces?</label>
+                        <label class="font-medium" class="mr-5">¿Qué producto ofreces?</label>
                         <div class="form-check form-check-inline">
                             <label class="form-check-label" for="tipo_producto_bien">Bien</label>
                             <input type="radio"
@@ -61,7 +61,7 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-3">
-                        <label for="clave_cabms">Clave CABMS:</label>
+                        <label class="font-medium" for="clave_cabms">Clave CABMS:</label>
                         <div class="flex flex-row">
                             <input type="text"
                                    class="form-control"
@@ -79,21 +79,21 @@
                         </div>
                     </div>
                     <div class="form-group col-md-9">
-                        <label for="nombre_producto">Nombre del producto:</label>
+                        <label class="font-medium" for="nombre_producto">Nombre del producto:</label>
                         <input type="text" class="form-control" id="nombre_producto" name="nombre_producto"
                                value="{{ $nombreProducto }}" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="descripcion_producto">Descripcion:</label>
+                        <label class="font-medium" for="descripcion_producto">Descripcion:</label>
                         <textarea class="form-control" id="descripcion_producto"
                                   name="descripcion_producto" maxlength="140">{{ $descripcionProducto }}</textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="precio">Precio:</label>
+                        <label class="font-medium" for="precio">Precio:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text">$</span>
                             <input type="number"
@@ -105,22 +105,22 @@
                         </div>
                     </div>
                     <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                        <label for="marca">Marca:</label>
+                        <label class="font-medium" for="marca">Marca:</label>
                         <input type="text" class="form-control" id="marca" name="marca"
                                value="{{ $marca }}">
                     </div>
                     <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                        <label for="modelo">Modelo:</label>
+                        <label class="font-medium" for="modelo">Modelo:</label>
                         <input type="text" class="form-control" id="modelo" name="modelo"
                                value="{{ $modelo }}">
                     </div>
                     <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                        <label for="color">Color:</label>
+                        <label class="font-medium" for="color">Color:</label>
                         <input type="text" class="form-control" id="color" name="color"
                                value="{{ $color }}">
                     </div>
                     <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                        <label for="material">Material:</label>
+                        <label class="font-medium" for="material">Material:</label>
                         <input type="text" class="form-control" id="material" name="material"
                                value="{{ $material }}">
                     </div>
