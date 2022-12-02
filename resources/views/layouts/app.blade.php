@@ -6,9 +6,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Mi Tiendita Virtual CDMX</title>
-
-        <!-- Fonts (Ver fuente predeterminada en config/google-fonts.php) -->
-        @googlefonts        
+        
+        @googlefonts
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
