@@ -15,8 +15,12 @@ RUN apt-get update \
         libxml2-dev \
         libpq-dev \
         libzip-dev \
+        libmagickwand-dev \
+        libwebp-dev \
         nodejs \
         postgresql-client-13 \
+    && mkdir -p /usr/src/php/ext/imagick \
+    && curl -fsSL https://github.com/Imagick/imagick/archive/06116aa24b76edaf6b1693198f79e6c295eda8a9.tar.gz | tar xvz -C "/usr/src/php/ext/imagick" --strip 1 \
     && npm install -g npm \
     && apt-get -y autoremove \
     && apt-get clean \
@@ -24,7 +28,8 @@ RUN apt-get update \
 
 # Install PHP extensions
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
-RUN docker-php-ext-install pdo pdo_pgsql pgsql mbstring exif pcntl zip bcmath gd intl exif
+RUN docker-php-ext-configure gd --with-jpeg --with-freetype --with-webp
+RUN docker-php-ext-install pdo pdo_pgsql pgsql mbstring exif pcntl zip bcmath gd intl exif imagick
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
