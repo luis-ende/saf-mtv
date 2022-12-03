@@ -55,9 +55,9 @@
         <select class="form-control" id="id_tipo_vialidad" name="id_tipo_vialidad" x-model="idTipoVialidad"
                 x-on:change="tipoVialidad = $event.target.options[$event.target.selectedIndex].text" required>
             <option value="0"> -- Selecciona -- </option>
-            @foreach ((array) $tipos_vialidad as $tipo_vialidad)
-                <option value={{ $tipo_vialidad['id'] }}>
-                    {{ $tipo_vialidad['tipo_vialidad'] }}
+            @foreach ($tipos_vialidad as $tipo_vialidad)
+                <option value={{ $tipo_vialidad->id }}>
+                    {{ $tipo_vialidad->tipo_vialidad }}
                 </option>
             @endforeach
         </select>
@@ -129,7 +129,7 @@
                                 }
                             });
 
-                            if (res.length >= 1) {                                
+                            if (res.length >= 1) {
                                 this.asentamientoSeleccion = res[0]['id'];
                             }
                         });

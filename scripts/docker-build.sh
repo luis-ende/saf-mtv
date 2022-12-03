@@ -21,3 +21,4 @@ docker compose exec app composer install
 docker compose exec app npm install
 docker compose exec app npm run build
 docker compose exec app php artisan migrate
+docker compose exec app php db:seed
