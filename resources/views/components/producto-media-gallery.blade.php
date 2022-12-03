@@ -40,8 +40,8 @@
                     <source :src="item.original_url" :type="item.mime_type">
                 </video>
                 <a x-show="item.mime_type.startsWith('image')"
-                   @click="$dispatch('img-modal', {  imgModalSrc: item.original_url, imgModalDesc: item.name })" class="cursor-pointer">
-                    <img class="rounded-t-lg" :src="item.original_url" :alt="item.name">
+                   @click="$dispatch('img-modal', { imgModalSrc: item.original_url, imgModalDesc: item.name })" class="cursor-pointer">
+                    <img class="rounded-t-lg w-60 h-40" :src="item.thumb_url" :alt="item.name">
                 </a>
                 <div x-show="!item.mime_type.startsWith('image') && !item.mime_type.startsWith('video')" class="flex flex-row justify-content-center">
                     @svg('bx-file', ['class' => 'h-12 w-12 mt-5 text-slate-600 h-28'])

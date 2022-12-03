@@ -39,6 +39,8 @@
 
 - La máquina virtual ejecuta un script bash (ver `Homestead/after.ssh`) después de arrancar para ejecutar algunos comandos adicionales para el sitio MTV.
 
+**IMPORTANTE:** Se recomienda levantar el proyecto en el ambiente de desarrollo con Homestead, ya que la máquina virtual contiene todos los requerimientos necesarios que de otra manera sería necesario instalar en el host.
+
 ### Compilación de assets
 
 - Para generar los assets desde la carpeta raíz del proyecto ejecutar: `npm run build`

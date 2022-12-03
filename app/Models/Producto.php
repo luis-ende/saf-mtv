@@ -34,12 +34,35 @@ class Producto extends Model implements HasMedia
         'material',
     ];
 
-    public function getAllMedia(): array
+    public function getAllMedia()
     {
-        $fotos = array_map([$this, 'getMediaItem'], $this->getMedia('fotos')->toArray());
-        $archivos = array_map([$this, 'getMediaItem'], $this->getMedia('archivos')->toArray());
+        $mediaItems = [];
+        $mediaFotos = $this->getMedia('fotos');
+        foreach($mediaFotos as $foto) {
+            $mediaItems[] = [
+                'id' => $foto['id'],
+                'name' => $foto['name'],
+                'file_name' => $foto['file_name'],
+                'mime_type' => $foto['mime_type'],
+                'size' => $foto['size'],
+                'original_url' => $foto['original_url'],
+                'thumb_url' => $foto->getUrl('thumb-cropped'),
+            ];
+        }
 
-        return array_merge($fotos, $archivos);
+        $mediaArchivos = $this->getMedia('archivos');
+        foreach($mediaArchivos as $archivo) {
+            $mediaItems[] = [
+                'id' => $archivo['id'],
+                'name' => $archivo['name'],
+                'file_name' => $archivo['file_name'],
+                'mime_type' => $archivo['mime_type'],
+                'size' => $archivo['size'],
+                'original_url' => $archivo['original_url'],
+            ];
+        }
+
+        return $mediaItems;
     }
 
     public function catalogo()
@@ -47,15 +70,9 @@ class Producto extends Model implements HasMedia
         return $this->belongsTo(CatalogoProductos::class, 'id_cat_productos');
     }
 
-    private function getMediaItem(array $item): array
+    public function registerMediaConversions(Media $media = null): void
     {
-        return [
-            'id' => $item['id'],
-            'name' => $item['name'],
-            'file_name' => $item['file_name'],
-            'mime_type' => $item['mime_type'],
-            'size' => $item['size'],
-            'original_url' => $item['original_url'],
-        ];
+        $this->addMediaConversion('thumb-cropped')
+            ->crop('crop-center', 240, 160);
     }
 }

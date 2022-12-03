@@ -9,7 +9,7 @@
 @php($modelo = isset($producto) ? $producto->modelo : ( isset($step) ? $step['modelo'] : old('modelo')))
 @php($color = isset($producto) ? $producto->color : ( isset($step) ? $step['color'] : old('color')))
 @php($material = isset($producto) ? $producto->material : ( isset($step) ? $step['material'] : old('material')))
-@php($coverFotoUrl = isset($producto) ? $producto->getFirstMediaUrl('fotos') : null )
+@php($coverFotoUrl = isset($producto) ? $producto->getFirstMedia('fotos')?->getUrl('thumb-cropped') : null )
 
 @if ($mode === 'add')
     @php($formAction = route('productos.store'))
@@ -130,7 +130,7 @@
         <div class="py-4 flex justify-content-end">
             @if ($mode === 'add')
                 <x-producto-importacion-button />
-                
+
                 <button class="btn btn-primary"
                         type="submit">
                     @svg('heroicon-m-plus-circle', ['class' => 'h-7 w-7 inline-block'])
