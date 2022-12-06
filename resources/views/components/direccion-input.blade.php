@@ -152,7 +152,7 @@
                 }
             },
             obtieneTipoVialidadLabel() {
-                return this.tipoVialidad.charAt(0).toUpperCase() + this.tipoVialidad.toLowerCase().slice(1) + ':';
+                return this.tipoVialidad.charAt(0).toUpperCase() + this.tipoVialidad.toLowerCase().slice(1);
             }
         }
     }
