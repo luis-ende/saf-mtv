@@ -9,8 +9,8 @@
 
 @isset($tipoVialidadId)
     @foreach($tipos_vialidad as $tv)
-        @if($tv['id'] === $tipoVialidadId)
-            @php($tipoVialidad = $tv['tipo_vialidad'])
+        @if($tv->id === $tipoVialidadId)
+            @php($tipoVialidad = $tv->tipo_vialidad)
         @endif
     @endforeach
 @endisset
