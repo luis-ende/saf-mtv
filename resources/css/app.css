@@ -11,10 +11,6 @@
   }
 
   .mtv-input-label {
-    @apply text-base relative top-3.5 bg-white ml-2.5 px-2;
+    @apply w-fit text-sm text-[#6F7271] relative top-2.5 bg-white ml-2.5 px-2;
   }
-
-  /* .mtv-input-label {
-    @apply block text-base;
-  }   */
 }

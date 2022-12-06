@@ -13,23 +13,23 @@
     visibility: visible;
 }
 
-.mtv-input-wrapper:focus-within {
-    label {
-        color: #235B4E;
-    }
+// Estilos para inputs
+
+.mtv-input-wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+}
+  
+.mtv-text-input:invalid ~ label, .mtv-text-input:invalid {
+    color: #9F2241 !important;
+    border-color: #9F2241 !important;
+    outline: none;
 }
 
-.mtv-text-input:not(:focus):invalid + label {    
-    color: #9F2241;
-}
-
-/* .mtv-input-label:has(+ input:invalid) {
-    color: #9F2241;
-}
-
-.mtv-input-label:has(+ input:valid) {
+.mtv-input-wrapper:focus-within label {
     color: #235B4E;
-} */
+}
+  
 
 /* Change Autocomplete styles in Chrome*/
 input:-webkit-autofill,

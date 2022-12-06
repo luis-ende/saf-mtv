@@ -2,7 +2,7 @@
 
 @php($url = $modo === 'registro' ? '/api/proveedores/registro/' : '/api/proveedores/login/')
 
-<div x-data="rfcValidacion()" x-init="rfcCompleto = obtieneRFCCompleto()">
+<div x-data="rfcValidacion()" x-init="rfcCompleto = obtieneRFCCompleto()" class="mtv-input-wrapper">
     <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
     <x-rfc-input
           x-model="rfcText"
@@ -114,14 +114,16 @@
                 }
             },
             obtieneRFCCompleto() {
-                const tipoPersona = document.getElementsByName('tipo_persona')[0].value;
-                if (tipoPersona === 'M') {
-                    // Contiene RFC con homoclave
-                    return this.rfcText;
-                } else if (tipoPersona === 'F') {
-                    // Input value contiene solo homoclave
-                    return document.getElementById('rfc_sin_homoclave').value + this.rfcText;
-                }
+                if (document.getElementsByName('tipo_persona').length > 0) {
+                    const tipoPersona = document.getElementsByName('tipo_persona')[0].value;
+                    if (tipoPersona === 'M') {
+                        // Contiene RFC con homoclave
+                        return this.rfcText;
+                    } else if (tipoPersona === 'F') {
+                        // Input value contiene solo homoclave
+                        return document.getElementById('rfc_sin_homoclave').value + this.rfcText;
+                    }
+                }                
 
                 return '';
             }

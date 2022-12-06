@@ -64,13 +64,13 @@
                         >
                     </div>
                 </div>
-                <div class="form-group col-md-3" x-show="tipoPersona === 'F'">
-                    <label class="font-medium" for="curp">CURP:</label>
+                <div class="form-group col-md-3" x-show="tipoPersona === 'F'">                    
                     @if ($mode === 'wizard')
-                        <x-curp-input value="{{ $curp }}" x-bind:required="tipoPersona === 'F'"/>
+                        <x-curp-input value="{{ $curp }}" x-bind:required="tipoPersona === 'F'"/>                        
                         <x-input-error :messages="$errors->get('curp')" class="mt-2"/>
                     @else
                         <input type="text" class="form-control" id="curp" value="{{ $curp }}" disabled>
+                        <label class="mvt-input-label" for="curp">CURP:</label>
                     @endif
                 </div>
                 <div class="form-group col-md-3" x-show="tipoPersona === 'F'">

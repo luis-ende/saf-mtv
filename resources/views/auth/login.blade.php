@@ -15,7 +15,7 @@
             @csrf
 
             <!-- RFC -->
-            <div class="mtv-input-wrapper">                
+            <div>                
                 <x-rfc-validacion-input id="rfc"
                                         name="rfc"
                                         :modo="__('login')"
@@ -24,13 +24,12 @@
             </div>
 
             <!-- Password -->
-            <div class="mt-4 mtv-input-wrapper">
-                <x-input-label for="password" :value="__('Contraseña')" />
-                <x-text-input id="password" class="block mt-1 w-full"
+            <div class="mt-4 mtv-input-wrapper">                
+                <x-text-input id="password"
                                 type="password"
                                 name="password"
                                 required autocomplete="current-password" />
-
+                <x-input-label for="password" :value="__('Contraseña')" />
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
 
