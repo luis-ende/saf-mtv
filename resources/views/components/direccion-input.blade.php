@@ -17,62 +17,78 @@
 
 <div x-data="domicilioDetalles()" class="row g-3" x-init="refreshCPAsentamiento(); isLoading = false; ">
     <input type="hidden" id="id_asentamiento" x-bind:value="asentamientoSeleccion" name="id_asentamiento">
-    <div class="form-group col-md-3">
-        <label class="font-medium" for="cp">Código postal:</label>
+    <div class="form-group col-md-3">                
         <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
-        <input type="text" class="form-control" maxlength="8" id="cp" name="cp" x-model="cpText" required
-               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-               @keyup="errorMessage = ''"
-               @blur="refreshCPAsentamiento()">
+        <div class="mtv-input-wrapper">
+            <input type="text" class="mtv-text-input" maxlength="8" id="cp" name="cp" x-model="cpText" required
+                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                @keyup="errorMessage = ''"
+                @blur="refreshCPAsentamiento()">
+            <label class="mtv-input-label" for="cp">Código postal</label>
+        </div>
         <label x-show="errorMessage != ''" x-text="errorMessage" class="text-sm text-red-600 space-y-1"></label>
     </div>
     <div class="form-group col-md-3">
-        <label class="font-medium" for="entidad_federativa">Entidad federativa:</label>
-        <select x-model="asentamientoSeleccion" class="form-control" id="entidad_federativa" name="entidad_federativa" required>
-            <template x-for="entidad in entidades" :key="entidad.id">
-                <option :value="entidad.id" x-text="entidad.nombre"></option>
-            </template>
-        </select>
+        <div class="mtv-input-wrapper">
+            <select x-model="asentamientoSeleccion" class="mtv-text-input" id="entidad_federativa" name="entidad_federativa" required>
+                <template x-for="entidad in entidades" :key="entidad.id">
+                    <option :value="entidad.id" x-text="entidad.nombre"></option>
+                </template>
+            </select>
+            <label class="mtv-input-label" for="entidad_federativa">Entidad federativa</label>
+        </div>
     </div>
     <div class="form-group col-md-3">
-        <label class="font-medium" for="alcaldia">Alcaldía:</label>
-        <select x-model="asentamientoSeleccion" class="form-control" id="alcaldia" name="alcaldia" required>
-            <template x-for="alcaldia in alcaldias" :key="alcaldia.id">
-                <option :value="alcaldia.id" x-text="alcaldia.nombre"></option>
-            </template>
-        </select>
+        <div class="mtv-input-wrapper">        
+            <select x-model="asentamientoSeleccion" class="mtv-text-input" id="alcaldia" name="alcaldia" required>
+                <template x-for="alcaldia in alcaldias" :key="alcaldia.id">
+                    <option :value="alcaldia.id" x-text="alcaldia.nombre"></option>
+                </template>
+            </select>
+            <label class="mtv-input-label" for="alcaldia">Alcaldía</label>
+        </div>    
     </div>
     <div class="form-group col-md-3">
-        <label class="font-medium" for="colonia">Colonia:</label>
-        <select x-model="asentamientoSeleccion" class="form-control" id="colonia" name="colonia" required>
-            <template x-for="colonia in colonias" :key="colonia.id">
-                <option :value="colonia.id" x-text="colonia.nombre"></option>
-            </template>
-        </select>
+        <div class="mtv-input-wrapper">
+            <select x-model="asentamientoSeleccion" class="mtv-text-input" id="colonia" name="colonia" required>
+                <template x-for="colonia in colonias" :key="colonia.id">
+                    <option :value="colonia.id" x-text="colonia.nombre"></option>
+                </template>
+            </select>
+            <label class="mtv-input-label" for="colonia">Colonia</label>
+        </div>
     </div>
     <div class="form-group col-md-3">
-        <label class="font-medium" for="id_tipo_vialidad">Tipo vialidad:</label>
-        <select class="form-control" id="id_tipo_vialidad" name="id_tipo_vialidad" x-model="idTipoVialidad"
-                x-on:change="tipoVialidad = $event.target.options[$event.target.selectedIndex].text" required>
-            <option value="0"> -- Selecciona -- </option>
-            @foreach ($tipos_vialidad as $tipo_vialidad)
-                <option value={{ $tipo_vialidad->id }}>
-                    {{ $tipo_vialidad->tipo_vialidad }}
-                </option>
-            @endforeach
-        </select>
+        <div class="mtv-input-wrapper">
+            <select class="mtv-text-input" id="id_tipo_vialidad" name="id_tipo_vialidad" x-model="idTipoVialidad"
+                    x-on:change="tipoVialidad = $event.target.options[$event.target.selectedIndex].text" required>
+                <option value="0"> -- Selecciona -- </option>
+                @foreach ($tipos_vialidad as $tipo_vialidad)
+                    <option value={{ $tipo_vialidad->id }}>
+                        {{ $tipo_vialidad->tipo_vialidad }}
+                    </option>
+                @endforeach
+            </select>
+            <label class="mtv-input-label" for="id_tipo_vialidad">Tipo vialidad</label>
+        </div>
     </div>
     <div class="form-group col-md-3">
-        <label class="font-medium" for="vialidad" x-text="obtieneTipoVialidadLabel()"></label>
-        <input type="text" class="form-control" id="vialidad" name="vialidad" required value="{{ $vialidad }}">
+        <div class="mtv-input-wrapper">        
+            <input type="text" class="mtv-text-input" id="vialidad" name="vialidad" required value="{{ $vialidad }}">
+            <label class="mtv-input-label" for="vialidad" x-text="obtieneTipoVialidadLabel()"></label>
+        </div>
     </div>
     <div class="form-group col-md-3">
-        <label class="font-medium" for="num_ext">Número exterior:</label>
-        <input type="text" class="form-control" id="num_ext" name="num_ext" required value="{{ $numExt }}">
+        <div class="mtv-input-wrapper">                
+            <input type="text" class="mtv-text-input" id="num_ext" name="num_ext" required value="{{ $numExt }}">
+            <label class="mtv-input-label" for="num_ext">Número exterior</label>
+        </div>
     </div>
     <div class="form-group col-md-3">
-        <label class="font-medium" for="num_int">Número interior:</label>
-        <input type="text" class="form-control" id="num_int" name="num_int" value="{{ $numInt }}">
+        <div class="mtv-input-wrapper">                        
+            <input type="text" class="mtv-text-input" id="num_int" name="num_int" value="{{ $numInt }}">
+            <label class="mtv-input-label" for="num_int">Número interior</label>
+        </div>
     </div>
 </div>
 

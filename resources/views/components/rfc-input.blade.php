@@ -4,4 +4,3 @@
        {{ $attributes }}
        required
        oninput="this.value = this.value.toUpperCase()" {!! $attributes->merge(['class' => 'mtv-text-input']) !!}>
-<x-input-label for="rfc" :value="__('RFC')" />

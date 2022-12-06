@@ -11,6 +11,7 @@
           :value="$value"
           :disabled="$disabled"
     />
+    {{ $slot }}
     <label x-show="mensajeError != '' || rfcInvalido != ''" x-text="obtenerMensajeError()" class="text-sm text-red-600 space-y-1"></label>
     <input type="hidden" id="rfc_completo" name="rfc_completo" x-model="rfcCompleto">
 </div>
