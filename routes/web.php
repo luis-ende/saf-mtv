@@ -63,4 +63,8 @@ Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'in
 
 Route::get('/programacion-anual', [ProgramacionAnualController::class, 'index'])->name('programacion-anual');
 
+Route::get('/registro-inicio', function() {
+    return view('registro.inicio');
+});
+
 require __DIR__.'/auth.php';
