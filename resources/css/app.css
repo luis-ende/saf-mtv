@@ -13,4 +13,22 @@
   .mtv-input-label {
     @apply w-fit text-base text-[#6F7271] relative top-2.5 bg-white ml-2.5 px-2;
   }
+
+  .mtv-button-gray {
+    @apply text-mtv-text-gray font-bold bg-white border border-slate-200 rounded-lg py-2 
+    hover:bg-mtv-gold hover:text-white active:bg-mtv-gold active:text-white;
+  }
+
+  .mtv-button-gold {
+    @apply border-slate-400 bg-mtv-gold rounded;
+  }
+
+  .mtv-button-secondary {
+    @apply font-bold text-white bg-mtv-secondary border border-mtv-secondary rounded-lg py-2
+    hover:bg-mtv-secondary hover:text-white active:bg-mtv-secondary active:text-white;
+  }
+
+  .mtv-button-secondary-white {
+    @apply border-slate-400 bg-white text-mtv-secondary rounded;
+  }
 }

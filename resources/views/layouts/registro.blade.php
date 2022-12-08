@@ -14,7 +14,7 @@
     <body class="font-sans antialiased">
         <!-- Page Heading -->
         <header class="bg-white">
-            @include('layouts.navigation-guest')
+            @include('layouts.navigation-registro')
         </header>
 
         <div class="min-h-screen bg-gray-100">

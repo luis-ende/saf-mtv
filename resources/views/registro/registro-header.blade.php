@@ -1,31 +1,39 @@
-<div class="text-slate-800 font-bold text-2xl p-6 bg-white border-b border-gray-200">
-    Registro a Mi Tiendita Virtual
-</div>
-<div class="p-6 bg-[#F7F3ED] border-b border-gray-200 text-base">
-    Crea una cuenta para realizar tu catálogo de productos y recibir notificaciones personalizadas.
-</div>
-<div class="py-3 bg-[#691C32] m-3 mb-4 rounded pl-5 flex flex-row flex-wrap">
-    <a href="{{ route('homepage') }}">
-        @svg('heroicon-s-arrow-right-circle', ['class' => 'h-5 w-5 inline-block mx-3 text-slate-200'])
-        Inicio
-    </a>
-    {{-- @foreach($wizard['steps'] as $stepData)
-    <div class="p-0 flex flex-row">
-        <a class="{{ $stepData['active'] ? 'text-[#BC955C] fw-bold' : 'text-slate-200' }} text-base no-underline hover:text-[#BC955C] flex flex-row"
-           href="{{ $stepData['url'] }}">
-            @if($loop->index === 0)
-                @svg('icomoon-profile', ['class' => 'h-5 w-5 inline-block mr-2'])
-            @elseif ($loop->index === 1)
-                @svg('bytesize-portfolio', ['class' => 'h-5 w-5 inline-block mr-2'])
-            @elseif ($loop->index === 2)
-                @svg('gmdi-storefront-o', ['class' => 'h-5 w-5 inline-block mr-2'])
-            @endif
-
-            <span>{{ $loop->index + 1 . '. ' . $stepData['title'] }}</span>
-            @if($loop->index + 1 !== $loop->count)
-                @svg('heroicon-s-arrow-right-circle', ['class' => 'h-5 w-5 inline-block mx-3 text-slate-200'])
-            @endif
-        </a>
+<div class="flex flex-col flex-nowrap">
+    <div class="py-3 bg-mtv-primary pl-5 flex flex-row flex-wrap">
+        <a href="{{ route('homepage') }}" 
+           class="text-mtv-gold font-bold text-lg no-underline hover:text-mtv-gold flex flex-row">
+            @svg('fas-arrow-left', ['class' => 'h-7 w-7 inline-block mr-3'])
+            <span>Inicio</span>
+        </a>        
     </div>
-    @endforeach --}}
+    <div class="w-full h-3 bg-mtv-gold"></div>
+    <div class="text-2xl py-1 px-7 bg-white border-b border-gray-200 flex flex-row my-3">                
+        <div class="basis-11/12">
+            <div class="font-bold text-2xl text-mtv-primary">Registro a Mi Tiendita Virtual</div>        
+            <div class="text-lg tracking-wide text-mtv-text-gray">
+                Crea una cuenta para realizar tu catálogo de productos y recibir notificaciones personalizadas.
+            </div>
+        </div>
+        <div class="basis-1/12 self-center flex flex-row justify-end">            
+            <x-dropdown align="right" width="48">
+                <x-slot name="trigger">
+                    <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                        <div>
+                            @svg('fluentui-chat-help-24-o', ['class' => 'h-7 w-7 inline-block text-mtv-primary'])
+                        </div>
+                        <div class="ml-1">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </button>
+                </x-slot>
+                <x-slot name="content">
+                    <x-dropdown-link href="#">
+                        {{ __('Tengo problemas con mi RFC') }}
+                    </x-dropdown-link>                    
+                </x-slot>
+            </x-dropdown>
+        </div>        
+    </div>
 </div>

@@ -65,6 +65,15 @@ Route::get('/programacion-anual', [ProgramacionAnualController::class, 'index'])
 
 Route::get('/registro-inicio', function() {
     return view('registro.inicio');
-});
+})->name('registro-inicio');
+
+Route::get('/registro-certificado-1', function() {
+    return view('registro.inicio-cert-1');
+})->name('registro-inicio-certificado-1');
+
+Route::get('/registro-confirmacion', function() {
+    return view('registro.inicio-confirmacion');
+})->name('registro-inicio-confirmacion');
+
 
 require __DIR__.'/auth.php';
