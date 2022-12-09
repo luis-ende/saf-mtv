@@ -42,7 +42,7 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6 flex flex-row">
-                <a class="font-bold no-underline mr-5" href="{{ route('wizard.registro-mtv.create') }}">Regístrate</a>
+                <a class="font-bold no-underline mr-5" href="{{ route('registro-inicio') }}">Regístrate</a>
                 <a class="font-bold no-underline mr-5" href="{{ route('login') }}">Ingresa</a>
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">

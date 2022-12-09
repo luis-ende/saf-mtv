@@ -8,6 +8,9 @@ import swal from 'sweetalert2';
 window.Swal = swal;
 
 import Alpine from 'alpinejs';
+import mask from '@alpinejs/mask'
+
+Alpine.plugin(mask)
 
 window.Alpine = Alpine;
 

@@ -8,12 +8,13 @@ module.exports = {
         './resources/views/**/*.blade.php',
     ],
 
-    theme: {        
+    theme: {
         extend: {
             colors: {
                 'mtv-gold': '#bc955c',
                 'mtv-primary': '#9f2241',
                 'mtv-secondary': '#235b4e',
+                'mtv-gray': '#6F7271',
                 'mtv-text-gray': '#6F7271',
             },
             fontFamily: {

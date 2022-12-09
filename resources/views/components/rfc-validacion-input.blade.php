@@ -10,8 +10,9 @@
           @keyup="rfcInvalido = ''"
           :value="$value"
           :disabled="$disabled"
+          placeholder="XXXXXXXXXXXXX"
+          x-mask="*************"
     />
-    {{ $slot }}
     <label x-show="mensajeError != '' || rfcInvalido != ''" x-text="obtenerMensajeError()" class="text-sm text-red-600 space-y-1"></label>
     <input type="hidden" id="rfc_completo" name="rfc_completo" x-model="rfcCompleto">
 </div>
@@ -124,7 +125,7 @@
                         // Input value contiene solo homoclave
                         return document.getElementById('rfc_sin_homoclave').value + this.rfcText;
                     }
-                }                
+                }
 
                 return '';
             }

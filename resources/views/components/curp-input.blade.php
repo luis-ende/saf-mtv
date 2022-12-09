@@ -1,16 +1,19 @@
-<div x-data="curpConsulta()">    
+<div x-data="curpConsulta()">
     <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
     <div class="mtv-input-wrapper">
-        <input id="curp"
-        name="curp"
-        type="text"
-        maxlength="18"
-        x-model="curpText"
-        @keyup="mensajeError = ''; limpiaCURPCampos();"
-        @blur="buscaCURP()"
-        oninput="this.value = this.value.toUpperCase()" {!! $attributes->merge(['class' => 'mtv-text-input']) !!}>
+        <input
+            id="curp"
+            name="curp"
+            type="text"
+            placeholder="XXXXXXXXXXXXXXXXXX"
+            x-mask="aaaa999999aaaaaa99"
+            maxlength="18"
+            x-model="curpText"
+            @keyup="mensajeError = ''; limpiaCURPCampos();"
+            @blur="buscaCURP()"
+            oninput="this.value = this.value.toUpperCase()" {!! $attributes->merge(['class' => 'mtv-text-input']) !!}>
         <label class="mtv-input-label" for="curp">CURP</label>
-    </div>    
+    </div>
     <label x-show="mensajeError != ''" x-text="mensajeError" class="text-sm text-[#9F2241] space-y-1"></label>
 </div>
 
