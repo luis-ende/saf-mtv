@@ -9,9 +9,9 @@
     <div class="w-full h-3 bg-mtv-gold"></div>
     <div class="text-2xl py-1 px-7 bg-white border-b border-gray-200 flex flex-row my-3">                
         <div class="basis-11/12">
-            <div class="font-bold text-2xl text-mtv-primary">Registro a Mi Tiendita Virtual</div>        
+            <div class="font-bold text-2xl text-mtv-primary">{{ $titulo }}</div>        
             <div class="text-lg tracking-wide text-mtv-text-gray">
-                Crea una cuenta para realizar tu catálogo de productos y recibir notificaciones personalizadas.
+                {{ $subtitulo }}
             </div>
         </div>
         <div class="basis-1/12 self-center flex flex-row justify-end">            

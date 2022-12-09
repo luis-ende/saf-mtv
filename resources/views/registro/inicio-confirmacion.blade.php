@@ -1,7 +1,9 @@
 <x-registro-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5">
         <div class="bg-white overflow-hidden shadow-sm">
-            @include('registro.registro-header')
+            @include('registro.registro-header', 
+                       ['titulo' => 'Registro a Mi Tiendita Virtual', 
+                        'subtitulo' => 'Crea una cuenta para realizar tu catálogo de productos y recibir notificaciones personalizadas.'])
             <div class="px-6">
                 <div class="w-fit mx-auto flex flex-col">
                     <label class="block basis-full text-2xl font-bold text-mtv-text-gray mt-4 mb-2 self-center">¿Qué tipo de persona eres?</label>

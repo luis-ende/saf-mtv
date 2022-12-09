@@ -15,7 +15,7 @@
     @endforeach
 @endisset
 
-<div x-data="domicilioDetalles()" class="row g-3" x-init="refreshCPAsentamiento(); isLoading = false; ">
+<div x-data="domicilioDetalles()" class="row" x-init="refreshCPAsentamiento(); isLoading = false; ">
     <input type="hidden" id="id_asentamiento" x-bind:value="asentamientoSeleccion" name="id_asentamiento">
     <div class="form-group col-md-3">                
         <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>

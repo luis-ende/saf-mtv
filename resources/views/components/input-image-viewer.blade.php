@@ -1,15 +1,19 @@
 @props(['id' => 'input-image', 'name' => 'input-image', 'image_url' => null])
 
-<div class="mr-3 mb-2" x-data="imageViewer()">
-    <div class="border rounded border-gray-200 bg-gray-100 mr-3 flex justify-center">
-        <div class="h-44 w-44 flex place-content-center place-items-center">
-            @svg('ri-image-add-fill', ['x-show' => '!imageUrl','class' => 'absolute h-10 w-10 text-slate-600'])
-            <img x-show="imageUrl" :src="imageUrl" alt="Logotipo"
-                 class="absolute object-scale-down rounded border border-gray-200 h-44 w-44 p-3"
-            >
-            <input id="{{ $id }}" name="{{ $name }}"
-                   class="inset-0 w-44 h-44 p-0 m-0 outline-none opacity-0 cursor-pointer"
-                   type="file" accept="image/*" @change="fileChosen">
+<div x-data="imageViewer()">
+    <div class="bg-gray-50 flex justify-center">
+        <div class="h-64 w-44">                        
+            <div class="flex place-content-center place-items-center relative">                 
+                @svg('carbon-edit', ['class' => 'absolute w-7 h-7 absolute top-8 right-2 p-1 text-mtv-text-gray z-40 bg-gray-50'])            
+                @svg('fas-building', ['x-show' => '!imageUrl', 'class' => 'absolute h-48 w-42 bg-gray-200 text-gray-50 p-4 my-3'])            
+                <img x-show="imageUrl" :src="imageUrl" alt="Logotipo"
+                     class="absolute object-scale-down h-48 w-44"
+                >
+                <input id="{{ $id }}" name="{{ $name }}"
+                       class="inset-0 w-44 h-64 p-0 m-0 outline-none opacity-0 cursor-pointer z-50"
+                       type="file" accept="image/*" @change="fileChosen"
+                >
+            </div>
         </div>
     </div>
 </div>

@@ -40,7 +40,7 @@
         id="diferenciadores"
         name="diferenciadores"
     >
-    <label class="mtv-input-label" for="diferenciadores">Diferenciadores empresariales</label>
+    <label class="mtv-input-label" for="diferenciadores">Diferencias que distinguen tu negocio</label>
 </div>
 
 <label class="text-xs text-slate-500" for="diferenciadores">Separar con comas.</label>

@@ -1,12 +1,17 @@
 <?php
 
-use App\Http\Controllers\OportunidadesController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CatalogoProductosController;
-use App\Http\Controllers\PerfilNegocioController;
-use App\Http\Controllers\CentroNotificacionesController;
+use App\Repositories\SectorRepository;
+use App\Repositories\TipoPymeRepository;
+use App\Repositories\VialidadRepository;
 use App\Http\Controllers\ProductosController;
+use App\Repositories\GrupoPrioritarioRepository;
+use App\Http\Controllers\OportunidadesController;
+use App\Http\Controllers\PerfilNegocioController;
+use App\Http\Controllers\CatalogoProductosController;
 use App\Http\Controllers\ProgramacionAnualController;
+use App\Http\Controllers\CentroNotificacionesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,5 +80,22 @@ Route::get('/registro-confirmacion', function() {
     return view('registro.inicio-confirmacion');
 })->name('registro-inicio-confirmacion');
 
+
+Route::get('/registro-perfil-negocio', function() {
+    $persona = Auth::user()->persona;
+
+    return view('registro.registro-perfil-negocio', [
+        'persona' => $persona,
+        'tipos_vialidad' => VialidadRepository::obtieneTiposVialidad(),
+        'grupos_prioritarios' => GrupoPrioritarioRepository::obtieneGruposPrioritarios(),
+        'tipos_pyme' => TipoPymeRepository::obtieneTiposPyme(),
+        'sectores' => SectorRepository::obtieneSectores(),
+        'categorias_scian' => [], // TODO: Implementar cuando esté listo el catálogo
+    ]);    
+})->middleware(['auth'])->name('registro-perfil-negocio');
+
+Route::get('/registro-contactos', function() {
+    return view('registro.registro-contactos');
+})->name('registro-contactos');
 
 require __DIR__.'/auth.php';

@@ -10,12 +10,17 @@ module.exports = {
 
     theme: {
         extend: {
+            screens: {
+                'xs': '320px',
+            },
             colors: {
                 'mtv-gold': '#bc955c',
+                'mtv-gold-light': '#ddc9a3',
                 'mtv-primary': '#9f2241',
                 'mtv-secondary': '#235b4e',
-                'mtv-gray': '#6F7271',
-                'mtv-text-gray': '#6F7271',
+                'mtv-gray': '#6f7271',
+                'mtv-gray-light': '#e6e6e6',
+                'mtv-text-gray': '#6f7271',                
             },
             fontFamily: {
                 sans: ['Source Sans Pro', ...defaultTheme.fontFamily.sans],
