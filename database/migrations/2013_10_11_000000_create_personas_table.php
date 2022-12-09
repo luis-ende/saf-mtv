@@ -20,7 +20,7 @@ return new class extends Migration
             $table->bigInteger('personable_id');
             $table->string('personable_type', 30);
             $table->integer('id_asentamiento');
-            $table->integer('id_tipo_vialidad');
+            $table->foreignId('id_tipo_vialidad')->constrained('cat_tipo_vialidad');
             $table->string('vialidad', 120);
             $table->string('num_ext', 100);
             $table->string('num_int', 80)->nullable();
