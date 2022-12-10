@@ -17,11 +17,11 @@
 
         <x-field-group-card
             title="Domicilio de tu negocio"
-        >                                    
-            <x-direccion-input                        
+        >
+            <x-direccion-input
                         :step="null"
                         :direccion="isset($persona) ? $persona->direccion() : null"
-                        :tipos_vialidad="$tipos_vialidad"                        
+                        :tipos_vialidad="$tipos_vialidad"
             />
         </x-field-group-card>
 
@@ -36,5 +36,6 @@
                 :mode="__('edit')"
             />
         </x-field-group-card>
-    <div>
+        <button type="submit" class="mtv-button-secondary my-4 self-end">Guardar y continuar</button>
+    </div>
 </div>

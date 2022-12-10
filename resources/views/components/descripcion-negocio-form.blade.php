@@ -36,7 +36,7 @@
     <form method="POST" enctype="multipart/form-data" action="{{ $formAction }}">
         @csrf
         <div class="flex flex-row flex-wrap">
-            <div class="md:basis-1/4 xs:basis-full pr-8 mt-3">                
+            <div class="md:basis-1/4 xs:basis-full pr-8 mt-3">
                 <x-input-image-viewer
                     :id="__('logotipo')"
                     :name="__('logotipo')"
@@ -54,7 +54,7 @@
             </div>
             <div class="md:basis-3/4 xs:basis-full row">
                 <div class="form-group col-md-4">
-                    <div class="mtv-input-wrapper">                            
+                    <div class="mtv-input-wrapper">
                         <select class="mtv-text-input" id="id_grupo_prioritario" name="id_grupo_prioritario" x-model="grupoPrioritario" autofocus required>
                             <option value="0"> -- Ninguno --</option>
                             @foreach ((array) $grupos_prioritarios as $grupo)
@@ -66,8 +66,8 @@
                         <label class="mtv-input-label" for="id_grupo_prioritario">¿Perteneces a algún sector prioritario?</label>
                     </div>
                 </div>
-                <div class="form-group col-md-4" x-show="grupoPrioritario == grupoPrioritarioMIPYMEId">                    
-                    <div class="mtv-input-wrapper">                        
+                <div class="form-group col-md-4" x-show="grupoPrioritario == grupoPrioritarioMIPYMEId">
+                    <div class="mtv-input-wrapper">
                         <select class="mtv-text-input" id="id_tipo_pyme" name="id_tipo_pyme" x-model="tipoPyme">
                             <option selected value="0"> -- Seleccionar --</option>
                             @foreach ((array) $tipos_pyme as $tipo)
@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <div class="mtv-input-wrapper">                                            
+                    <div class="mtv-input-wrapper">
                         <select class="mtv-text-input" id="id_sector" name="id_sector" x-model="sector">
                             <option selected value="0"> -- Seleccionar --</option>
                             @foreach ((array) $sectores as $sector)
@@ -90,10 +90,10 @@
                             @endforeach
                         </select>
                         <label class="mtv-input-label" for="id_sector">Sector</label>
-                    </div>    
+                    </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <div class="mtv-input-wrapper">                                                                
+                    <div class="mtv-input-wrapper">
                         <select class="mtv-text-input" id="id_categoria_scian" name="id_categoria_scian">
                             <option selected value="0"> -- Seleccionar --</option>
                         </select>
@@ -101,23 +101,23 @@
                     </div>
                 </div>
                 <div class="form-group col-md-8">
-                    <div class="mtv-input-wrapper">                                                                                        
+                    <div class="mtv-input-wrapper">
                         <input type="text" class="mtv-text-input" id="nombre_negocio" name="nombre_negocio"
                             value="{{ $nombreNegocio }}" required>
                         <label class="mtv-input-label" for="nombre_negocio">Nombre comercial de tu negocio</label>
                     </div>
-                    <x-input-error :messages="$errors->get('nombre_negocio')" class="mt-2"/>                        
+                    <x-input-error :messages="$errors->get('nombre_negocio')" class="mt-2"/>
                 </div>
                 <div class="form-group col-md-12">
-                    <div class="mtv-input-wrapper">                                                                                        
+                    <div class="mtv-input-wrapper">
                         <input type="text" class="mtv-text-input" id="lema_negocio" name="lema_negocio"
                             value="{{ $lema }}" required>
                         <label class="mtv-input-label" for="lema_negocio">Lema del negocio</label>
                     </div>
-                    <x-input-error :messages="$errors->get('lema_negocio')" class="mt-2"/>                        
-                </div>                                
+                    <x-input-error :messages="$errors->get('lema_negocio')" class="mt-2"/>
+                </div>
                 <div class="form-group col-md-12">
-                    <div class="mtv-input-wrapper">                                                                                                            
+                    <div class="mtv-input-wrapper">
                         <textarea class="mtv-text-input" id="descripcion_negocio" name="descripcion_negocio" required>{{ $descripcionNegocio }}</textarea>
                         <label class="mtv-input-label" for="descripcion_negocio">Descripción del negocio</label>
                     </div>
@@ -131,9 +131,9 @@
                         ¿Quieres subir tu carta de presentación? Agrégala en formato PDF de hasta 3MB.
                     </label>
                     <div class="flex flex-row justify-start text-mtv-gold font-bold">
-                        <div class="flex flex-row cursor-pointer" 
+                        <div class="flex flex-row cursor-pointer"
                              @click="$refs.inputCartaPresentacion.click()"
-                        >                            
+                        >
                             @svg('uiw-paper-clip', ['class' => 'h-9 w-9 mr-3'])
                             <span class="w-full self-center">Adjuntar documento</span>
                             <input id="carta_presentacion" name="carta_presentacion"
@@ -142,20 +142,20 @@
                                    x-ref="inputCartaPresentacion"
                                    @change="cartaPresentacion = $event.target.value.replace(/^.*[\\\/]/, '')"
                             >
-                        </div>                        
-                    </div>                    
+                        </div>
+                    </div>
                     <div class="text-mtv-text-gray" x-show="cartaPresentacion !== null">
                         @svg('uiw-paper-clip', ['class' => 'h-3 w-3 inline-block mr-5'])
                         <label class="font-bold" x-text="cartaPresentacion"></label>
                         @svg('sui-cross', [
-                            'class' => 'h-3 w-3 inline-block ml-3 cursor-pointer', 
+                            'class' => 'h-3 w-3 inline-block ml-3 cursor-pointer',
                             '@click' => "document.getElementById('carta_presentacion').value = null; cartaPresentacion = null"
                         ])
                     </div>
                 </div>
             </div>
-        </div>         
-            <div class="py-4 flex justify-content-end">
+        </div>
+            {{--<div class="py-4 flex justify-content-end">
                 @if ($mode === 'wizard')
                     <a class="btn btn-primary mr-3" href="{{ route('wizard.registro-mtv.show', [$wizard['id'], 'perfil-negocio']) }}">
                         @svg('heroicon-s-arrow-left-circle', ['class' => 'h-5 w-5 inline-block'])
@@ -171,7 +171,7 @@
                         Guardar
                     </button>
                 @endif
-            </div>
+            </div>--}}
     </form>
 </div>
 

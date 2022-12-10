@@ -91,11 +91,15 @@ Route::get('/registro-perfil-negocio', function() {
         'tipos_pyme' => TipoPymeRepository::obtieneTiposPyme(),
         'sectores' => SectorRepository::obtieneSectores(),
         'categorias_scian' => [], // TODO: Implementar cuando esté listo el catálogo
-    ]);    
+    ]);
 })->middleware(['auth'])->name('registro-perfil-negocio');
 
 Route::get('/registro-contactos', function() {
-    return view('registro.registro-contactos');
+    $persona = Auth::user()->persona;
+
+    return view('registro.registro-contactos', [
+        'persona' => $persona,
+    ]);
 })->name('registro-contactos');
 
 require __DIR__.'/auth.php';
