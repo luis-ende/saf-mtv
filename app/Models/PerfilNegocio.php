@@ -31,6 +31,7 @@ class PerfilNegocio extends Model implements HasMedia
         'id_tipo_pyme',
         'id_sector',
         'id_categoria_scian',
+        'nombre_negocio',
         'lema_negocio',
         'descripcion_negocio',
         'diferenciadores',

@@ -3,7 +3,7 @@
 @php($diferenciadores = $diferenciadores !== '' ? explode(',', $diferenciadores) : [])
 
 <style>
-    .tags-input-wrapper{        
+    .tags-input-wrapper{
         padding: 10px;
         border-radius: 4px;
         border: 1px solid #ccc
@@ -17,8 +17,9 @@
     }
     .tags-input-wrapper .tag{
         display: inline-block;
-        background-color: #691C32;
-        color: white;
+        background-color: white;
+        color: #235b4e;
+        border: 1px solid gainsboro;
         border-radius: 40px;
         padding: 0px 3px 0px 7px;
         margin-right: 5px;
@@ -39,13 +40,15 @@
         class="mtv-text-input"
         id="diferenciadores"
         name="diferenciadores"
+        placeholder="¿Qué te hace diferente de tu competencia? Precio bajos, Atención al cliente, Certificaciones, Capacitación, etc."
     >
     <label class="mtv-input-label" for="diferenciadores">Diferencias que distinguen tu negocio</label>
 </div>
 
-<label class="text-xs text-slate-500" for="diferenciadores">Separar con comas.</label>
+<label class="text-xs text-slate-500" for="diferenciadores">Usa comas para separar las palabras</label>
 
 <script type="text/javascript">
+    // TODO: Cambiar componente o corregir bug con un solo tag (no se guarda)
     (function(){
 
         "use strict"

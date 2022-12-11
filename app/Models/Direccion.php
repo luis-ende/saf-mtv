@@ -6,17 +6,17 @@ use App\Services\BusquedaCPService;
 
 final class Direccion
 {
-    public string $id_asentamiento;
-    public string $cp;
-    public int $id_tipo_vialidad;
-    public string $vialidad;
-    public string $num_ext;
+    public ?string $id_asentamiento;
+    public ?string $cp;
+    public ?int $id_tipo_vialidad;
+    public ?string $vialidad;
+    public ?string $num_ext;
     public ?string $num_int;
 
-    public function __construct(int               $idAsentamiento,
-                                int               $idTipoVialidad,
-                                string            $vialidad,
-                                string            $numExt,
+    public function __construct(?int               $idAsentamiento,
+                                ?int               $idTipoVialidad,
+                                ?string            $vialidad,
+                                ?string            $numExt,
                                 ?string           $numInt,
                                 BusquedaCPService $busquedaCPService)
     {

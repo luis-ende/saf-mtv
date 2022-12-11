@@ -3,11 +3,7 @@
 use App\Http\Controllers\RegistroMTVController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Repositories\SectorRepository;
-use App\Repositories\TipoPymeRepository;
-use App\Repositories\VialidadRepository;
 use App\Http\Controllers\ProductosController;
-use App\Repositories\GrupoPrioritarioRepository;
 use App\Http\Controllers\OportunidadesController;
 use App\Http\Controllers\PerfilNegocioController;
 use App\Http\Controllers\CatalogoProductosController;
@@ -39,11 +35,15 @@ Route::post('/oportunidades-de-negocio', [OportunidadesController::class, 'searc
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'registro_mtv.status'])->name('dashboard');
 
-Route::get('/catalogo-productos', [CatalogoProductosController::class, 'index'])->middleware(['auth', 'verified'])->name('catalogo-productos');
+// TODO: Crear grupos
 
-Route::get('/perfil-negocio', [PerfilNegocioController::class, 'index'])->middleware(['auth', 'verified'])->name('perfil-negocio');
+Route::get('/catalogo-productos', [CatalogoProductosController::class, 'index'])
+    ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('catalogo-productos');
+
+Route::get('/perfil-negocio', [PerfilNegocioController::class, 'index'])
+    ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('perfil-negocio');
 
 Route::post('/perfil-negocio/update', [PerfilNegocioController::class, 'update'])->middleware(['auth', 'verified'])->name('perfil-negocio.update');
 
@@ -53,13 +53,15 @@ Route::post('/productos', [ProductosController::class, 'store'])->middleware(['a
 
 Route::post('/productos/edit/{producto}', [ProductosController::class, 'update'])->middleware(['auth', 'verified'])->name('productos.update');
 
-Route::get('/productos/{producto}/archivos', [ProductosController::class, 'showArchivos'])->middleware(['auth', 'verified'])->name('productos-archivos.show');
+Route::get('/productos/{producto}/archivos', [ProductosController::class, 'showArchivos'])
+    ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('productos-archivos.show');
 
 Route::post('/productos/{producto}/archivos', [ProductosController::class, 'storeFiles'])->middleware(['auth', 'verified'])->name('productos-archivos.store');
 
 Route::delete('/productos/archivos/{id}', [ProductosController::class, 'deleteFile'])->middleware(['auth', 'verified'])->name('productos-archivos.delete');
 
-Route::get('/productos/edit/{producto}', [ProductosController::class, 'show'])->middleware(['auth', 'verified'])->name('productos.edit');
+Route::get('/productos/edit/{producto}', [ProductosController::class, 'show'])
+    ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('productos.edit');
 
 Route::delete('/productos/delete/{producto}', [ProductosController::class, 'destroy'])->middleware(['auth', 'verified'])->name('productos.destroy');
 
@@ -78,18 +80,8 @@ Route::post('/registro-identificacion', [RegistroMTVController::class, 'storeReg
 
 Route::post('/registro-confirmacion', [RegistroMTVController::class, 'storeRegistroCreaCuenta'])->name('registro-inicio-confirmacion.store');
 
-Route::get('/registro-perfil-negocio', function() {
-    $persona = Auth::user()->persona;
-
-    return view('registro.registro-perfil-negocio', [
-        'persona' => $persona,
-        'tipos_vialidad' => VialidadRepository::obtieneTiposVialidad(),
-        'grupos_prioritarios' => GrupoPrioritarioRepository::obtieneGruposPrioritarios(),
-        'tipos_pyme' => TipoPymeRepository::obtieneTiposPyme(),
-        'sectores' => SectorRepository::obtieneSectores(),
-        'categorias_scian' => [], // TODO: Implementar cuando esté listo el catálogo
-    ]);
-})->middleware(['auth'])->name('registro-perfil-negocio');
+Route::get('/registro-perfil-negocio', [RegistroMTVController::class, 'showRegistroPerfilNegocio'])->middleware(['auth'])->name('registro-perfil-negocio.show');
+Route::post('/registro-perfil-negocio', [RegistroMTVController::class, 'storeRegistroPerfilNegocio'])->middleware(['auth'])->name('registro-perfil-negocio.store');
 
 Route::get('/registro-contactos', function() {
     $persona = Auth::user()->persona;
@@ -97,6 +89,6 @@ Route::get('/registro-contactos', function() {
     return view('registro.registro-contactos', [
         'persona' => $persona,
     ]);
-})->name('registro-contactos');
+})->name('registro-contactos.show');
 
 require __DIR__.'/auth.php';

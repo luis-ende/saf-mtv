@@ -41,9 +41,9 @@
 @endif
 
 @if ($errors->any())
-    <div class="alert alert-danger alert-dismissible fade show w-7/12" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show w-7/12 flex flex-col" role="alert">
         @foreach ($errors->all() as $error)
-            <div class="text-base basis-10/12">
+            <div class="text-base basis-full">
                 @svg('uiw-warning', ['class' => 'h-5 w-5 inline-block mr-1'])
                 {{ $error }}
             </div>

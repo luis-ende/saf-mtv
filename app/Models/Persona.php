@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Services\BusquedaCPService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -31,6 +30,8 @@ class Persona extends Model
         'vialidad',
         'num_int',
         'num_ext',
+        'email',
+        'registro_fase',
     ];
 
      /**
@@ -76,9 +77,9 @@ class Persona extends Model
 
     public function nombre_o_razon_social(): string
     {
-        if ($this->id_tipo_persona === 'F') {
+        if ($this->id_tipo_persona === Persona::TIPO_PERSONA_FISICA_ID) {
             return $this->tipo_persona->nombre . ' ' . $this->tipo_persona->primer_ap . ' ' . $this->tipo_persona->segundo_ap;
-        } elseif ($this->id_tipo_persona === 'M') {
+        } elseif ($this->id_tipo_persona === Persona::TIPO_PERSONA_MORAL_ID) {
             return $this->tipo_persona->razon_social;
         }
 
@@ -96,5 +97,10 @@ class Persona extends Model
                 'numInt' => $this->num_int,
             ]
         );
+    }
+
+    public function registroCompleto(): bool
+    {
+        return $this->registro_fase === RegistroMTV::FASE_REGISTRO_COMPLETO;
     }
 }

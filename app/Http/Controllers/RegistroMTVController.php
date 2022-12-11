@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PerfilNegocioRequest;
 use App\Models\Persona;
+use App\Models\RegistroMTV;
 use App\Repositories\PersonaRepository;
+use App\Repositories\SectorRepository;
+use App\Repositories\TipoPymeRepository;
+use App\Repositories\VialidadRepository;
+use App\Repositories\GrupoPrioritarioRepository;
 use App\Services\CertExtractorService;
 use App\Services\RegistroPersonaService;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-use Matrix\Exception;
 
 class RegistroMTVController extends Controller
 {
-    public const TIPO_REGISTRO_CERT = 'C';
-    public const TIPO_REGISTRO_EMAIL = 'E';
-
     public function showRegistroInicio(Request $request)
     {
         $request->session()->regenerate();
@@ -25,11 +30,11 @@ class RegistroMTVController extends Controller
 
     public function showRegistroIdentificacion(Request $request, string $tipoPersona, string $tipoRegistro)
     {
-        if ($tipoRegistro === self::TIPO_REGISTRO_CERT) {
+        if ($tipoRegistro === RegistroMTV::TIPO_REGISTRO_CERT) {
             return response()->view('registro.inicio-certificado', [
                 'tipoPersona' => $tipoPersona,
             ]);
-        } elseif ($tipoRegistro === self::TIPO_REGISTRO_EMAIL) {
+        } elseif ($tipoRegistro === RegistroMTV::TIPO_REGISTRO_EMAIL) {
             return response()->view('registro.inicio-confirmacion', [
                 'tipoRegistro' => $tipoRegistro,
                 'tipoPersona' => $tipoPersona,
@@ -50,8 +55,8 @@ class RegistroMTVController extends Controller
             return redirect()->back()->withErrors($e->validator);
         }
 
-        $tipoRegistro = self::TIPO_REGISTRO_CERT;
-        $tipoPersona = $request->get('tipo_persona');
+        $tipoRegistro = RegistroMTV::TIPO_REGISTRO_CERT;
+        $tipoPersona = $request->input('tipo_persona');
         $certPath = $request->file('certificado_file')->getRealPath();
         $personaDatos = null;
         try {
@@ -82,37 +87,41 @@ class RegistroMTVController extends Controller
                 'tipo_registro' => [
                     'required',
                     Rule::in([
-                        self::TIPO_REGISTRO_CERT,
-                        self::TIPO_REGISTRO_EMAIL
+                        RegistroMTV::TIPO_REGISTRO_CERT,
+                        RegistroMTV::TIPO_REGISTRO_EMAIL
                     ]),
                 ],
                 'password' => 'required|min:8|max:15|same:password_confirmacion' // TODO: Aplicar las mismas validaciones que en front-end
             ]);
 
             $personaDatos = $request->only('tipo_persona', 'email', 'password');
-            $tipoPersona = $request->get('tipo_persona');
-            $tipoRegistro = $request->get('tipo_registro');
+            $tipoPersona = $request->input('tipo_persona');
+            $tipoRegistro = $request->input('tipo_registro');
 
-            if ($tipoRegistro === self::TIPO_REGISTRO_CERT) {
+            if ($tipoRegistro === RegistroMTV::TIPO_REGISTRO_CERT) {
                 $this->validate($request, ['persona_datos' => 'required|json']);
-                $personaDatos = array_merge($personaDatos, json_decode($request->get('persona_datos'), true));
-                $personaDatos['genero'] = $personaDatos['sexo'];
-                unset($personaDatos['sexo']);
+                $personaDatos = array_merge($personaDatos, json_decode($request->input('persona_datos'), true));
+                if (!array_key_exists('genero', $personaDatos)) {
+                    $personaDatos['genero'] = $personaDatos['sexo'];
+                    unset($personaDatos['sexo']);
+                }
                 // TODO: Consultar Renapo para completar nombre, primer_ap, segundo_ap
             } else {
-                $this->validate($request, ['email' => 'required|email|same:email_confirmacion']);
-                $personaDatos['email'] = $request->get('email');
+                $this->validate($request, [
+                    'email' => 'required|email|same:email_confirmacion|max:255',
+                ]);
+                $personaDatos['email'] = $request->input('email');
 
                 if ($tipoPersona === Persona::TIPO_PERSONA_FISICA_ID) {
                     $this->validate($request, [
                         'curp' => 'required|max:18',
-                        'rfc' => 'required|max:13',
+                        'rfc' => 'required|max:13|unique:users,rfc',
                     ]);
                     $personaDatos = $request->only(['curp', 'rfc']);
                     // TODO: Consultar Renapo para completar nombre, primer_ap, segundo_ap
                 } elseif ($tipoPersona === Persona::TIPO_PERSONA_MORAL_ID) {
                     $this->validate($request, [
-                        'rfc' => 'required|max:13',
+                        'rfc' => 'required|max:12|unique:users,rfc',
                         'razon_social' => 'required',
                         'fecha_constitucion' => 'required|date',
                     ]);
@@ -120,28 +129,110 @@ class RegistroMTVController extends Controller
                 }
             }
         } catch (ValidationException $e) {
-            $tipoPersona = $request->get('tipo_persona') ?? null;
-            $tipoRegistro = $request->get('tipo_registro') ?? null;
-            $personaDatos = $request->get('persona_datos') ? json_decode($request->get('persona_datos'), true) : null;
+            $tipoPersona = $request->input('tipo_persona') ?? null;
+            $tipoRegistro = $request->input('tipo_registro') ?? null;
+            $personaDatos = $request->input('persona_datos') ? json_decode($request->get('persona_datos'), true) : null;
 
             $datos = compact('tipoPersona', 'tipoRegistro', 'personaDatos');
             $request->session()->flash('error', 'El proceso de registro no pudo ser completado: ' . $e->getMessage());
             // TODO: Personalizar mensajes de error para password y email que deben coincidir
+            // https://laravel.com/docs/9.x/validation#customizing-the-error-messages
 
             return view('registro.inicio-confirmacion', $datos);
         }
 
         try {
-            $registroService->registraPersonaMTV($personaDatos, $personaRepository);
+            $user = $registroService->registraPersonaMTV($personaDatos, $personaRepository);
+            // Iniciar sesión con el nuevo usuario
+            event(new Registered($user));
+            Auth::login($user);
 
             return redirect()->route('registro-perfil-negocio');
         } catch (\Throwable $e) {
-            $request->session()->flash('error', 'El proceso de registro no pudo ser completado: ' . $e->getMessage());
+            $request->session()->flash('error', 'El proceso de registro no pudo ser completado debido al siguiente error: ' . $e->getMessage());
 
             return view('registro.inicio-confirmacion',
                 compact('tipoPersona', 'tipoRegistro', 'personaDatos'));
         }
+    }
 
-        /*return redirect()->route('registro-inicio');*/
+    public function showRegistroPerfilNegocio(Request $request)
+    {
+        $persona = Auth::user()->persona;
+
+        if (!$persona->registroCompleto()) {
+            return view('registro.registro-perfil-negocio', [
+                'persona' => $persona,
+                'tipos_vialidad' => VialidadRepository::obtieneTiposVialidad(),
+                'grupos_prioritarios' => GrupoPrioritarioRepository::obtieneGruposPrioritarios(),
+                'tipos_pyme' => TipoPymeRepository::obtieneTiposPyme(),
+                'sectores' => SectorRepository::obtieneSectores(),
+                'categorias_scian' => [], // TODO: Implementar cuando esté listo este catálogo
+            ]);
+        }
+
+        return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function storeRegistroPerfilNegocio(PerfilNegocioRequest $request)
+    {
+        $persona = Auth::user()->persona;
+
+        if (!$persona->registroCompleto()) {
+            try {
+                $personaDatos = $request->safe()->only([
+                    'id_asentamiento',
+                    'id_tipo_vialidad',
+                    'vialidad',
+                    'num_ext',
+                    'num_int'
+                ]);
+                if ($persona->registro_fase === RegistroMTV::REGISTRO_FASE_IDENTIFICACION) {
+                    $personaDatos['registro_fase'] = RegistroMTV::REGISTRO_FASE_TU_NEGOCIO;
+                }
+                $persona->update($personaDatos);
+
+                $perfilNegocioDatos = $request->safe()->only([
+                    'id_grupo_prioritario',
+                    'id_tipo_pyme',
+                    'id_sector',
+                    'id_categoria_scian',
+                    'lema_negocio',
+                    'nombre_negocio',
+                    'descripcion_negocio',
+                    'diferenciadores',
+                    'sitio_web',
+                    'cuenta_facebook',
+                    'cuenta_twitter',
+                    'cuenta_linkedin',
+                    'num_whatsapp',
+                ]);
+
+                $perfilNegocio = $persona->perfil_negocio;
+                if ($perfilNegocio) {
+                    $persona->perfil_negocio->update($perfilNegocioDatos);
+                } else {
+                    $registroPersonaService = new RegistroPersonaService();
+                    $perfilNegocio = $registroPersonaService->registraPerfilNegocio($perfilNegocioDatos, $persona);
+                }
+
+                $logotipoFile = $request->safe()->only(['logotipo']);
+                if (isset($logotipoFile['logotipo'])) {
+                    $path = $logotipoFile['logotipo']->store('public/logotipos');
+                    $perfilNegocio->clearMediaCollection('logotipos');
+                    $perfilNegocio->addMedia(storage_path('app') . '/' . $path)->toMediaCollection('logotipos');
+                }
+
+                return redirect()->route('registro-contactos.show');
+            } catch (ValidationException $e) {
+                $request->session()->flash('error', 'El proceso de registro no pudo ser completado: ' . $e->getMessage());
+
+                return redirect()->route('registro-perfil-negocio.show')
+                    ->withErrors($e->validator)
+                    ->withInput();
+            }
+        }
+
+        return redirect(RouteServiceProvider::HOME);
     }
 }

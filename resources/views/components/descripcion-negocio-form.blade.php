@@ -32,11 +32,11 @@
     @php($formAction = route('descripcion-negocio.update'))
 @endif
 
-<div class="container" x-data="descripcionNegocioReglas()">
-    <form method="POST" enctype="multipart/form-data" action="{{ $formAction }}">
-        @csrf
+<div x-data="descripcionNegocioReglas()">
+{{--    <form method="POST" enctype="multipart/form-data" action="{{ $formAction }}">--}}
+{{--        @csrf--}}
         <div class="flex flex-row flex-wrap">
-            <div class="md:basis-1/4 xs:basis-full pr-8 mt-3">
+            <div class="md:basis-1/4 xs:basis-full mt-3 px-8">
                 <x-input-image-viewer
                     :id="__('logotipo')"
                     :name="__('logotipo')"
@@ -52,10 +52,10 @@
                     @svg('ri-whatsapp-line', ['class' => 'h-5 w-5'])
                 </div>
             </div>
-            <div class="md:basis-3/4 xs:basis-full row">
+            <div class="md:basis-3/4 xs:basis-full row mx-0">
                 <div class="form-group col-md-4">
                     <div class="mtv-input-wrapper">
-                        <select class="mtv-text-input" id="id_grupo_prioritario" name="id_grupo_prioritario" x-model="grupoPrioritario" autofocus required>
+                        <select class="mtv-text-input" id="id_grupo_prioritario" name="id_grupo_prioritario" x-model="grupoPrioritario" required>
                             <option value="0"> -- Ninguno --</option>
                             @foreach ((array) $grupos_prioritarios as $grupo)
                                 <option
@@ -111,14 +111,17 @@
                 <div class="form-group col-md-12">
                     <div class="mtv-input-wrapper">
                         <input type="text" class="mtv-text-input" id="lema_negocio" name="lema_negocio"
-                            value="{{ $lema }}" required>
+                               placeholder="Eslogan o frase corta y memorable que usas para promocionar tu negocio"
+                               value="{{ $lema }}" required>
                         <label class="mtv-input-label" for="lema_negocio">Lema del negocio</label>
                     </div>
                     <x-input-error :messages="$errors->get('lema_negocio')" class="mt-2"/>
                 </div>
                 <div class="form-group col-md-12">
                     <div class="mtv-input-wrapper">
-                        <textarea class="mtv-text-input" id="descripcion_negocio" name="descripcion_negocio" required>{{ $descripcionNegocio }}</textarea>
+                        <textarea class="mtv-text-input" id="descripcion_negocio" name="descripcion_negocio"
+                                  placeholder="Describe tu negocio o actividad en máximo 100 palabras"
+                                  required>{{ $descripcionNegocio }}</textarea>
                         <label class="mtv-input-label" for="descripcion_negocio">Descripción del negocio</label>
                     </div>
                     <x-input-error :messages="$errors->get('descripcion_negocio')" class="mt-2"/>
@@ -155,24 +158,7 @@
                 </div>
             </div>
         </div>
-            {{--<div class="py-4 flex justify-content-end">
-                @if ($mode === 'wizard')
-                    <a class="btn btn-primary mr-3" href="{{ route('wizard.registro-mtv.show', [$wizard['id'], 'perfil-negocio']) }}">
-                        @svg('heroicon-s-arrow-left-circle', ['class' => 'h-5 w-5 inline-block'])
-                        Anterior
-                    </a>
-                    <button id="btn_siguiente" class="btn btn-primary">
-                        Siguiente
-                        @svg('heroicon-s-arrow-right-circle', ['class' => 'h-5 w-5 inline-block'])
-                    </button>
-                @elseif ($mode === 'edit')
-                    <button class="btn btn-primary" type="submit">
-                        @svg('gmdi-save-as', ['class' => 'h-5 w-5 inline-block mr-1'])
-                        Guardar
-                    </button>
-                @endif
-            </div>--}}
-    </form>
+{{--    </form>--}}
 </div>
 
 <script type="text/javascript">

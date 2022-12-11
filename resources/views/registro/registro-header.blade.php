@@ -1,7 +1,7 @@
 <div class="flex flex-col flex-nowrap">
     <div class="py-3 bg-mtv-primary px-3 flex flex-row flex-nowrap font-bold md:text-base xs:text-sm">
         @php($currentRoute = Route::current()->getName())
-        @php($esRegistroInicio = !in_array($currentRoute, ['registro-perfil-negocio', 'registro-contactos']))
+        @php($esRegistroInicio = !in_array($currentRoute, ['registro-perfil-negocio.show', 'registro-contactos.show']))
         @if($esRegistroInicio)
             <a href="{{ route('homepage') }}"
                class="text-mtv-gold-light no-underline hover:text-white flex flex-row">
@@ -15,16 +15,22 @@
                     Tu negocio
                 </div>
                 @svg('fas-arrow-right', ['class' => 'h-5 w-5 inline-block text-white ml-5 mr-5 self-center'])
-                <div class="{{ $currentRoute === 'registro-contactos' ? 'text-white' : 'text-mtv-gold-light' }}">
+                <div class="{{ $currentRoute === 'registro-contactos.show' ? 'text-white' : 'text-mtv-gold-light' }}">
                     @svg('fas-building-user', ['class' => 'h-7 w-7 inline-block mr-2'])
                     Contactos
                 </div>
             </div>
-            <a href="{{ route('logout') }}"
-               class="md:basis-2/12 xs:basis-4/12 self-end text-mtv-gold-light no-underline hover:text-white text-end">
-                Cerrar sesión
-                @svg('fas-arrow-right', ['class' => 'h-7 w-7 inline-block ml-3'])
-            </a>
+            <form method="POST" action="{{ route('logout') }}"
+                  class="md:basis-2/12 xs:basis-4/12 self-end text-mtv-gold-light no-underline hover:text-white text-end">
+                @csrf
+                <button
+                   type="button"
+                   onclick="event.preventDefault(); this.closest('form').submit();"
+                >
+                    Cerrar sesión
+                    @svg('fas-arrow-right', ['class' => 'h-7 w-7 inline-block ml-3'])
+                </button>
+            </form>
         @endif
     </div>
     <div class="w-full h-3 bg-mtv-gold-light"></div>

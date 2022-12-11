@@ -9,16 +9,15 @@ use App\Models\Persona;
 use App\Models\PersonaFisica;
 use App\Models\PersonaMoral;
 use App\Models\Producto;
+use App\Models\RegistroMTV;
 use App\Models\User;
 use App\Repositories\PersonaRepository;
 use Carbon\Carbon;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class RegistroPersonaService
 {
-    public function registraPersonaMTV(array $personaRegistroDatos, PersonaRepository $personaRepository): bool
+    public function registraPersonaMTV(array $personaRegistroDatos, PersonaRepository $personaRepository): ?User
     {
         DB::transaction(function() use($personaRegistroDatos, $personaRepository) {
             $tipo_persona = null;
@@ -44,7 +43,7 @@ class RegistroPersonaService
                 'personable_type' => get_class($tipo_persona),
                 'rfc' => $personaRegistroDatos['rfc'],
                 'email' => $personaRegistroDatos['email'],
-                'registro_completo' => false,
+                'registro_fase' => RegistroMTV::REGISTRO_FASE_IDENTIFICACION,
                 /*'id_asentamiento' => $personaRegistroDatos['id_asentamiento'],
                 'id_tipo_vialidad' => $personaRegistroDatos['id_tipo_vialidad'],
                 'vialidad' => $personaRegistroDatos['vialidad'],
@@ -109,12 +108,15 @@ class RegistroPersonaService
                 'password' => bcrypt($personaRegistroDatos['password'])
             ]);
 
-            // Iniciar sesión con el nuevo usuario
-            event(new Registered($user));
-
-            Auth::login($user);
+            return $user;
         });
 
-        return true;
+        return null;
+    }
+
+    public function registraPerfilNegocio(array $perfilNegocioDatos, Persona $persona) {
+        $perfilNegocioDatos['id_persona'] = $persona->id;
+
+        return PerfilNegocio::create($perfilNegocioDatos);
     }
 }

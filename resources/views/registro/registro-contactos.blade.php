@@ -1,5 +1,5 @@
 <x-registro-layout>
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-5">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-2">
         <div class="bg-white overflow-hidden shadow-sm">
             @include('registro.registro-header',
                        ['titulo' => 'Contactos',
@@ -10,7 +10,7 @@
                 />
 
                 <div class="flex flex-row my-4 space-x-2 justify-end">
-                    <a href="{{ route('registro-perfil-negocio') }}" class="mtv-button-secondary-white no-underline self-center">
+                    <a href="{{ route('registro-perfil-negocio.show') }}" class="mtv-button-secondary-white no-underline self-center">
                         @svg('fas-arrow-left', ['class' => 'h-7 w-7 inline-block mr-3'])
                         Atrás
                     </a>
