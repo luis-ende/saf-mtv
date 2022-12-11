@@ -10,11 +10,11 @@
                 />
 
                 <div class="flex flex-row my-4 space-x-2 justify-end">
-                    <a href="{{ route('registro-perfil-negocio') }}" class="mtv-button-secondary-white no-underline">
+                    <a href="{{ route('registro-perfil-negocio') }}" class="mtv-button-secondary-white no-underline self-center">
                         @svg('fas-arrow-left', ['class' => 'h-7 w-7 inline-block mr-3'])
                         Atrás
                     </a>
-                    <button type="submit" class="mtv-button-secondary">Finalizar registro</button>
+                    <button type="submit" class="mtv-button-secondary self-center">Finalizar registro</button>
                 </div>
             </div>
         </div>

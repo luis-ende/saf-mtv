@@ -1,6 +1,5 @@
 <div x-data="curpConsulta()">
-    <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
-    <div class="mtv-input-wrapper">
+    <div class="mtv-input-wrapper relative">
         <input
             id="curp"
             name="curp"
@@ -13,8 +12,11 @@
             @blur="buscaCURP()"
             oninput="this.value = this.value.toUpperCase()" {!! $attributes->merge(['class' => 'mtv-text-input']) !!}>
         <label class="mtv-input-label" for="curp">CURP</label>
+        <div class="absolute inset-y-0 top-4 right-0 pr-3 flex items-center text-sm leading-5">
+            <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+        </div>
     </div>
-    <label x-show="mensajeError != ''" x-text="mensajeError" class="text-sm text-[#9F2241] space-y-1"></label>
+    <label x-show="mensajeError != ''" x-text="mensajeError" class="text-xs text-red-600 space-y-1"></label>
 </div>
 
 <script>
@@ -46,12 +48,13 @@
                                     })
                                 } else {
                                     let curpDatos = res['curp_datos'];
-                                    document.getElementById('rfc_sin_homoclave').value = curpDatos['CURP'].substring(0, curpDatos['CURP'].length-8);
+                                    /*document.getElementById('rfc_sin_homoclave').value = curpDatos['CURP'].substring(0, curpDatos['CURP'].length-8);
                                     document.getElementById('fecha_nacimiento').value = curpDatos['fechNac'];
                                     document.getElementById('genero').value = curpDatos['sexo'];
                                     document.getElementById('nombre').value = curpDatos['nombres'];
                                     document.getElementById('primer_ap').value = curpDatos['apellido1'];
-                                    document.getElementById('segundo_ap').value = curpDatos['apellido2'];
+                                    document.getElementById('segundo_ap').value = curpDatos['apellido2'];*/
+                                    document.getElementById('rfc').value = curpDatos['CURP'].substring(0, curpDatos['CURP'].length-8);
                                     document.getElementById('rfc').focus();
                                 }
                             }
@@ -60,11 +63,11 @@
             },
             limpiaCURPCampos() {
                 document.getElementById('rfc').value = '';
-                document.getElementById('fecha_nacimiento').value = '';
+                /*document.getElementById('fecha_nacimiento').value = '';
                 document.getElementById('genero').value = '';
                 document.getElementById('nombre').value = '';
                 document.getElementById('primer_ap').value = '';
-                document.getElementById('segundo_ap').value = '';
+                document.getElementById('segundo_ap').value = '';*/
             }
         }
     }

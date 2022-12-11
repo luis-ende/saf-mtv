@@ -42,17 +42,19 @@ class RegistroPersonaService
                 'id_tipo_persona' => $personaRegistroDatos['tipo_persona'],
                 'personable_id' => $tipo_persona->id,
                 'personable_type' => get_class($tipo_persona),
-                'rfc' => $personaRegistroDatos['rfc_completo'],
-                'id_asentamiento' => $personaRegistroDatos['id_asentamiento'],
+                'rfc' => $personaRegistroDatos['rfc'],
+                'email' => $personaRegistroDatos['email'],
+                'registro_completo' => false,
+                /*'id_asentamiento' => $personaRegistroDatos['id_asentamiento'],
                 'id_tipo_vialidad' => $personaRegistroDatos['id_tipo_vialidad'],
                 'vialidad' => $personaRegistroDatos['vialidad'],
                 'num_int' => $personaRegistroDatos['num_int'],
-                'num_ext' => $personaRegistroDatos['num_ext'],
+                'num_ext' => $personaRegistroDatos['num_ext'],*/
             ]);
 
-            $personaRepository->updateContactos($persona, $personaRegistroDatos['contactos_lista']);
+            /*$personaRepository->updateContactos($persona, $personaRegistroDatos['contactos_lista']);*/
 
-            $perfilNegocio = PerfilNegocio::create([
+            /*$perfilNegocio = PerfilNegocio::create([
                 'id_persona' => $persona->id,
                 'id_grupo_prioritario' => $personaRegistroDatos['id_grupo_prioritario'],
                 'id_tipo_pyme' => $personaRegistroDatos['id_tipo_pyme'],
@@ -71,15 +73,15 @@ class RegistroPersonaService
             if ($personaRegistroDatos['logotipo_path'] && $personaRegistroDatos['logotipo_path'] !== '') {
                 $perfilNegocio->addMedia(storage_path('app/public/logotipos_tmp/' . basename($personaRegistroDatos['logotipo_path'])))
                 ->toMediaCollection('logotipos');
-            }            
+            }       */
 
-            $catalogoProductos = CatalogoProductos::create([
+            /*$catalogoProductos = CatalogoProductos::create([
                 'nombre_catalogo' => 'Catálogo principal',
                 'id_persona' => $persona->id,
-            ]);
+            ]);*/
 
             // Si se capturaron los datos del producto
-            if (isset($personaRegistroDatos['nombre_producto']) && isset($personaRegistroDatos['clave_cabms'])) {
+            /*if (isset($personaRegistroDatos['nombre_producto']) && isset($personaRegistroDatos['clave_cabms'])) {
                 $producto = [
                     'tipo' => $personaRegistroDatos['tipo_producto'],
                     'clave_cabms' => $personaRegistroDatos['clave_cabms'],
@@ -97,10 +99,10 @@ class RegistroPersonaService
                 }
 
                 Producto::create($producto);
-            }
+            }*/
 
             $user = User::create([
-                'rfc' => $personaRegistroDatos['rfc_completo'],
+                'rfc' => $personaRegistroDatos['rfc'],
                 'id_persona' => $persona->id,
                 'activo' => true,
                 'last_login' => now(),

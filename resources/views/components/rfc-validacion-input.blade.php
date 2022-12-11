@@ -2,19 +2,23 @@
 
 @php($url = $modo === 'registro' ? '/api/proveedores/registro/' : '/api/proveedores/login/')
 
-<div x-data="rfcValidacion()" x-init="rfcCompleto = obtieneRFCCompleto()" class="mtv-input-wrapper">
-    <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
-    <x-rfc-input
-          x-model="rfcText"
-          @blur="verificaRFC()"
-          @keyup="rfcInvalido = ''"
-          :value="$value"
-          :disabled="$disabled"
-          placeholder="XXXXXXXXXXXXX"
-          x-mask="*************"
-    />
-    <label x-show="mensajeError != '' || rfcInvalido != ''" x-text="obtenerMensajeError()" class="text-sm text-red-600 space-y-1"></label>
-    <input type="hidden" id="rfc_completo" name="rfc_completo" x-model="rfcCompleto">
+<div x-data="rfcValidacion()">
+    <div class="mtv-input-wrapper relative">
+        <x-rfc-input
+              x-model="rfcText"
+              @blur="verificaRFC()"
+              @keyup="rfcInvalido = ''"
+              :value="$value"
+              :disabled="$disabled"
+              placeholder="XXXXXXXXXX - XXX"
+              x-mask="*************"
+        />
+        <div class="absolute inset-y-0 top-4 right-0 pr-3 flex items-center text-sm leading-5">
+            <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+        </div>
+        <input type="hidden" id="rfc_completo" name="rfc_completo" x-model="rfcCompleto">
+    </div>
+    <label x-show="mensajeError != '' || rfcInvalido != ''" x-text="obtenerMensajeError()" class="text-xs text-red-600 space-y-1"></label>
 </div>
 
 <script type="text/javascript">
@@ -32,22 +36,23 @@
             isLoading: false,
 
             verificaRFC() {
-                let btnFormSubmit = this.modoValidacion === 'registro' ?
+                /*let btnFormSubmit = this.modoValidacion === 'registro' ?
                     document.getElementById('btn_perfil_negocio_siguiente') :
-                    document.getElementById('btn_login');
+                    document.getElementById('btn_login');*/
 
                 this.rfcExisteEnPadronProveedores = false;
                 this.rfcEtapaEnPadronProveedores = '';
                 this.rfcExisteEnMTV = false;
                 this.rfcInvalido = '';
                 this.mensajeError = '';
-                if (btnFormSubmit) {
+                /*if (btnFormSubmit) {
                     btnFormSubmit.disabled = false;
-                }
+                }*/
 
-                this.rfcCompleto = this.obtieneRFCCompleto();
+                // this.rfcCompleto = this.obtieneRFCCompleto();
+                this.rfcCompleto = this.rfcText;
 
-                if (this.rfcText && this.rfcCompleto !== '') {
+                if (this.esRFCValido(this.rfcCompleto)) {
                     this.isLoading = true;
 
                     fetch(this.rfcVerificacionUrl + this.rfcCompleto)
@@ -56,9 +61,9 @@
                                 this.isLoading = false;
                                 if (res['error']) {
                                     this.mensajeError = 'Servicio no disponible. No es posible registrar el RFC en Mi Tiendita Virtual.'
-                                    if (btnFormSubmit) {
+                                    /*if (btnFormSubmit) {
                                         btnFormSubmit.disabled = true;
-                                    }
+                                    }*/
                                 } else {
                                     this.rfcExisteEnPadronProveedores = res['existe_en_padron_proveedores'];
                                     this.rfcExisteEnMTV = res['existe_en_mtv'];
@@ -79,9 +84,9 @@
                                                 allowOutsideClick: false,
                                             }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    if (btnFormSubmit) {
+                                                    /*if (btnFormSubmit) {
                                                         btnFormSubmit.disabled = true;
-                                                    }
+                                                    }*/
                                                 }
                                             })
                                         } else if (this.rfcExisteEnMTV && this.modoValidacion === 'registro') {
@@ -93,9 +98,9 @@
                                                 allowOutsideClick: false,
                                             }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    if (btnFormSubmit) {
+                                                    /*if (btnFormSubmit) {
                                                         btnFormSubmit.disabled = true;
-                                                    }
+                                                    }*/
                                                 }
                                             })
                                         }
@@ -115,7 +120,10 @@
                     }
                 }
             },
-            obtieneRFCCompleto() {
+            esRFCValido(rfc) {
+                return rfc.length === 12 || rfc.length === 13;
+            }
+            /*obtieneRFCCompleto() {
                 if (document.getElementsByName('tipo_persona').length > 0) {
                     const tipoPersona = document.getElementsByName('tipo_persona')[0].value;
                     if (tipoPersona === 'M') {
@@ -128,7 +136,7 @@
                 }
 
                 return '';
-            }
+            }*/
         }
     }
 </script>

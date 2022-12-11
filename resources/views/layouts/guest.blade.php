@@ -5,8 +5,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Mi Tiendita Virtual CDMX</title>
-        
-        @googlefonts        
+
+        @googlefonts
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -20,9 +20,7 @@
         <div class="min-h-screen bg-gray-100">
             <!-- Page Content -->
             <main>
-                <div class="row">
-                    @include('layouts.alert-notification')
-                </div>
+                @include('layouts.alert-notification')
                 {{ $slot }}
             </main>
         </div>

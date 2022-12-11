@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RegistroMTVController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Repositories\SectorRepository;
@@ -68,18 +69,14 @@ Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'in
 
 Route::get('/programacion-anual', [ProgramacionAnualController::class, 'index'])->name('programacion-anual');
 
-Route::get('/registro-inicio', function() {
-    return view('registro.inicio');
-})->name('registro-inicio');
+Route::get('/registro-inicio', [RegistroMTVController::class, 'showRegistroInicio'])->name('registro-inicio');
 
-Route::get('/registro-certificado-1', function() {
-    return view('registro.inicio-cert-1');
-})->name('registro-inicio-certificado-1');
+Route::get('/registro-identificacion/{tipoPersona}/{tipoRegistro}',
+    [RegistroMTVController::class, 'showRegistroIdentificacion'])->name('registro-inicio-identificacion');
 
-Route::get('/registro-confirmacion', function() {
-    return view('registro.inicio-confirmacion');
-})->name('registro-inicio-confirmacion');
+Route::post('/registro-identificacion', [RegistroMTVController::class, 'storeRegistroCert'])->name('registro-inicio-identificacion.store');
 
+Route::post('/registro-confirmacion', [RegistroMTVController::class, 'storeRegistroCreaCuenta'])->name('registro-inicio-confirmacion.store');
 
 Route::get('/registro-perfil-negocio', function() {
     $persona = Auth::user()->persona;
