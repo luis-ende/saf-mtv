@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use InvalidArgumentException;
 
 class RegistroMTVController extends Controller
 {
@@ -62,11 +63,17 @@ class RegistroMTVController extends Controller
         try {
             if ($tipoPersona === Persona::TIPO_PERSONA_FISICA_ID) {
                 $personaDatos = $certExtractorService->extraer_pfisica($certPath);
+                if ($personaDatos === false) {
+                    throw new InvalidArgumentException('Archivo .cer inválido. No corresponde a persona física.');
+                }
             } elseif ($tipoPersona === Persona::TIPO_PERSONA_MORAL_ID) {
                 $personaDatos = $certExtractorService->extraer_pmoral($certPath);
+                if ($personaDatos === false) {
+                    throw new InvalidArgumentException('Archivo .cer inválido. No corresponde a persona moral.');
+                }
             }
         } catch (\Throwable $e) {
-            return redirect()->back()->with('error', 'Error al procesar archivo .cer');
+            return redirect()->back()->withError($e->getMessage());
         }
 
         return response()->view('registro.inicio-confirmacion',
@@ -242,5 +249,14 @@ class RegistroMTVController extends Controller
         }
 
         return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function storeRegistroContactos()
+    {
+        $persona = Auth::user()->persona;
+
+        return view('registro.registro-contactos', [
+            'persona' => $persona,
+        ]);
     }
 }
