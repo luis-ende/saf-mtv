@@ -7,6 +7,7 @@
             <div class="px-6">
                 <x-perfil-negocio-form
                     :persona="$persona"
+                    :cat_paises="$cat_paises"
                     :tipos_vialidad="$tipos_vialidad"
                     :grupos_prioritarios="$grupos_prioritarios"
                     :tipos_pyme="$tipos_pyme"

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->char('id_tipo_persona', 1); // "F" = "Física" | "M" = "Moral"
             $table->bigInteger('personable_id');
             $table->string('personable_type', 30);
+            $table->unsignedSmallInteger('id_pais')->nullable();
             $table->integer('id_asentamiento')->nullable();
             $table->integer('id_tipo_vialidad')->nullable();
             $table->string('vialidad', 120)->nullable();

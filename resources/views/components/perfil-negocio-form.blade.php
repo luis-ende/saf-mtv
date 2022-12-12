@@ -1,4 +1,4 @@
-@props(['persona' => null, 'grupos_prioritarios' => [], 'tipos_pyme' => [],'sectores' => [], 'tipos_vialidad' => null])
+@props(['persona' => null, 'cat_paises' => [], 'grupos_prioritarios' => [], 'tipos_pyme' => [],'sectores' => [], 'tipos_vialidad' => null])
 
 <form method="POST" enctype="multipart/form-data" action="{{ route('registro-perfil-negocio.store') }}">
     @csrf
@@ -45,6 +45,7 @@
                         :step="null"
                         :direccion="isset($persona) ? $persona->direccion() : null"
                         :tipos_vialidad="$tipos_vialidad"
+                        :cat_paises="$cat_paises"
             />
         </x-field-group-card>
 

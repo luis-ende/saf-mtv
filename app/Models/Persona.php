@@ -25,6 +25,7 @@ class Persona extends Model
         'personable_id',
         'personable_type',
         'rfc',
+        'id_pais',
         'id_asentamiento',
         'id_tipo_vialidad',
         'vialidad',
@@ -88,6 +89,7 @@ class Persona extends Model
     {
         return App::makeWith(
             Direccion::class, [
+                'idPais' => $this->id_pais,
                 'idAsentamiento' => $this->id_asentamiento,
                 'idTipoVialidad' => $this->id_tipo_vialidad,
                 'vialidad' => $this->vialidad,

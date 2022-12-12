@@ -24,6 +24,7 @@ class PerfilNegocioRequest extends FormRequest
     public function rules()
     {
         return [
+            'id_pais' => 'required|integer',
             'id_asentamiento' => 'required|integer',
             'id_tipo_vialidad' => 'required|integer',
             'vialidad' => 'required|max:120',

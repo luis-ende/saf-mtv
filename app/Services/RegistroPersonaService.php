@@ -41,12 +41,7 @@ class RegistroPersonaService
                 'personable_type' => get_class($tipo_persona),
                 'rfc' => $personaRegistroDatos['rfc'],
                 'email' => $personaRegistroDatos['email'],
-                'registro_fase' => RegistroMTV::REGISTRO_FASE_IDENTIFICACION,
-                /*'id_asentamiento' => $personaRegistroDatos['id_asentamiento'],
-                'id_tipo_vialidad' => $personaRegistroDatos['id_tipo_vialidad'],
-                'vialidad' => $personaRegistroDatos['vialidad'],
-                'num_int' => $personaRegistroDatos['num_int'],
-                'num_ext' => $personaRegistroDatos['num_ext'],*/
+                'registro_fase' => RegistroMTV::REGISTRO_FASE_IDENTIFICACION,                
             ]);
 
             /*$personaRepository->updateContactos($persona, $personaRegistroDatos['contactos_lista']);*/

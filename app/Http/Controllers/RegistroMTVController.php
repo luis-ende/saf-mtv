@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PerfilNegocioRequest;
 use App\Models\Persona;
 use App\Models\RegistroMTV;
-use App\Repositories\PersonaRepository;
+use Illuminate\Http\Request;
+use InvalidArgumentException;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use App\Repositories\PaisesRepository;
 use App\Repositories\SectorRepository;
+use App\Services\CertExtractorService;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
+use App\Repositories\PersonaRepository;
 use App\Repositories\TipoPymeRepository;
 use App\Repositories\VialidadRepository;
-use App\Repositories\GrupoPrioritarioRepository;
-use App\Services\CertExtractorService;
 use App\Services\RegistroPersonaService;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
+use App\Http\Requests\PerfilNegocioRequest;
 use Illuminate\Validation\ValidationException;
-use InvalidArgumentException;
+use App\Repositories\GrupoPrioritarioRepository;
 
 class RegistroMTVController extends Controller
 {
@@ -174,6 +175,7 @@ class RegistroMTVController extends Controller
         if (!$persona->registroCompleto()) {
             return view('registro.registro-perfil-negocio', [
                 'persona' => $persona,
+                'cat_paises' => PaisesRepository::obtienePaises(),
                 'tipos_vialidad' => VialidadRepository::obtieneTiposVialidad(),
                 'grupos_prioritarios' => GrupoPrioritarioRepository::obtieneGruposPrioritarios(),
                 'tipos_pyme' => TipoPymeRepository::obtieneTiposPyme(),
@@ -192,6 +194,7 @@ class RegistroMTVController extends Controller
         if (!$persona->registroCompleto()) {
             try {
                 $personaDatos = $request->safe()->only([
+                    'id_pais',
                     'id_asentamiento',
                     'id_tipo_vialidad',
                     'vialidad',
