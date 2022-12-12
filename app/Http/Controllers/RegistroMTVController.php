@@ -111,8 +111,7 @@ class RegistroMTVController extends Controller
                 $personaDatos['genero'] = $personaDatos['sexo'];
                 unset($personaDatos['sexo']);
             }
-
-            // TODO: Consultar Renapo para completar nombre, primer_ap, segundo_ap
+            
             if ($tipoRegistro === RegistroMTV::TIPO_REGISTRO_EMAIL) {
                 $this->validate($request, [
                     'email' => 'required|email|same:email_confirmacion|max:255',
@@ -124,8 +123,7 @@ class RegistroMTVController extends Controller
                         'curp' => 'required|max:18',
                         'rfc' => 'required|max:13|unique:users,rfc',
                     ]);
-                    $personaDatos = array_merge($personaDatos, $request->only(['curp', 'rfc']));
-                    // TODO: Consultar Renapo para completar nombre, primer_ap, segundo_ap
+                    $personaDatos = array_merge($personaDatos, $request->only(['curp', 'rfc']));                    
                 } elseif ($tipoPersona === Persona::TIPO_PERSONA_MORAL_ID) {
                     $this->validate($request, [
                         'rfc' => 'required|max:12|unique:users,rfc',

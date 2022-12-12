@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
+
 class CertExtractorService {
     public function extraer_pfisica(string $certPath){
         $fileContent = file_get_contents($certPath);
@@ -29,6 +32,21 @@ class CertExtractorService {
             $certificado['nombre'] = '';
             $certificado['primer_ap'] = '';
             $certificado['segundo_ap'] = '';
+
+            $busquedaCURP = new BusquedaCURPService();
+            $curpConsulta = $busquedaCURP->obtieneCURPDatos($certificado['curp']);
+            if ($curpConsulta['error']) {                
+                throw new InternalErrorException($curpConsulta['error_msg']);
+
+            } elseif ($curpConsulta['error']['curp_no_localizado']) {
+                throw new NotFoundResourceException('No se encontraron datos asociados a la CURP:' . $certificado['curp']);
+
+            } else {
+                $certificado['nombre'] = $curpConsulta['curp_datos']['nombre'];
+                $certificado['primer_ap'] = $curpConsulta['curp_datos']['apellido1'];
+                $certificado['segundo_ap'] = $curpConsulta['curp_datos']['apellido2'];
+            }
+
 
 //            $curp = strtoupper($certificado['curp'] );
 //            $curl = curl_init();
