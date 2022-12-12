@@ -55,7 +55,7 @@
             <div class="form-group col-md-4">
                 <div class="mtv-input-wrapper">
                     <select class="mtv-text-input" id="id_grupo_prioritario" name="id_grupo_prioritario" x-model="grupoPrioritario" required>
-                        <option value="0"> -- Ninguno --</option>
+                        <option value="0">-- Ninguno --</option>
                         @foreach ((array) $grupos_prioritarios as $grupo)
                             <option
                                 value={{ $grupo['id'] }}
@@ -68,7 +68,7 @@
             <div class="form-group col-md-4" x-show="grupoPrioritario == grupoPrioritarioMIPYMEId">
                 <div class="mtv-input-wrapper">
                     <select class="mtv-text-input" id="id_tipo_pyme" name="id_tipo_pyme" x-model="tipoPyme">
-                        <option selected value="0"> -- Seleccionar --</option>
+                        <option selected value="0">-- Seleccionar --</option>
                         @foreach ((array) $tipos_pyme as $tipo)
                             <option
                                 value={{ $tipo['id'] }}
@@ -81,7 +81,7 @@
             <div class="form-group col-md-4">
                 <div class="mtv-input-wrapper">
                     <select class="mtv-text-input" id="id_sector" name="id_sector" x-model="sector">
-                        <option selected value="0"> -- Seleccionar --</option>
+                        <option selected value="0">-- Seleccionar --</option>
                         @foreach ((array) $sectores as $sector)
                             <option
                                 value={{ $sector['id'] }}
@@ -94,7 +94,7 @@
             <div class="form-group col-md-4">
                 <div class="mtv-input-wrapper">
                     <select class="mtv-text-input" id="id_categoria_scian" name="id_categoria_scian">
-                        <option selected value="0"> -- Seleccionar --</option>
+                        <option selected value="0">-- Seleccionar --</option>
                     </select>
                     <label class="mtv-input-label" for="id_categoria_scian">Giro</label>
                 </div>

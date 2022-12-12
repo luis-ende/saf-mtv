@@ -83,8 +83,7 @@ class RegistroMTVController extends Controller
     public function storeRegistroCreaCuenta(Request $request, RegistroPersonaService $registroService, PersonaRepository $personaRepository)
     {
         try {
-            $this->validate($request, [
-                'persona_datos' => 'required|json',
+            $this->validate($request, [                
                 'tipo_persona' => [
                     'required',
                     Rule::in([
@@ -100,16 +99,22 @@ class RegistroMTVController extends Controller
                     ]),
                 ],
                 'password' => 'required|min:8|max:15|same:password_confirmacion' // TODO: Aplicar las mismas validaciones que en front-end
-            ]);
+            ]);            
 
-            $personaDatos = $request->only('tipo_persona', 'email', 'password');
-            $personaDatos = array_merge($personaDatos, json_decode($request->input('persona_datos'), true));
+            $personaDatos = $request->only('tipo_persona', 'email', 'password');            
             $tipoPersona = $request->input('tipo_persona');
-            $tipoRegistro = $request->input('tipo_registro');
+            $tipoRegistro = $request->input('tipo_registro');            
 
-            if (!array_key_exists('genero', $personaDatos)) {
-                $personaDatos['genero'] = $personaDatos['sexo'];
-                unset($personaDatos['sexo']);
+            if ($request->has('persona_datos')) {
+                $this->validate($request, [
+                    'persona_datos' => 'required|json',
+                ]);
+                $personaDatos = array_merge($personaDatos, json_decode($request->input('persona_datos'), true));
+                if (($tipoPersona === Persona::TIPO_PERSONA_FISICA_ID) && 
+                    !array_key_exists('genero', $personaDatos)) {
+                    $personaDatos['genero'] = $personaDatos['sexo'];
+                    unset($personaDatos['sexo']);
+                }
             }
             
             if ($tipoRegistro === RegistroMTV::TIPO_REGISTRO_EMAIL) {
@@ -120,9 +125,10 @@ class RegistroMTVController extends Controller
 
                 if ($tipoPersona === Persona::TIPO_PERSONA_FISICA_ID) {
                     $this->validate($request, [
+                        'persona_datos' => 'required|json',
                         'curp' => 'required|max:18',
                         'rfc' => 'required|max:13|unique:users,rfc',
-                    ]);
+                    ]);                    
                     $personaDatos = array_merge($personaDatos, $request->only(['curp', 'rfc']));                    
                 } elseif ($tipoPersona === Persona::TIPO_PERSONA_MORAL_ID) {
                     $this->validate($request, [
@@ -130,7 +136,7 @@ class RegistroMTVController extends Controller
                         'razon_social' => 'required',
                         'fecha_constitucion' => 'required|date',
                     ]);
-                    $personaDatos = array_merge($personaDatos, $request->only(['rfc', 'razon_social', 'fecha_constitucion']));
+                    $personaDatos = array_merge($personaDatos, $request->only(['rfc', 'razon_social', 'fecha_constitucion']));                    
                 }
             }
         } catch (ValidationException $e) {
@@ -140,7 +146,7 @@ class RegistroMTVController extends Controller
 
             $datos = compact('tipoPersona', 'tipoRegistro', 'personaDatos');
             $request->session()->flash('error', 'El proceso de registro no pudo ser completado: ' . $e->getMessage());
-            // TODO: Personalizar mensajes de error para password y email que deben coincidir
+            // TODO: Personalizar mensajes de error para password y email que deben coincidir, y otros
             // https://laravel.com/docs/9.x/validation#customizing-the-error-messages
 
             return view('registro.inicio-confirmacion', $datos);
@@ -254,9 +260,13 @@ class RegistroMTVController extends Controller
         $persona = Auth::user()->persona;
 
         if (!$persona->registroCompleto()) {
-            return view('registro.registro-contactos', [
-                'persona' => $persona,
-            ]);
+            if ($persona->registro_fase === RegistroMTV::REGISTRO_FASE_TU_NEGOCIO) {
+                return view('registro.registro-contactos', [
+                    'persona' => $persona,
+                ]);
+            } elseif ($persona->registro_fase === RegistroMTV::REGISTRO_FASE_IDENTIFICACION) {
+                return redirect()->route('registro-perfil-negocio.show');
+            }
         }
 
         return redirect(RouteServiceProvider::HOME);

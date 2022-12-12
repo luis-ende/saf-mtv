@@ -30,9 +30,9 @@
             @elseif ($persona->id_tipo_persona === 'M')
                 <span class="xs:basis-full md:basis-1/4">
                     Razón social: <span class="text-gray-700 uppercase">{{ $persona->nombre_o_razon_social() }}</span>
-                </span>
+                </span>                
                 <span class="xs:basis-full md:basis-1/4">
-                    Fecha constitución: <span class="text-gray-700">{{ $persona->tipo_persona->fecha_nacimiento }}</span>
+                    Fecha constitución: <span class="text-gray-700">{{ $persona->tipo_persona->fecha_constitucion }}</span>
                 </span>
             @endif
             </div>

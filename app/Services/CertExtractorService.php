@@ -29,7 +29,7 @@ class CertExtractorService {
             $dia = substr($certificado['curp'],8, -8);
             $fecha = $año.'-'.$mes.'-'.$dia;
             $certificado['fecha_nacimiento'] = date("d/m/Y", strtotime($fecha));
-            $certificado['nombre'] = '';
+            $certificado['nombre'] = $certificado['nombre_completo'];
             $certificado['primer_ap'] = '';
             $certificado['segundo_ap'] = '';
 
@@ -38,11 +38,11 @@ class CertExtractorService {
             if ($curpConsulta['error']) {                
                 throw new InternalErrorException($curpConsulta['error_msg']);
 
-            } elseif ($curpConsulta['error']['curp_no_localizado']) {
+            } elseif ($curpConsulta['curp_no_localizado']) {
                 throw new NotFoundResourceException('No se encontraron datos asociados a la CURP:' . $certificado['curp']);
 
             } else {
-                $certificado['nombre'] = $curpConsulta['curp_datos']['nombre'];
+                $certificado['nombre'] = $curpConsulta['curp_datos']['nombres'];
                 $certificado['primer_ap'] = $curpConsulta['curp_datos']['apellido1'];
                 $certificado['segundo_ap'] = $curpConsulta['curp_datos']['apellido2'];
             }
