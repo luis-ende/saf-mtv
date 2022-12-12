@@ -3,9 +3,8 @@
 @php($diferenciadores = $diferenciadores !== '' ? explode(',', $diferenciadores) : [])
 
 <style>
-    .tags-input-wrapper{
-        background: #f8fafc;
-        padding: 6px;
+    .tags-input-wrapper{        
+        padding: 10px;
         border-radius: 4px;
         border: 1px solid #ccc
     }
@@ -32,15 +31,18 @@
     }
 </style>
 
-<label class="font-medium" for="diferenciadores">Diferenciadores empresariales:</label>
-<input
-    x-data="diferenciadoresLista()"
-    x-init="inicializaLista()"
-    type="text"
-    class="form-control"
-    id="diferenciadores"
-    name="diferenciadores"
->
+<div class="mtv-input-wrapper">
+    <input
+        x-data="diferenciadoresLista()"
+        x-init="inicializaLista()"
+        type="text"
+        class="mtv-text-input"
+        id="diferenciadores"
+        name="diferenciadores"
+    >
+    <label class="mtv-input-label" for="diferenciadores">Diferenciadores empresariales</label>
+</div>
+
 <label class="text-xs text-slate-500" for="diferenciadores">Separar con comas.</label>
 
 <script type="text/javascript">

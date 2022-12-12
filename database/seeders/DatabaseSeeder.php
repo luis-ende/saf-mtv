@@ -2,18 +2,22 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class TipoVialidadSeeder extends Seeder
+class DatabaseSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seed the application's database.
      *
      * @return void
      */
     public function run()
+    {
+        $this->seedTiposVialidad();
+    }
+
+    private function seedTiposVialidad() 
     {
         DB::table('cat_tipo_vialidad')->insert([
             'tipo_vialidad' => 'CALLE',

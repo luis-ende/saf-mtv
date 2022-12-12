@@ -60,17 +60,18 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-3">
-                        <label class="font-medium" for="clave_cabms">Clave CABMS:</label>
+                    <div class="form-group col-md-3">                                                
                         <div class="flex flex-row">
-                            <input type="text"
-                                   class="form-control"
-                                   style="background-color: #efefef"
-                                   id="clave_cabms"
-                                   name="clave_cabms"
-                                   placeholder="Buscar clave CABMS..."
-                                   value="{{ $claveCABMS }}"
-                                   required readonly>
+                            <div class="mtv-input-wrapper">
+                                <input type="text"
+                                    class="mtv-text-input"                                    
+                                    id="clave_cabms"
+                                    name="clave_cabms"
+                                    placeholder="Buscar clave CABMS..."
+                                    value="{{ $claveCABMS }}"
+                                    required readonly>
+                                <label class="mtv-input-label" for="clave_cabms">Clave CABMS</label>
+                            </div>
                             <a href="#"
                                class="text-base no-underline hover:text-[#BC955C]"
                                data-bs-toggle="modal" data-bs-target="#cabmsModal">
@@ -79,50 +80,61 @@
                         </div>
                     </div>
                     <div class="form-group col-md-9">
-                        <label class="font-medium" for="nombre_producto">Nombre del producto:</label>
-                        <input type="text" class="form-control" id="nombre_producto" name="nombre_producto"
+                        <div class="mtv-input-wrapper">                        
+                            <input type="text" class="mtv-text-input" id="nombre_producto" name="nombre_producto"
                                value="{{ $nombreProducto }}" required>
+                            <label class="mtv-input-label" for="nombre_producto">Nombre del producto</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label class="font-medium" for="descripcion_producto">Descripcion:</label>
-                        <textarea class="form-control" id="descripcion_producto"
-                                  name="descripcion_producto" maxlength="140">{{ $descripcionProducto }}</textarea>
+                        <div class="mtv-input-wrapper">                                                    
+                            <textarea class="mtv-text-input" id="descripcion_producto"
+                                    name="descripcion_producto" maxlength="140">{{ $descripcionProducto }}</textarea>
+                            <label class="mtv-input-label" for="descripcion_producto">Descripcion</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-4">
-                        <label class="font-medium" for="precio">Precio:</label>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">$</span>
+                    <div class="form-group col-md-4">                                                                            
+                        <div class="mtv-input-wrapper">
                             <input type="number"
-                                   min="0"
-                                   step=".01"
-                                   class="form-control"
-                                   id="precio" name="precio"
-                                   value="{{ $precio }}" required>
+                                min="0"
+                                step=".01"
+                                class="mtv-text-input"
+                                id="precio" name="precio"
+                                value="{{ $precio }}" required>
+                            <label class="mtv-input-label" for="precio">Precio</label>
+                        </div>                        
+                    </div>
+                    <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
+                        <div class="mtv-input-wrapper">                            
+                            <input type="text" class="mtv-text-input" id="marca" name="marca"
+                                value="{{ $marca }}">
+                            <label class="mtv-input-label" for="marca">Marca</label>
                         </div>
                     </div>
                     <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                        <label class="font-medium" for="marca">Marca:</label>
-                        <input type="text" class="form-control" id="marca" name="marca"
-                               value="{{ $marca }}">
-                    </div>
-                    <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                        <label class="font-medium" for="modelo">Modelo:</label>
-                        <input type="text" class="form-control" id="modelo" name="modelo"
+                        <div class="mtv-input-wrapper">                                                    
+                            <input type="text" class="mtv-text-input" id="modelo" name="modelo"
                                value="{{ $modelo }}">
+                            <label class="mtv-input-label" for="modelo">Modelo</label>
+                        </div>    
                     </div>
                     <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                        <label class="font-medium" for="color">Color:</label>
-                        <input type="text" class="form-control" id="color" name="color"
+                        <div class="mtv-input-wrapper">                          
+                            <input type="text" class="mtv-text-input" id="color" name="color"
                                value="{{ $color }}">
+                               <label class="mtv-input-label" for="color">Color</label>
+                        </div>
                     </div>
                     <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                        <label class="font-medium" for="material">Material:</label>
-                        <input type="text" class="form-control" id="material" name="material"
-                               value="{{ $material }}">
+                        <div class="mtv-input-wrapper">                                                      
+                            <input type="text" class="mtv-text-input" id="material" name="material"
+                                value="{{ $material }}">
+                            <label class="mtv-input-label" for="material">Material</label>
+                        </div>
                     </div>
                 </div>
             </div>

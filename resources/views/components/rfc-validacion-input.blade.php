@@ -2,7 +2,7 @@
 
 @php($url = $modo === 'registro' ? '/api/proveedores/registro/' : '/api/proveedores/login/')
 
-<div x-data="rfcValidacion()" x-init="rfcCompleto = obtieneRFCCompleto()">
+<div x-data="rfcValidacion()" x-init="rfcCompleto = obtieneRFCCompleto()" class="mtv-input-wrapper">
     <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
     <x-rfc-input
           x-model="rfcText"
@@ -11,6 +11,7 @@
           :value="$value"
           :disabled="$disabled"
     />
+    {{ $slot }}
     <label x-show="mensajeError != '' || rfcInvalido != ''" x-text="obtenerMensajeError()" class="text-sm text-red-600 space-y-1"></label>
     <input type="hidden" id="rfc_completo" name="rfc_completo" x-model="rfcCompleto">
 </div>
@@ -114,14 +115,16 @@
                 }
             },
             obtieneRFCCompleto() {
-                const tipoPersona = document.getElementsByName('tipo_persona')[0].value;
-                if (tipoPersona === 'M') {
-                    // Contiene RFC con homoclave
-                    return this.rfcText;
-                } else if (tipoPersona === 'F') {
-                    // Input value contiene solo homoclave
-                    return document.getElementById('rfc_sin_homoclave').value + this.rfcText;
-                }
+                if (document.getElementsByName('tipo_persona').length > 0) {
+                    const tipoPersona = document.getElementsByName('tipo_persona')[0].value;
+                    if (tipoPersona === 'M') {
+                        // Contiene RFC con homoclave
+                        return this.rfcText;
+                    } else if (tipoPersona === 'F') {
+                        // Input value contiene solo homoclave
+                        return document.getElementById('rfc_sin_homoclave').value + this.rfcText;
+                    }
+                }                
 
                 return '';
             }

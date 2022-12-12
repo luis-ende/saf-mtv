@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .mtv-text-input {
+    @apply w-full rounded-md border-[#E6E6E6] text-[#6F7271] p-3
+    focus:text-[#6F7271] focus:outline-none focus:border-2 focus:border-[#235B4E] focus:ring-0 focus:ring-[#235B4E]
+    disabled:bg-slate-50 disabled:text-slate-500 disabled:border-[#E6E6E6] disabled:shadow-none 
+    invalid:border-[#9F2241] invalid:text-[#9F2241] focus:invalid:border-[#9F2241] focus:invalid:ring-[#9F2241];
+  }
+
+  .mtv-input-label {
+    @apply w-fit text-base text-[#6F7271] relative top-2.5 bg-white ml-2.5 px-2;
+  }
+}

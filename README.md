@@ -46,6 +46,10 @@
 - Para generar los assets desde la carpeta raíz del proyecto ejecutar: `npm run build`
 - `npm run dev` permite escuchar los cambios realizados en el código para refrescar el navegador sin tener que compilar los assets cada vez
 
+### SVGs
+
+- Los íconos utilizados en format SVG se encuentran en la carpeta `resources\svg` como archivos .svg y se utilizan en plantillas Blade con la directiva `@svg`, por ejemplo: `@svg('govicon-building')`. Ver más acerca sobre los íconos de [Blade UI Kit](https://blade-ui-kit.com/blade-icons).
+
 ## MTV en Docker
 
 - Instrucciones para instalar Docker y Docker Compose en Linux: [https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)

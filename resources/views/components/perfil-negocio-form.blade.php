@@ -64,72 +64,91 @@
                         >
                     </div>
                 </div>
-                <div class="form-group col-md-3" x-show="tipoPersona === 'F'">
-                    <label class="font-medium" for="curp">CURP:</label>
+                <div class="form-group col-md-3" x-show="tipoPersona === 'F'">                    
                     @if ($mode === 'wizard')
-                        <x-curp-input value="{{ $curp }}" x-bind:required="tipoPersona === 'F'"/>
+                        <x-curp-input value="{{ $curp }}" x-bind:required="tipoPersona === 'F'"/>                        
                         <x-input-error :messages="$errors->get('curp')" class="mt-2"/>
                     @else
                         <input type="text" class="form-control" id="curp" value="{{ $curp }}" disabled>
+                        <label class="mvt-input-label" for="curp">CURP</label>
                     @endif
                 </div>
-                <div class="form-group col-md-3" x-show="tipoPersona === 'F'">
-                    <label class="font-medium" for="rfc_sin_homoclave">RFC:</label>
-                    <input type="text" class="form-control"
-                           style="background-color: #efefef"
-                           id="rfc_sin_homoclave"
-                           name="rfc_sin_homoclave"
-                           value="{{ $rfcSinH ?? '' }}"
-                           readonly>
+                <div class="form-group col-md-3" x-show="tipoPersona === 'F'">                    
+                    <div class="mtv-input-wrapper">
+                        <input type="text" class="mtv-text-input"
+                            id="rfc_sin_homoclave"
+                            name="rfc_sin_homoclave"
+                            value="{{ $rfcSinH ?? '' }}"
+                            readonly>
+                        <label class="mtv-input-label" for="rfc_sin_homoclave">RFC</label>
+                    </div>
                 </div>
-                <div class="form-group col-md-3">
-                    <label class="font-medium" for="rfc" x-text="tipoPersona === 'F' ? 'Homoclave:' : 'RFC con homoclave:'"></label>
-                    @if ($mode === 'wizard')
-                        <x-rfc-validacion-input value="{{ $rfc }}"/>
-                        <x-input-error :messages="$errors->get('rfc_completo')" class="mt-2"/>
-                    @else
-                        <x-rfc-input value="{{ $idTipoPersona === 'F' ? $homoclave : $rfc }}" disabled />
+                <div class="form-group col-md-3">                    
+                    <div class="mtv-input-wrapper">
+                    @if ($mode === 'wizard')                        
+                    <x-rfc-validacion-input value="{{ $rfc }}">
+                        <label class="mtv-input-label" for="rfc" x-text="tipoPersona === 'F' ? 'Homoclave' : 'RFC con homoclave'"></label>
+                    </x-rfc-validacion-input>                    
+                    @else                        
+                    <x-rfc-input value="{{ $idTipoPersona === 'F' ? $homoclave : $rfc }}" disabled />
+                    <label class="mtv-input-label" for="rfc" x-text="tipoPersona === 'F' ? 'Homoclave' : 'RFC con homoclave'"></label>                        
                     @endif
+                    </div>    
+                    <x-input-error :messages="$errors->get('rfc_completo')" class="mt-2"/>
                 </div>
-                <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
-                    <label class="font-medium" for="fecha_nacimiento">Fecha de nacimiento:</label>
-                    <input type="text" class="form-control" style="background-color: #efefef" id="fecha_nacimiento"
+                <div class="form-group col-md-4" x-show="tipoPersona === 'F'">                    
+                    <div class="mtv-input-wrapper">
+                        <input type="text" class="mtv-text-input" id="fecha_nacimiento"
                            name="fecha_nacimiento" value="{{ $fechaNacimiento }}" readonly>
+                        <label class="mtv-input-label" for="fecha_nacimiento">Fecha de nacimiento</label>
+                    </div>                    
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
-                    <label class="font-medium" for="genero">Género:</label>
-                    <input type="text" class="form-control" style="background-color: #efefef" id="genero"
-                           name="genero" value="{{ $genero }}" readonly>
+                    <div class="mtv-input-wrapper">                        
+                        <input type="text" class="mtv-text-input" id="genero"
+                            name="genero" value="{{ $genero }}" readonly>
+                        <label class="mtv-input-label" for="genero">Género</label>
+                    </div>
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
-                    <label class="font-medium" for="nombre">Nombre:</label>
-                    <input type="text" class="form-control" style="background-color: #efefef" id="nombre"
+                    <div class="mtv-input-wrapper">
+                        <input type="text" class="mtv-text-input" id="nombre"
                            name="nombre" value="{{ $nombre }}" readonly>
+                        <label class="mtv-input-label" for="nombre">Nombre</label>
+                    </div>    
+                </div>
+                <div class="form-group col-md-4" x-show="tipoPersona === 'F'">                    
+                    <div class="mtv-input-wrapper">
+                        <input type="text" class="mtv-text-input" id="primer_ap"
+                            name="primer_ap" value="{{ $primerAp }}">
+                        <label class="mtv-input-label" for="primer_ap">Primer apellido</label>
+                    </div>    
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
-                    <label class="font-medium" for="primer_ap">Primer apellido:</label>
-                    <input type="text" class="form-control" style="background-color: #efefef" id="primer_ap"
-                           name="primer_ap" value="{{ $primerAp }}">
-                </div>
-                <div class="form-group col-md-4" x-show="tipoPersona === 'F'">
-                    <label class="font-medium" for="segundo_ap">Segundo apellido:</label>
-                    <input type="text" class="form-control" style="background-color: #efefef" id="segundo_ap"
+                    <div class="mtv-input-wrapper">
+                        <input type="text" class="mtv-text-input" id="segundo_ap"
                            name="segundo_ap" value="{{ $segundoAp }}" readonly>
+                        <label class="mtv-input-label" for="segundo_ap">Segundo apellido</label>
+                    </div>
                 </div>
                 <div class="form-group col-md-4" x-show="tipoPersona === 'M'">
-                    <label class="font-medium" for="fecha_constitucion">Fecha de constitución:</label>
-                    <input type="date" class="form-control" id="fecha_constitucion" name="fecha_constitucion"
-                           value="{{ $fechaConstitucion }}"
-                           x-bind:required="tipoPersona === 'M'"
-                    >
+                    <div class="mtv-input-wrapper">
+                        <input type="date" class="mtv-text-input" id="fecha_constitucion" name="fecha_constitucion"
+                            value="{{ $fechaConstitucion }}"
+                            x-bind:required="tipoPersona === 'M'"
+                        >
+                        <label class="mtv-input-label" for="fecha_constitucion">Fecha de constitución</label>
+                    </div>
                     <x-input-error :messages="$errors->get('rfc')" class="mt-2"/>
                 </div>
                 <div class="form-group col-md-12" x-show="tipoPersona === 'M'">
-                    <label class="font-medium" for="razon_social">Razón social:</label>
-                    <input type="text" class="form-control" id="razon_social" name="razon_social"
-                           value="{{ $razonSocial }}"
-                           x-bind:required="tipoPersona === 'M'"
-                    >
+                    <div class="mtv-input-wrapper">                        
+                        <input type="text" class="mtv-text-input" id="razon_social" name="razon_social"
+                            value="{{ $razonSocial }}"
+                            x-bind:required="tipoPersona === 'M'"
+                        >
+                        <label class="mtv-input-label" for="razon_social">Razón social</label>
+                    </div>    
                     <x-input-error :messages="$errors->get('razon_social')" class="mt-2"/>
                 </div>
             </div>
@@ -164,24 +183,28 @@
                 <label class="text-[#BC955C] font-bold">Contraseña</label>
             </div>
             <div class="card-body row g-3">
-                <div class="form-group col-md-6">
-                    <label class="font-medium" for="password">Contraseña:</label>
-                    <x-text-input id="password" class="block mt-1 w-full"
-                                  type="password"
-                                  name="password"
-                                  autocomplete="new-password"
-                                  :is_required="$mode === 'wizard'"
-                    />
+                <div class="form-group col-md-6">                    
+                    <div class="mtv-input-wrapper">
+                        <x-text-input id="password" class="block w-full"
+                                    type="password"
+                                    name="password"
+                                    autocomplete="new-password"
+                                    :is_required="$mode === 'wizard'"
+                        />
+                        <label class="mtv-input-label" for="password">Contraseña</label>
+                    </div>    
                     <x-input-error :messages="$errors->get('password')" class="mt-2"/>
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label class="font-medium" for="password_confirmation">Confirmar contraseña:</label>
-                    <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                  type="password"
-                                  name="password_confirmation"
-                                  :is_required="$mode === 'wizard'"
-                    />
+                    <div class="mtv-input-wrapper">                    
+                        <x-text-input id="password_confirmation" class="block w-full"
+                                    type="password"
+                                    name="password_confirmation"
+                                    :is_required="$mode === 'wizard'"
+                        />
+                        <label class="mtv-input-label" for="password_confirmation">Confirmar contraseña</label>
+                    </div>
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2"/>
                 </div>
             </div>
