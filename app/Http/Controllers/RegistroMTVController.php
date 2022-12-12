@@ -77,6 +77,7 @@ class RegistroMTVController extends Controller
     {
         try {
             $this->validate($request, [
+                'persona_datos' => 'required|json',
                 'tipo_persona' => [
                     'required',
                     Rule::in([
@@ -95,18 +96,17 @@ class RegistroMTVController extends Controller
             ]);
 
             $personaDatos = $request->only('tipo_persona', 'email', 'password');
+            $personaDatos = array_merge($personaDatos, json_decode($request->input('persona_datos'), true));
             $tipoPersona = $request->input('tipo_persona');
             $tipoRegistro = $request->input('tipo_registro');
 
-            if ($tipoRegistro === RegistroMTV::TIPO_REGISTRO_CERT) {
-                $this->validate($request, ['persona_datos' => 'required|json']);
-                $personaDatos = array_merge($personaDatos, json_decode($request->input('persona_datos'), true));
-                if (!array_key_exists('genero', $personaDatos)) {
-                    $personaDatos['genero'] = $personaDatos['sexo'];
-                    unset($personaDatos['sexo']);
-                }
-                // TODO: Consultar Renapo para completar nombre, primer_ap, segundo_ap
-            } else {
+            if (!array_key_exists('genero', $personaDatos)) {
+                $personaDatos['genero'] = $personaDatos['sexo'];
+                unset($personaDatos['sexo']);
+            }
+
+            // TODO: Consultar Renapo para completar nombre, primer_ap, segundo_ap
+            if ($tipoRegistro === RegistroMTV::TIPO_REGISTRO_EMAIL) {
                 $this->validate($request, [
                     'email' => 'required|email|same:email_confirmacion|max:255',
                 ]);
@@ -117,7 +117,7 @@ class RegistroMTVController extends Controller
                         'curp' => 'required|max:18',
                         'rfc' => 'required|max:13|unique:users,rfc',
                     ]);
-                    $personaDatos = $request->only(['curp', 'rfc']);
+                    $personaDatos = array_merge($personaDatos, $request->only(['curp', 'rfc']));
                     // TODO: Consultar Renapo para completar nombre, primer_ap, segundo_ap
                 } elseif ($tipoPersona === Persona::TIPO_PERSONA_MORAL_ID) {
                     $this->validate($request, [
@@ -125,7 +125,7 @@ class RegistroMTVController extends Controller
                         'razon_social' => 'required',
                         'fecha_constitucion' => 'required|date',
                     ]);
-                    $personaDatos = $request->only(['rfc', 'razon_social', 'fecha_constitucion']);
+                    $personaDatos = array_merge($personaDatos, $request->only(['rfc', 'razon_social', 'fecha_constitucion']));
                 }
             }
         } catch (ValidationException $e) {
@@ -147,7 +147,7 @@ class RegistroMTVController extends Controller
             event(new Registered($user));
             Auth::login($user);
 
-            return redirect()->route('registro-perfil-negocio');
+            return redirect()->route('registro-perfil-negocio.show');
         } catch (\Throwable $e) {
             $request->session()->flash('error', 'El proceso de registro no pudo ser completado debido al siguiente error: ' . $e->getMessage());
 

@@ -2,13 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\CatalogoProductos;
-use App\Models\Contacto;
 use App\Models\PerfilNegocio;
 use App\Models\Persona;
 use App\Models\PersonaFisica;
 use App\Models\PersonaMoral;
-use App\Models\Producto;
 use App\Models\RegistroMTV;
 use App\Models\User;
 use App\Repositories\PersonaRepository;
@@ -17,9 +14,10 @@ use Illuminate\Support\Facades\DB;
 
 class RegistroPersonaService
 {
-    public function registraPersonaMTV(array $personaRegistroDatos, PersonaRepository $personaRepository): ?User
+    public function registraPersonaMTV(array $personaRegistroDatos, PersonaRepository $personaRepository): User
     {
-        DB::transaction(function() use($personaRegistroDatos, $personaRepository) {
+        $user = null;
+        DB::transaction(function() use($personaRegistroDatos, $personaRepository, &$user) {
             $tipo_persona = null;
             if ($personaRegistroDatos['tipo_persona'] === Persona::TIPO_PERSONA_FISICA_ID) {
                 $tipo_persona = PersonaFisica::create([
@@ -107,11 +105,9 @@ class RegistroPersonaService
                 'last_login' => now(),
                 'password' => bcrypt($personaRegistroDatos['password'])
             ]);
-
-            return $user;
         });
 
-        return null;
+        return $user;
     }
 
     public function registraPerfilNegocio(array $perfilNegocioDatos, Persona $persona) {

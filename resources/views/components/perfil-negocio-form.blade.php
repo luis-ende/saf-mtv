@@ -24,9 +24,8 @@
                 <span class="xs:basis-full md:basis-1/4">
                     Género: <span class="text-gray-700">{{ $persona->tipo_persona->genero }}</span>
                 </span>
-{{--                <span class="xs:basis-full md:basis-1/4">Nombre: {{ $persona->nombre_o_razon_social() }} </span>--}}
                 <span class="xs:basis-full md:basis-1/4">
-                    Nombre: <span class="text-gray-700 uppercase">José Luis Salazar Antonio</span>
+                    Nombre: <span class="text-gray-700 uppercase">{{ $persona->nombre_o_razon_social() }}</span>
                 </span>
             @elseif ($persona->id_tipo_persona === 'M')
                 <span class="xs:basis-full md:basis-1/4">

@@ -12,6 +12,8 @@
                         <input name="tipo_registro" id="persona_datos" type="hidden" value="{{ $tipoRegistro }}">
                         <input name="tipo_persona" id="persona_persona" type="hidden" value="{{ $tipoPersona }}">
                         @if($tipoRegistro === 'E')
+                            <input name="persona_datos" id="persona_datos_reg_email"
+                                   type="hidden" value="">
                             <label class="block basis-full text-xl font-bold text-mtv-text-gray mt-2 mb-2 self-center">¿Qué tipo de persona eres?</label>
                             <div class="basis-full flex flex-row w-56 self-center mb-3" x-data="{ tipoPersona: '{{ $tipoPersona }}' }">
                                 <x-tipo-persona-radio :value="$tipoPersona" :disabled="true" />
@@ -69,7 +71,8 @@
                                 </div>
                             </div>
                         @elseif($tipoRegistro === 'C')
-                            <input name="persona_datos" id="persona_datos" type="hidden" value="{{ json_encode($personaDatos) }}">
+                            <input name="persona_datos" id="persona_datos_reg_cert"
+                                   type="hidden" value="{{ json_encode($personaDatos) }}">
                             @if($tipoPersona === 'F')
                                 <ul class="my-3 uppercase text-mtv-text-gray list-outside p-0 ml-16">
                                     <li>Nombre: <strong>{{ $personaDatos['nombre_completo'] }}</strong></li>
