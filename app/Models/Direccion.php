@@ -8,7 +8,7 @@ final class Direccion
 {
     public ?int $id_pais;
     public ?string $id_asentamiento;
-    public ?string $cp;
+    public ?string $cp = '';
     public ?int $id_tipo_vialidad;
     public ?string $vialidad;
     public ?string $num_ext;
@@ -23,7 +23,9 @@ final class Direccion
                                 BusquedaCPService $busquedaCPService)
     {
         $this ->id_asentamiento = $idAsentamiento;
-        $this->cp = $busquedaCPService->buscaAsentamientoCP($idAsentamiento);
+        if ($idAsentamiento) {
+            $this->cp = $busquedaCPService->buscaAsentamientoCP($idAsentamiento);
+        }        
         $this->id_tipo_vialidad = $idTipoVialidad;
         $this->vialidad = $vialidad;
         $this->num_ext = $numExt;
