@@ -43,6 +43,8 @@ class PerfilNegocioRequest extends FormRequest
             'cuenta_linkedin' => 'max:240',
             'num_whatsapp' => 'max:15',
             'logotipo' => 'nullable|file|image',
+            'carta_presentacion' => 'nullable|file|mimes:pdf|max:3000',
+            'eliminar_carta' => 'boolean'
         ];
     }
 }

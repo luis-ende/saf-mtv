@@ -218,9 +218,17 @@ class RegistroMTVController extends Controller
 
                 $logotipoFile = $request->safe()->only(['logotipo']);
                 if (isset($logotipoFile['logotipo'])) {
-                    $path = $logotipoFile['logotipo']->store('public/logotipos');
                     $perfilNegocio->clearMediaCollection('logotipos');
-                    $perfilNegocio->addMedia(storage_path('app') . '/' . $path)->toMediaCollection('logotipos');
+                    $perfilNegocio->addMedia($logotipoFile['logotipo'])->toMediaCollection('logotipos');
+                }
+
+                $cartaPresentacionFile = $request->safe()->only(['carta_presentacion']);
+                if ($request->input('eliminar_carta')) {
+                    $perfilNegocio->clearMediaCollection('documentos');
+                }
+                if (isset($cartaPresentacionFile['carta_presentacion'])) {
+                    $perfilNegocio->clearMediaCollection('documentos');
+                    $perfilNegocio->addMedia($cartaPresentacionFile['carta_presentacion'])->toMediaCollection('documentos');
                 }
 
                 return redirect()->route('registro-contactos.show');
