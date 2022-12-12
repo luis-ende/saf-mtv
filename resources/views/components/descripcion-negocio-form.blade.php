@@ -33,7 +33,7 @@
     @php($formAction = route('descripcion-negocio.update'))
 @endif
 
-<div x-data="descripcionNegocioReglas()">
+<div x-data="descripcionNegocioReglas()" x-init="initModalForm()">
     <div class="flex flex-row flex-wrap">
         <div class="md:basis-1/4 xs:basis-full mt-3 px-8">
             <x-input-image-viewer
@@ -43,12 +43,12 @@
             />
             <input type="hidden" id="logotipo_path" name="logotipo_path" value="{{ $logotipoUrl ?? '' }}">
             <label class="to-mtv-text-gray my-2">Sitio web y redes sociales</label>
-            <div class="flex flex-row flex-nowrap justify-between mb-3 text-mtv-gold">
-                @svg('iconoir-internet', ['class' => 'h-5 w-5'])
-                @svg('iconpark-facebookone-o', ['class' => 'h-5 w-5'])
-                @svg('bi-twitter', ['class' => 'h-5 w-5'])
-                @svg('antdesign-linkedin-o', ['class' => 'h-5 w-5'])
-                @svg('ri-whatsapp-line', ['class' => 'h-5 w-5'])
+            <div class="flex flex-row flex-nowrap justify-between mb-3 text-mtv-gold cursor-pointer">
+                @svg('iconoir-internet', ['class' => 'h-5 w-5', '@click' => "event.preventDefault(); showFormEdit('sitio_web')"])
+                @svg('iconpark-facebookone-o', ['class' => 'h-5 w-5', '@click' => "event.preventDefault(); showFormEdit('cuenta_facebook')"])
+                @svg('bi-twitter', ['class' => 'h-5 w-5', '@click' => "event.preventDefault(); showFormEdit('cuenta_twitter')"])
+                @svg('antdesign-linkedin-o', ['class' => 'h-5 w-5', '@click' => "event.preventDefault(); showFormEdit('cuenta_linkedin')"])
+                @svg('ri-whatsapp-line', ['class' => 'h-5 w-5', '@click' => "event.preventDefault(); showFormEdit('num_whatsapp')"])
             </div>
         </div>
         <div class="md:basis-3/4 xs:basis-full row mx-0">
@@ -162,16 +162,100 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="negocioLinksModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="negocioLinksModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-mtv-gray-light">
+                    <h5 class="modal-title" id="negocioLinksModalLabel">Agrega tu sitio web y redes sociales</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="contactoFormContainer" class="modal-body row">
+                    <input type="hidden" id="contacto_id" name="contacto_id">
+                    <div class="form-group col-md-12">
+                        <div class="mtv-input-wrapper">
+                            <input type="text" 
+                                   class="mtv-text-input" id="sitio_web" 
+                                   name="sitio_web" maxlength="255"
+                                   value="{{ $sitio_web }}">
+                            <label class="mtv-input-label" for="contacto_nombre">Sitio web</label>
+                        </div>                    
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="mtv-input-wrapper">
+                            <input type="text" 
+                                   class="mtv-text-input" 
+                                   id="cuenta_facebook" name="cuenta_facebook" 
+                                   maxlength="240"
+                                   value="{{ $cuenta_facebook }}">
+                            <label class="mtv-input-label" for="contacto_nombre">Facebook</label>
+                        </div>                    
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="mtv-input-wrapper">
+                            <input type="text" 
+                                   class="mtv-text-input" 
+                                   id="cuenta_twitter" name="cuenta_twitter" 
+                                   maxlength="240"
+                                   value="{{ $cuenta_twitter }}">
+                            <label class="mtv-input-label" for="contacto_nombre">Twitter</label>
+                        </div>                    
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="mtv-input-wrapper">
+                            <input type="text" 
+                                   class="mtv-text-input" 
+                                   id="cuenta_linkedin" name="cuenta_linkedin" 
+                                   maxlength="240"
+                                   value="{{ $cuenta_linkedin }}">
+                            <label class="mtv-input-label" for="contacto_nombre">LinkedIn</label>
+                        </div>                    
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="mtv-input-wrapper">
+                            <input type="text" 
+                                   class="mtv-text-input" 
+                                   id="num_whatsapp" name="num_whatsapp" 
+                                   maxlength="15"
+                                   value="{{ $num_whatsapp }}">
+                            <label class="mtv-input-label" for="contacto_nombre">WhatsApp</label>
+                        </div>                    
+                    </div>                
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="mtv-button-secondary" @click="closeFormEdit()">Guardar</button>
+                </div>
+            </div>    
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
     function descripcionNegocioReglas() {
         return {
+            negocioLinksModalForm: new bootstrap.Modal(document.getElementById('negocioLinksModal'), { keyboard: true }),
+            currentLinkInput: null,
             grupoPrioritarioMIPYMEId: 1,
             grupoPrioritario: {{ $grupoPrioritarioId ?? 0 }},
             tipoPyme: {{ $tipoPymeId ?? 0 }},
             sector: {{ $sectorId ?? 0 }},
             diferenciadores: '',
+
+            closeFormEdit() {
+                this.negocioLinksModalForm.hide();
+            },
+            showFormEdit(inputId) {                                
+                this.currentLinkInput = inputId;                
+                this.negocioLinksModalForm.show();                
+            },
+            initModalForm() {
+                document.getElementById('negocioLinksModal').addEventListener('shown.bs.modal', () => {                    
+                    if (this.currentLinkInput) {                        
+                        document.getElementById(this.currentLinkInput).focus();
+                    }                    
+                });                
+            }
         }
     }
 </script>
