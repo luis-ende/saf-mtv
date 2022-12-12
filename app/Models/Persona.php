@@ -39,9 +39,7 @@ class Persona extends Model
      *
      * @var array
      */
-    protected $attributes = [
-        'id_asentamiento' => 1,
-        'id_tipo_vialidad' => 1,
+    protected $attributes = [        
     ];
 
     /**
