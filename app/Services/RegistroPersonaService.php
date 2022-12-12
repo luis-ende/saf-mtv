@@ -2,25 +2,22 @@
 
 namespace App\Services;
 
-use App\Models\CatalogoProductos;
-use App\Models\Contacto;
 use App\Models\PerfilNegocio;
 use App\Models\Persona;
 use App\Models\PersonaFisica;
 use App\Models\PersonaMoral;
-use App\Models\Producto;
+use App\Models\RegistroMTV;
 use App\Models\User;
 use App\Repositories\PersonaRepository;
 use Carbon\Carbon;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class RegistroPersonaService
 {
-    public function registraPersonaMTV(array $personaRegistroDatos, PersonaRepository $personaRepository): bool
+    public function registraPersonaMTV(array $personaRegistroDatos, PersonaRepository $personaRepository): User
     {
-        DB::transaction(function() use($personaRegistroDatos, $personaRepository) {
+        $user = null;
+        DB::transaction(function() use($personaRegistroDatos, $personaRepository, &$user) {
             $tipo_persona = null;
             if ($personaRegistroDatos['tipo_persona'] === Persona::TIPO_PERSONA_FISICA_ID) {
                 $tipo_persona = PersonaFisica::create([
@@ -42,17 +39,14 @@ class RegistroPersonaService
                 'id_tipo_persona' => $personaRegistroDatos['tipo_persona'],
                 'personable_id' => $tipo_persona->id,
                 'personable_type' => get_class($tipo_persona),
-                'rfc' => $personaRegistroDatos['rfc_completo'],
-                'id_asentamiento' => $personaRegistroDatos['id_asentamiento'],
-                'id_tipo_vialidad' => $personaRegistroDatos['id_tipo_vialidad'],
-                'vialidad' => $personaRegistroDatos['vialidad'],
-                'num_int' => $personaRegistroDatos['num_int'],
-                'num_ext' => $personaRegistroDatos['num_ext'],
+                'rfc' => $personaRegistroDatos['rfc'],
+                'email' => $personaRegistroDatos['email'],
+                'registro_fase' => RegistroMTV::REGISTRO_FASE_IDENTIFICACION,                
             ]);
 
-            $personaRepository->updateContactos($persona, $personaRegistroDatos['contactos_lista']);
+            /*$personaRepository->updateContactos($persona, $personaRegistroDatos['contactos_lista']);*/
 
-            $perfilNegocio = PerfilNegocio::create([
+            /*$perfilNegocio = PerfilNegocio::create([
                 'id_persona' => $persona->id,
                 'id_grupo_prioritario' => $personaRegistroDatos['id_grupo_prioritario'],
                 'id_tipo_pyme' => $personaRegistroDatos['id_tipo_pyme'],
@@ -71,15 +65,15 @@ class RegistroPersonaService
             if ($personaRegistroDatos['logotipo_path'] && $personaRegistroDatos['logotipo_path'] !== '') {
                 $perfilNegocio->addMedia(storage_path('app/public/logotipos_tmp/' . basename($personaRegistroDatos['logotipo_path'])))
                 ->toMediaCollection('logotipos');
-            }            
+            }       */
 
-            $catalogoProductos = CatalogoProductos::create([
+            /*$catalogoProductos = CatalogoProductos::create([
                 'nombre_catalogo' => 'Catálogo principal',
                 'id_persona' => $persona->id,
-            ]);
+            ]);*/
 
             // Si se capturaron los datos del producto
-            if (isset($personaRegistroDatos['nombre_producto']) && isset($personaRegistroDatos['clave_cabms'])) {
+            /*if (isset($personaRegistroDatos['nombre_producto']) && isset($personaRegistroDatos['clave_cabms'])) {
                 $producto = [
                     'tipo' => $personaRegistroDatos['tipo_producto'],
                     'clave_cabms' => $personaRegistroDatos['clave_cabms'],
@@ -97,22 +91,34 @@ class RegistroPersonaService
                 }
 
                 Producto::create($producto);
-            }
+            }*/
 
             $user = User::create([
-                'rfc' => $personaRegistroDatos['rfc_completo'],
+                'rfc' => $personaRegistroDatos['rfc'],
                 'id_persona' => $persona->id,
                 'activo' => true,
                 'last_login' => now(),
                 'password' => bcrypt($personaRegistroDatos['password'])
             ]);
-
-            // Iniciar sesión con el nuevo usuario
-            event(new Registered($user));
-
-            Auth::login($user);
         });
 
-        return true;
+        return $user;
+    }
+
+    public function registraPerfilNegocio(array $perfilNegocioDatos, Persona $persona) {
+        $perfilNegocioDatos['id_persona'] = $persona->id;
+
+        return PerfilNegocio::create($perfilNegocioDatos);
+    }
+
+    public function registraContactos(string $listaContactos, Persona $persona) 
+    {
+        $personaRepository = new PersonaRepository();
+        DB::transaction(function() use($persona, $listaContactos, $personaRepository) {        
+            $personaRepository->updateContactos($persona, $listaContactos);
+            $persona->update([
+                'registro_fase' => RegistroMTV::REGISTRO_FASE_CONTACTOS,
+            ]);
+        });
     }
 }

@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\OportunidadesController;
+use App\Http\Controllers\RegistroMTVController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CatalogoProductosController;
-use App\Http\Controllers\PerfilNegocioController;
-use App\Http\Controllers\CentroNotificacionesController;
 use App\Http\Controllers\ProductosController;
+use App\Http\Controllers\OportunidadesController;
+use App\Http\Controllers\PerfilNegocioController;
+use App\Http\Controllers\CatalogoProductosController;
 use App\Http\Controllers\ProgramacionAnualController;
+use App\Http\Controllers\CentroNotificacionesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,11 +35,15 @@ Route::post('/oportunidades-de-negocio', [OportunidadesController::class, 'searc
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'registro_mtv.status'])->name('dashboard');
 
-Route::get('/catalogo-productos', [CatalogoProductosController::class, 'index'])->middleware(['auth', 'verified'])->name('catalogo-productos');
+// TODO: Crear grupos
 
-Route::get('/perfil-negocio', [PerfilNegocioController::class, 'index'])->middleware(['auth', 'verified'])->name('perfil-negocio');
+Route::get('/catalogo-productos', [CatalogoProductosController::class, 'index'])
+    ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('catalogo-productos');
+
+Route::get('/perfil-negocio', [PerfilNegocioController::class, 'index'])
+    ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('perfil-negocio');
 
 Route::post('/perfil-negocio/update', [PerfilNegocioController::class, 'update'])->middleware(['auth', 'verified'])->name('perfil-negocio.update');
 
@@ -47,13 +53,15 @@ Route::post('/productos', [ProductosController::class, 'store'])->middleware(['a
 
 Route::post('/productos/edit/{producto}', [ProductosController::class, 'update'])->middleware(['auth', 'verified'])->name('productos.update');
 
-Route::get('/productos/{producto}/archivos', [ProductosController::class, 'showArchivos'])->middleware(['auth', 'verified'])->name('productos-archivos.show');
+Route::get('/productos/{producto}/archivos', [ProductosController::class, 'showArchivos'])
+    ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('productos-archivos.show');
 
 Route::post('/productos/{producto}/archivos', [ProductosController::class, 'storeFiles'])->middleware(['auth', 'verified'])->name('productos-archivos.store');
 
 Route::delete('/productos/archivos/{id}', [ProductosController::class, 'deleteFile'])->middleware(['auth', 'verified'])->name('productos-archivos.delete');
 
-Route::get('/productos/edit/{producto}', [ProductosController::class, 'show'])->middleware(['auth', 'verified'])->name('productos.edit');
+Route::get('/productos/edit/{producto}', [ProductosController::class, 'show'])
+    ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('productos.edit');
 
 Route::delete('/productos/delete/{producto}', [ProductosController::class, 'destroy'])->middleware(['auth', 'verified'])->name('productos.destroy');
 
@@ -62,5 +70,21 @@ Route::post('/productos/importacion', [ProductosController::class, 'importProduc
 Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'index'])->middleware(['auth', 'verified'])->name('centro-notificaciones');
 
 Route::get('/programacion-anual', [ProgramacionAnualController::class, 'index'])->name('programacion-anual');
+
+Route::get('/registro-inicio', [RegistroMTVController::class, 'showRegistroInicio'])->name('registro-inicio');
+
+Route::get('/registro-identificacion/{tipoPersona}/{tipoRegistro}',
+    [RegistroMTVController::class, 'showRegistroIdentificacion'])->name('registro-inicio-identificacion');
+
+Route::post('/registro-identificacion', [RegistroMTVController::class, 'storeRegistroCert'])->name('registro-inicio-identificacion.store');
+
+Route::post('/registro-confirmacion', [RegistroMTVController::class, 'storeRegistroCreaCuenta'])->name('registro-inicio-confirmacion.store');
+
+Route::get('/registro-perfil-negocio', [RegistroMTVController::class, 'showRegistroPerfilNegocio'])->middleware(['auth'])->name('registro-perfil-negocio.show');
+Route::post('/registro-perfil-negocio', [RegistroMTVController::class, 'storeRegistroPerfilNegocio'])->middleware(['auth'])->name('registro-perfil-negocio.store');
+
+Route::get('/registro-contactos', [RegistroMTVController::class, 'showRegistroContactos'])->middleware(['auth'])->name('registro-contactos.show');
+
+Route::post('/registro-contactos', [RegistroMTVController::class, 'storeRegistroContactos'])->middleware(['auth'])->name('registro-contactos.store');
 
 require __DIR__.'/auth.php';

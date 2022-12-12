@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Throwable;
 
 class BusquedaCURPService
 {
@@ -58,7 +59,7 @@ class BusquedaCURPService
             } else {
                 $responseData['error'] = true;
             }
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             $responseData['error'] = true;
             $responseData['error_msg'] = $e->getMessage();
         }

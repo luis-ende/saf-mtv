@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->seedTiposVialidad();
+        $this->seedPaises();
     }
 
     private function seedTiposVialidad() 
@@ -149,5 +150,13 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+    }
+
+    private function seedPaises() 
+    {
+        $path = base_path('database/data/cat_paises.sql');
+        $sql = file_get_contents($path);
+
+        DB::unprepared($sql);
     }
 }

@@ -19,11 +19,14 @@ return new class extends Migration
             $table->char('id_tipo_persona', 1); // "F" = "Física" | "M" = "Moral"
             $table->bigInteger('personable_id');
             $table->string('personable_type', 30);
-            $table->integer('id_asentamiento');
-            $table->foreignId('id_tipo_vialidad')->constrained('cat_tipo_vialidad');
-            $table->string('vialidad', 120);
-            $table->string('num_ext', 100);
+            $table->unsignedSmallInteger('id_pais')->nullable();
+            $table->integer('id_asentamiento')->nullable();
+            $table->integer('id_tipo_vialidad')->nullable();
+            $table->string('vialidad', 120)->nullable();
+            $table->string('num_ext', 100)->nullable();
             $table->string('num_int', 80)->nullable();
+            $table->string('email');
+            $table->unsignedSmallInteger('registro_fase')->default(1);
             $table->timestamps();
         });
     }

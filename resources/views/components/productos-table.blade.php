@@ -25,7 +25,7 @@
             <td>
                 <div class="flex flex-row justify-end">
                     <a href="{{ route('productos.edit', [$producto->id]) }}"
-                       class="text-base no-underline hover:text-[#BC955C]">
+                       class="text-base no-underline hover:text-mtv-secondary">
                         @svg('heroicon-m-pencil-square', ['class' => 'h-5 w-5 inline-block mr-1'])
                     </a>
                     <form id="producto_destroy_form_{{ $producto->id }}" action="{{ route('productos.destroy', [$producto->id]) }}" method="POST">
@@ -33,8 +33,8 @@
                         @csrf
                         <a href="{{ route('productos.destroy', [$producto->id]) }}"
                            @click="removeRow($event, {{ $producto->id }}); $event.preventDefault()"
-                           class="text-base no-underline hover:text-[#BC955C]">
-                            @svg('heroicon-s-trash', ['class' => 'h-5 w-5 inline-block'])
+                           class="text-base no-underline hover:text-mtv-secondary">
+                            @svg('heroicon-o-trash', ['class' => 'h-5 w-5 inline-block'])
                         </a>
                     </form>
                 </div>

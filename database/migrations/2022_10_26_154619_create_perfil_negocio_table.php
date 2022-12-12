@@ -20,9 +20,10 @@ return new class extends Migration
             $table->unsignedInteger('id_tipo_pyme')->nullable();
             $table->unsignedInteger('id_sector')->nullable();
             $table->unsignedInteger('id_categoria_scian')->nullable();
-            $table->text('lema_negocio')->nullable();
-            $table->text('descripcion_negocio')->nullable();
-            $table->text('diferenciadores')->nullable();
+            $table->string('nombre_negocio', 100);
+            $table->text('lema_negocio');
+            $table->text('descripcion_negocio');
+            $table->text('diferenciadores');
             $table->string('sitio_web', 255)->nullable();
             $table->string('cuenta_facebook', 240)->nullable();
             $table->string('cuenta_twitter', 240)->nullable();

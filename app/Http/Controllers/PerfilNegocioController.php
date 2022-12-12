@@ -9,7 +9,7 @@ use App\Repositories\SectorRepository;
 use App\Repositories\PersonaRepository;
 use App\Repositories\TipoPymeRepository;
 use App\Repositories\VialidadRepository;
-use App\Http\Requests\DescripcionNegocioRequest;
+use App\Http\Requests\PerfilNegocioRequest;
 use App\Repositories\GrupoPrioritarioRepository;
 
 class PerfilNegocioController extends Controller

@@ -1,5 +1,6 @@
-@props(['tipos_vialidad' => [], 'step' => [], 'direccion' => null])
+@props(['tipos_vialidad' => [], 'cat_paises' => [], 'step' => [], 'direccion' => null])
 
+@php($idPais = isset($direccion) ? $direccion->id_pais : (isset($step) ? $step['id_pais'] : old('id_pais')))
 @php($idAsentamiento = isset($direccion) ? $direccion->id_asentamiento : (isset($step) ? $step['id_asentamiento'] : old('id_asentamiento')))
 @php($cp = isset($direccion) ? $direccion->cp : ( isset($step) ? $step['cp'] : old('cp')))
 @php($tipoVialidadId = isset($direccion) ? $direccion->id_tipo_vialidad : ( isset($step) ? $step['id_tipo_vialidad'] : old('id_tipo_vialidad')))
@@ -15,8 +16,22 @@
     @endforeach
 @endisset
 
-<div x-data="domicilioDetalles()" class="row g-3" x-init="refreshCPAsentamiento(); isLoading = false; ">
+<div x-data="domicilioDetalles()" class="row" x-init="refreshCPAsentamiento(); isLoading = false; ">
     <input type="hidden" id="id_asentamiento" x-bind:value="asentamientoSeleccion" name="id_asentamiento">
+    <div class="form-group col-md-3">
+        <div class="mtv-input-wrapper">
+            <select class="mtv-text-input" id="id_pais" name="id_pais">
+                @php($paisDefault = !$idPais ? 'Mexico' : null)
+                @foreach($cat_paises as $pais)
+                    <option value={{ $pais->id }} 
+                        {{ ($pais->id === $idPais) || ($pais->pais === $paisDefault) ? 'selected' : '' }}>
+                        {{ $pais->pais }}
+                    </option>
+                @endforeach                
+            </select>
+            <label class="mtv-input-label" for="entidad_federativa">País</label>
+        </div>
+    </div>
     <div class="form-group col-md-3">                
         <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
         <div class="mtv-input-wrapper">
@@ -27,20 +42,10 @@
             <label class="mtv-input-label" for="cp">Código postal</label>
         </div>
         <label x-show="errorMessage != ''" x-text="errorMessage" class="text-sm text-red-600 space-y-1"></label>
-    </div>
-    <div class="form-group col-md-3">
-        <div class="mtv-input-wrapper">
-            <select x-model="asentamientoSeleccion" class="mtv-text-input" id="entidad_federativa" name="entidad_federativa" required>
-                <template x-for="entidad in entidades" :key="entidad.id">
-                    <option :value="entidad.id" x-text="entidad.nombre"></option>
-                </template>
-            </select>
-            <label class="mtv-input-label" for="entidad_federativa">Entidad federativa</label>
-        </div>
-    </div>
+    </div>    
     <div class="form-group col-md-3">
         <div class="mtv-input-wrapper">        
-            <select x-model="asentamientoSeleccion" class="mtv-text-input" id="alcaldia" name="alcaldia" required>
+            <select x-model="asentamientoSeleccion" class="mtv-text-input" id="alcaldia" name="alcaldia">
                 <template x-for="alcaldia in alcaldias" :key="alcaldia.id">
                     <option :value="alcaldia.id" x-text="alcaldia.nombre"></option>
                 </template>
@@ -50,7 +55,7 @@
     </div>
     <div class="form-group col-md-3">
         <div class="mtv-input-wrapper">
-            <select x-model="asentamientoSeleccion" class="mtv-text-input" id="colonia" name="colonia" required>
+            <select x-model="asentamientoSeleccion" class="mtv-text-input" id="colonia" name="colonia">
                 <template x-for="colonia in colonias" :key="colonia.id">
                     <option :value="colonia.id" x-text="colonia.nombre"></option>
                 </template>
@@ -119,6 +124,7 @@
 
                             if (res.length === 0) {
                                this.errorMessage = 'No se encontraron asentamientos asociados al CP';
+                               this.asentamientoSeleccion = null;
                             }
 
                             res.forEach(asentamiento => {

@@ -4,13 +4,49 @@
 
 @layer components {
   .mtv-text-input {
-    @apply w-full rounded-md border-[#E6E6E6] text-[#6F7271] p-3
-    focus:text-[#6F7271] focus:outline-none focus:border-2 focus:border-[#235B4E] focus:ring-0 focus:ring-[#235B4E]
-    disabled:bg-slate-50 disabled:text-slate-500 disabled:border-[#E6E6E6] disabled:shadow-none 
-    invalid:border-[#9F2241] invalid:text-[#9F2241] focus:invalid:border-[#9F2241] focus:invalid:ring-[#9F2241];
+    @apply w-full rounded-md border-mtv-gray-light text-mtv-gray p-3
+    focus:text-mtv-gray focus:outline-none focus:border-2 focus:border-mtv-secondary focus:ring-0 focus:ring-mtv-secondary
+    disabled:bg-slate-50 disabled:text-slate-500 disabled:border-mtv-gray-light disabled:shadow-none
+    invalid:border-mtv-primary invalid:text-mtv-primary focus:invalid:border-mtv-primary focus:invalid:ring-mtv-primary;
   }
 
   .mtv-input-label {
-    @apply w-fit text-base text-[#6F7271] relative top-2.5 bg-white ml-2.5 px-2;
+    @apply w-fit text-sm text-mtv-gray relative top-2.5 bg-white ml-2.5 px-2;
+  }
+
+  .mtv-button-gray {
+    @apply text-mtv-gray font-bold bg-white border border-slate-200 rounded-lg py-2
+    hover:bg-mtv-gold hover:text-white active:bg-mtv-gold active:text-white
+    focus:text-mtv-gray focus:ring-2 focus:ring-mtv-gray-light;
+  }
+
+  .mtv-button-gold {
+    @apply border-slate-400 bg-mtv-gold rounded;
+  }
+
+  .mtv-button-secondary {
+    @apply font-bold text-white bg-mtv-secondary rounded-lg py-2 px-5 my-4
+    focus:outline-none focus:ring-2 focus:ring-mtv-gold-light
+    hover:bg-mtv-gold-light hover:text-white active:bg-mtv-gold-light
+    active:text-white active:ring-2 active:ring-mtv-secondary;
+  }
+
+  .mtv-button-secondary-white {
+    @apply font-bold border-mtv-gray-light border-2 rounded-lg bg-white text-mtv-secondary py-1 px-5 my-4
+    focus:outline-none focus:ring-2 focus:ring-mtv-gray-light
+    hover:bg-mtv-gold-light hover:text-white active:bg-mtv-gold-light
+    active:text-mtv-secondary active:ring-2 active:bg-white active:border-mtv-gray-light;
+  }
+
+  .mtv-link-secondary {
+      @apply font-bold bg-white text-mtv-secondary no-underline
+      hover:bg-white hover:text-mtv-gold-light hover:underline
+      active:text-mtv-gold-light;
+  }
+
+  .mtv-link-gold {
+      @apply text-mtv-gold bg-white no-underline
+      hover:bg-white hover:text-mtv-primary hover:underline
+      active:text-mtv-primary;
   }
 }

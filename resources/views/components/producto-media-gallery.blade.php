@@ -55,7 +55,7 @@
                             @svg('icomoon-download', ['class' => 'h-5 w-5'])
                         </a>
                         <button type="button" class="btn btn-primary" @click="removeFile($event, index)" title="Eliminar">
-                            @svg('heroicon-s-trash', ['class' => 'h-5 w-5'])
+                            @svg('heroicon-o-trash', ['class' => 'h-5 w-5'])
                         </button>
                     </div>
                 </div>

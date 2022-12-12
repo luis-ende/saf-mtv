@@ -27,7 +27,7 @@
                 @if($icon_like)
                     @svg('uiw-like-o', ['class' => 'h-5 w-5 inline-block mr-1'])
                 @endif
-                @svg('heroicon-s-trash', ['class' => 'h-5 w-5 inline-block'])
+                @svg('heroicon-o-trash', ['class' => 'h-5 w-5 inline-block'])
             </div>
         </td>
     </tr>
@@ -43,7 +43,7 @@
                 @if($icon_like)
                 @svg('uiw-like-o', ['class' => 'h-5 w-5 inline-block mr-1'])
                 @endif
-                @svg('heroicon-s-trash', ['class' => 'h-5 w-5 inline-block'])
+                @svg('heroicon-o-trash', ['class' => 'h-5 w-5 inline-block'])
             </div>
         </td>
     </tr>

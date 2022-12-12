@@ -1,17 +1,22 @@
-<div x-data="curpConsulta()">    
-    <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
-    <div class="mtv-input-wrapper">
-        <input id="curp"
-        name="curp"
-        type="text"
-        maxlength="18"
-        x-model="curpText"
-        @keyup="mensajeError = ''; limpiaCURPCampos();"
-        @blur="buscaCURP()"
-        oninput="this.value = this.value.toUpperCase()" {!! $attributes->merge(['class' => 'mtv-text-input']) !!}>
+<div x-data="curpConsulta()">
+    <div class="mtv-input-wrapper relative">
+        <input
+            id="curp"
+            name="curp"
+            type="text"
+            placeholder="XXXXXXXXXXXXXXXXXX"
+            x-mask="aaaa999999aaaaaa99"
+            maxlength="18"
+            x-model="curpText"
+            @keyup="mensajeError = ''; limpiaCURPCampos();"
+            @blur="buscaCURP()"
+            oninput="this.value = this.value.toUpperCase()" {!! $attributes->merge(['class' => 'mtv-text-input']) !!}>
         <label class="mtv-input-label" for="curp">CURP</label>
-    </div>    
-    <label x-show="mensajeError != ''" x-text="mensajeError" class="text-sm text-[#9F2241] space-y-1"></label>
+        <div class="absolute inset-y-0 top-4 right-0 pr-3 flex items-center text-sm leading-5">
+            <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+        </div>
+    </div>
+    <label x-show="mensajeError != ''" x-text="mensajeError" class="text-xs text-red-600 space-y-1"></label>
 </div>
 
 <script>
@@ -42,14 +47,22 @@
                                         html: "CURP inválida o no localizada.",
                                     })
                                 } else {
-                                    let curpDatos = res['curp_datos'];
-                                    document.getElementById('rfc_sin_homoclave').value = curpDatos['CURP'].substring(0, curpDatos['CURP'].length-8);
-                                    document.getElementById('fecha_nacimiento').value = curpDatos['fechNac'];
-                                    document.getElementById('genero').value = curpDatos['sexo'];
-                                    document.getElementById('nombre').value = curpDatos['nombres'];
-                                    document.getElementById('primer_ap').value = curpDatos['apellido1'];
-                                    document.getElementById('segundo_ap').value = curpDatos['apellido2'];
+                                    let curpDatos = {
+                                        'curp': res['curp_datos']['CURP'],
+                                        'nombre': res['curp_datos']['nombres'],
+                                        'primer_ap': res['curp_datos']['apellido1'],
+                                        'segundo_ap': res['curp_datos']['apellido2'],
+                                        'sexo': res['curp_datos']['sexo'],
+                                        'fecha_nacimiento': res['curp_datos']['fechNac'],
+                                    };
+
+                                    document.getElementById('rfc').value = curpDatos['curp'].substring(0, curpDatos['curp'].length-8);
                                     document.getElementById('rfc').focus();
+                                    let inputPersonaDatos = document.getElementById('persona_datos_reg_email');
+                                    console.log(curpDatos)
+                                    if (inputPersonaDatos) {
+                                        inputPersonaDatos.value = JSON.stringify(curpDatos);
+                                    }
                                 }
                             }
                         })
@@ -57,11 +70,6 @@
             },
             limpiaCURPCampos() {
                 document.getElementById('rfc').value = '';
-                document.getElementById('fecha_nacimiento').value = '';
-                document.getElementById('genero').value = '';
-                document.getElementById('nombre').value = '';
-                document.getElementById('primer_ap').value = '';
-                document.getElementById('segundo_ap').value = '';
             }
         }
     }

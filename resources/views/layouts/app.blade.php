@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Mi Tiendita Virtual CDMX</title>
-        
+
         @googlefonts
 
         <!-- Scripts -->
@@ -25,7 +25,7 @@
             <!-- Page Content -->
             <main>
                 <div class="container">
-                    <div class="row mt-3">
+                    <div class="mt-3">
                         @include('layouts.alert-notification')
                     </div>
                     {{ $slot }}
