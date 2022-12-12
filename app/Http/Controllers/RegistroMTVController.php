@@ -238,7 +238,7 @@ class RegistroMTVController extends Controller
 
                 return redirect()->route('registro-contactos.show');
             } catch (ValidationException $e) {
-                $request->session()->flash('error', 'El proceso de registro no pudo ser completado: ' . $e->getMessage());
+                $request->session()->flash('error', 'Error al guardar datos: ' . $e->getMessage());
 
                 return redirect()->route('registro-perfil-negocio.show')
                     ->withErrors($e->validator)
@@ -249,12 +249,41 @@ class RegistroMTVController extends Controller
         return redirect(RouteServiceProvider::HOME);
     }
 
-    public function storeRegistroContactos()
+    public function showRegistroContactos(Request $request)
     {
         $persona = Auth::user()->persona;
 
-        return view('registro.registro-contactos', [
-            'persona' => $persona,
-        ]);
+        if (!$persona->registroCompleto()) {
+            return view('registro.registro-contactos', [
+                'persona' => $persona,
+            ]);
+        }
+
+        return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function storeRegistroContactos(Request $request) 
+    {        
+        $persona = Auth::user()->persona;
+
+        try {
+            $this->validate($request, [
+                'contactos_lista' => 'required|json',            
+            ]);
+        } catch (ValidationException $e) {
+            return redirect()->route('registro-contactos.show')
+                ->withErrors($e->validator)
+                ->withInput();
+        }
+
+        try {
+            $registroPersonaService = new RegistroPersonaService();
+            $registroPersonaService->registraContactos($request->input('contactos_lista'), $persona);
+        } catch (\Throwable $e) {
+            return redirect()->back()->withError($e->getMessage());
+        }        
+
+        // TODO: Siguiente, mostrar mensaje "¿Quieres crear tu catálogo?"
+        return redirect(RouteServiceProvider::HOME);
     }
 }

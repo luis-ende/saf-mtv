@@ -83,12 +83,8 @@ Route::post('/registro-confirmacion', [RegistroMTVController::class, 'storeRegis
 Route::get('/registro-perfil-negocio', [RegistroMTVController::class, 'showRegistroPerfilNegocio'])->middleware(['auth'])->name('registro-perfil-negocio.show');
 Route::post('/registro-perfil-negocio', [RegistroMTVController::class, 'storeRegistroPerfilNegocio'])->middleware(['auth'])->name('registro-perfil-negocio.store');
 
-Route::get('/registro-contactos', function() {
-    $persona = Auth::user()->persona;
+Route::get('/registro-contactos', [RegistroMTVController::class, 'showRegistroContactos'])->middleware(['auth'])->name('registro-contactos.show');
 
-    return view('registro.registro-contactos', [
-        'persona' => $persona,
-    ]);
-})->name('registro-contactos.show');
+Route::post('/registro-contactos', [RegistroMTVController::class, 'storeRegistroContactos'])->middleware(['auth'])->name('registro-contactos.store');
 
 require __DIR__.'/auth.php';

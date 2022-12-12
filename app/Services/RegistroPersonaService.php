@@ -115,4 +115,15 @@ class RegistroPersonaService
 
         return PerfilNegocio::create($perfilNegocioDatos);
     }
+
+    public function registraContactos(string $listaContactos, Persona $persona) 
+    {
+        $personaRepository = new PersonaRepository();
+        DB::transaction(function() use($persona, $listaContactos, $personaRepository) {        
+            $personaRepository->updateContactos($persona, $listaContactos);
+            $persona->update([
+                'registro_fase' => RegistroMTV::REGISTRO_FASE_CONTACTOS,
+            ]);
+        });
+    }
 }

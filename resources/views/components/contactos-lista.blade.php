@@ -11,7 +11,7 @@
             name="contactos_lista"
             x-bind:value="JSON.stringify(contactos)"
         >
-        <div class="w-full flex flex-col align-items-end px-1 my-3">
+        <div class="w-full flex flex-col align-items-end px-1 mb-3">
             <!-- Button trigger modal -->
             <button
                 class="mtv-button-secondary-white no-underline"
@@ -119,7 +119,7 @@
                                 name="contacto_telefono_oficina"
                                 maxlength="13"
                                 placeholder="_ _ - _ _ _ _ _ _ _ _"
-                                x-mask="99 - 99999999"
+                                x-mask="99-99999999"
                                 data-contacto-campo-requerido="1">
                             <label class="mtv-input-label" for="contacto_telefono_oficina">Teléfono oficina</label>
                         </div>
@@ -140,7 +140,7 @@
                                 name="contacto_telefono_movil"
                                 maxlength="13"
                                 placeholder="_ _ - _ _ _ _ _ _ _ _"
-                                x-mask="99 - 99999999"
+                                x-mask="99-99999999"
                                 data-contacto-campo-requerido="1">
                             <label class="mtv-input-label" for="contacto_telefono_movil">Teléfono móvil</label>
                         </div>
