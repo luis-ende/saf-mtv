@@ -41,6 +41,8 @@
 
 **IMPORTANTE:** Se recomienda levantar el proyecto en el ambiente de desarrollo con Homestead, ya que la máquina virtual contiene todos los requerimientos necesarios que de otra manera sería necesario instalar en el host.
 
+Para realizar una actualización completa del ambiente de desarrollo ejecutar desde el directorio raíz del proyecto: `./scripts/deploy-fresh-homestead.sh` (la base de datos local será restaurada completamente, por lo que se recomienda hacer un backup si se quieren conservar datos de prueba generados)
+
 ### Compilación de assets
 
 - Para generar los assets desde la carpeta raíz del proyecto ejecutar: `npm run build`
@@ -48,7 +50,7 @@
 
 ### SVGs
 
-- Los íconos utilizados en format SVG se encuentran en la carpeta `resources\svg` como archivos .svg y se utilizan en plantillas Blade con la directiva `@svg`, por ejemplo: `@svg('govicon-building')`. Ver más acerca sobre los íconos de [Blade UI Kit](https://blade-ui-kit.com/blade-icons).
+- Los íconos utilizados en format SVG se encuentran en la carpeta `resources/svg` como archivos .svg y se utilizan en plantillas Blade con la directiva `@svg`, por ejemplo: `@svg('govicon-building')`. Ver más acerca sobre los íconos de [Blade UI Kit](https://blade-ui-kit.com/blade-icons).
 
 ## MTV en Docker
 
