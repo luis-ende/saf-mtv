@@ -16,8 +16,8 @@
 
   .mtv-button-gray {
     @apply text-mtv-gray font-bold bg-white border border-slate-200 rounded-lg py-2
-    hover:bg-mtv-gold hover:text-white active:bg-mtv-gold active:text-white
-    focus:text-mtv-gray focus:ring-2 focus:ring-mtv-gray-light;
+    hover:bg-mtv-gold-light hover:text-white active:bg-mtv-gold-light active:text-white
+    focus:text-gold-light focus:ring-2 focus:ring-mtv-gold-light;
   }
 
   .mtv-button-gold {
