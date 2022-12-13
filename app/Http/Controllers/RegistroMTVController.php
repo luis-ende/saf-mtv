@@ -297,6 +297,6 @@ class RegistroMTVController extends Controller
         }        
 
         // TODO: Siguiente, mostrar mensaje "¿Quieres crear tu catálogo?"
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::HOME)->with('success', '¡Registro exitoso!');
     }
 }
