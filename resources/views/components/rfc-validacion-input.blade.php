@@ -61,10 +61,8 @@
                                 this.isLoading = false;
                                 if (res['error']) {
                                     this.mensajeError = 'Servicio no disponible. No es posible registrar el RFC en Mi Tiendita Virtual.'
-                                    /*if (btnFormSubmit) {
-                                        btnFormSubmit.disabled = true;
-                                    }*/
                                 } else {
+                                    console.log(res);
                                     this.rfcExisteEnPadronProveedores = res['existe_en_padron_proveedores'];
                                     this.rfcExisteEnMTV = res['existe_en_mtv'];
                                     this.rfcEtapaEnPadronProveedores = res['etapa_en_padron_proveedores'];
@@ -74,33 +72,27 @@
 
                                         if (this.rfcExisteEnPadronProveedores) {
                                             Swal.fire({
-                                                title: this.rfcInvalido,
-                                                confirmButtonColor: '#691C32',
-                                                html: "Ya cuentas con un registro en el Padrón de Proveedores ("
-                                                    + this.rfcEtapaEnPadronProveedores + "). " +
-                                                    "Puedes enviar la información de tu catálogo en el perfil de tu negocio. " +
-                                                    '<a href="https://tianguisdigital.finanzas.cdmx.gob.mx/login">Padrón de Proveedores</a>.',
-                                                icon: "warning",
-                                                allowOutsideClick: false,
+                                                ...SwalMTVCustom,
+                                                title: 'Ya estás registrado en Padrón de Proveedores',
+                                                html: '<div class="">' +
+                                                    '<span>Puedes crear tu catálogo de productos y revisar notificaciones desde Padrón de Proveedores.</span>' +
+                                                    '<p class="swal-mtv-html-container-action">¿Quieres ingresar al sitio?</p>' +
+                                                    '</div>',
                                             }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    /*if (btnFormSubmit) {
-                                                        btnFormSubmit.disabled = true;
-                                                    }*/
+                                                    window.location = 'https://tianguisdigital.finanzas.cdmx.gob.mx/login';
                                                 }
                                             })
                                         } else if (this.rfcExisteEnMTV && this.modoValidacion === 'registro') {
                                             Swal.fire({
-                                                title: this.rfcInvalido,
-                                                html: 'Ya cuentas con un registro en Mi Tiendita Virtual. <br><a href="{{ route('login') }}">Inicia sesión</a> para acceder al portal.',
-                                                icon: "warning",
-                                                confirmButtonColor: '#691C32',
-                                                allowOutsideClick: false,
+                                                ...SwalMTVCustom,
+                                                html: '<div class="">' +
+                                                    '<span>Puedes crear tu catálogo de productos y revisar notificaciones al ingresar a Mi Tiendita Virtual.</span>' +
+                                                    '<p class="swal-mtv-html-container-action">¿Quieres iniciar sesión?</p>' +
+                                                    '</div>',
                                             }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    /*if (btnFormSubmit) {
-                                                        btnFormSubmit.disabled = true;
-                                                    }*/
+                                                    window.location.href = '/login';
                                                 }
                                             })
                                         }
@@ -122,7 +114,10 @@
             },
             esRFCValido(rfc) {
                 return rfc.length === 12 || rfc.length === 13;
-            }
+            },
+            // showModal() {
+            //     this.modalTest.show();
+            // }
             /*obtieneRFCCompleto() {
                 if (document.getElementsByName('tipo_persona').length > 0) {
                     const tipoPersona = document.getElementsByName('tipo_persona')[0].value;

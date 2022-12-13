@@ -42,9 +42,11 @@
                                 if (res['curp_invalido'] || res['curp_no_localizado']) {
                                     this.mensajeError = "CURP inválida o no localizada."
                                     Swal.fire({
-                                        icon: "error",
-                                        title: this.curpText,
-                                        html: "CURP inválida o no localizada.",
+                                        ...SwalMTVCustom,
+                                        title: 'CURP inválida o no localizada.',
+                                        html: "Verifique que la CURP introducida sea correcta.",
+                                        showCancelButton: false,
+                                        confirmButtonText: 'Aceptar',
                                     })
                                 } else {
                                     let curpDatos = {

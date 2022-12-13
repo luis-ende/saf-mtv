@@ -6,6 +6,21 @@ window.bootstrap = bootstrap;
 
 import swal from 'sweetalert2';
 window.Swal = swal;
+window.SwalMTVCustom = {
+    customClass: {
+        'title': 'swal2-mtv-title swal2-mtv-title-warning',
+        'popup': 'swal2-mtv-popup',
+        'confirmButton': 'swal2-mtv-confirm-button',
+        'cancelButton': 'swal2-mtv-cancel-button',
+        'htmlContainer': 'swal2-mtv-html-container',
+        'icon': 'swal2-mtv-icon'
+    },
+    showConfirmButton: true,
+    showCancelButton: true,
+    confirmButtonText: 'Sí',
+    cancelButtonText: 'No',
+    allowOutsideClick: false,
+}
 
 import Alpine from 'alpinejs';
 import mask from '@alpinejs/mask'
