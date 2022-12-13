@@ -44,11 +44,11 @@
             <input type="hidden" id="logotipo_path" name="logotipo_path" value="{{ $logotipoUrl ?? '' }}">
             <label class="to-mtv-text-gray my-2">Sitio web y redes sociales</label>
             <div class="flex flex-row flex-nowrap justify-between mb-3 text-mtv-gold cursor-pointer">
-                @svg('iconoir-internet', ['class' => 'h-5 w-5', '@click' => "event.preventDefault(); showFormEdit('sitio_web')"])
-                @svg('iconpark-facebookone-o', ['class' => 'h-5 w-5', '@click' => "event.preventDefault(); showFormEdit('cuenta_facebook')"])
-                @svg('bi-twitter', ['class' => 'h-5 w-5', '@click' => "event.preventDefault(); showFormEdit('cuenta_twitter')"])
-                @svg('antdesign-linkedin-o', ['class' => 'h-5 w-5', '@click' => "event.preventDefault(); showFormEdit('cuenta_linkedin')"])
-                @svg('ri-whatsapp-line', ['class' => 'h-5 w-5', '@click' => "event.preventDefault(); showFormEdit('num_whatsapp')"])
+                @svg('iconoir-internet', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('sitio_web')"])
+                @svg('entypo-facebook', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('cuenta_facebook')"])
+                @svg('fab-twitter-square', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('cuenta_twitter')"])
+                @svg('uiw-linkedin', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('cuenta_linkedin')"])
+                @svg('icomoon-whatsapp', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('num_whatsapp')"])
             </div>
         </div>
         <div class="md:basis-3/4 xs:basis-full row mx-0">
@@ -169,7 +169,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-mtv-gray-light">
                     <h5 class="modal-title" id="negocioLinksModalLabel">Agrega tu sitio web y redes sociales</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" @click="negocioLinksModalForm.hide()" aria-label="Close"></button>
                 </div>
                 <div id="contactoFormContainer" class="modal-body row">
                     <input type="hidden" id="contacto_id" name="contacto_id">
@@ -223,7 +223,7 @@
                         </div>                    
                     </div>                
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer">                    
                     <button type="button" class="mtv-button-secondary" @click="closeFormEdit()">Guardar</button>
                 </div>
             </div>    

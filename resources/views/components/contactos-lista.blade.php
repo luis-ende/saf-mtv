@@ -71,7 +71,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-mtv-gray-light">
                     <h5 class="modal-title" id="contactosModalLabel">Contactos</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" @click="contactosModalForm.hide()" aria-label="Close"></button>
                 </div>
                 <div id="contactoFormContainer" class="modal-body row">
                     <input type="hidden" id="contacto_id" name="contacto_id">
