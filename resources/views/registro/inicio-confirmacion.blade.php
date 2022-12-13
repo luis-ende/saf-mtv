@@ -15,7 +15,7 @@
                             @if($tipoPersona === 'F')
                                 <input name="persona_datos" id="persona_datos_reg_email"
                                     type="hidden" value="">
-                            @endif       
+                            @endif
                             <label class="block basis-full text-xl font-bold text-mtv-text-gray mt-2 mb-2 self-center">¿Qué tipo de persona eres?</label>
                             <div class="basis-full flex flex-row w-56 self-center mb-3" x-data="{ tipoPersona: '{{ $tipoPersona }}' }">
                                 <x-tipo-persona-radio :value="$tipoPersona" :disabled="true" />
@@ -28,7 +28,7 @@
                                     </div>
                                 @endif
                                     <div class="w-48 sm:basis-full basis-1/2">
-                                        <x-rfc-validacion-input value="" />
+                                        <x-rfc-validacion-input value="" :modo="__('registro')" />
                                         <x-input-error :messages="$errors->get('rfc')" class="mt-2"/>
                                     </div>
                                 @if($tipoPersona === 'M')
