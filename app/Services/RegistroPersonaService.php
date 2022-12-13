@@ -2,15 +2,16 @@
 
 namespace App\Services;
 
-use App\Models\PerfilNegocio;
-use App\Models\Persona;
-use App\Models\PersonaFisica;
-use App\Models\PersonaMoral;
-use App\Models\RegistroMTV;
-use App\Models\User;
-use App\Repositories\PersonaRepository;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Persona;
+use App\Models\RegistroMTV;
+use App\Models\PersonaMoral;
+use App\Models\PerfilNegocio;
+use App\Models\PersonaFisica;
+use App\Models\CatalogoProductos;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\PersonaRepository;
 
 class RegistroPersonaService
 {
@@ -118,6 +119,11 @@ class RegistroPersonaService
             $personaRepository->updateContactos($persona, $listaContactos);
             $persona->update([
                 'registro_fase' => RegistroMTV::REGISTRO_FASE_CONTACTOS,
+            ]);
+
+            $catalogoProductos = CatalogoProductos::create([
+                'nombre_catalogo' => 'Catálogo principal',
+                'id_persona' => $persona->id,
             ]);
         });
     }
