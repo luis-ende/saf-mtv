@@ -52,3 +52,27 @@
     </div>
 @endif
 </div>
+    
+@if(Session::has('registro-completo'))
+@php($dialogoHtml = Blade::render('layouts.registro-completo-alert'))
+    <script>        
+        window.addEventListener("load", (event) => {                        
+            showRegistroCompletoDialogo();
+        });    
+        function showRegistroCompletoDialogo()
+        {        
+            const props = SwalMTVCustom;
+            props.customClass['title'] = 'swal2-mtv-title swal2-mtv-html-container-reg-completo'
+
+            Swal.fire({
+            ...props,
+            title: '¡Registro exitoso!',
+            html: `{!! $dialogoHtml !!}`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/catalogo-productos';
+                }
+            })                
+        }    
+    </script>
+@endif
