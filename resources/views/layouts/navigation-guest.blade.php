@@ -49,9 +49,9 @@
                         <x-dropdown-link :href="route('logout')"
                                 onclick="event.preventDefault();
                                             this.closest('form').submit();">
-                            {{ __('Log Out') }}
+                            {{ __('Cerrar sesión') }}
                         </x-dropdown-link>
-                    </form>                                                        
+                    </form>
                 @else
                     <a class="font-bold no-underline mr-5" href="{{ route('registro-inicio') }}">Regístrate</a>
                     <a class="font-bold no-underline mr-5" href="{{ route('login') }}">Ingresa</a>
@@ -107,7 +107,7 @@
                                         this.closest('form').submit();">
                         {{ __('Cerrar sesión') }}
                     </x-responsive-nav-link>
-                </form>                
+                </form>
             @else
                 <x-responsive-nav-link :href="route('login')">
                     {{ __('Ingresa') }}
