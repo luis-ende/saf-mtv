@@ -9,8 +9,11 @@ class PersonaRepository
 {
     public function updateContactos(Persona $persona, string $contactosJson): void
     {
-        // TODO: Implementar guardado de campo 'orden_matriz_escalamiento'
         $contactos = json_decode($contactosJson, true);
+
+        if (count($contactos) === 0) {
+            throw new \Exception('Se require al menos un contacto en la matriz de escalamiento.');
+        }
 
         Contacto::where('id_persona', $persona->id)->delete();
 
