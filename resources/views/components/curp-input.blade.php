@@ -60,8 +60,7 @@
 
                                     document.getElementById('rfc').value = curpDatos['curp'].substring(0, curpDatos['curp'].length-8);
                                     document.getElementById('rfc').focus();
-                                    let inputPersonaDatos = document.getElementById('persona_datos_reg_email');
-                                    console.log(curpDatos)
+                                    let inputPersonaDatos = document.getElementById('persona_datos_reg_email');                                    
                                     if (inputPersonaDatos) {
                                         inputPersonaDatos.value = JSON.stringify(curpDatos);
                                     }
