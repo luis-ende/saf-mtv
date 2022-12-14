@@ -66,6 +66,7 @@
 
             Swal.fire({
             ...props,
+            cancelButtonText: 'Después',
             title: '¡Registro exitoso!',
             html: `{!! $dialogoHtml !!}`,
             }).then((result) => {

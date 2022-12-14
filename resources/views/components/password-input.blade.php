@@ -16,8 +16,8 @@
             @endif
             required>
         <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
-            @svg('fas-eye', ['class' => 'h-5 w-5 mt-4 text-gray-500', '@click' => 'show = !show', ':class' => "{'hidden': !show, 'block':show}"])
-            @svg('fas-eye-slash', ['class' => 'h-5 w-5 mt-4 text-gray-500', '@click' => 'show = !show', ':class' => "{'block': !show, 'hidden':show}"])
+            @svg('fas-eye', ['class' => 'h-5 w-5 mt-4 text-mtv-text-gray-light', '@click' => 'show = !show', ':class' => "{'hidden': !show, 'block':show}"])
+            @svg('fas-eye-slash', ['class' => 'h-5 w-5 mt-4 text-mtv-text-gray-light', '@click' => 'show = !show', ':class' => "{'block': !show, 'hidden':show}"])
         </div>
         <label class="mtv-input-label" for="{{ $label_id }}">{{ $label }}</label>
     </div>

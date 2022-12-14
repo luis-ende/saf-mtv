@@ -43,7 +43,7 @@
             />
             <input type="hidden" id="logotipo_path" name="logotipo_path" value="{{ $logotipoUrl ?? '' }}">
             <label class="to-mtv-text-gray my-2">Sitio web y redes sociales</label>
-            <div class="flex flex-row flex-nowrap justify-between mb-3 text-mtv-gold cursor-pointer">
+            <div class="flex flex-row flex-nowrap justify-between mb-3 text-mtv-gold cursor-pointer border-t-2 pt-3">
                 @svg('iconoir-internet', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('sitio_web')"])
                 @svg('entypo-facebook', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('cuenta_facebook')"])
                 @svg('fab-twitter-square', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('cuenta_twitter')"])
@@ -130,7 +130,7 @@
             </div>
             <div class="form-group col-md-12 w-full"
                  x-data="{ cartaPresentacion: {{ $cartaPresentacion ? "'" . $cartaPresentacion->file_name . "'" : 'null' }} }">
-                <label class="text-mtv-text-gray my-3">
+                <label class="text-mtv-text-gray font-bold my-3">
                     ¿Quieres subir tu carta de presentación? Agrégala en formato PDF de hasta 3MB.
                 </label>
                 <div class="flex flex-row justify-start text-mtv-gold font-bold">
@@ -152,7 +152,7 @@
                     </div>
                 </div>
                 <div class="text-mtv-text-gray" x-show="cartaPresentacion !== null">
-                    @svg('uiw-paper-clip', ['class' => 'h-3 w-3 inline-block mr-5'])
+                    {{-- @svg('uiw-paper-clip', ['class' => 'h-3 w-3 inline-block mr-5']) --}}
                     <label class="font-bold" x-text="cartaPresentacion"></label>
                     @svg('sui-cross', [
                         'class' => 'h-3 w-3 inline-block ml-3 cursor-pointer',
