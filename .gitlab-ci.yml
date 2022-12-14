@@ -1,0 +1,20 @@
+image: unleashed/php:8.1-nodejs-16.x
+
+stages:
+  - lint
+  - test
+  - stage
+
+lint php:
+  stage: lint
+  script:
+    - phplint -e php app/
+
+phpstan:
+  stage: test
+  before_script:
+    - composer self-update --stable
+    - cp .env.example .env
+    - composer install --no-progress --prefer-dist --optimize-autoloader --ansi
+  script:
+    - ./vendor/bin/phpstan analyse --ansi --level 1 app
