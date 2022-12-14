@@ -5,6 +5,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Mi Tiendita Virtual CDMX</title>
+        <link rel="shortcut icon" href="img/tianguis.png">
         
         @googlefonts        
 
