@@ -84,7 +84,7 @@ class RegistroMTVController extends Controller
     public function storeRegistroCreaCuenta(Request $request, RegistroPersonaService $registroService, PersonaRepository $personaRepository)
     {
         try {
-            $this->validate($request, [                
+            $this->validate($request, [
                 'tipo_persona' => [
                     'required',
                     Rule::in([
@@ -100,24 +100,24 @@ class RegistroMTVController extends Controller
                     ]),
                 ],
                 'password' => 'required|min:8|max:15|same:password_confirmacion' // TODO: Aplicar las mismas validaciones que en front-end
-            ]);            
+            ]);
 
-            $personaDatos = $request->only('tipo_persona', 'email', 'password');            
+            $personaDatos = $request->only('tipo_persona', 'email', 'password');
             $tipoPersona = $request->input('tipo_persona');
-            $tipoRegistro = $request->input('tipo_registro');            
+            $tipoRegistro = $request->input('tipo_registro');
 
             if ($request->has('persona_datos')) {
                 $this->validate($request, [
                     'persona_datos' => 'required|json',
                 ]);
                 $personaDatos = array_merge($personaDatos, json_decode($request->input('persona_datos'), true));
-                if (($tipoPersona === Persona::TIPO_PERSONA_FISICA_ID) && 
+                if (($tipoPersona === Persona::TIPO_PERSONA_FISICA_ID) &&
                     !array_key_exists('genero', $personaDatos)) {
                     $personaDatos['genero'] = $personaDatos['sexo'];
                     unset($personaDatos['sexo']);
                 }
             }
-            
+
             if ($tipoRegistro === RegistroMTV::TIPO_REGISTRO_EMAIL) {
                 $this->validate($request, [
                     'email' => 'required|email|same:email_confirmacion|max:255',
@@ -129,15 +129,15 @@ class RegistroMTVController extends Controller
                         'persona_datos' => 'required|json',
                         'curp' => 'required|max:18',
                         'rfc' => 'required|max:13|unique:users,rfc',
-                    ]);                    
-                    $personaDatos = array_merge($personaDatos, $request->only(['curp', 'rfc']));                    
+                    ]);
+                    $personaDatos = array_merge($personaDatos, $request->only(['curp', 'rfc']));
                 } elseif ($tipoPersona === Persona::TIPO_PERSONA_MORAL_ID) {
                     $this->validate($request, [
                         'rfc' => 'required|max:12|unique:users,rfc',
                         'razon_social' => 'required',
                         'fecha_constitucion' => 'required|date',
                     ]);
-                    $personaDatos = array_merge($personaDatos, $request->only(['rfc', 'razon_social', 'fecha_constitucion']));                    
+                    $personaDatos = array_merge($personaDatos, $request->only(['rfc', 'razon_social', 'fecha_constitucion']));
                 }
             }
         } catch (ValidationException $e) {
@@ -154,7 +154,7 @@ class RegistroMTVController extends Controller
         }
 
         try {
-            $user = $registroService->registraPersonaMTV($personaDatos, $personaRepository);
+            $user = $registroService->registraPersonaMTV($personaDatos);
             // Iniciar sesión con el nuevo usuario
             event(new Registered($user));
             Auth::login($user);
@@ -275,13 +275,13 @@ class RegistroMTVController extends Controller
         return redirect(RouteServiceProvider::HOME);
     }
 
-    public function storeRegistroContactos(Request $request) 
-    {        
+    public function storeRegistroContactos(Request $request)
+    {
         $persona = Auth::user()->persona;
 
         try {
             $this->validate($request, [
-                'contactos_lista' => 'required|json',            
+                'contactos_lista' => 'required|json',
             ]);
         } catch (ValidationException $e) {
             return redirect()->route('registro-contactos.show')
@@ -294,7 +294,7 @@ class RegistroMTVController extends Controller
             $registroPersonaService->registraContactos($request->input('contactos_lista'), $persona);
         } catch (\Throwable $e) {
             return redirect()->back()->withError($e->getMessage());
-        }        
+        }
 
         // TODO: Siguiente, mostrar mensaje "¿Quieres crear tu catálogo?"
         return redirect(RouteServiceProvider::HOME)->with('registro-completo', '¡Registro exitoso!');

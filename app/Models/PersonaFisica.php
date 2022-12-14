@@ -38,11 +38,11 @@ class PersonaFisica extends Model
 
     public function rfc_sin_homoclave()
     {
-        return substr($this->persona->rfc, 0, -3);
+        return substr($this->persona()->rfc, 0, -3);
     }
 
     public function homoclave()
     {
-        return substr($this->persona->rfc, -3);
+        return substr($this->persona()->rfc, -3);
     }
 }

@@ -15,10 +15,10 @@ use App\Repositories\PersonaRepository;
 
 class RegistroPersonaService
 {
-    public function registraPersonaMTV(array $personaRegistroDatos, PersonaRepository $personaRepository): User
+    public function registraPersonaMTV(array $personaRegistroDatos): User
     {
         $user = null;
-        DB::transaction(function() use($personaRegistroDatos, $personaRepository, &$user) {
+        DB::transaction(function() use($personaRegistroDatos, &$user) {
             $tipo_persona = null;
             if ($personaRegistroDatos['tipo_persona'] === Persona::TIPO_PERSONA_FISICA_ID) {
                 $tipo_persona = PersonaFisica::create([
@@ -42,7 +42,7 @@ class RegistroPersonaService
                 'personable_type' => get_class($tipo_persona),
                 'rfc' => $personaRegistroDatos['rfc'],
                 'email' => $personaRegistroDatos['email'],
-                'registro_fase' => RegistroMTV::REGISTRO_FASE_IDENTIFICACION,                
+                'registro_fase' => RegistroMTV::REGISTRO_FASE_IDENTIFICACION,
             ]);
 
             /*$personaRepository->updateContactos($persona, $personaRegistroDatos['contactos_lista']);*/
@@ -112,10 +112,10 @@ class RegistroPersonaService
         return PerfilNegocio::create($perfilNegocioDatos);
     }
 
-    public function registraContactos(string $listaContactos, Persona $persona) 
+    public function registraContactos(string $listaContactos, Persona $persona)
     {
         $personaRepository = new PersonaRepository();
-        DB::transaction(function() use($persona, $listaContactos, $personaRepository) {        
+        DB::transaction(function() use($persona, $listaContactos, $personaRepository) {
             $personaRepository->updateContactos($persona, $listaContactos);
             $persona->update([
                 'registro_fase' => RegistroMTV::REGISTRO_FASE_CONTACTOS,
