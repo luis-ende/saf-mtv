@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\RegistroMTVController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified', 'registro_mtv.status'])->name('dashboard');
 
 // TODO: Crear grupos
+
+Route::post('persona/{persona}/contactos', [PersonaController::class, 'storeContactos'])->middleware('auth')->name('persona-contactos.store');
 
 Route::get('/catalogo-productos', [CatalogoProductosController::class, 'index'])
     ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('catalogo-productos');
