@@ -155,6 +155,8 @@
     </div>
 </div>
 
+@php($personaId = Auth::user()->persona->id)
+
 <script type="text/javascript">
     function listaContactos() {
 
@@ -186,6 +188,7 @@
                     if (esNuevoContacto) {
                         this.contactos.push(contacto);
                     }
+                    this.postContactos();
                     this.contactosModalForm.hide();
                 }
             },
@@ -206,7 +209,16 @@
                 this.contactosModalForm.show();
             },
             eliminaContacto(id) {
-                this.contactos = this.contactos.filter(item => item.id !== id);
+                Swal.fire({
+                    ...SwalMTVCustom,
+                    title: 'Eliminar contacto',
+                    html: '<span>¿Deseas eliminar el contacto de la matriz de escalamiento?</span>',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.contactos = this.contactos.filter(item => item.id !== id);
+                        this.postContactos();
+                    }
+                })
             },
             validaContacto(contacto) {
                 this.errors = {};
@@ -231,6 +243,30 @@
                 invalidState = invalidState || invalidValues.length > 0;
 
                 return !invalidState;
+            },
+            postContactos() {
+                const formData = new FormData();
+                formData.append('contactos_lista', JSON.stringify(this.contactos));
+
+                fetch('{{ route('persona-contactos.store', ['persona' => $personaId]) }}', {
+                    method: "POST",
+                    credentials: 'same-origin',
+                    headers: {
+                        'X-CSRF-Token': '{{ csrf_token() }}',
+                    },
+                    body: formData,
+                }).then(response => {
+                    if (!response.ok) {
+                        this.mensajeError = "Error"
+                        Swal.fire({
+                            ...SwalMTVCustom,
+                            title: this.mensajeError,
+                            html: "El contacto no pudo ser guardado.",
+                            showCancelButton: false,
+                            confirmButtonText: 'Aceptar',
+                        })
+                    }
+                })
             },
             clearFormFields() {
                 document.getElementById('contacto_id').value = 0;

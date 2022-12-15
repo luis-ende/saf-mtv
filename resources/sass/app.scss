@@ -36,10 +36,14 @@
     background-color: #E6E6E6;
     font-size: 1.2rem !important;
     font-weight: lighter !important;
-    padding-bottom: 0.8em !important;
+    padding-top: 0.4em !important;
+    padding-bottom: 0.4em !important;
     border-top-left-radius: 12px !important;
     border-top-right-radius: 12px !important;
     text-align: left !important;
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
 }
 
 .swal2-mtv-title-warning:before {

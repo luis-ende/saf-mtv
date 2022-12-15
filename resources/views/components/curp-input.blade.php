@@ -40,10 +40,10 @@
                                 this.mensajeError = 'Servicio de consulta de CURP no disponible.'
                             } else {
                                 if (res['curp_invalido'] || res['curp_no_localizado']) {
-                                    this.mensajeError = "CURP inválida o no localizada."
+                                    this.mensajeError = "CURP inválida o no localizada"
                                     Swal.fire({
                                         ...SwalMTVCustom,
-                                        title: 'CURP inválida o no localizada.',
+                                        title: this.mensajeError,
                                         html: "Verifique que la CURP introducida sea correcta.",
                                         showCancelButton: false,
                                         confirmButtonText: 'Aceptar',
@@ -60,7 +60,7 @@
 
                                     document.getElementById('rfc').value = curpDatos['curp'].substring(0, curpDatos['curp'].length-8);
                                     document.getElementById('rfc').focus();
-                                    let inputPersonaDatos = document.getElementById('persona_datos_reg_email');                                    
+                                    let inputPersonaDatos = document.getElementById('persona_datos_reg_email');
                                     if (inputPersonaDatos) {
                                         inputPersonaDatos.value = JSON.stringify(curpDatos);
                                     }
