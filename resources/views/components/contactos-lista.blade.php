@@ -206,7 +206,15 @@
                 this.contactosModalForm.show();
             },
             eliminaContacto(id) {
-                this.contactos = this.contactos.filter(item => item.id !== id);
+                Swal.fire({
+                    ...SwalMTVCustom,
+                    title: 'Eliminar contacto',
+                    html: '<span>¿Deseas eliminar el contacto de la matriz de escalamiento?</span>',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.contactos = this.contactos.filter(item => item.id !== id);
+                    }
+                })
             },
             validaContacto(contacto) {
                 this.errors = {};
