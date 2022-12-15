@@ -73,9 +73,9 @@
                                 <label class="mtv-input-label" for="clave_cabms">Clave CABMS</label>
                             </div>
                             <a href="#"
-                               class="text-base no-underline hover:text-[#BC955C]"
+                               class="text-base no-underline mtv-button-secondary-white self-end my-0"
                                data-bs-toggle="modal" data-bs-target="#cabmsModal">
-                                @svg('fluentui-text-bullet-list-square-search-20', ['class' => 'h-10 w-10 inline-block'])
+                                @svg('fluentui-text-bullet-list-square-search-20', ['class' => 'h-10 w-7 inline-block'])
                             </a>
                         </div>
                     </div>
@@ -143,22 +143,13 @@
             @if ($mode === 'add')
                 <x-producto-importacion-button />
 
-                <button class="btn btn-primary"
+                <button class="mtv-button-secondary"
                         type="submit">
                     @svg('heroicon-m-plus-circle', ['class' => 'h-7 w-7 inline-block'])
                     Agregar producto
-                </button>
-            @elseif ($mode === 'wizard')
-                <a class="btn btn-primary mr-3" href="{{ route('wizard.registro-mtv.show', [$wizard['id'], 'descripcion-negocio']) }}">
-                    @svg('heroicon-s-arrow-left-circle', ['class' => 'h-5 w-5 inline-block'])
-                    Anterior
-                </a>
-                <button id="btn_siguiente" class="btn btn-primary">
-                    Finalizar registro
-                    @svg('bi-check-circle-fill', ['class' => 'h-4 w-4 inline-block'])
-                </button>
+                </button>            
             @else
-                <button class="btn btn-primary" type="submit">
+                <button class="mtv-button-secondary" type="submit">
                     @svg('gmdi-save-as', ['class' => 'h-5 w-5 inline-block mr-1'])
                     Guardar
                 </button>

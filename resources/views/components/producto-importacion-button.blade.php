@@ -1,5 +1,5 @@
 <div x-data="productoListaImportacion()" x-init="initData()">
-    <button class="btn btn-primary mr-2"
+    <button class="mtv-button-secondary-white mr-2"
             type="button"
             @click="clickImportacionButton()">
         @svg('polaris-major-import-store', ['class' => 'h-7 w-7 inline-block mr-1'])

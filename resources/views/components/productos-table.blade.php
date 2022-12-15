@@ -25,15 +25,15 @@
             <td>
                 <div class="flex flex-row justify-end">
                     <a href="{{ route('productos.edit', [$producto->id]) }}"
-                       class="text-base no-underline hover:text-mtv-secondary">
-                        @svg('heroicon-m-pencil-square', ['class' => 'h-5 w-5 inline-block mr-1'])
+                       class="text-mtv-text-gray text-base no-underline hover:text-mtv-secondary">
+                        @svg('heroicon-m-pencil-square', ['class' => 'h-5 w-5 inline-block mr-3'])
                     </a>
                     <form id="producto_destroy_form_{{ $producto->id }}" action="{{ route('productos.destroy', [$producto->id]) }}" method="POST">
                         @method('DELETE')
                         @csrf
                         <a href="{{ route('productos.destroy', [$producto->id]) }}"
                            @click="removeRow($event, {{ $producto->id }}); $event.preventDefault()"
-                           class="text-base no-underline hover:text-mtv-secondary">
+                           class="text-mtv-text-gray text-base no-underline hover:text-mtv-secondary">
                             @svg('heroicon-o-trash', ['class' => 'h-5 w-5 inline-block'])
                         </a>
                     </form>
@@ -50,17 +50,14 @@
         return {
             removeRow(e, id) {
                 Swal.fire({
-                    title: '¿Desea eliminar el producto?',
-                    showDenyButton: false,
-                    showCancelButton: true,
-                    confirmButtonColor: '#691C32',
-                    confirmButtonText: 'Eliminar',
-                    cancelButtonText: `Cancelar`,
+                    ...SwalMTVCustom,
+                    title: 'Eliminar producto',
+                    html: '<span>¿Deseas eliminar el producto de tu catálogo?</span>',
                 }).then((result) => {
-                    if (result.isConfirmed) {
+                    if (result.isConfirmed) {                        
                         this.sendDeleteRequest(e, id);
                     }
-                });
+                })
             },
             sendDeleteRequest(e, id) {
                 document.getElementById('producto_destroy_form_' + id).submit();

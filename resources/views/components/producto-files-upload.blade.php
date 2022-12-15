@@ -77,7 +77,7 @@
         </template>
 
         <div class="flex justify-content-center mt-3">
-            <button type="button" class="btn btn-primary"
+            <button type="button" class="mtv-button-secondary"
                     @click="sendFiles($event)"
                     :disabled="isUploading">
                 <span x-show="isUploading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

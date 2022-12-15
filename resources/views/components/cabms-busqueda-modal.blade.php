@@ -2,9 +2,9 @@
 <div class="modal modal-lg fade" id="cabmsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content" x-data="dataTable()" x-init="initModalForm()">
-            <div class="modal-header">
+            <div class="modal-header bg-mtv-gray-light">
                 <h5 class="modal-title" id="staticBackdropLabel">Búsqueda de claves CABMS</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" @click="cabmsModal.hide()" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                     <div class="container mx-auto w-full h-full">
@@ -13,7 +13,7 @@
                                 <div class="flex justify-between items-center">
                                     <div class="flex space-x-2 items-center">
                                         <label for="select-view">Mostrar</label>
-                                        <select id="select-view" x-model="view" @change="changeView()" class="form-control px-4 py-1 border rounded focus:outline-none">
+                                        <select id="select-view" x-model="view" @change="changeView()" class="px-4 py-1 border rounded focus:ring-mtv-secondary">
                                             <option value="5">5</option>
                                             <option value="10">10</option>
                                             <option value="25">25</option>
@@ -22,7 +22,7 @@
                                     </div>
                                     <div>
                                         <input id="input-search" @keydown.enter="search($event.target.value)"
-                                               type="text" class="form-control px-2 py-1 border rounded focus:outline-none"
+                                               type="text" class="px-2 py-1 border rounded focus:ring-mtv-secondary"
                                                placeholder="Buscar (presiona ENTER)..." autofocus>
                                     </div>
                                 </div>
@@ -126,8 +126,8 @@
                 </script>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary"
+                {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button> --}}
+                <button type="button" class="mtv-button-secondary"
                         @click="clickSeleccionar()">
                     @svg('bi-check-circle-fill', ['class' => 'h-4 w-4 inline-block mr-1'])
                     Selecionar

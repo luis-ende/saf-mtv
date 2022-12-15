@@ -5,18 +5,18 @@
         @if($esRegistroInicio)
             <a href="{{ route('homepage') }}"
                class="text-mtv-gold-light no-underline hover:text-white flex flex-row">
-                @svg('fas-arrow-left', ['class' => 'h-7 w-7 inline-block mr-3'])
+                @svg('fas-arrow-left', ['class' => 'md:h-7 md:w-7 xs:h-5 xs:w-5 inline-block mr-3'])
                 Inicio
             </a>
         @else
             <div class="md:basis-10/12 xs:basis-8/12 flex flex-row items-center">
                 <div class="text-white">
-                    @svg('fas-building', ['class' => 'h-7 w-7 inline-block mr-2'])
+                    @svg('fas-building', ['class' => 'md:h-7 md:w-7 xs:h-5 xs:w-5 inline-block mr-2'])
                     Tu negocio
                 </div>
-                @svg('fas-arrow-right', ['class' => 'h-5 w-5 inline-block text-white ml-5 mr-5 self-center'])
+                @svg('fas-arrow-right', ['class' => 'md:h-7 md:w-7 xs:h-5 inline-block text-white ml-5 mr-5 self-center'])
                 <div class="{{ $currentRoute === 'registro-contactos.show' ? 'text-white' : 'text-mtv-gold-light' }}">
-                    @svg('fas-building-user', ['class' => 'h-7 w-7 inline-block mr-2'])
+                    @svg('fas-building-user', ['class' => 'md:h-7 md:w-7 xs:h-5 xs:w-5 inline-block mr-2'])
                     Contactos
                 </div>
             </div>
@@ -28,7 +28,7 @@
                    onclick="event.preventDefault(); this.closest('form').submit();"
                 >
                     Cerrar sesión
-                    @svg('fas-arrow-right', ['class' => 'h-7 w-7 inline-block ml-3'])
+                    @svg('fas-arrow-right', ['class' => 'md:h-7 md:w-7 xs:h-5 xs:w-5 inline-block ml-3'])
                 </button>
             </form>
         @endif
@@ -47,7 +47,7 @@
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
                             <div>
-                                @svg('fluentui-chat-help-24-o', ['class' => 'h-7 w-7 inline-block text-mtv-primary'])
+                                @svg('fluentui-chat-help-24-o', ['class' => 'md:h-7 md:w-7 xs:h-5 xs:w-5 inline-block text-mtv-primary'])
                             </div>
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
