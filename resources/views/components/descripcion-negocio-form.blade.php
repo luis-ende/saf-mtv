@@ -84,8 +84,8 @@
                         <option selected value="0">-- Seleccionar --</option>
                         @foreach ((array) $sectores as $sector)
                             <option
-                                value={{ $sector['id'] }}
-                            >{{ $sector['sector'] }}</option>
+                                value={{ $sector->id }}
+                            >{{ $sector->sector }}</option>
                         @endforeach
                     </select>
                     <label class="mtv-input-label" for="id_sector">Sector</label>

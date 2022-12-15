@@ -9,7 +9,6 @@ use InvalidArgumentException;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\PaisesRepository;
-use App\Repositories\SectorRepository;
 use App\Services\CertExtractorService;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
@@ -20,6 +19,7 @@ use App\Services\RegistroPersonaService;
 use App\Http\Requests\PerfilNegocioRequest;
 use Illuminate\Validation\ValidationException;
 use App\Repositories\GrupoPrioritarioRepository;
+use App\Repositories\CatCiudadanoCABMSRepository;
 
 class RegistroMTVController extends Controller
 {
@@ -168,7 +168,7 @@ class RegistroMTVController extends Controller
         }
     }
 
-    public function showRegistroPerfilNegocio(Request $request)
+    public function showRegistroPerfilNegocio(Request $request, CatCiudadanoCABMSRepository $catCCABMSRepo)
     {
         $persona = Auth::user()->persona;
 
@@ -179,7 +179,7 @@ class RegistroMTVController extends Controller
                 'tipos_vialidad' => VialidadRepository::obtieneTiposVialidad(),
                 'grupos_prioritarios' => GrupoPrioritarioRepository::obtieneGruposPrioritarios(),
                 'tipos_pyme' => TipoPymeRepository::obtieneTiposPyme(),
-                'sectores' => SectorRepository::obtieneSectores(),
+                'sectores' => $catCCABMSRepo->obtieneSectores(),
                 'categorias_scian' => [], // TODO: Implementar cuando esté listo este catálogo
             ]);
         }
