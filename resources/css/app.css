@@ -11,7 +11,7 @@
   }
 
   .mtv-input-label {
-    @apply w-fit text-sm text-mtv-gray relative top-2.5 bg-white ml-2.5 px-2;
+    @apply w-fit text-sm text-mtv-gray-2 relative top-2.5 bg-white ml-2.5 px-2;
   }
 
   .mtv-button-gray {
