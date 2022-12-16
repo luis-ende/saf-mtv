@@ -22,6 +22,9 @@ window.SwalMTVCustom = {
     allowOutsideClick: false,
 }
 
+import choices from 'choices.js';
+window.Choices = choices;
+
 import Alpine from 'alpinejs';
 import mask from '@alpinejs/mask'
 

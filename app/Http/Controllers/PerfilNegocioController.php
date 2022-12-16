@@ -15,7 +15,7 @@ use App\Repositories\GrupoPrioritarioRepository;
 
 class PerfilNegocioController extends Controller
 {
-     /**
+    /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
     public function show()
@@ -34,10 +34,10 @@ class PerfilNegocioController extends Controller
     }
 
     public function update(PerfilNegocioRequest $request, PerfilNegocioRepository $perfilNegocioRepository)
-    {    
+    {
         // TODO: Implementar TRANSACCION
         $persona = Auth::user()->persona;
-        
+
         $personaDatos = $request->safe()->only([
             'id_pais',
             'id_asentamiento',
@@ -45,7 +45,7 @@ class PerfilNegocioController extends Controller
             'vialidad',
             'num_ext',
             'num_int'
-        ]);        
+        ]);
         $persona->update($personaDatos);
 
         $perfilNegocioDatos = $request->safe()->only([
@@ -62,7 +62,7 @@ class PerfilNegocioController extends Controller
             'cuenta_twitter',
             'cuenta_linkedin',
             'num_whatsapp',
-        ]);        
+        ]);
 
         $adjuntos = $request->safe()->only(['logotipo', 'carta_presentacion', 'eliminar_carta']);
         $perfilNegocioDatos = array_merge($perfilNegocioDatos, $adjuntos);
