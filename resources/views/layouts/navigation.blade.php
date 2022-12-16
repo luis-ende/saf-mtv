@@ -43,7 +43,10 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('perfil-negocio')">
-                            {{ __('Perfil') }}
+                            {{ __('Mi perfil') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('perfil-negocio')">
+                            {{ __('Configuración') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('centro-notificaciones')">
                             {{ __('Notificaciones') }}
