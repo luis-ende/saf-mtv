@@ -1,6 +1,8 @@
-@props(['persona' => null, 'cat_paises' => [], 'grupos_prioritarios' => [], 'tipos_pyme' => [],'sectores' => [], 'tipos_vialidad' => null])
+@props(['mode' => 'edit', 'persona' => null, 'cat_paises' => [], 'grupos_prioritarios' => [], 'tipos_pyme' => [],'sectores' => [], 'tipos_vialidad' => null])
 
-<form method="POST" enctype="multipart/form-data" action="{{ route('registro-perfil-negocio.store') }}">
+@php($updateRoute = $mode === 'registro' ? route('registro-perfil-negocio.store') : ($mode === 'edit' ? route('perfil-negocio.update') : ''))
+
+<form method="POST" enctype="multipart/form-data" action="{{ $updateRoute }}">
     @csrf
     <div class="flex flex-col space-y-5">
         <x-field-group-card
@@ -41,8 +43,7 @@
         <x-field-group-card
             title="Domicilio de tu negocio"
         >
-            <x-direccion-input
-                        :step="null"
+            <x-direccion-input                        
                         :direccion="isset($persona) ? $persona->direccion() : null"
                         :tipos_vialidad="$tipos_vialidad"
                         :cat_paises="$cat_paises"
@@ -57,10 +58,14 @@
                 :grupos_prioritarios="$grupos_prioritarios"
                 :tipos_pyme="$tipos_pyme"
                 :sectores="$sectores"
-                :mode="__('edit')"
+                :mode="$mode"
             />
         </x-field-group-card>
 
-        <button type="submit" class="mtv-button-secondary my-4 self-end">Guardar y continuar</button>
+        @if($mode === 'registro')
+            <button type="submit" class="mtv-button-secondary my-4 self-end">Guardar y continuar</button>
+        @elseif($mode === 'edit')    
+            <button type="submit" class="mtv-button-secondary self-end">Actualizar</button>
+        @endif
     </div>
 </form>

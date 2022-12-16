@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Repositories\PaisesRepository;
 use App\Repositories\SectorRepository;
-use App\Repositories\PersonaRepository;
 use App\Repositories\TipoPymeRepository;
 use App\Repositories\VialidadRepository;
 use App\Http\Requests\PerfilNegocioRequest;
+use App\Repositories\PerfilNegocioRepository;
 use App\Repositories\GrupoPrioritarioRepository;
 
 class PerfilNegocioController extends Controller
@@ -17,12 +18,13 @@ class PerfilNegocioController extends Controller
      /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function index()
+    public function show()
     {
         $persona = Auth::user()->persona;
 
         return view('perfil-negocio', [
             'persona' => $persona,
+            'cat_paises' => PaisesRepository::obtienePaises(),
             'tipos_vialidad' => VialidadRepository::obtieneTiposVialidad(),
             'grupos_prioritarios' => GrupoPrioritarioRepository::obtieneGruposPrioritarios(),
             'tipos_pyme' => TipoPymeRepository::obtieneTiposPyme(),
@@ -31,51 +33,42 @@ class PerfilNegocioController extends Controller
         ]);
     }
 
-    public function update(Request $request, PersonaRepository $personaRepository)
-    {
-        // TODO: Implementar transacción
+    public function update(PerfilNegocioRequest $request, PerfilNegocioRepository $perfilNegocioRepository)
+    {    
+        // TODO: Implementar TRANSACCION
         $persona = Auth::user()->persona;
-        $persona['id_asentamiento'] = $request->input('id_asentamiento');
-        $persona['id_tipo_vialidad'] = $request->input('id_tipo_vialidad');
-        $persona['vialidad'] = $request->input('vialidad');
-        $persona['num_ext'] = $request->input('num_ext');
-        $persona['num_int'] = $request->input('num_int');
-        $persona->save();
+        
+        $personaDatos = $request->safe()->only([
+            'id_pais',
+            'id_asentamiento',
+            'id_tipo_vialidad',
+            'vialidad',
+            'num_ext',
+            'num_int'
+        ]);        
+        $persona->update($personaDatos);
 
-        // TODO: Implementar guardado de nueva contraseña
+        $perfilNegocioDatos = $request->safe()->only([
+            'id_grupo_prioritario',
+            'id_tipo_pyme',
+            'id_sector',
+            'id_categoria_scian',
+            'lema_negocio',
+            'nombre_negocio',
+            'descripcion_negocio',
+            'diferenciadores',
+            'sitio_web',
+            'cuenta_facebook',
+            'cuenta_twitter',
+            'cuenta_linkedin',
+            'num_whatsapp',
+        ]);        
 
-        $personaRepository->updateContactos($persona, $request->input('contactos_lista'));
+        $adjuntos = $request->safe()->only(['logotipo', 'carta_presentacion', 'eliminar_carta']);
+        $perfilNegocioDatos = array_merge($perfilNegocioDatos, $adjuntos);
+        $perfilNegocioRepository->updatePerfilNegocio($persona->perfil_negocio, $perfilNegocioDatos);
 
         return redirect()->route('dashboard')
             ->with('success', 'Datos de contacto actualizados.');
-    }
-
-    public function updateDescripcionNegocio(Request $request)
-    {
-        //$descripcionNegocioFields = $request->validated();
-
-        $perfilNegocio = Auth::user()->persona->perfil_negocio;
-        $perfilNegocio['id_grupo_prioritario'] = $request->input('id_grupo_prioritario');
-        $perfilNegocio['id_tipo_pyme'] = $request->input('id_tipo_pyme');
-        $perfilNegocio['id_sector'] = $request->input('id_sector');
-        $perfilNegocio['id_categoria_scian'] = $request->input('id_categoria_scian');
-        $perfilNegocio['lema_negocio'] = $request->input('lema_negocio');
-        $perfilNegocio['descripcion_negocio'] = $request->input('descripcion_negocio');
-        $perfilNegocio['diferenciadores'] = $request->input('diferenciadores');
-        $perfilNegocio['sitio_web'] = $request->input('sitio_web');
-        $perfilNegocio['cuenta_facebook'] = $request->input('cuenta_facebook');
-        $perfilNegocio['cuenta_twitter'] = $request->input('cuenta_twitter');
-        $perfilNegocio['cuenta_linkedin'] = $request->input('cuenta_linkedin');
-        $perfilNegocio['num_whatsapp'] = $request->input('num_whatsapp');
-        $perfilNegocio->save();
-
-        if ($request->file('logotipo') && $this->validate($request, ['logotipo' => 'mimes:jpg,bmp,png'])) {
-            $path = $request->file('logotipo')->store('public/logotipos');
-            $perfilNegocio->clearMediaCollection('logotipos');
-            $perfilNegocio->addMedia(storage_path('app') . '/' . $path)->toMediaCollection('logotipos');
-        }
-
-        return redirect()->route('dashboard')
-            ->with('success', 'Perfil de negocio actualizado.');
     }
 }

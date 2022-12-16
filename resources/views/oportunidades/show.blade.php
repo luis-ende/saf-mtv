@@ -1,6 +1,6 @@
 <x-app-layout>
     <div x-data="oportunidadesPagina()" class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-3">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg min-h-fit">
+        <div class="bg-white overflow-hidden min-h-fit">
             <div class="text-slate-800 font-bold text-2xl p-6 bg-white border-b border-gray-200">
                 @svg('lineawesome-business-time-solid', ['class' => 'h-7 w-7 inline-block mr-1'])
                 Oportunidades de negocio

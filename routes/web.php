@@ -45,12 +45,10 @@ Route::post('persona/{persona}/contactos', [PersonaController::class, 'storeCont
 Route::get('/catalogo-productos', [CatalogoProductosController::class, 'index'])
     ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('catalogo-productos');
 
-Route::get('/perfil-negocio', [PerfilNegocioController::class, 'index'])
+Route::get('/perfil-negocio', [PerfilNegocioController::class, 'show'])
     ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('perfil-negocio');
 
 Route::post('/perfil-negocio/update', [PerfilNegocioController::class, 'update'])->middleware(['auth', 'verified'])->name('perfil-negocio.update');
-
-Route::post('/descripcion-negocio/update', [PerfilNegocioController::class, 'updateDescripcionNegocio'])->middleware(['auth', 'verified'])->name('descripcion-negocio.update');
 
 Route::post('/productos', [ProductosController::class, 'store'])->middleware(['auth', 'verified'])->name('productos.store');
 

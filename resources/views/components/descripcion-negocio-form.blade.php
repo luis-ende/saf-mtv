@@ -1,37 +1,20 @@
-@props(['mode' => 'wizard', 'step' => null, 'wizard', 'grupos_prioritarios' => [], 'tipos_pyme' => [], 'sectores' => []])
+@props(['mode' => 'registro', 'grupos_prioritarios' => [], 'tipos_pyme' => [], 'sectores' => []])
 
-@php($grupoPrioritarioId = isset($perfilNegocio) ? $perfilNegocio->id_grupo_prioritario : ( isset($step) ? $step['id_grupo_prioritario'] : old('id_grupo_prioritario')))
-@php($tipoPymeId = isset($perfilNegocio) ? $perfilNegocio->id_tipo_pyme : ( isset($step) ? $step['id_tipo_pyme'] : old('id_tipo_pyme')))
-@php($sectorId = isset($perfilNegocio) ? $perfilNegocio->id_sector : ( isset($step) ? $step['id_sector'] : old('id_sector')))
-@php($diferenciadores = isset($perfilNegocio) ? $perfilNegocio->diferenciadores : ( isset($step) ? $step['diferenciadores'] : old('diferenciadores')))
-@php($lema = isset($perfilNegocio) ? $perfilNegocio->lema_negocio : ( isset($step) ? $step['lema_negocio'] : old('lema_negocio')))
-@php($nombreNegocio = isset($perfilNegocio) ? $perfilNegocio->nombre_negocio : ( isset($step) ? $step['nombre_negocio'] : old('nombre_negocio')))
-@php($descripcionNegocio = isset($perfilNegocio) ? $perfilNegocio->descripcion_negocio : ( isset($step) ? $step['descripcion_negocio'] : old('descripcion_negocio')))
-@php($sitio_web = isset($perfilNegocio) ? $perfilNegocio->sitio_web : ( isset($step) ? $step['sitio_web'] : old('sitio_web')))
-@php($cuenta_facebook = isset($perfilNegocio) ? $perfilNegocio->cuenta_facebook : ( isset($step) ? $step['cuenta_facebook'] : old('cuenta_facebook')))
-@php($cuenta_twitter = isset($perfilNegocio) ? $perfilNegocio->cuenta_twitter : ( isset($step) ? $step['cuenta_twitter'] : old('cuenta_twitter')))
-@php($cuenta_linkedin = isset($perfilNegocio) ? $perfilNegocio->cuenta_linkedin : ( isset($step) ? $step['cuenta_linkedin'] : old('cuenta_linkedin')))
-@php($num_whatsapp = isset($perfilNegocio) ? $perfilNegocio->num_whatsapp : ( isset($step) ? $step['num_whatsapp'] : old('num_whatsapp')))
-@php($logotipoUrl = isset($perfilNegocio) ? $perfilNegocio->getFirstMediaUrl('logotipos') : ( isset($step) ? $step['logotipo_path'] : null))
-@php($cartaPresentacion = isset($perfilNegocio) ? $perfilNegocio->getFirstMedia('documentos') : ( isset($step) ? $step['carta_presentacion'] : null))
+@php($grupoPrioritarioId = isset($perfilNegocio) ? $perfilNegocio->id_grupo_prioritario : old('id_grupo_prioritario'))
+@php($tipoPymeId = isset($perfilNegocio) ? $perfilNegocio->id_tipo_pyme : old('id_tipo_pyme'))
+@php($sectorId = isset($perfilNegocio) ? $perfilNegocio->id_sector : old('id_sector'))
+@php($diferenciadores = isset($perfilNegocio) ? $perfilNegocio->diferenciadores : old('diferenciadores'))
+@php($lema = isset($perfilNegocio) ? $perfilNegocio->lema_negocio : old('lema_negocio'))
+@php($nombreNegocio = isset($perfilNegocio) ? $perfilNegocio->nombre_negocio : old('nombre_negocio'))
+@php($descripcionNegocio = isset($perfilNegocio) ? $perfilNegocio->descripcion_negocio : old('descripcion_negocio'))
+@php($sitio_web = isset($perfilNegocio) ? $perfilNegocio->sitio_web : old('sitio_web'))
+@php($cuenta_facebook = isset($perfilNegocio) ? $perfilNegocio->cuenta_facebook : old('cuenta_facebook'))
+@php($cuenta_twitter = isset($perfilNegocio) ? $perfilNegocio->cuenta_twitter : old('cuenta_twitter'))
+@php($cuenta_linkedin = isset($perfilNegocio) ? $perfilNegocio->cuenta_linkedin : old('cuenta_linkedin'))
+@php($num_whatsapp = isset($perfilNegocio) ? $perfilNegocio->num_whatsapp : old('num_whatsapp'))
+@php($logotipoUrl = isset($perfilNegocio) ? $perfilNegocio->getFirstMediaUrl('logotipos') : null)
+@php($cartaPresentacion = isset($perfilNegocio) ? $perfilNegocio->getFirstMedia('documentos') : null)
 
-@isset ($step)
-    @php($grupos_prioritarios = $step['grupos_prioritarios'])
-@endisset
-
-@isset ($step)
-    @php($tipos_pyme = $step['tipos_pyme'])
-@endisset
-
-@isset ($step)
-    @php($sectores = $step['sectores'])
-@endisset
-
-@if ($mode === 'wizard')
-    @php($formAction = route('wizard.registro-mtv.update', [$wizard['id'], 'descripcion-negocio']))
-@elseif ($mode === 'edit')
-    @php($formAction = route('descripcion-negocio.update'))
-@endif
 
 <div x-data="descripcionNegocioReglas()" x-init="initModalForm()">
     <div class="flex flex-row flex-wrap">
@@ -82,11 +65,11 @@
                 <div class="mtv-input-wrapper">
                     <select class="mtv-text-input" id="id_sector" name="id_sector" x-model="sector">
                         <option selected value="0">-- Seleccionar --</option>
-                        @foreach ((array) $sectores as $sector)
+                        {{-- @foreach ((array) $sectores as $sector)
                             <option
                                 value={{ $sector->id }}
                             >{{ $sector->sector }}</option>
-                        @endforeach
+                        @endforeach --}}
                     </select>
                     <label class="mtv-input-label" for="id_sector">Sector</label>
                 </div>

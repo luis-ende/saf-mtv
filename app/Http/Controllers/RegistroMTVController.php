@@ -20,6 +20,7 @@ use App\Http\Requests\PerfilNegocioRequest;
 use Illuminate\Validation\ValidationException;
 use App\Repositories\GrupoPrioritarioRepository;
 use App\Repositories\CatCiudadanoCABMSRepository;
+use App\Repositories\PerfilNegocioRepository;
 
 class RegistroMTVController extends Controller
 {
@@ -187,7 +188,7 @@ class RegistroMTVController extends Controller
         return redirect(RouteServiceProvider::HOME);
     }
 
-    public function storeRegistroPerfilNegocio(PerfilNegocioRequest $request)
+    public function storeRegistroPerfilNegocio(PerfilNegocioRequest $request, PerfilNegocioRepository $perfilNegocioRepository)
     {
         $persona = Auth::user()->persona;
 
@@ -223,27 +224,14 @@ class RegistroMTVController extends Controller
                 ]);
 
                 $perfilNegocio = $persona->perfil_negocio;
-                if ($perfilNegocio) {
-                    $persona->perfil_negocio->update($perfilNegocioDatos);
-                } else {
+                if (!$perfilNegocio) {
                     $registroPersonaService = new RegistroPersonaService();
                     $perfilNegocio = $registroPersonaService->registraPerfilNegocio($perfilNegocioDatos, $persona);
                 }
 
-                $logotipoFile = $request->safe()->only(['logotipo']);
-                if (isset($logotipoFile['logotipo'])) {
-                    $perfilNegocio->clearMediaCollection('logotipos');
-                    $perfilNegocio->addMedia($logotipoFile['logotipo'])->toMediaCollection('logotipos');
-                }
-
-                $cartaPresentacionFile = $request->safe()->only(['carta_presentacion']);
-                if ($request->input('eliminar_carta')) {
-                    $perfilNegocio->clearMediaCollection('documentos');
-                }
-                if (isset($cartaPresentacionFile['carta_presentacion'])) {
-                    $perfilNegocio->clearMediaCollection('documentos');
-                    $perfilNegocio->addMedia($cartaPresentacionFile['carta_presentacion'])->toMediaCollection('documentos');
-                }
+                $adjuntos = $request->safe()->only(['logotipo', 'carta_presentacion', 'eliminar_carta']);
+                $perfilNegocioDatos = array_merge($perfilNegocioDatos, $adjuntos);
+                $perfilNegocioRepository->updatePerfilNegocio($perfilNegocio, $perfilNegocioDatos);
 
                 return redirect()->route('registro-contactos.show');
             } catch (ValidationException $e) {

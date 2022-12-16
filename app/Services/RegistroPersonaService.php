@@ -45,55 +45,6 @@ class RegistroPersonaService
                 'registro_fase' => RegistroMTV::REGISTRO_FASE_IDENTIFICACION,
             ]);
 
-            /*$personaRepository->updateContactos($persona, $personaRegistroDatos['contactos_lista']);*/
-
-            /*$perfilNegocio = PerfilNegocio::create([
-                'id_persona' => $persona->id,
-                'id_grupo_prioritario' => $personaRegistroDatos['id_grupo_prioritario'],
-                'id_tipo_pyme' => $personaRegistroDatos['id_tipo_pyme'],
-                'id_sector' => $personaRegistroDatos['id_sector'],
-                'id_categoria_scian' => $personaRegistroDatos['id_categoria_scian'],
-                'lema_negocio' => $personaRegistroDatos['lema_negocio'],
-                'descripcion_negocio' => $personaRegistroDatos['descripcion_negocio'],
-                'diferenciadores' => $personaRegistroDatos['diferenciadores'],
-                'sitio_web' => $personaRegistroDatos['sitio_web'],
-                'cuenta_facebook' => $personaRegistroDatos['cuenta_facebook'],
-                'cuenta_twitter' => $personaRegistroDatos['cuenta_twitter'],
-                'cuenta_linkedin' => $personaRegistroDatos['cuenta_linkedin'],
-                'num_whatsapp' => $personaRegistroDatos['num_whatsapp'],
-            ]);
-
-            if ($personaRegistroDatos['logotipo_path'] && $personaRegistroDatos['logotipo_path'] !== '') {
-                $perfilNegocio->addMedia(storage_path('app/public/logotipos_tmp/' . basename($personaRegistroDatos['logotipo_path'])))
-                ->toMediaCollection('logotipos');
-            }       */
-
-            /*$catalogoProductos = CatalogoProductos::create([
-                'nombre_catalogo' => 'Catálogo principal',
-                'id_persona' => $persona->id,
-            ]);*/
-
-            // Si se capturaron los datos del producto
-            /*if (isset($personaRegistroDatos['nombre_producto']) && isset($personaRegistroDatos['clave_cabms'])) {
-                $producto = [
-                    'tipo' => $personaRegistroDatos['tipo_producto'],
-                    'clave_cabms' => $personaRegistroDatos['clave_cabms'],
-                    'nombre' => $personaRegistroDatos['nombre_producto'],
-                    'descripcion' => $personaRegistroDatos['descripcion_producto'],
-                    'precio' => $personaRegistroDatos['precio'],
-                    'id_cat_productos' => $catalogoProductos->id,
-                ];
-
-                if ($personaRegistroDatos['tipo_producto'] === Producto::TIPO_PRODUCTO_BIEN_ID) {
-                    $producto['marca'] = $personaRegistroDatos['marca'];
-                    $producto['modelo'] = $personaRegistroDatos['modelo'];
-                    $producto['color'] = $personaRegistroDatos['color'];
-                    $producto['material'] = $personaRegistroDatos['material'];
-                }
-
-                Producto::create($producto);
-            }*/
-
             $user = User::create([
                 'rfc' => $personaRegistroDatos['rfc'],
                 'id_persona' => $persona->id,
