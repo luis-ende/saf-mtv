@@ -34,8 +34,6 @@ psql -d saf_mtv -h homestead -U homestead -e -c "CREATE USER saf_mtv_dbuser WITH
 psql -d saf_mtv -h homestead -U homestead -e -c "GRANT ALL PRIVILEGES ON DATABASE saf_mtv to saf_mtv_dbuser;"
 # Cargar catálogo de asentamientos de prueba para modo desarrollo
 psql -d saf_mtv -h homestead -U homestead -e -f /var/www/saf-mtv/Homestead/pgsql/cat_asentamientos.sql
-# Cargar catálogo de claves cabms de prueba para modo desarrollo
-psql -d saf_mtv -h homestead -U homestead -e -f /var/www/saf-mtv/Homestead/pgsql/cabms.sql
 
 sudo service php8.1-fpm restart
 sudo systemctl restart nginx
@@ -49,6 +47,7 @@ cp .env.example .env
 composer install
 php artisan migrate
 php artisan db:seed
+# php artisan db:seed --class=CatCiudadanoCABMSSeeder
 
 npm install && npm run build
 
