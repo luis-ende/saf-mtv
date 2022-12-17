@@ -23,35 +23,37 @@
             <select class="mtv-text-input" id="id_pais" name="id_pais">
                 @php($paisDefault = !$idPais ? 'Mexico' : null)
                 @foreach($cat_paises as $pais)
-                    <option value={{ $pais->id }} 
+                    <option value={{ $pais->id }}
                         {{ ($pais->id === $idPais) || ($pais->pais === $paisDefault) ? 'selected' : '' }}>
                         {{ $pais->pais }}
                     </option>
-                @endforeach                
+                @endforeach
             </select>
             <label class="mtv-input-label" for="entidad_federativa">País</label>
         </div>
     </div>
-    <div class="form-group col-md-3">                
-        <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
-        <div class="mtv-input-wrapper">
+    <div class="form-group col-md-3">
+        <div class="mtv-input-wrapper relative">
             <input type="text" class="mtv-text-input" maxlength="8" id="cp" name="cp" x-model="cpText" required
                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                 @keyup="errorMessage = ''"
                 @blur="refreshCPAsentamiento()">
             <label class="mtv-input-label" for="cp">Código postal</label>
+            <div class="absolute inset-y-0 top-4 right-0 pr-3 flex items-center text-sm leading-5">
+                <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+            </div>
         </div>
         <label x-show="errorMessage != ''" x-text="errorMessage" class="text-sm text-red-600 space-y-1"></label>
-    </div>    
+    </div>
     <div class="form-group col-md-3">
-        <div class="mtv-input-wrapper">        
+        <div class="mtv-input-wrapper">
             <select x-model="asentamientoSeleccion" class="mtv-text-input" id="alcaldia" name="alcaldia">
                 <template x-for="alcaldia in alcaldias" :key="alcaldia.id">
                     <option :value="alcaldia.id" x-text="alcaldia.nombre"></option>
                 </template>
             </select>
             <label class="mtv-input-label" for="alcaldia">Alcaldía</label>
-        </div>    
+        </div>
     </div>
     <div class="form-group col-md-3">
         <div class="mtv-input-wrapper">
@@ -78,19 +80,19 @@
         </div>
     </div>
     <div class="form-group col-md-3">
-        <div class="mtv-input-wrapper">        
+        <div class="mtv-input-wrapper">
             <input type="text" class="mtv-text-input" id="vialidad" name="vialidad" required value="{{ $vialidad }}">
             <label class="mtv-input-label" for="vialidad" x-text="obtieneTipoVialidadLabel()"></label>
         </div>
     </div>
     <div class="form-group col-md-3">
-        <div class="mtv-input-wrapper">                
+        <div class="mtv-input-wrapper">
             <input type="text" class="mtv-text-input" id="num_ext" name="num_ext" required value="{{ $numExt }}">
             <label class="mtv-input-label" for="num_ext">Número exterior</label>
         </div>
     </div>
     <div class="form-group col-md-3">
-        <div class="mtv-input-wrapper">                        
+        <div class="mtv-input-wrapper">
             <input type="text" class="mtv-text-input" id="num_int" name="num_int" value="{{ $numInt }}">
             <label class="mtv-input-label" for="num_int">Número interior</label>
         </div>
