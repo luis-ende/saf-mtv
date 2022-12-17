@@ -46,8 +46,8 @@
                                           </span>
                                             </span>
                                             <div class="flex flex-col">
-                                                <svg @click="sort('clave_cabms', 'asc')" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="h-3 w-3 cursor-pointer text-gray-500 fill-current" x-bind:class="{'text-primary': sorted.field === 'clave_cabms' && sorted.rule === 'asc'}"><path d="M5 15l7-7 7 7"></path></svg>
-                                                <svg @click="sort('clave_cabms', 'desc')" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="h-3 w-3 cursor-pointer text-gray-500 fill-current" x-bind:class="{'text-primary': sorted.field === 'clave_cabms' && sorted.rule === 'desc'}"><path d="M19 9l-7 7-7-7"></path></svg>
+                                                <svg @click="sort('cabms', 'asc')" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="h-3 w-3 cursor-pointer text-gray-500 fill-current" x-bind:class="{'text-primary': sorted.field === 'cabms' && sorted.rule === 'asc'}"><path d="M5 15l7-7 7 7"></path></svg>
+                                                <svg @click="sort('cabms', 'desc')" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="h-3 w-3 cursor-pointer text-gray-500 fill-current" x-bind:class="{'text-primary': sorted.field === 'cabms' && sorted.rule === 'desc'}"><path d="M19 9l-7 7-7-7"></path></svg>
                                             </div>
                                         </div>
                                     </th>
@@ -57,8 +57,8 @@
                                             Concepto
                                           </span>
                                             <div class="flex flex-col">
-                                                <svg @click="sort('concepto_cabms', 'asc')" fill="none" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="text-gray-500 h-3 w-3 cursor-pointer fill-current" x-bind:class="{'text-blue-500': sorted.field === 'concepto_cabms' && sorted.rule === 'asc'}"><path d="M5 15l7-7 7 7"></path></svg>
-                                                <svg @click="sort('concepto_cabms', 'desc')" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="text-gray-500 h-3 w-3 cursor-pointer fill-current" x-bind:class="{'text-blue-500': sorted.field === 'concepto_cabms' && sorted.rule === 'desc'}"><path d="M19 9l-7 7-7-7"></path></svg>
+                                                <svg @click="sort('nombre_cabms', 'asc')" fill="none" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="text-gray-500 h-3 w-3 cursor-pointer fill-current" x-bind:class="{'text-blue-500': sorted.field === 'nombre_cabms' && sorted.rule === 'asc'}"><path d="M5 15l7-7 7 7"></path></svg>
+                                                <svg @click="sort('nombre_cabms', 'desc')" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="text-gray-500 h-3 w-3 cursor-pointer fill-current" x-bind:class="{'text-blue-500': sorted.field === 'nombre_cabms' && sorted.rule === 'desc'}"><path d="M19 9l-7 7-7-7"></path></svg>
                                             </div>
                                         </div>
                                     </th>
@@ -68,26 +68,26 @@
                                             P. P.
                                           </span>
                                             <div class="flex flex-col">
-                                                <svg @click="sort('partida_especifica', 'asc')" fill="none" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="text-gray-500 h-3 w-3 cursor-pointer fill-current" x-bind:class="{'text-blue-500': sorted.field === 'partida_especifica' && sorted.rule === 'asc'}"><path d="M5 15l7-7 7 7"></path></svg>
-                                                <svg @click="sort('partida_especifica', 'desc')" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="text-gray-500 h-3 w-3 cursor-pointer fill-current" x-bind:class="{'text-blue-500': sorted.field === 'partida_especifica' && sorted.rule === 'desc'}"><path d="M19 9l-7 7-7-7"></path></svg>
+                                                <svg @click="sort('partida', 'asc')" fill="none" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="text-gray-500 h-3 w-3 cursor-pointer fill-current" x-bind:class="{'text-blue-500': sorted.field === 'partida' && sorted.rule === 'asc'}"><path d="M5 15l7-7 7 7"></path></svg>
+                                                <svg @click="sort('partida', 'desc')" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="text-gray-500 h-3 w-3 cursor-pointer fill-current" x-bind:class="{'text-blue-500': sorted.field === 'partida' && sorted.rule === 'desc'}"><path d="M19 9l-7 7-7-7"></path></svg>
                                             </div>
                                         </div>
                                     </th>
                                     </thead>
                                     <tbody>
-                                    <template x-for="(item, index) in items" :key="index">
+                                    <template x-for="(item, index) in items" :key="item.id">
                                         <tr x-show="checkView(index + 1)" class="hover:bg-gray-200 text-gray-900 text-xs">
                                             <td class="py-3">
-                                                <input type="checkbox" x-bind:value="item.clave_cabms" x-model="checkedItems">
+                                                <input type="checkbox" x-bind:value="item.id" x-model="checkedItems">
                                             </td>
                                             <td class="py-3">
-                                                <span x-text="item.clave_cabms"></span>
+                                                <span x-text="item.cabms"></span>
                                             </td>
                                             <td class="py-3">
-                                                <span x-text="item.concepto_cabms"></span>
+                                                <span x-text="item.nombre_cabms"></span>
                                             </td>
                                             <td class="py-3">
-                                                <span x-text="item.partida_especifica"></span>
+                                                <span x-text="item.partida"></span>
                                             </td>
                                         </tr>
                                     </template>
@@ -157,17 +157,17 @@
             },
             currentPage: 1,
             sorted: {
-                field: 'clave_cabms',
+                field: 'cabms',
                 rule: 'asc'
             },
             initData() {
-                this.items = cabmsData.sort(this.compareOnKey('concepto_cabms', 'asc'))
+                this.items = cabmsData.sort(this.compareOnKey('nombre_cabms', 'asc'))
                 this.pagination.total = this.items.length
                 this.pagination.lastPage = Math.ceil(this.items.length / this.view)
             },
             compareOnKey(key, rule) {
                 return function(a, b) {
-                    if (key === 'clave_cabms' || key === 'concepto_cabms' || key === 'partida_especifica') {
+                    if (key === 'cabms' || key === 'nombre_cabms' || key === 'partida') {
                         let comparison = 0
                         const fieldA = a[key].toUpperCase()
                         const fieldB = b[key].toUpperCase()
@@ -269,7 +269,11 @@
             },
             clickSeleccionar() {
                 if (this.checkedItems.length > 0) {
-                    document.getElementById('clave_cabms').value = this.checkedItems[0];
+                    const cabmsId = this.checkedItems[0];
+                    const cabmsItem = this.items.find(item => item.id == cabmsId);
+                    if (cabmsItem) {
+                        document.getElementById('clave_cabms').value = cabmsItem.cabms;
+                    }
                 }
                 this.cabmsModal.hide();
             },
