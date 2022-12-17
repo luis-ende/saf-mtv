@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\CatCiudadanoCABMSRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Repositories\PaisesRepository;
-use App\Repositories\SectorRepository;
 use App\Repositories\TipoPymeRepository;
 use App\Repositories\VialidadRepository;
 use App\Http\Requests\PerfilNegocioRequest;
@@ -15,10 +15,10 @@ use App\Repositories\GrupoPrioritarioRepository;
 
 class PerfilNegocioController extends Controller
 {
-     /**
+    /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function show()
+    public function show(CatCiudadanoCABMSRepository $catCCABMSRepository)
     {
         $persona = Auth::user()->persona;
 
@@ -28,16 +28,16 @@ class PerfilNegocioController extends Controller
             'tipos_vialidad' => VialidadRepository::obtieneTiposVialidad(),
             'grupos_prioritarios' => GrupoPrioritarioRepository::obtieneGruposPrioritarios(),
             'tipos_pyme' => TipoPymeRepository::obtieneTiposPyme(),
-            'sectores' => SectorRepository::obtieneSectores(),
+            'sectores' => $catCCABMSRepository->obtieneSectores(),
             'categorias_scian' => [], // TODO: Implementar cuando esté listo el catálogo
         ]);
     }
 
     public function update(PerfilNegocioRequest $request, PerfilNegocioRepository $perfilNegocioRepository)
-    {    
+    {
         // TODO: Implementar TRANSACCION
         $persona = Auth::user()->persona;
-        
+
         $personaDatos = $request->safe()->only([
             'id_pais',
             'id_asentamiento',
@@ -45,7 +45,7 @@ class PerfilNegocioController extends Controller
             'vialidad',
             'num_ext',
             'num_int'
-        ]);        
+        ]);
         $persona->update($personaDatos);
 
         $perfilNegocioDatos = $request->safe()->only([
@@ -62,7 +62,7 @@ class PerfilNegocioController extends Controller
             'cuenta_twitter',
             'cuenta_linkedin',
             'num_whatsapp',
-        ]);        
+        ]);
 
         $adjuntos = $request->safe()->only(['logotipo', 'carta_presentacion', 'eliminar_carta']);
         $perfilNegocioDatos = array_merge($perfilNegocioDatos, $adjuntos);
@@ -70,5 +70,17 @@ class PerfilNegocioController extends Controller
 
         return redirect()->route('dashboard')
             ->with('success', 'Datos de contacto actualizados.');
+    }
+
+    public function categoriasScianIndex(Request $request, int $idSector, CatCiudadanoCABMSRepository $catCiudadanoCABMSRepository)
+    {
+        $categorias = $catCiudadanoCABMSRepository->obtieneCategoriasScianPorSector($idSector);
+
+        return array_map(function($item) {
+            return [
+                'label' => $item->categoria_scian,
+                'value' => $item->id
+            ];
+        }, $categorias);
     }
 }

@@ -64,3 +64,5 @@ Para realizar una actualización completa del ambiente de desarrollo ejecutar de
 - Consideraciones para el despliegue en ambiente de producción (primera instalación):
   - Generar llave de aplicación, ejecutar: `php artisan key:generate` 
   - Precargado de fuentes, ejecutar: `php artisan google-fonts:fetch`
+  - `database/seeders/DatabaseSeeder.php` (ejecutar `php artisan db:seed`) carga catálogos de MTV
+  - `database/seeders/CatCiudadanoCABMSSeeder.php` (ejecutar `php artisan db:seed --class=CatCiudadanoCABMSSeeder`) carga los catálogos relacionados con el catálogo CABMS (importados previamente de un archivo Excel a CSV y luego a SQL)

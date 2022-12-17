@@ -88,4 +88,6 @@ Route::get('/registro-contactos', [RegistroMTVController::class, 'showRegistroCo
 
 Route::post('/registro-contactos', [RegistroMTVController::class, 'storeRegistroContactos'])->middleware(['auth'])->name('registro-contactos.store');
 
+Route::get('/perfil-negocio/categorias_scian/{id_sector}', [PerfilNegocioController::class, 'categoriasScianIndex'])->middleware('auth')->name('categorias-scian.index');
+
 require __DIR__.'/auth.php';

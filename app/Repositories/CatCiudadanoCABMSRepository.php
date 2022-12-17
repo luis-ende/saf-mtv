@@ -6,18 +6,27 @@ use Illuminate\Support\Facades\DB;
 
 class CatCiudadanoCABMSRepository
 {
-    public function obtieneSectores() 
+    public function obtieneSectores()
     {
-        $sectores = DB::table('cat_ciudadano_cabms')->select('sector as id', 'sector')->distinct( 'sector')->get()->toArray();
-        
+        $sectores = DB::table('cat_sectores')
+                        ->select('id', 'sector')
+                        ->orderBy('sector')
+                        ->get()
+                        ->toArray();
+
         return $sectores;
     }
 
-    public function obtieneGiros(string $sector): array
+    public function obtieneCategoriasScianPorSector(int $idSector)
     {
-        $giros = DB::table('cat_ciudadano_cabms')->select( 'giro')->where('sector', $sector);
+        $giros = DB::table('cat_categorias_scian')
+                    ->select('id', 'categoria_scian')
+                    ->where('id_sector', $idSector)
+                    ->orderBy('categoria_scian')
+                    ->get()
+                    ->toArray();
 
-        return [];
+        return $giros;
     }
 
 }

@@ -3,6 +3,7 @@
 @php($grupoPrioritarioId = isset($perfilNegocio) ? $perfilNegocio->id_grupo_prioritario : old('id_grupo_prioritario'))
 @php($tipoPymeId = isset($perfilNegocio) ? $perfilNegocio->id_tipo_pyme : old('id_tipo_pyme'))
 @php($sectorId = isset($perfilNegocio) ? $perfilNegocio->id_sector : old('id_sector'))
+@php($catSCIANId = isset($perfilNegocio) ? $perfilNegocio->id_categoria_scian : old('id_categoria_scian'))
 @php($diferenciadores = isset($perfilNegocio) ? $perfilNegocio->diferenciadores : old('diferenciadores'))
 @php($lema = isset($perfilNegocio) ? $perfilNegocio->lema_negocio : old('lema_negocio'))
 @php($nombreNegocio = isset($perfilNegocio) ? $perfilNegocio->nombre_negocio : old('nombre_negocio'))
@@ -16,7 +17,7 @@
 @php($cartaPresentacion = isset($perfilNegocio) ? $perfilNegocio->getFirstMedia('documentos') : null)
 
 
-<div x-data="descripcionNegocioReglas()" x-init="initModalForm()">
+<div x-data="descripcionNegocioReglas()" x-init="initDescripcionNegocio()">
     <div class="flex flex-row flex-wrap">
         <div class="md:basis-1/4 xs:basis-full mt-3 px-8">
             <x-input-image-viewer
@@ -52,7 +53,7 @@
                 <div class="mtv-input-wrapper">
                     <select class="mtv-text-input" id="id_tipo_pyme" name="id_tipo_pyme" x-model="tipoPyme">
                         <option selected value="0">-- Seleccionar --</option>
-                        @foreach ((array) $tipos_pyme as $tipo)
+                        @foreach ((array)$tipos_pyme as $tipo)
                             <option
                                 value={{ $tipo['id'] }}
                             >{{ $tipo['tipo_pyme'] }}</option>
@@ -63,21 +64,24 @@
             </div>
             <div class="form-group col-md-4">
                 <div class="mtv-input-wrapper">
-                    <select class="mtv-text-input" id="id_sector" name="id_sector" x-model="sector">
-                        <option selected value="0">-- Seleccionar --</option>
-                        {{-- @foreach ((array) $sectores as $sector)
+                    <select class="mtv-text-input"
+                            id="id_sector" name="id_sector"
+                            @change="refreshCategoriasScian($event.target.value, null)"
+                            x-model="sector">
+                         @foreach ($sectores as $sector)
                             <option
                                 value={{ $sector->id }}
                             >{{ $sector->sector }}</option>
-                        @endforeach --}}
+                        @endforeach
                     </select>
                     <label class="mtv-input-label" for="id_sector">Sector</label>
                 </div>
             </div>
             <div class="form-group col-md-4">
                 <div class="mtv-input-wrapper">
-                    <select class="mtv-text-input" id="id_categoria_scian" name="id_categoria_scian">
-                        <option selected value="0">-- Seleccionar --</option>
+                    <select class="mtv-text-input"
+                            id="id_categoria_scian" name="id_categoria_scian"
+                            x-ref="selectCategoriaScian">
                     </select>
                     <label class="mtv-input-label" for="id_categoria_scian">Giro</label>
                 </div>
@@ -135,7 +139,6 @@
                     </div>
                 </div>
                 <div class="text-mtv-text-gray" x-show="cartaPresentacion !== null">
-                    {{-- @svg('uiw-paper-clip', ['class' => 'h-3 w-3 inline-block mr-5']) --}}
                     <label class="font-bold" x-text="cartaPresentacion"></label>
                     @svg('sui-cross', [
                         'class' => 'h-3 w-3 inline-block ml-3 cursor-pointer',
@@ -158,58 +161,58 @@
                     <input type="hidden" id="contacto_id" name="contacto_id">
                     <div class="form-group col-md-12">
                         <div class="mtv-input-wrapper">
-                            <input type="text" 
-                                   class="mtv-text-input" id="sitio_web" 
+                            <input type="text"
+                                   class="mtv-text-input" id="sitio_web"
                                    name="sitio_web" maxlength="255"
                                    value="{{ $sitio_web }}">
                             <label class="mtv-input-label" for="contacto_nombre">Sitio web</label>
-                        </div>                    
+                        </div>
                     </div>
                     <div class="form-group col-md-12">
                         <div class="mtv-input-wrapper">
-                            <input type="text" 
-                                   class="mtv-text-input" 
-                                   id="cuenta_facebook" name="cuenta_facebook" 
+                            <input type="text"
+                                   class="mtv-text-input"
+                                   id="cuenta_facebook" name="cuenta_facebook"
                                    maxlength="240"
                                    value="{{ $cuenta_facebook }}">
                             <label class="mtv-input-label" for="contacto_nombre">Facebook</label>
-                        </div>                    
+                        </div>
                     </div>
                     <div class="form-group col-md-12">
                         <div class="mtv-input-wrapper">
-                            <input type="text" 
-                                   class="mtv-text-input" 
-                                   id="cuenta_twitter" name="cuenta_twitter" 
+                            <input type="text"
+                                   class="mtv-text-input"
+                                   id="cuenta_twitter" name="cuenta_twitter"
                                    maxlength="240"
                                    value="{{ $cuenta_twitter }}">
                             <label class="mtv-input-label" for="contacto_nombre">Twitter</label>
-                        </div>                    
+                        </div>
                     </div>
                     <div class="form-group col-md-12">
                         <div class="mtv-input-wrapper">
-                            <input type="text" 
-                                   class="mtv-text-input" 
-                                   id="cuenta_linkedin" name="cuenta_linkedin" 
+                            <input type="text"
+                                   class="mtv-text-input"
+                                   id="cuenta_linkedin" name="cuenta_linkedin"
                                    maxlength="240"
                                    value="{{ $cuenta_linkedin }}">
                             <label class="mtv-input-label" for="contacto_nombre">LinkedIn</label>
-                        </div>                    
+                        </div>
                     </div>
                     <div class="form-group col-md-12">
                         <div class="mtv-input-wrapper">
-                            <input type="text" 
-                                   class="mtv-text-input" 
-                                   id="num_whatsapp" name="num_whatsapp" 
+                            <input type="text"
+                                   class="mtv-text-input"
+                                   id="num_whatsapp" name="num_whatsapp"
                                    maxlength="15"
                                    value="{{ $num_whatsapp }}">
                             <label class="mtv-input-label" for="contacto_nombre">WhatsApp</label>
-                        </div>                    
-                    </div>                
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer">                    
+                <div class="modal-footer">
                     <button type="button" class="mtv-button-secondary" @click="closeFormEdit()">Guardar</button>
                 </div>
-            </div>    
+            </div>
         </div>
     </div>
 </div>
@@ -217,6 +220,14 @@
 <script type="text/javascript">
     function descripcionNegocioReglas() {
         return {
+            categoriasScianRoute: '/perfil-negocio/categorias_scian/',
+            categoriasScianChoices: new Choices('#id_categoria_scian', {
+                allowHTML: false,
+                loadingText: 'Cargando...',
+                noChoicesText: 'Sin categorías/giros para elegir',
+                noResultsText: 'No se encontraron resultados',
+                itemSelectText: 'Seleccionar',
+            }),
             negocioLinksModalForm: new bootstrap.Modal(document.getElementById('negocioLinksModal'), { keyboard: true }),
             currentLinkInput: null,
             grupoPrioritarioMIPYMEId: 1,
@@ -228,16 +239,31 @@
             closeFormEdit() {
                 this.negocioLinksModalForm.hide();
             },
-            showFormEdit(inputId) {                                
-                this.currentLinkInput = inputId;                
-                this.negocioLinksModalForm.show();                
+            showFormEdit(inputId) {
+                this.currentLinkInput = inputId;
+                this.negocioLinksModalForm.show();
             },
-            initModalForm() {
-                document.getElementById('negocioLinksModal').addEventListener('shown.bs.modal', () => {                    
-                    if (this.currentLinkInput) {                        
+            initDescripcionNegocio() {
+                document.getElementById('negocioLinksModal').addEventListener('shown.bs.modal', () => {
+                    if (this.currentLinkInput) {
                         document.getElementById(this.currentLinkInput).focus();
-                    }                    
-                });                
+                    }
+                });
+
+                this.refreshCategoriasScian({{ $sectorId }}, {{ $catSCIANId }});
+            },
+            refreshCategoriasScian(sector, catScianId) {
+                this.categoriasScianChoices.clearStore();
+                this.categoriasScianChoices.setChoices(async () => {
+                    try {
+                        const items = await fetch(this.categoriasScianRoute + sector);
+                        return items.json();
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }).then(() => {
+                    this.categoriasScianChoices.setChoiceByValue(catScianId);
+                });
             }
         }
     }
