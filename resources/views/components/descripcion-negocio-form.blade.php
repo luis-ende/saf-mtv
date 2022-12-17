@@ -3,6 +3,7 @@
 @php($grupoPrioritarioId = isset($perfilNegocio) ? $perfilNegocio->id_grupo_prioritario : old('id_grupo_prioritario'))
 @php($tipoPymeId = isset($perfilNegocio) ? $perfilNegocio->id_tipo_pyme : old('id_tipo_pyme'))
 @php($sectorId = isset($perfilNegocio) ? $perfilNegocio->id_sector : old('id_sector'))
+@php($catSCIANId = isset($perfilNegocio) ? $perfilNegocio->id_categoria_scian : old('id_categoria_scian'))
 @php($diferenciadores = isset($perfilNegocio) ? $perfilNegocio->diferenciadores : old('diferenciadores'))
 @php($lema = isset($perfilNegocio) ? $perfilNegocio->lema_negocio : old('lema_negocio'))
 @php($nombreNegocio = isset($perfilNegocio) ? $perfilNegocio->nombre_negocio : old('nombre_negocio'))
@@ -16,7 +17,7 @@
 @php($cartaPresentacion = isset($perfilNegocio) ? $perfilNegocio->getFirstMedia('documentos') : null)
 
 
-<div x-data="descripcionNegocioReglas()" x-init="initModalForm()">
+<div x-data="descripcionNegocioReglas()" x-init="initDescripcionNegocio()">
     <div class="flex flex-row flex-wrap">
         <div class="md:basis-1/4 xs:basis-full mt-3 px-8">
             <x-input-image-viewer
@@ -52,7 +53,7 @@
                 <div class="mtv-input-wrapper">
                     <select class="mtv-text-input" id="id_tipo_pyme" name="id_tipo_pyme" x-model="tipoPyme">
                         <option selected value="0">-- Seleccionar --</option>
-                        @foreach ((array) $tipos_pyme as $tipo)
+                        @foreach ((array)$tipos_pyme as $tipo)
                             <option
                                 value={{ $tipo['id'] }}
                             >{{ $tipo['tipo_pyme'] }}</option>
@@ -65,14 +66,13 @@
                 <div class="mtv-input-wrapper">
                     <select class="mtv-text-input"
                             id="id_sector" name="id_sector"
-                            @change="$refs.selectCategoriaScian.selectedIndex = -1; refreshCategoriasScian($event.target.value)"
+                            @change="refreshCategoriasScian($event.target.value, null)"
                             x-model="sector">
-                        <option selected value="0">-- Seleccionar --</option>
-                        {{-- @foreach ((array) $sectores as $sector)
+                         @foreach ($sectores as $sector)
                             <option
                                 value={{ $sector->id }}
                             >{{ $sector->sector }}</option>
-                        @endforeach --}}
+                        @endforeach
                     </select>
                     <label class="mtv-input-label" for="id_sector">Sector</label>
                 </div>
@@ -139,7 +139,6 @@
                     </div>
                 </div>
                 <div class="text-mtv-text-gray" x-show="cartaPresentacion !== null">
-                    {{-- @svg('uiw-paper-clip', ['class' => 'h-3 w-3 inline-block mr-5']) --}}
                     <label class="font-bold" x-text="cartaPresentacion"></label>
                     @svg('sui-cross', [
                         'class' => 'h-3 w-3 inline-block ml-3 cursor-pointer',
@@ -244,14 +243,16 @@
                 this.currentLinkInput = inputId;
                 this.negocioLinksModalForm.show();
             },
-            initModalForm() {
+            initDescripcionNegocio() {
                 document.getElementById('negocioLinksModal').addEventListener('shown.bs.modal', () => {
                     if (this.currentLinkInput) {
                         document.getElementById(this.currentLinkInput).focus();
                     }
                 });
+
+                this.refreshCategoriasScian({{ $sectorId }}, {{ $catSCIANId }});
             },
-            refreshCategoriasScian(sector) {
+            refreshCategoriasScian(sector, catScianId) {
                 this.categoriasScianChoices.clearStore();
                 this.categoriasScianChoices.setChoices(async () => {
                     try {
@@ -260,6 +261,8 @@
                     } catch (err) {
                         console.error(err);
                     }
+                }).then(() => {
+                    this.categoriasScianChoices.setChoiceByValue(catScianId);
                 });
             }
         }

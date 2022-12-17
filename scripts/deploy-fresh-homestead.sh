@@ -15,10 +15,9 @@ npm install
 php artisan migrate:fresh
 php artisan db:seed
 export PGPASSWORD='secret'
-psql -d saf_mtv -h homestead -U homestead -e -f /var/www/saf-mtv/Homestead/pgsql/cabms.sql
 psql -d saf_mtv -h homestead -U homestead -e -f /var/www/saf-mtv/Homestead/pgsql/cat_asentamientos.sql
 npm run build
 php artisan cache:clear
-php artisan config:cache 
-# php artisan config:clear 
+php artisan config:cache
+# php artisan config:clear
 vagrant exit

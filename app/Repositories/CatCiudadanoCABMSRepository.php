@@ -8,22 +8,21 @@ class CatCiudadanoCABMSRepository
 {
     public function obtieneSectores()
     {
-        $sectores = DB::table('cat_ciudadano_cabms')
-                        ->select('sector as id', 'sector')
-                        ->distinct( 'sector')
+        $sectores = DB::table('cat_sectores')
+                        ->select('id', 'sector')
+                        ->orderBy('sector')
                         ->get()
                         ->toArray();
 
         return $sectores;
     }
 
-    public function obtieneCategoriasScianPorSector(string $sector)
+    public function obtieneCategoriasScianPorSector(int $idSector)
     {
-        $giros = DB::table('cat_ciudadano_cabms')
-                    ->select('giro as id', 'giro as categoria_scian') // TODO: Obtener de tabla cat_categorias_scian
-                    ->distinct('giro')
-                    ->where('sector', $sector)
-                    ->orderBy('giro')
+        $giros = DB::table('cat_categorias_scian')
+                    ->select('id', 'categoria_scian')
+                    ->where('id_sector', $idSector)
+                    ->orderBy('categoria_scian')
                     ->get()
                     ->toArray();
 

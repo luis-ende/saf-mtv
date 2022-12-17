@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('id_persona')->constrained('personas');
             $table->unsignedInteger('id_grupo_prioritario');
             $table->unsignedInteger('id_tipo_pyme')->nullable();
-            $table->unsignedInteger('id_sector')->nullable();
-            $table->unsignedInteger('id_categoria_scian')->nullable();
+            $table->unsignedInteger('id_sector');
+            $table->unsignedInteger('id_categoria_scian');
             $table->string('nombre_negocio', 100);
             $table->text('lema_negocio');
             $table->text('descripcion_negocio');
