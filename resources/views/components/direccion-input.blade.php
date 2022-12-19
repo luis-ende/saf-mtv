@@ -32,14 +32,16 @@
             <label class="mtv-input-label" for="entidad_federativa">País</label>
         </div>
     </div>
-    <div class="form-group col-md-3">                
-        <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
-        <div class="mtv-input-wrapper">
+    <div class="form-group col-md-3">                        
+        <div class="mtv-input-wrapper relative">
             <input type="text" class="mtv-text-input" maxlength="8" id="cp" name="cp" x-model="cpText" required
                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                 @keyup="errorMessage = ''"
                 @blur="refreshCPAsentamiento()">
             <label class="mtv-input-label" for="cp">Código postal</label>
+            <div class="absolute inset-y-0 top-4 right-0 pr-3 flex items-center text-sm leading-5">
+                <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+            </div>
         </div>
         <label x-show="errorMessage != ''" x-text="errorMessage" class="text-sm text-red-600 space-y-1"></label>
     </div>    
