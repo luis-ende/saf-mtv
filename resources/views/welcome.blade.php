@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <div class="flex flex-col">
+    <div class="min-h-screen flex flex-col">
         <!-- Menú de preguntas -->
         <div class="flex flex-row bg-[#691C32] space-x-7 py-3 px-5 md:justify-end md:flex-wrap">
             <a class="text-[#BC955C] hover:text-[#BC955C] no-underline font-bold text-center" href="#">¿Qué es Mi Tiendita Virtual?</a>

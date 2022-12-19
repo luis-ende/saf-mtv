@@ -18,6 +18,7 @@ module.exports = {
                 'mtv-gold-light': '#ddc9a3',
                 'mtv-primary': '#9f2241',
                 'mtv-secondary': '#235b4e',
+                'mtv-secondary-dark': '#10312b',
                 'mtv-gray': '#6f7271',
                 'mtv-gray-light': '#e6e6e6',
                 'mtv-gray-2': '#98989A',
