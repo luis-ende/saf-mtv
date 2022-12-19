@@ -12,6 +12,7 @@
                     :grupos_prioritarios="$grupos_prioritarios"
                     :tipos_pyme="$tipos_pyme"
                     :sectores="$sectores"
+                    :mode="__('registro')"
                 />
             </div>
         </div>

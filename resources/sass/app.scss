@@ -7,12 +7,11 @@
 @import 'choices.js/src/styles/choices.scss';
 
 [type="checkbox"], [type="radio"] {
-    color: $secondary
+    color: $secondary;
 }
 
-
-[type="checkbox"], [type="radio"] {
-    color: $secondary
+[type="search"]:focus {
+    --tw-ring-color: #235B4E !important;
 }
 
 
