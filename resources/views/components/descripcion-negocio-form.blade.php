@@ -3,7 +3,7 @@
 @php($sectorPredeterminado = count($sectores) > 0 ? $sectores[0]->id : null)
 @php($grupoPrioritarioId = isset($perfilNegocio) ? $perfilNegocio->id_grupo_prioritario : old('id_grupo_prioritario'))
 @php($tipoPymeId = isset($perfilNegocio) ? $perfilNegocio->id_tipo_pyme : old('id_tipo_pyme'))
-@php($sectorId = isset($perfilNegocio) ? ($perfilNegocio->id_sector ?? $sectorPredeterminado) : $sectorPredeterminado)
+@php($sectorId = isset($perfilNegocio) ? ($perfilNegocio->id_sector ? $perfilNegocio->id_sector : $sectorPredeterminado) : $sectorPredeterminado)
 @php($catSCIANId = isset($perfilNegocio) ? $perfilNegocio->id_categoria_scian : old('id_categoria_scian'))
 @php($diferenciadores = isset($perfilNegocio) ? $perfilNegocio->diferenciadores : old('diferenciadores'))
 @php($lema = isset($perfilNegocio) ? $perfilNegocio->lema_negocio : old('lema_negocio'))
