@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\PersonaController;
-use App\Http\Controllers\RegistroMTVController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProductosController;
+use App\Http\Controllers\RegistroMTVController;
 use App\Http\Controllers\OportunidadesController;
 use App\Http\Controllers\PerfilNegocioController;
 use App\Http\Controllers\CatalogoProductosController;
 use App\Http\Controllers\ProgramacionAnualController;
 use App\Http\Controllers\CentroNotificacionesController;
+use App\Http\Controllers\UsuarioConfiguracionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,5 +90,9 @@ Route::get('/registro-contactos', [RegistroMTVController::class, 'showRegistroCo
 Route::post('/registro-contactos', [RegistroMTVController::class, 'storeRegistroContactos'])->middleware(['auth'])->name('registro-contactos.store');
 
 Route::get('/perfil-negocio/categorias_scian/{id_sector}', [PerfilNegocioController::class, 'categoriasScianIndex'])->middleware('auth')->name('categorias-scian.index');
+
+Route::get('/configuracion', [UsuarioConfiguracionController::class, 'show'])->middleware('auth')->name('usuario-configuracion.show');
+
+Route::post('/configuracion', [UsuarioConfiguracionController::class, 'update'])->middleware('auth')->name('usuario-configuracion.update');
 
 require __DIR__.'/auth.php';

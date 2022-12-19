@@ -45,7 +45,7 @@
                         <x-dropdown-link :href="route('perfil-negocio')">
                             {{ __('Mi perfil') }}
                         </x-dropdown-link>
-                        <x-dropdown-link :href="route('perfil-negocio')">
+                        <x-dropdown-link :href="route('usuario-configuracion.show')">
                             {{ __('Configuración') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('centro-notificaciones')">
