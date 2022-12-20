@@ -19,36 +19,21 @@
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
-                             width="800" height="400" xmlns="http://www.w3.org/2000/svg"
-                             role="img" aria-label="Placeholder: Second slide"
-                             preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title><rect width="100%" height="100%" fill="#666"></rect><text x="50%" y="50%" fill="#444" dy=".3em">First slide</text>
-                        </svg>
+                    <img src="{{ asset('assets/banner01.jpg') }}" />
+                        <div class="carousel-caption d-none d-md-block bg-[#9F2241]">
+                            <h5>¿Quieres saber cómo venderle a la CDMX</h5>
+                            <p>Conoce Mi Tiendita Virtual</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                    <img src="{{ asset('assets/banner02.jpg') }}" />
                         <div class="carousel-caption d-none d-md-block">
                             <h5>Bienvenido a Mi Tiendita Virtual</h5>
                             <p>Conoce Mi Tiendita Virtual</p>
                         </div>
                     </div>
                     <div class="carousel-item">
-                    <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
-                             width="800" height="400" xmlns="http://www.w3.org/2000/svg"
-                             role="img" aria-label="Placeholder: Second slide"
-                             preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title><rect width="100%" height="100%" fill="#666"></rect><text x="50%" y="50%" fill="#444" dy=".3em">Second slide</text>
-                        </svg>
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Bienvenido a Mi Tiendita Virtual</h5>
-                            <p>Conoce Mi Tiendita Virtual</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
-                             width="800" height="400" xmlns="http://www.w3.org/2000/svg"
-                             role="img" aria-label="Placeholder: Second slide"
-                             preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title><rect width="100%" height="100%" fill="#666"></rect><text x="50%" y="50%" fill="#444" dy=".3em">Third slide</text>
-                        </svg>
+                    <img src="{{ asset('assets/banner03.jpg') }}" />
                         <div class="carousel-caption d-none d-md-block">
                             <h5>Bienvenido a Mi Tiendita Virtual</h5>
                             <p>Conoce Mi Tiendita Virtual</p>
@@ -103,16 +88,16 @@
         </div>
 <!-- Menú de mi Tiendita virtual-->
         <div class="flex flex-row bg-[#9F2241] space-x-7 py-3 px-5 md:justify-center md:flex-wrap sticky-top">
-            <a class="text-[#DDC9A3] hover:text-[#BC955C] no-underline font-bold text-center" href="#virtual-store">¿Qué es Mi Tiendita Virtual</a>
-            <a class="text-[#DDC9A3] hover:text-[#BC955C] no-underline font-bold text-center" href="#for-virtual-store">¿Para quién es?</a>
-            <a class="text-[#DDC9A3] hover:text-[#BC955C] no-underline font-bold text-center" href="#how-part-virtual-store">¿Cómo formo parte?</a>
-            <a class="text-[#DDC9A3] hover:text-[#BC955C] no-underline font-bold text-center" href="#">¿Tienes dudas?</a>
+            <a class="text-[#DDC9A3] hover:text-[#FFFFFF] no-underline font-bold text-center" href="#virtual-store">¿Qué es Mi Tiendita Virtual</a>
+            <a class="text-[#DDC9A3] hover:text-[#FFFFFF] no-underline font-bold text-center" href="#for-virtual-store">¿Para quién es?</a>
+            <a class="text-[#DDC9A3] hover:text-[#FFFFFF] no-underline font-bold text-center" href="#how-part-virtual-store">¿Cómo formo parte?</a>
+            <a class="text-[#DDC9A3] hover:text-[#FFFFFF] no-underline font-bold text-center" href="#">¿Tienes dudas?</a>
         </div>
 
 <!-- sección qué es mtv-->
         <div class="what-mtv" id="virtual-store">
             <div class="what-mtv-left">
-           
+                <img src="{{ asset('assets/smartphone_01.png') }}" />
             </div>
             <div class="what-mtv-right">
                <p class="what-mtv-right-title">¿Qué es mi tiendita virtual?</p>
@@ -137,6 +122,12 @@
 <!-- sección para quién es mtv-->
         <div class="for-mtv" id="for-virtual-store">
             <div class="image-container">
+                <div class="image-container-top">
+                   <img src="{{ asset('assets/img_01.jpg') }}" />
+                   <img src="{{ asset('assets/img_02.jpg') }}" />
+                </div>
+                <img src="{{ asset('assets/img_03.jpg') }}" />
+                <img src="{{ asset('assets/img_04.jpg') }}" />
             </div>
             <div class="for-mtv-information-container">
                 <div class="for-mtv-information-container-top">
@@ -179,7 +170,7 @@
                 </div>
             </div>
         </div>
-        <!-- sección para cómo formo parte de MTV-->
+<!-- sección para cómo formo parte de MTV-->
         <div class="how-part" id="how-part-virtual-store">
           @svg('horizontal-plot')
           <div class="how-part-information">
