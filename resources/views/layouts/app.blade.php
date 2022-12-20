@@ -14,7 +14,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <header class="bg-white shadow">
+        <header class="bg-white">
             @if (Auth::user())
                 @include('layouts.navigation')
             @else
