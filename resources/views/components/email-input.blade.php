@@ -4,9 +4,7 @@
     <input
         {{ $attributes }}
         class="mtv-text-input"
-        type="email"
-        placeholder="nombre@correo.com"
-        required
+        type="email"        
     />
     <label class="mtv-input-label" for="{{ $label_id }}">{{ $label }}</label>
 </div>

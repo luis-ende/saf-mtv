@@ -31,6 +31,7 @@
                 name="password"
                 label_id="password"
                 label="Contraseña"
+                required
             />
 
             <!-- Remember Me -->

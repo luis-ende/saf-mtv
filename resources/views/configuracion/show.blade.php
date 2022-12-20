@@ -5,8 +5,10 @@
                 <div class="uppercase text-mtv-primary font-bold border-l-4 border-mtv-primary p-2"> 
                     Configuración
                 </div>                    
-            </div>                
+            </div>             
             <form action="{{ route('usuario-configuracion.update') }}" method="POST" class="px-10 py-3 flex flex-column space-y-4">
+                @csrf                
+
                 <label class="text-lg text-mtv-gray font-bold">Cambiar credenciales de ingreso</label>                
                 <div class="border rounded px-4 pb-3 grid grid-cols-2 gap-3 md:w-2/3 xs:w-full">
                     <div class="col-span-1">
