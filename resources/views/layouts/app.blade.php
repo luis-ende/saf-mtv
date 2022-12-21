@@ -25,6 +25,7 @@
         </header>
 
         <div class="bg-gray-100">
+        <div class="min-h-screen">
             <!-- Page Content -->
             <main>                
                 <div class="mt-3">

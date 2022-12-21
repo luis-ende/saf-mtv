@@ -1,7 +1,14 @@
+<style>
+.menu-mtv {
+    position:sticky;
+    top: 60px;
+}
+</style>
+
 <x-guest-layout>
-    <div class="min-h-screen flex flex-col">
+    <div class="flex flex-col" style="background-color:#FFFFFF" id="back-main">
         <!-- Menú de preguntas -->
-        <div class="flex flex-row bg-[#FFFFFF] space-x-7 py-3 px-5 md:justify-start md:flex-wrap border border-5 border-top-0 border-end-0 border-start-0">
+        <div class="flex flex-row bg-[#FFFFFF] space-x-7 py-3 px-5 md:justify-start md:flex-wrap border border-5 border-top-0 border-end-0 border-start-0" style="margin-top:-10px">
             <a class="text-[#8B1232] hover:text-[#BC955C] no-underline font-bold text-center" href="#">Inicio</a>
             <a class="text-[#BC955C] hover:text-[#BC955C] no-underline font-bold text-center" href="#virtual-store">¿Qué es Mi Tiendita Virtual?</a>
             <a class="text-[#BC955C] hover:text-[#BC955C] no-underline font-bold text-center" href="#">Preguntas frecuentes</a>
@@ -19,24 +26,24 @@
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                    <img src="{{ asset('assets/banner01.jpg') }}" />
-                        <div class="carousel-caption d-none d-md-block bg-[#9F2241]">
-                            <h5>¿Quieres saber cómo venderle a la CDMX</h5>
-                            <p>Conoce Mi Tiendita Virtual</p>
+                    <img src="{{ asset('assets/fakeBanner_01.png') }}" />
+                        <div class="carousel-caption d-none d-md-block">
+                            <!-- <h5>¿Quieres saber cómo venderle a la CDMX</h5>
+                            <p>Conoce Mi Tiendita Virtual</p> -->
                         </div>
                     </div>
                     <div class="carousel-item">
-                    <img src="{{ asset('assets/banner02.jpg') }}" />
+                    <img src="{{ asset('assets/fakeBanner_02.png') }}" />
                         <div class="carousel-caption d-none d-md-block">
-                            <h5>Bienvenido a Mi Tiendita Virtual</h5>
-                            <p>Conoce Mi Tiendita Virtual</p>
+                            <!-- <h5>Bienvenido a Mi Tiendita Virtual</h5>
+                            <p>Conoce Mi Tiendita Virtual</p> -->
                         </div>
                     </div>
                     <div class="carousel-item">
-                    <img src="{{ asset('assets/banner03.jpg') }}" />
+                    <img src="{{ asset('assets/fakeBanner_03.png') }}" />
                         <div class="carousel-caption d-none d-md-block">
-                            <h5>Bienvenido a Mi Tiendita Virtual</h5>
-                            <p>Conoce Mi Tiendita Virtual</p>
+                            <!-- <h5>Bienvenido a Mi Tiendita Virtual</h5>
+                            <p>Conoce Mi Tiendita Virtual</p> -->
                         </div>
                     </div>
                 </div>
@@ -55,7 +62,8 @@
     <div class="menu-bottom">
             <div class="card-menu-bottom">
                <div class="circle">
-               @svg('provider', ['class' => 'h-20 w-20 '])
+               <img src="{{ asset('assets/icono01.png') }}" />
+               <!-- @svg('provider', ['class' => 'h-20 w-20 ']) -->
                </div>
                <p class="message-one">Quiero ser proveedor</p>
                <p class="message-second">Quiero conocer cómo venderle a la CDMX</p>
@@ -63,7 +71,8 @@
             </div>
             <div class="card-menu-bottom">
                <div class="circle">
-               @svg('product', ['class' => 'h-20 w-20 '])
+               <img src="{{ asset('assets/icono02.png') }}" />
+               <!-- @svg('product', ['class' => 'h-20 w-20 ']) -->
                </div>
                <p class="message-one">Ofrece tu producto</p>
                <p class="message-second">Regístrate y ofrece tus productos</p>
@@ -71,7 +80,8 @@
             </div>
             <div class="card-menu-bottom">
                <div class="circle">
-               @svg('calendar', ['class' => 'h-20 w-20 '])
+               <img src="{{ asset('assets/icono03.png') }}" />
+               <!-- @svg('calendar', ['class' => 'h-20 w-20 ']) -->
                </div>
                <p class="message-one">Oportunidades para vender</p>
                <p class="message-second">Compras programadas para el próximo año</p>
@@ -79,7 +89,8 @@
             </div>
             <div class="card-menu-bottom">
                <div class="circle">
-               @svg('oportunities', ['class' => 'h-20 w-20 '])
+               <img src="{{ asset('assets/icono04.png') }}" />
+               <!-- @svg('oportunities', ['class' => 'h-20 w-20 ']) -->
                </div>
                <p class="message-one">Ya soy proveedor</p>
                <p class="message-second">Estoy registrado en padrón de proveedores</p>
@@ -87,7 +98,8 @@
             </div>
         </div>
 <!-- Menú de mi Tiendita virtual-->
-        <div class="flex flex-row bg-[#9F2241] space-x-7 py-3 px-5 md:justify-center md:flex-wrap sticky-top">
+        <div class="flex flex-row bg-[#9F2241] space-x-7 py-3 px-5 md:justify-center md:flex-wrap menu-mtv">
+            <a class="text-[#DDC9A3] hover:text-[#FFFFFF] no-underline font-bold text-center" href="#">Inicio</a>
             <a class="text-[#DDC9A3] hover:text-[#FFFFFF] no-underline font-bold text-center" href="#virtual-store">¿Qué es Mi Tiendita Virtual</a>
             <a class="text-[#DDC9A3] hover:text-[#FFFFFF] no-underline font-bold text-center" href="#for-virtual-store">¿Para quién es?</a>
             <a class="text-[#DDC9A3] hover:text-[#FFFFFF] no-underline font-bold text-center" href="#how-part-virtual-store">¿Cómo formo parte?</a>

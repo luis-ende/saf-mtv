@@ -12,13 +12,13 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased bg-white">
         <!-- Page Heading -->
         <header class="bg-white">
             @include('layouts.navigation-guest')
         </header>
 
-        <div class="bg-gray-100">
+        <div class="min-h-screen" style="margin-top:80px">
             <!-- Page Content -->
             <main>
                 @include('layouts.alert-notification')

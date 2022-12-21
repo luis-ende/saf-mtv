@@ -5,6 +5,11 @@
     justify-content: space-evenly;
     margin-top: 60px;
     margin-bottom: 40px;
+    background-color: #ffffff;
+}
+
+.menu-bottom img {
+    width: 80px;
 }
 
 .circle {
@@ -50,7 +55,7 @@
 
 .what-mtv {
     display: flex;
-    background-color: white;
+    padding-top: 40px;
 }
 
 .what-mtv-right {
@@ -115,7 +120,7 @@
 .image-container {
     width: 30%;
     height: 400px;
-    margin-top: 50px;
+    margin-top: 110px;
 }
 
 .image-container-top {
@@ -131,8 +136,8 @@
     width: 70%;
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
-    margin-bottom: -30px;
+    margin-top: 110px;
+    margin-bottom: 30px;
 }
 
 .for-mtv-information-container-top {
@@ -203,7 +208,7 @@
     height: 50px;
     margin-right: -20px;
     margin-left: -20px;
-    margin-top: 5px;
+    margin-top: 22px;
 }
 
 .for-mtv-information-container-bottom-gold {
