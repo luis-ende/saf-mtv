@@ -2,11 +2,14 @@
     <div class="py-3 bg-mtv-primary px-3 flex flex-row flex-nowrap font-bold md:text-base xs:text-sm">
         @php($currentRoute = Route::current()->getName())
         @php($esRegistroInicio = !in_array($currentRoute, ['registro-perfil-negocio.show', 'registro-contactos.show']))
-        @if($esRegistroInicio)
-            <a href="{{ route('homepage') }}"
+        @if($esRegistroInicio)     
+            @php($homePageRoute = route('homepage'))       
+            
+            <a href="{{ $currentRoute === 'registro-inicio' ? route('homepage') : '#' }}"
+               onclick="{{ $currentRoute !== 'registro-inicio' ? 'history.back()' : '' }}"               
                class="text-mtv-gold-light no-underline hover:text-white flex flex-row">
                 @svg('fas-arrow-left', ['class' => 'md:h-7 md:w-7 xs:h-5 xs:w-5 inline-block mr-3'])
-                Inicio
+                {{ $currentRoute === 'registro-inicio' ? 'Inicio' : 'Anterior' }}
             </a>
         @else
             <div class="md:basis-10/12 xs:basis-8/12 flex flex-row items-center">
