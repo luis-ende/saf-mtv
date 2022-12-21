@@ -1,4 +1,4 @@
-@props(['rfc_input_label' => 'RFC con homoclave'])
+@props(['rfc_input_label' => 'RFC'])
 
 <div class="mtv-input-wrapper">
     <input id="rfc"
