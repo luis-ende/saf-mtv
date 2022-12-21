@@ -15,7 +15,7 @@
                             </button>
                         </h2>
                         <div id="body-datos-contacto" class="accordion-collapse collapse show" aria-labelledby="heading-datos-contacto" data-bs-parent="#perfil-accordion">
-                            <div class="accordion-body bg-white">
+                            <div class="accordion-body">
                                 <x-perfil-negocio-form
                                     :persona="$persona"
                                     :cat_paises="$cat_paises"
@@ -35,7 +35,7 @@
                             </button>
                         </h2>
                         <div id="body-perfil-negocio" class="accordion-collapse collapse" aria-labelledby="heading-perfil-negocio" data-bs-parent="#perfil-accordion">
-                            <div class="accordion-body bg-white">
+                            <div class="accordion-body">
                                 <form action="{{ route('registro-contactos.store') }}" method="POST">
                                     @csrf
                                     <x-contactos-lista

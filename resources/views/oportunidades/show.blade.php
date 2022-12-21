@@ -17,21 +17,21 @@
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
-                        <input type="search" 
-                               id="oportunidades-search" name="oportunidades-search" 
-                               class="block w-full pt-3 pb-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-[#691C32] focus:border-[#691C32]" 
+                        <input type="search"
+                               id="oportunidades-search" name="oportunidades-search"
+                               class="block w-full pt-3 pb-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-[#691C32] focus:border-[#691C32]"
                                placeholder="Buscar oportunidades por palabras clave..."
                                autofocus
                                value="{{ $term_busqueda ?? '' }}"
                                >
-                        <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-[#691C32] hover:bg-[#691C32] focus:ring-4 focus:outline-none focus:ring-[#691C32] font-medium rounded-lg text-sm px-4 py-2">Buscar</button>
+                        <button type="submit" class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1">Buscar</button>
                     </div>
                 </form>
                 @isset($num_resultados)
-                    @if($num_resultados === 0 and !empty($term_busqueda)) 
+                    @if($num_resultados === 0 and !empty($term_busqueda))
                         <div class="p-0 mt-2 text-slate-700">
                             No se encontraron oportunidades con el término <span class="font-bold">"{{ $term_busqueda }}</span>".
-                        </div>                        
+                        </div>
                     @endif
                     @if($num_resultados > 0 && !empty($term_busqueda))
                         <div class="p-0 mt-2 text-slate-700">
@@ -81,7 +81,7 @@
                                 <div class="flex flex-column">
                                     <span class="text-xl">{{ $entidades_convocantes }}</span>
                                     <p class="m-0 text-slate-700 text-base">Dependencias</p>
-                                </div>                                
+                                </div>
                             </div>
                             <div class="basis-1/5 p-1 text-center font-bold flex flex-column">
                                 @svg('carbon-view-next', ['class' => 'basis-1/2 h-20 w-20 p-3 mb-2 inline-block mr-3 border-4 border-[#BC955C] text-slate-800 rounded-full self-center'])
@@ -98,18 +98,18 @@
                                 </div>
                             </div>
                             <div class="basis-1/5 p-1 text-center font-bold flex flex-column">
-                                @svg('ri-chat-private-line', ['class' => 'basis-1/2 h-20 w-20 p-3 mb-2 inline-block mr-3 border-4 border-[#BC955C] text-slate-800 rounded-full self-center'])                                
+                                @svg('ri-chat-private-line', ['class' => 'basis-1/2 h-20 w-20 p-3 mb-2 inline-block mr-3 border-4 border-[#BC955C] text-slate-800 rounded-full self-center'])
                                 <div class="basis-1/2 flex flex-column">
                                     <span class="text-xl">{{ $invitaciones_restringidas }}</span>
                                     <p class="m-0 text-slate-700 text-base">Invitaciones restringidas</p>
                                 </div>
                             </div>
                             <div class="basis-1/5 p-1 text-center font-bold flex flex-column">
-                                @svg('eos-assignment-ind-o', ['class' => 'basis-1/2 h-20 w-20 p-3 mb-2 inline-block mr-3 border-4 border-[#BC955C] text-slate-800 rounded-full self-center'])                                                                
+                                @svg('eos-assignment-ind-o', ['class' => 'basis-1/2 h-20 w-20 p-3 mb-2 inline-block mr-3 border-4 border-[#BC955C] text-slate-800 rounded-full self-center'])
                                 <div class="basis-1/2 flex flex-column">
                                     <span class="text-xl">{{ $adjudicaciones_directas }}</span>
                                     <p class="m-0 text-slate-700 text-base">Adjudicaciones directas</p>
-                                </div>    
+                                </div>
                             </div>
                         </div>
 
@@ -133,7 +133,7 @@
                         </div>
 
                         <x-oportunidades-listado
-                            :categorias="$categorias"                            
+                            :categorias="$categorias"
                          />
                     </div>
                 </div>

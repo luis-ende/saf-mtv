@@ -19,7 +19,8 @@
     @php($formAction = route('productos.update', $producto->id))
 @endif
 
-@php($showImageViewer = $mode !== 'wizard' && $mode !== 'add')
+{{-- TODO: Remover componente image viewer --}}
+@php($showImageViewer = false)
 
 <div x-data="{ tipoProducto: '{{ $tipoProducto ?? 'B' }}' }">
     <form method="POST" action="{{ $formAction }}">
@@ -60,11 +61,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-3">                                                
+                    <div class="form-group col-md-3">
                         <div class="flex flex-row">
                             <div class="mtv-input-wrapper">
                                 <input type="text"
-                                    class="mtv-text-input"                                    
+                                    class="mtv-text-input"
                                     id="clave_cabms"
                                     name="clave_cabms"
                                     placeholder="Buscar clave CABMS..."
@@ -80,7 +81,7 @@
                         </div>
                     </div>
                     <div class="form-group col-md-9">
-                        <div class="mtv-input-wrapper">                        
+                        <div class="mtv-input-wrapper">
                             <input type="text" class="mtv-text-input" id="nombre_producto" name="nombre_producto"
                                value="{{ $nombreProducto }}" required>
                             <label class="mtv-input-label" for="nombre_producto">Nombre del producto</label>
@@ -89,7 +90,7 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <div class="mtv-input-wrapper">                                                    
+                        <div class="mtv-input-wrapper">
                             <textarea class="mtv-text-input" id="descripcion_producto"
                                     name="descripcion_producto" maxlength="140">{{ $descripcionProducto }}</textarea>
                             <label class="mtv-input-label" for="descripcion_producto">Descripcion</label>
@@ -97,7 +98,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-4">                                                                            
+                    <div class="form-group col-md-4">
                         <div class="mtv-input-wrapper">
                             <input type="number"
                                 min="0"
@@ -106,31 +107,31 @@
                                 id="precio" name="precio"
                                 value="{{ $precio }}" required>
                             <label class="mtv-input-label" for="precio">Precio</label>
-                        </div>                        
+                        </div>
                     </div>
                     <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                        <div class="mtv-input-wrapper">                            
+                        <div class="mtv-input-wrapper">
                             <input type="text" class="mtv-text-input" id="marca" name="marca"
                                 value="{{ $marca }}">
                             <label class="mtv-input-label" for="marca">Marca</label>
                         </div>
                     </div>
                     <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                        <div class="mtv-input-wrapper">                                                    
+                        <div class="mtv-input-wrapper">
                             <input type="text" class="mtv-text-input" id="modelo" name="modelo"
                                value="{{ $modelo }}">
                             <label class="mtv-input-label" for="modelo">Modelo</label>
-                        </div>    
+                        </div>
                     </div>
                     <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                        <div class="mtv-input-wrapper">                          
+                        <div class="mtv-input-wrapper">
                             <input type="text" class="mtv-text-input" id="color" name="color"
                                value="{{ $color }}">
                                <label class="mtv-input-label" for="color">Color</label>
                         </div>
                     </div>
                     <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
-                        <div class="mtv-input-wrapper">                                                      
+                        <div class="mtv-input-wrapper">
                             <input type="text" class="mtv-text-input" id="material" name="material"
                                 value="{{ $material }}">
                             <label class="mtv-input-label" for="material">Material</label>
@@ -139,7 +140,7 @@
                 </div>
             </div>
         </div>
-        <div class="py-4 flex justify-content-end">
+        <div class="flex justify-content-end">
             @if ($mode === 'add')
                 <x-producto-importacion-button />
 
@@ -147,7 +148,7 @@
                         type="submit">
                     @svg('heroicon-m-plus-circle', ['class' => 'h-7 w-7 inline-block'])
                     Agregar producto
-                </button>            
+                </button>
             @else
                 <button class="mtv-button-secondary" type="submit">
                     @svg('gmdi-save-as', ['class' => 'h-5 w-5 inline-block mr-1'])
