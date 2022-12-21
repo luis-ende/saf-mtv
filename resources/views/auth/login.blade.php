@@ -14,15 +14,11 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <!-- RFC -->
-            <div class="mtv-input-wrapper">
-                <x-rfc-validacion-input id="rfc"
-                                        name="rfc"
-                                        :modo="__('login')"
-                                        :value="old('rfc')" >
-                    <x-input-label for="rfc" :value="__('RFC')" />
-                </x-rfc-validacion-input>
-            </div>
+            <!-- RFC -->            
+            <x-rfc-validacion-input id="rfc"
+                                    name="rfc"
+                                    :modo="__('login')"
+                                    :value="old('rfc')" />                            
             <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
 
             <!-- Password -->
@@ -31,6 +27,7 @@
                 name="password"
                 label_id="password"
                 label="Contraseña"
+                required
             />
 
             <!-- Remember Me -->

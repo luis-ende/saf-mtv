@@ -1,5 +1,5 @@
 <x-registro-layout>
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-2">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
         <div class="bg-white overflow-hidden shadow-sm">
             @include('registro.registro-header',
                        ['titulo' => 'Registro a Mi Tiendita Virtual',
@@ -59,6 +59,7 @@
                                         name="email"
                                         label="Correo electrónico"
                                         label_id="email"
+                                        required
                                     />
                                     <x-input-error :messages="$errors->get('email')" class="mt-2"/>
                                 </div>
@@ -68,6 +69,7 @@
                                         name="email_confirmacion"
                                         label="Confirma correo electrónico"
                                         label_id="email_confirmacion"
+                                        required
                                     />
                                     <x-input-error :messages="$errors->get('email_confirmacion')" class="mt-2"/>
                                 </div>
@@ -99,6 +101,7 @@
                                     label_id="password"
                                     label="Contraseña"
                                     show_validations="true"
+                                    required
                                 />
                             </div>
                             <div class="w-48 sm:basis-full basis-1/2">
@@ -108,6 +111,7 @@
                                         name="password_confirmacion"
                                         label_id="password_confirmacion"
                                         label="Confirma tu contraseña"
+                                        required
                                     />
                                 </div>
                             </div>

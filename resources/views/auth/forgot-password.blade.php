@@ -6,8 +6,11 @@
             </a>
         </x-slot>
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Para restablecer su contraseña ingrese el RFC que utiliza para iniciar sesión.') }}
+        <div class="uppercase text-mtv-primary font-bold border-l-4 border-mtv-primary p-2 mb-2"> 
+            ¿Olvidaste tu contraseña?
+        </div>                    
+        <div class="text-mtv-text-gray text-base">
+            Te ayudamos a recuperarla. ¿Cuál es el R.F.C. que registraste?
         </div>
 
         <!-- Session Status -->
@@ -15,19 +18,16 @@
 
         <form method="POST" action="{{ route('password.email') }}">
             @csrf
-
-            <!-- Email Address -->
-            <div>
-                <x-input-label for="rfc" :value="__('RFC')" />
-
-                <x-text-input id="rfc" class="block mt-1 w-full" type="text" name="rfc" :value="old('rfc')" required autofocus />
-
-                <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
-            </div>
-
+            
+            <x-rfc-input 
+                id="rfc"
+                name="rfc"
+                maxlength="13"
+                :rfc_input_label="__('RFC')"
+                :modo="__('reset-password')" />                            
             <div class="flex items-center justify-end mt-4">
-                <button id="btn_login" class="btn btn-primary">
-                    {{ __('Recuperar contraseña') }}
+                <button id="btn_login" class="mtv-button-secondary">
+                    {{ __('Enviar') }}
                 </button>
             </div>
         </form>

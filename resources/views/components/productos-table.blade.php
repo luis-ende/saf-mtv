@@ -3,7 +3,7 @@
 <div x-data="columnActions()" class="table-responsive">
     <table class="table table-striped table-sm ">
         <thead class="table-light">
-        <tr>
+        <tr class="uppercase">
             <th scope="col">#</th>
             <th scope="col">Clave CABMS</th>
             <th scope="col">Tipo</th>

@@ -180,8 +180,7 @@ class RegistroMTVController extends Controller
                 'tipos_vialidad' => VialidadRepository::obtieneTiposVialidad(),
                 'grupos_prioritarios' => GrupoPrioritarioRepository::obtieneGruposPrioritarios(),
                 'tipos_pyme' => TipoPymeRepository::obtieneTiposPyme(),
-                'sectores' => $catCCABMSRepo->obtieneSectores(),
-                'categorias_scian' => [], // TODO: Implementar cuando esté listo este catálogo
+                'sectores' => $catCCABMSRepo->obtieneSectores(),                
             ]);
         }
 
@@ -283,8 +282,7 @@ class RegistroMTVController extends Controller
         } catch (\Throwable $e) {
             return redirect()->back()->withError($e->getMessage());
         }
-
-        // TODO: Siguiente, mostrar mensaje "¿Quieres crear tu catálogo?"
+        
         return redirect(RouteServiceProvider::HOME)->with('registro-completo', '¡Registro exitoso!');
     }
 }

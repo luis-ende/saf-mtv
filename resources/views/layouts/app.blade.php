@@ -14,7 +14,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <header class="bg-white shadow">
+        <header class="bg-white">
             @if (Auth::user())
                 @include('layouts.navigation')
             @else
@@ -22,7 +22,7 @@
             @endif
         </header>
 
-        <div class="min-h-screen bg-gray-100">
+        <div class="bg-gray-100">
             <!-- Page Content -->
             <main>                
                 <div class="mt-3">

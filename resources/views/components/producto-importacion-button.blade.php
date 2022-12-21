@@ -10,7 +10,7 @@
     <div class="modal fade" id="importOpcionesModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="importOpcionesModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-mtv-gray-light">
                     <h5 class="modal-title" id="importOpcionesModalLabel">Opciones de importación</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -93,8 +93,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" :disabled="processing">Cancelar</button>
-                    <button type="button" class="btn btn-primary" @click="importarProductos()" :disabled="processing">Continuar</button>
+                    <button type="button" class="mtv-button-gray self-center" data-bs-dismiss="modal" :disabled="processing">Cancelar</button>
+                    <button type="button" class="mtv-button-secondary" @click="importarProductos()" :disabled="processing">Continuar</button>
                 </div>
             </div>
         </div>
@@ -112,7 +112,10 @@
                 processing: false,
 
                 async clickImportacionButton () {
+                    const props = SwalMTVCustom;
+                    props.customClass['title'] = 'swal2-mtv-title';
                     const { value: file } = await Swal.fire({
+                        ...props,
                         title: 'Importación de productos',
                         html: 'Seleccione el archivo a importar.',
                         input: 'file',

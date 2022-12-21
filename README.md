@@ -58,6 +58,7 @@ Para realizar una actualización completa del ambiente de desarrollo ejecutar de
   - En Windows [https://docs.docker.com/desktop/install/windows-install/](https://docs.docker.com/desktop/install/windows-install/) 
 - Desde la carpeta raíz del proyecto, ir al subdirectorio `scripts` y ejecutar `docker-build.sh` para generar la imagen de Docker y levantar los contenedores del proyecto
 	- En Windows: Abrir el archivo docker-build.sh y comentar o descomentar líneas según el sistema operativo (Windows/Linux). Ejecutar en una terminal (preferiblemente PowerShell) como Administrador
+- Para acceder al contenedor de PostgreSQL y la base de datos de MTV con psql: `docker compose exec postgres psql -U saf_mtv_dbuser -W -d saf_mtv`
 
 ## Producción:
 

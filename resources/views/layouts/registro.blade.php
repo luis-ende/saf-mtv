@@ -18,10 +18,10 @@
             @include('layouts.navigation-registro')
         </header>
 
-        <div class="min-h-screen bg-gray-100">
+        <div class="bg-gray-100">
             <!-- Page Content -->
             <main>
-                <div class="row">
+                <div class="mt-3">
                     @include('layouts.alert-notification')
                 </div>
                 {{ $slot }}

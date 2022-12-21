@@ -6,7 +6,7 @@
                     Mi perfil
                 </div>                    
             </div>                
-            <div class="px-4 py-3">
+            <div class="px-4 py-4">
                 <div class="accordion" id="perfil-accordion">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="heading-datos-contacto">
