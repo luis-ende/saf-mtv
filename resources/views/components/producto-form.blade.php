@@ -1,4 +1,4 @@
-@props(['mode' => 'add', 'producto', 'wizard'])
+@props(['mode' => 'add', 'producto'])
 
 @php($tipoProducto = isset($producto) ? $producto->tipo : ( isset($step) ? $step['tipo_producto'] : old('tipo_producto')))
 @php($claveCABMS = isset($producto) ? $producto->clave_cabms : ( isset($step) ? $step['clave_cabms'] : old('clave_cabms')))
@@ -13,8 +13,6 @@
 
 @if ($mode === 'add')
     @php($formAction = route('productos.store'))
-@elseif ($mode === 'wizard')
-    @php($formAction = route('wizard.registro-mtv.update', [$wizard['id'], 'catalogo-productos']))
 @elseif ($mode === 'edit')
     @php($formAction = route('productos.update', $producto->id))
 @endif
