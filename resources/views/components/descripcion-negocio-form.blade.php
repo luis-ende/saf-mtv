@@ -117,7 +117,10 @@
                 <x-diferenciadores-input :diferenciadores="$diferenciadores" />
             </div>
             <div class="form-group col-md-12 w-full"
-                 x-data="{ cartaPresentacion: {{ $cartaPresentacion ? "'" . $cartaPresentacion->file_name . "'" : 'null' }} }">
+                 x-data="{ 
+                    cartaPresentacion: {{ $cartaPresentacion ? "'" . $cartaPresentacion->file_name . "'" : 'null' }},
+                    cartaPresentacionURL: '{{ $cartaPresentacion ? $cartaPresentacion->original_url : '' }}',
+                }">
                 <label class="text-mtv-text-gray font-bold my-3">
                     ¿Quieres subir tu carta de presentación? Agrégala en formato PDF de hasta 3MB.
                 </label>
@@ -140,7 +143,10 @@
                     </div>
                 </div>
                 <div class="text-mtv-text-gray" x-show="cartaPresentacion !== null">
-                    <label class="font-bold" x-text="cartaPresentacion"></label>
+                    <a x-bind:href="cartaPresentacionURL" 
+                       class="font-bold no-underline text-mtv-text-gray hover:text-mtv-primary focus:text-mtv-text-gray" 
+                       x-text="cartaPresentacion" 
+                       target="_blank"></a>
                     @svg('sui-cross', [
                         'class' => 'h-3 w-3 inline-block ml-3 cursor-pointer',
                         '@click' => "document.getElementById('carta_presentacion').value = null; cartaPresentacion = null"
