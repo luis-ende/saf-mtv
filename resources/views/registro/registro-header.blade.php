@@ -42,7 +42,7 @@
             </div>
         </div>
         @if($esRegistroInicio)
-            <div class="basis-1/12 self-center flex flex-row justify-end">
+            <div class="basis-1/12 self-center flex flex-row justify-end" x-data="menuAyuda()">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
@@ -57,12 +57,35 @@
                         </button>
                     </x-slot>
                     <x-slot name="content">
-                        <x-dropdown-link href="#">
+                        <x-dropdown-link href="#" 
+                            @click="event.preventDefault(); mostrarMensajeAyudaRFC()">
                             {{ __('Tengo problemas con mi RFC') }}
                         </x-dropdown-link>
                     </x-slot>
                 </x-dropdown>
             </div>
+
+            <script type="text/javascript">
+                function menuAyuda() {
+                  return {
+                      mostrarMensajeAyudaRFC() {
+                          const props = SwalMTVCustom;
+                          props.customClass['title'] = 'swal2-mtv-title'
+                          Swal.fire({
+                              ...props,
+                              title: '¿Problemas con tu RFC?',                
+                              html: '<span>El SAT te puede ayudar. Verifica si estas registrado en el RFC.</span><br><span>Sólo requieres tu CURP.</span>' + 
+                                    '<p class="swal-mtv-html-container-action">¿Quieres ir al sitio del SAT?</p>',
+                              
+                          }).then((result) => {
+                              if (result.isConfirmed) {
+                                  window.open('https://www.sat.gob.mx/home');
+                              }
+                          })
+                      }
+                  }
+                }  
+              </script>
         @endif
     </div>
 </div>
