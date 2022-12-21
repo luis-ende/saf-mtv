@@ -16,7 +16,7 @@
                 <div class="hidden sm:flex sm:items-center sm:ml-6">                    
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button class="mr-3 flex items-center text-sm font-medium text-mtv-primary hover:text-mtv-primary hover:border-gray-300 focus:outline-none focus:text-mtv-primary focus:border-gray-300 transition duration-150 ease-in-out">
+                            <button class="mr-7 flex items-center text-sm font-medium text-mtv-primary hover:text-mtv-primary hover:border-gray-300 focus:outline-none focus:text-mtv-primary focus:border-gray-300 transition duration-150 ease-in-out">
                                 <div>
                                     @svg('fluentui-chat-help-24-o', ['class' => 'h-7 w-7 inline-block ml-1'])
                                 </div>
@@ -40,7 +40,7 @@
                         </x-slot>
                     </x-dropdown>
 
-                    <a class="text-mtv-primary mr-3">
+                    <a class="text-mtv-primary mr-7">
                         @svg('codicon-bell-dot', ['class' => 'h-7 w-7 inline-block'])
                     </a>
 
@@ -48,8 +48,8 @@
                         <x-slot name="trigger">
                             <button class="flex items-center text-sm text-mtv-primary font-bold hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
                                 <div>
-                                    Hola, {{ Auth::user()->persona->nombre_o_razon_social()}}
-                                    {{-- @svg('fas-user-circle', ['class' => 'h-7 w-7 inline-block ml-1']) --}}
+                                    @svg('lineawesome-user-check-solid', ['class' => 'h-7 w-7 inline-block ml-1'])
+                                    Hola, {{ Auth::user()->persona->nombre_o_razon_social()}}                                    
                                 </div>
                                 <div class="ml-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
