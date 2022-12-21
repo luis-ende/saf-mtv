@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\RegistroMTVController;
+use App\Http\Controllers\CatalogoCABMSController;
 use App\Http\Controllers\OportunidadesController;
 use App\Http\Controllers\PerfilNegocioController;
 use App\Http\Controllers\CatalogoProductosController;
@@ -94,5 +95,7 @@ Route::get('/perfil-negocio/categorias_scian/{id_sector}', [PerfilNegocioControl
 Route::get('/configuracion', [UsuarioConfiguracionController::class, 'show'])->middleware('auth')->name('usuario-configuracion.show');
 
 Route::post('/configuracion', [UsuarioConfiguracionController::class, 'update'])->middleware('auth')->name('usuario-configuracion.update');
+
+Route::get('catalogo_cabms/{criterio_busqueda}', [CatalogoCABMSController::class, 'buscaClavesCABMS'])->middleware('auth')->name('catalogo-cabms.search');
 
 require __DIR__.'/auth.php';

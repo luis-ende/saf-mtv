@@ -26,8 +26,6 @@ Route::get('contacto/asentamientos/{cp}', [\App\Http\Controllers\Api\ContactoCon
 
 Route::get('contacto/curp/{curp}', [\App\Http\Controllers\Api\ContactoController::class, 'consultaCURP']);
 
-Route::get('catalogo_cabms/{tipo_producto}/{criterio_busqueda}', [\App\Http\Controllers\Api\CatalogoCABMSController::class, 'buscaClavesCABMS']);
-
 // TODO: API Endpoints de prueba para modo local de desarrollo, remover...
 
 Route::get('consulta_curp/{curp}', function(Request $request, string $curp) {

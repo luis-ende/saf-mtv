@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Models\Producto;
 use Illuminate\Support\Facades\DB;
 
 class CatCiudadanoCABMSRepository
@@ -30,36 +29,28 @@ class CatCiudadanoCABMSRepository
         return $giros;
     }
 
-    public function obtieneClavesCABMS(string $tipoProducto, string $criterioBusqueda): array {
+    public function obtieneClavesCABMS(int $perfilCategoriaScianId, string $criterioBusqueda): array {
         $clavesCABMS = [];
-
-        if (env('APP_ENV') === 'local') {
-            // TODO: Falta establecer fuente de datos del catálogo para producción
-            if ($criterioBusqueda === '') {
-                return $clavesCABMS;
-            }
-
-            $searchCriteria = [
-                [
-                    DB::raw('LOWER(nombre_cabms)'),
-                    'LIKE',
-                    DB::raw("LOWER('%{$criterioBusqueda}%')"),
-                ]
-            ];
-
-            // Tipo de producto 'Servicio'
-            if ($tipoProducto === Producto::TIPO_PRODUCTO_SERVICIO_ID) {
-                $searchCriteria[] = ['cabms', 'LIKE', '3%'];
-            } else {
-                $searchCriteria[] = ['cabms', 'NOT LIKE', '3%'];
-            }
-
-            $query = DB::table('cat_cabms')
-                ->select( 'id', 'cabms', 'nombre_cabms', 'partida AS partida_especifica')
-                ->where($searchCriteria);
-
-            $clavesCABMS = $query->get()->toArray();
+    
+        if ($criterioBusqueda === '') {
+            return $clavesCABMS;
         }
+
+        $searchCriteria = [
+            [
+                DB::raw('LOWER(nombre_cabms)'),
+                'LIKE',
+                DB::raw("LOWER('%{$criterioBusqueda}%')"),
+            ]
+        ];                                           
+
+        $query = DB::table('cat_cabms')
+            ->select( 'cat_cabms.id', 'cat_cabms.cabms', 'cat_cabms.nombre_cabms', 'cat_cabms.partida AS partida')
+            ->join('cat_categorias_scian', 'cat_categorias_scian.id', '=', 'cat_cabms.id_categoria_scian')                                         
+            ->where($searchCriteria)
+            ->where('id_categoria_scian', '=', $perfilCategoriaScianId);
+
+        $clavesCABMS = $query->get()->toArray();        
 
         return $clavesCABMS;
     }

@@ -42,7 +42,7 @@
                                     <th width="20%">
                                         <div class="flex space-x-2">
                                           <span>
-                                            Clave CABMS
+                                            CABMS
                                           </span>
                                             </span>
                                             <div class="flex flex-col">
@@ -65,7 +65,7 @@
                                     <th width="5%">
                                         <div class="flex items-center space-x-2">
                                           <span class="">
-                                            P. P.
+                                            Partida
                                           </span>
                                             <div class="flex flex-col">
                                                 <svg @click="sort('partida', 'asc')" fill="none" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24" stroke="currentColor" class="text-gray-500 h-3 w-3 cursor-pointer fill-current" x-bind:class="{'text-blue-500': sorted.field === 'partida' && sorted.rule === 'asc'}"><path d="M5 15l7-7 7 7"></path></svg>
@@ -140,6 +140,7 @@
 <script>
     window.dataTable = function () {
         return {
+            catCABMSBusquedaRoute: '/catalogo_cabms/',
             loading: false,
             checkedItems: [],
             cabmsModal: new bootstrap.Modal(document.getElementById('cabmsModal'), { keyboard: false }),
@@ -199,9 +200,8 @@
             },
             search(value) {
                 if (value.length > 1) {
-                    this.loading = true;
-                    // TODO: Usar variable según tipo de producto: 'B', 'S'
-                    fetch('/api/catalogo_cabms/' + 'B/' + value)
+                    this.loading = true;                    
+                    fetch(this.catCABMSBusquedaRoute + value)
                         .then((res) => res.json())
                         .then((json) => {
                             this.loading = false
