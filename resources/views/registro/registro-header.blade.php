@@ -9,7 +9,7 @@
                onclick="{{ $currentRoute !== 'registro-inicio' ? 'history.back()' : '' }}"               
                class="text-mtv-gold-light no-underline hover:text-white flex flex-row">
                 @svg('fas-arrow-left', ['class' => 'md:h-7 md:w-7 xs:h-5 xs:w-5 inline-block mr-3'])
-                {{ $currentRoute === 'registro-inicio' ? 'Inicio' : 'Anterior' }}
+                {{ $currentRoute === 'registro-inicio' ? 'Página de inicio' : 'Anterior' }}
             </a>
         @else
             <div class="md:basis-10/12 xs:basis-8/12 flex flex-row items-center">
