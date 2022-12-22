@@ -98,4 +98,8 @@ Route::post('/configuracion', [UsuarioConfiguracionController::class, 'update'])
 
 Route::get('catalogo_cabms/{criterio_busqueda}', [CatalogoCABMSController::class, 'buscaClavesCABMS'])->middleware('auth')->name('catalogo-cabms.search');
 
+Route::get('/catalogo-registro-inicio', [CatalogoProductosController::class, 'showRegistroInicio'])->middleware('auth')->name('catalogo-registro-inicio');
+
+Route::get('/alta-producto-1', [CatalogoProductosController::class, 'showAltaProducto1'])->middleware('auth')->name('alta-producto-1');
+
 require __DIR__.'/auth.php';

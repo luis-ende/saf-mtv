@@ -1,9 +1,11 @@
 @props(['producto_id' => null])
 
 <div class="bg-white p7 rounded w-11/12 mx-auto">
-    <div x-data="dataFileDnD()" x-init="$watch('triggerUpdateEvent', value => { $store.filesUploaded.hasFilesUploaded = true })" class="relative flex flex-col p-4 text-gray-400 border border-gray-200 rounded">
+    <div x-data="dataFileDnD()" 
+         x-init="$watch('triggerUpdateEvent', value => { $store.filesUploaded.hasFilesUploaded = true })" 
+         class="relative flex flex-col p-4 text-gray-400">
         <div x-ref="dnd"
-             class="relative flex flex-col text-gray-400 border border-gray-200 border-dashed rounded cursor-pointer">
+             class="relative flex flex-col text-gray-400 border-2 border-mtv-gray-2 border-dashed rounded cursor-pointer">
             <input accept="*" type="file" multiple
                    class="absolute inset-0 z-40 w-full h-full p-0 m-0 outline-none opacity-0 cursor-pointer"
                    @change="addFiles($event)"
@@ -13,12 +15,8 @@
                    title="" />
 
             <div class="flex flex-col items-center justify-center py-10 text-center">
-                <svg class="w-6 h-6 mr-1 text-current-50" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <p class="m-0">Arrastrar archivos aquí o hacer clic en este recuadro.</p>
+                @svg('ri-image-add-fill', ['class' => 'w-7 h-7 mr-1 text-mtv-secondary'])                
+                <p class="m-0">Arrastra aquí tus archivos o haz clic en el recuadro para agregarlos</p>
             </div>
         </div>
 
@@ -81,7 +79,7 @@
                     @click="sendFiles($event)"
                     :disabled="isUploading">
                 <span x-show="isUploading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                <span class="ml-1" x-text="isUploading ? 'Enviando...' : 'Guardar'"></span>
+                <span class="ml-1" x-text="isUploading ? 'Enviando...' : 'Siguiente'"></span>
             </button>
         </div>
     </div>

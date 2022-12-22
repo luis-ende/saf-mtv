@@ -16,6 +16,18 @@ class CatalogoProductosController extends Controller
     {
         $productosPersona = Auth::user()->persona->catalogoProductos->productos;
 
-        return view('catalogo-productos', ['productosPersona' => $productosPersona]);
+        return view('catalogo-productos', [
+            'productosPersona' => $productosPersona,
+        ]);
+    }
+
+    public function showRegistroInicio()
+    {
+        return view('catalogo-productos.inicio-tipo-carga');
+    }
+
+    public function showAltaProducto1() 
+    {
+        return view('catalogo-productos.alta-producto-1');
     }
 }
