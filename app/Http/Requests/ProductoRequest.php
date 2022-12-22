@@ -26,8 +26,7 @@ class ProductoRequest extends FormRequest
         return [
             'clave_cabms' => ['required'],
             'nombre_producto' => ['required'],
-            'descripcion_producto' => ['required'],
-            'precio' => ['required', 'numeric'],
+            'descripcion_producto' => ['required'],            
             'tipo_producto' => [
                 'required', 
                 Rule::in([

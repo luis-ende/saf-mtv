@@ -26,12 +26,12 @@ class Producto extends Model implements HasMedia
         'tipo',
         'clave_cabms',
         'nombre',
-        'descripcion',
-        'precio',
+        'descripcion',        
         'marca',
         'modelo',
         'color',
         'material',
+        'codigo_barras',
     ];
 
     public function getAllMedia()
