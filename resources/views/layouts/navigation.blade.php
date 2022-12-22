@@ -99,7 +99,7 @@
         <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                    {{ __('Escritorio') }}
+                    {{ __('Inicio') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('catalogo-productos')" :active="request()->routeIs('catalogo-productos')">
                     {{ __('Mis productos') }}
@@ -132,24 +132,26 @@
         </div>
     </nav>    
 
-    <nav x-data="{ open: false }" class="bg-white border-b-4 border-mtv-gold-light text-mtv-gold-light">
-        <!-- Menú principal -->
-        <div class="px-3">
-            <div class="flex justify-between h-16">
-                <div class="flex">                                        
-                    <div class="hidden space-x-8 sm:-my-px sm:flex">
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            {{ __('Inicio') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('catalogo-productos')" :active="request()->routeIs('catalogo-productos')">
-                            {{ __('Mi catálogo') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('oportunidades-negocio')" :active="request()->routeIs('oportunidades-negocio')">
-                            {{ __('Oportunidades') }}
-                        </x-nav-link>
-                    </div>
-                </div>                
-            </div>
-        </div>        
-    </nav>
+    @if($show_main_menu)
+        <nav x-data="{ open: false }" class="bg-white border-b-4 border-mtv-gold-light text-mtv-gold-light">
+            <!-- Menú principal -->
+            <div class="px-3">
+                <div class="flex justify-between h-16">
+                    <div class="flex">                                        
+                        <div class="hidden space-x-8 sm:-my-px sm:flex">
+                            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                                {{ __('Inicio') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('catalogo-productos')" :active="request()->routeIs('catalogo-productos')">
+                                {{ __('Mi catálogo') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('oportunidades-negocio')" :active="request()->routeIs('oportunidades-negocio')">
+                                {{ __('Oportunidades') }}
+                            </x-nav-link>
+                        </div>
+                    </div>                
+                </div>
+            </div>        
+        </nav>
+    @endif
 </div>

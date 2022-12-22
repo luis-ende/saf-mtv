@@ -4,7 +4,6 @@
 @php($claveCABMS = isset($producto) ? $producto->clave_cabms : old('clave_cabms'))
 @php($nombreProducto = isset($producto) ? $producto->nombre : old('nombre_producto'))
 @php($descripcionProducto = isset($producto) ? $producto->descripcion : old('descripcion_producto'))
-@php($precio = isset($producto) ? $producto->precio : old('precio'))
 @php($marca = isset($producto) ? $producto->marca : old('marca'))
 @php($modelo = isset($producto) ? $producto->modelo : old('modelo'))
 @php($color = isset($producto) ? $producto->color : old('color'))
@@ -95,18 +94,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <div class="mtv-input-wrapper">
-                            <input type="number"
-                                min="0"
-                                step=".01"
-                                class="mtv-text-input"
-                                id="precio" name="precio"
-                                value="{{ $precio }}" required>
-                            <label class="mtv-input-label" for="precio">Precio</label>
-                        </div>
-                    </div>
+                <div class="row">                    
                     <div class="form-group col-md-4" x-show="tipoProducto === 'B'">
                         <div class="mtv-input-wrapper">
                             <input type="text" class="mtv-text-input" id="marca" name="marca"

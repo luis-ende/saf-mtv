@@ -1,4 +1,4 @@
-<x-registro-layout>
+<x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
         <div class="bg-white overflow-hidden shadow-sm">
             @include('catalogo-productos.registro-header',
@@ -15,7 +15,7 @@
                                value="" required>
                         <label class="mtv-input-label" for="nombre_producto">Nombre de tu producto</label>
                     </div>
-                    <label class="text-xs text-slate-500 mr-5" 
+                    <label class="text-xs text-slate-500 mx-3" 
                            for="descripcion_producto">
                            Aparecerá como título en el catálogo
                     </label>
@@ -24,7 +24,7 @@
                                 name="descripcion_producto" maxlength="140"></textarea>
                         <label class="mtv-input-label" for="descripcion_producto">Describe tu producto</label>                        
                     </div>
-                    <label class="text-xs text-slate-500" 
+                    <label class="text-xs text-slate-500 mx-3" 
                                for="descripcion_producto">
                                Indica en qué unidad de medida vendes tu producto, qué presentación tiene, fabricante y otras características importantes con las que cuenta tu producto.
                     </label>
@@ -45,7 +45,7 @@
                                     value="">
                                 <label class="mtv-input-label" for="color">Color(es)</label>
                             </div>
-                            <label class="text-xs text-slate-500" 
+                            <label class="text-xs text-slate-500 mx-3" 
                                for="color">
                                Usa comas para separar las palabras
                             </label>                        
@@ -74,4 +74,4 @@
             </form>
         </div>
     </div>
-</x-registro-layout>
+</x-app-layout>

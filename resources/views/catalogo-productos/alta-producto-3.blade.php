@@ -1,4 +1,4 @@
-<x-registro-layout>
+<x-app-layout :show_main_menu="false">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
         <div class="bg-white overflow-hidden shadow-sm">
             @include('catalogo-productos.registro-header',

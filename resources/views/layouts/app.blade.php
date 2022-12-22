@@ -1,3 +1,5 @@
+@props(['show_main_menu' => true])
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -16,7 +18,7 @@
     <body class="font-sans antialiased">
         <header class="bg-white">
             @if (Auth::user())
-                @include('layouts.navigation')
+                @include('layouts.navigation', ['show_main_menu' => $show_main_menu])
             @else
                 @include('layouts.navigation-guest')
             @endif
