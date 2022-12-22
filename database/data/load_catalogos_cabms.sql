@@ -12,9 +12,9 @@ FROM cat_ciudadano_cabms as ccc
          INNER JOIN cat_sectores AS cs ON cs.sector = ccc.sector
 ORDER BY giro;
 
--- Llenar cat_cabms --
+-- Llenar cat_cabms, distinct remueve líneas duplicadas --
 
 INSERT INTO cat_cabms(cabms, nombre_cabms, partida, id_categoria_scian, created_at, updated_at)
-SELECT cabms, nombre_cabms, partida, ccs.id as id_categoria_scian, current_timestamp, current_timestamp FROM cat_ciudadano_cabms
+SELECT distinct(cabms), nombre_cabms, partida, ccs.id as id_categoria_scian, current_timestamp, current_timestamp FROM cat_ciudadano_cabms
         INNER JOIN cat_categorias_scian ccs on cat_ciudadano_cabms.giro = ccs.categoria_scian
 ORDER BY nombre_cabms;
