@@ -261,6 +261,7 @@
                 this.categoriasScian = await this.fetchCategoriasScian();
                 this.categoriasScianChoices.setChoices(this.categoriasScian);
                 this.categoriasScianChoices.setChoiceByValue(catScianId);
+                this.refreshSector(catScianId);
             },
             refreshSector(catScianId) {
                 const catScian = this.categoriasScian.find(item => item.value == catScianId);
