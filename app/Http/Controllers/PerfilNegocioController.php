@@ -72,14 +72,32 @@ class PerfilNegocioController extends Controller
             ->with('success', 'Datos de contacto actualizados.');
     }
 
-    public function categoriasScianIndex(Request $request, int $idSector, CatCiudadanoCABMSRepository $catCiudadanoCABMSRepository)
+    public function categoriasScianIndex(Request $request, CatCiudadanoCABMSRepository $catCiudadanoCABMSRepository, ?int $idSector = null)
     {
-        $categorias = $catCiudadanoCABMSRepository->obtieneCategoriasScianPorSector($idSector);
+        if (isset($idSector)) {
+            $categorias = $catCiudadanoCABMSRepository->obtieneCategoriasScianPorSector($idSector);
+        } else {
+            $categorias = $catCiudadanoCABMSRepository->obtieneCategoriasScian();
+        }
 
         return array_map(function($item) {
             return [
                 'label' => $item->categoria_scian,
-                'value' => $item->id
+                'value' => $item->id,
+                'id_sector' => $item->id_sector,
+            ];
+        }, $categorias);
+    }
+
+    public function categoriasScianPorPalabraClave(Request $request, int $keyword, CatCiudadanoCABMSRepository $catCiudadanoCABMSRepository)
+    {
+        $categorias = $catCiudadanoCABMSRepository->buscaCategoriasScianPorPalabraClave($keyword);
+
+        return array_map(function($item) {
+            return [
+                'label' => $item->categoria_scian,
+                'value' => $item->id,
+                'id_sector' => $item->id_sector,
             ];
         }, $categorias);
     }

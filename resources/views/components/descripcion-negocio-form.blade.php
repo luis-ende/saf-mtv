@@ -17,7 +17,6 @@
 @php($logotipoUrl = isset($perfilNegocio) ? $perfilNegocio->getFirstMediaUrl('logotipos') : null)
 @php($cartaPresentacion = isset($perfilNegocio) ? $perfilNegocio->getFirstMedia('documentos') : null)
 
-
 <div x-data="descripcionNegocioReglas()" x-init="initDescripcionNegocio()">
     <div class="flex flex-row flex-wrap">
         <div class="md:basis-1/4 xs:basis-full mt-3 px-8">
@@ -63,28 +62,22 @@
                     <label class="mtv-input-label" for="id_tipo_pyme">Tipo</label>
                 </div>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-8">
                 <div class="mtv-input-wrapper">
-                    <select class="mtv-text-input"
-                            id="id_sector" name="id_sector"
-                            @change="refreshCategoriasScian($event.target.value, null)"
-                            x-model="sector">
-                         @foreach ($sectores as $sector)
-                            <option
-                                value={{ $sector->id }}
-                            >{{ $sector->sector }}</option>
-                        @endforeach
+                    <select class="mtv-text-input text-base"
+                            id="id_categoria_scian"
+                            name="id_categoria_scian"
+                            @change="refreshSector($event.target.value)"
+                            x-ref="selectCategoriaScian">
                     </select>
-                    <label class="mtv-input-label" for="id_sector">Sector</label>
+                    <label class="mtv-input-label" for="id_categoria_scian">Giro</label>
                 </div>
             </div>
             <div class="form-group col-md-4">
                 <div class="mtv-input-wrapper">
-                    <select class="mtv-text-input"
-                            id="id_categoria_scian" name="id_categoria_scian"
-                            x-ref="selectCategoriaScian">
-                    </select>
-                    <label class="mtv-input-label" for="id_categoria_scian">Giro</label>
+                    <input type="hidden" id="id_sector" name="id_sector" x-model="sectorId">
+                    <input type="text" class="mtv-text-input" id="sector_nombre" x-model="sectorNombre" disabled>
+                    <label class="mtv-input-label" for="sector_nombre">Sector</label>
                 </div>
             </div>
             <div class="form-group col-md-8">
@@ -117,7 +110,7 @@
                 <x-diferenciadores-input :diferenciadores="$diferenciadores" />
             </div>
             <div class="form-group col-md-12 w-full"
-                 x-data="{ 
+                 x-data="{
                     cartaPresentacion: {{ $cartaPresentacion ? "'" . $cartaPresentacion->file_name . "'" : 'null' }},
                     cartaPresentacionURL: '{{ $cartaPresentacion ? $cartaPresentacion->original_url : '' }}',
                 }">
@@ -143,9 +136,9 @@
                     </div>
                 </div>
                 <div class="text-mtv-text-gray" x-show="cartaPresentacion !== null">
-                    <a x-bind:href="cartaPresentacionURL" 
-                       class="font-bold no-underline text-mtv-text-gray hover:text-mtv-primary focus:text-mtv-text-gray" 
-                       x-text="cartaPresentacion" 
+                    <a x-bind:href="cartaPresentacionURL"
+                       class="font-bold no-underline text-mtv-text-gray hover:text-mtv-primary focus:text-mtv-text-gray"
+                       x-text="cartaPresentacion"
                        target="_blank"></a>
                     @svg('sui-cross', [
                         'class' => 'h-3 w-3 inline-block ml-3 cursor-pointer',
@@ -227,6 +220,8 @@
 <script type="text/javascript">
     function descripcionNegocioReglas() {
         return {
+            sectores: {!! json_encode($sectores) !!},
+            categoriasScian: [],
             categoriasScianRoute: '/perfil-negocio/categorias_scian/',
             categoriasScianChoices: new Choices('#id_categoria_scian', {
                 allowHTML: false,
@@ -234,13 +229,15 @@
                 noChoicesText: 'Sin categorías/giros para elegir',
                 noResultsText: 'No se encontraron resultados',
                 itemSelectText: 'Seleccionar',
+                searchResultLimit: 16,
             }),
             negocioLinksModalForm: new bootstrap.Modal(document.getElementById('negocioLinksModal'), { keyboard: true }),
             currentLinkInput: null,
             grupoPrioritarioMIPYMEId: 1,
             grupoPrioritario: {{ $grupoPrioritarioId ?? 0 }},
             tipoPyme: {{ $tipoPymeId ?? 0 }},
-            sector: {{ $sectorId ?? 0 }},
+            sectorId: {{ $sectorId ?? 0 }},
+            sectorNombre: '',
             diferenciadores: '',
 
             closeFormEdit() {
@@ -257,20 +254,29 @@
                     }
                 });
 
-                this.refreshCategoriasScian({{ $sectorId }}, {{ $catSCIANId }});
+                this.refreshCategoriasScian({{ $catSCIANId }});
             },
-            refreshCategoriasScian(sector, catScianId) {
+            async refreshCategoriasScian(catScianId) {
                 this.categoriasScianChoices.clearStore();
-                this.categoriasScianChoices.setChoices(async () => {
-                    try {
-                        const items = await fetch(this.categoriasScianRoute + sector);
-                        return items.json();
-                    } catch (err) {
-                        console.error(err);
-                    }
-                }).then(() => {
-                    this.categoriasScianChoices.setChoiceByValue(catScianId);
-                });
+                this.categoriasScian = await this.fetchCategoriasScian();
+                this.categoriasScianChoices.setChoices(this.categoriasScian);
+                this.categoriasScianChoices.setChoiceByValue(catScianId);
+            },
+            refreshSector(catScianId) {
+                const catScian = this.categoriasScian.find(item => item.value == catScianId);
+                if (catScian) {
+                    this.sectorId = catScian.id_sector;
+                    const sector = this.sectores.find(item => item.id == catScian.id_sector);
+                    this.sectorNombre = sector.sector;
+                }
+            },
+            async fetchCategoriasScian() {
+                try {
+                    const items = await fetch(this.categoriasScianRoute);
+                    return items.json();
+                } catch (err) {
+                    console.error(err);
+                }
             }
         }
     }

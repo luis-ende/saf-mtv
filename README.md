@@ -67,3 +67,7 @@ Para realizar una actualización completa del ambiente de desarrollo ejecutar de
   - Precargado de fuentes, ejecutar: `php artisan google-fonts:fetch`
   - `database/seeders/DatabaseSeeder.php` (ejecutar `php artisan db:seed`) carga catálogos de MTV
   - `database/seeders/CatCiudadanoCABMSSeeder.php` (ejecutar `php artisan db:seed --class=CatCiudadanoCABMSSeeder`) carga los catálogos relacionados con el catálogo CABMS (importados previamente de un archivo Excel a CSV y luego a SQL)
+  - **Para las búsquedas por palabra clave basadas en "lógica difusa" es necesario activar la extensiión `pg_trgm` en PostgreSQL.** 
+    - En línea de comando con psql, revisar si la extensión ya se encuentra activada usar: `\dx`
+    - Para activar la extensión: `CREATE EXTENSION pg_trgm;`
+    - Más información sobre la extensión y su uso: https://www.postgresql.org/docs/current/pgtrgm.html
