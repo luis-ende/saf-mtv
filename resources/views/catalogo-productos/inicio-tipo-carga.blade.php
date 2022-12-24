@@ -9,17 +9,17 @@
                     <label class="block basis-full text-xl font-bold text-mtv-secondary mt-4 mb-2 self-center">Agrega tus productos</label>
                     <div class="w-fit mx-auto flex flex-col my-10">
                         <label class="text-mtv-gray font-bold">¿Quieres cargar solo un producto o uno por uno?</label>
-                        <button type="button" 
-                                class="mtv-button-secondary self-center my-4">
+                        <a href="{{ route('alta-producto-1.show') }}"
+                           class="mtv-button-secondary self-center my-4 no-underline">
                             Agrega tu producto
-                        </button>
+                        </a>
                         <label class="text-mtv-gray font-bold">¿Quieres cargar varios productos a la vez?</label>
-                        <button type="button" 
-                                class="mtv-button-secondary self-center my-4">
+                        <a href="#"
+                           class="mtv-button-secondary self-center my-4 no-underline">
                             Carga masiva de productos
-                        </button>
+                        </a>
                     </div>
-                </div>                                
+                </div>
             </div>
         </div>
     </div>

@@ -98,10 +98,13 @@ Route::get('/configuracion', [UsuarioConfiguracionController::class, 'show'])->m
 
 Route::post('/configuracion', [UsuarioConfiguracionController::class, 'update'])->middleware('auth')->name('usuario-configuracion.update');
 
-Route::get('catalogo_cabms/{criterio_busqueda}', [CatalogoCABMSController::class, 'buscaClavesCABMS'])->middleware('auth')->name('catalogo-cabms.search');
+Route::get('/catalogo-cabms/{criterio_busqueda}', [CatalogoCABMSController::class, 'buscaClavesCABMS'])->middleware('auth')->name('catalogo-cabms.search');
 
 Route::get('/catalogo-registro-inicio', [CatalogoProductosController::class, 'showRegistroInicio'])->middleware('auth')->name('catalogo-registro-inicio');
 
-Route::get('/alta-producto-1', [CatalogoProductosController::class, 'showAltaProducto1'])->middleware('auth')->name('alta-producto-1');
+Route::get('/alta-producto-1', [CatalogoProductosController::class, 'showAltaProducto1'])->middleware('auth')->name('alta-producto-1.show');
+Route::get('/alta-producto-2', [CatalogoProductosController::class, 'showAltaProducto2'])->middleware('auth')->name('alta-producto-2.show');
+Route::get('/alta-producto-3', [CatalogoProductosController::class, 'showAltaProducto3'])->middleware('auth')->name('alta-producto-3.show');
+Route::get('/alta-producto-4', [CatalogoProductosController::class, 'showAltaProducto4'])->middleware('auth')->name('alta-producto-4.show');
 
 require __DIR__.'/auth.php';
