@@ -6,7 +6,8 @@
                         'titulo_icono' => 'polaris-major-add-product',
                         'subtitulo' => '',
                         'texto_secuencia' => 'Paso 1 de 4'])
-            <form class="px-6">
+            <form method="POST" action="{{ route('alta-producto.store', [1]) }}" class="px-6">
+                @csrf
                 <div class="w-fit mx-auto flex flex-col"
                      x-data="busquedaCABMS()"
                      x-init="$watch('tipoProducto', value => cabmsChoices.clearChoices()); initBusquedaCABMS()">

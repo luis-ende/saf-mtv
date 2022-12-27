@@ -24,7 +24,7 @@ class Producto extends Model implements HasMedia
     protected $fillable = [
         'id_cat_productos',
         'tipo',
-        'clave_cabms',
+        'id_cabms',
         'nombre',
         'descripcion',        
         'marca',
@@ -32,6 +32,7 @@ class Producto extends Model implements HasMedia
         'color',
         'material',
         'codigo_barras',
+        'registro_fase',
     ];
 
     public function getAllMedia()

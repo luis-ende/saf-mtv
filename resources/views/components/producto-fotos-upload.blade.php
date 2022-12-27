@@ -1,12 +1,15 @@
 @props(['producto_id' => null])
 
-<div class="bg-white p7 rounded w-11/12 mx-auto">
+@php($maxNumFotos = 3)
+
+<div class="bg-white p7 rounded w-11/12 mx-auto">    
     <div x-data="dataFileDnD()" 
          x-init="$watch('triggerUpdateEvent', value => { $store.filesUploaded.hasFilesUploaded = true })" 
          class="relative flex flex-col p-4 text-gray-400">
         <div x-ref="dnd"
              class="relative flex flex-col text-gray-400 border-2 border-mtv-gray-2 border-dashed rounded cursor-pointer">
-            <input accept="*" type="file" multiple
+            <input accept="image/png, image/jpeg" type="file" multiple
+                   id="producto_fotos"  name="producto_fotos"
                    class="absolute inset-0 z-40 w-full h-full p-0 m-0 outline-none opacity-0 cursor-pointer"
                    @change="addFiles($event)"
                    @dragover="$refs.dnd.classList.add('border-blue-400'); $refs.dnd.classList.add('ring-4'); $refs.dnd.classList.add('ring-inset');"
@@ -21,10 +24,10 @@
         </div>
 
         <template x-if="files.length > 0">
-            <div class="grid grid-cols-2 gap-4 mt-4 md:grid-cols-6" @drop.prevent="drop($event)"
+            <div class="grid grid-cols-3 gap-4 mt-4 self-center" @drop.prevent="drop($event)"
                  @dragover.prevent="$event.dataTransfer.dropEffect = 'move'">
                 <template x-for="(_, index) in Array.from({ length: files.length })">
-                    <div class="relative flex flex-col items-center overflow-hidden text-center bg-gray-100 border rounded cursor-move select-none"
+                    <div class="relative flex flex-col items-center overflow-hidden text-center bg-gray-100 border rounded cursor-move select-none w-32 h-32"
                          style="padding-top: 100%;" @dragstart="dragstart($event)" @dragend="fileDragging = null"
                          :class="{'border-blue-600': fileDragging == index}" draggable="true" :data-index="index">
                         <button class="absolute top-0 right-0 z-50 p-1 bg-white rounded-bl focus:outline-none" type="button" @click="remove(index)">
@@ -33,31 +36,12 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
-                        </button>
-                        <template x-if="files[index]?.type.includes('audio/')">
-                            <svg class="absolute w-12 h-12 text-gray-400 transform top-1/2 -translate-y-2/3"
-                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                            </svg>
-                        </template>
-                        <template x-if="files[index]?.type.includes('application/') || files[index]?.type === ''">
-                            <svg class="absolute w-12 h-12 text-gray-400 transform top-1/2 -translate-y-2/3"
-                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                            </svg>
-                        </template>
+                        </button>  
+
                         <template x-if="files[index]?.type.includes('image/')">
                             <img class="absolute inset-0 z-0 object-cover w-full h-full border-4 border-white preview"
                                  x-bind:src="files[index] ? loadFile(files[index]) : null" />
-                        </template>
-                        <template x-if="files[index]?.type.includes('video/')">
-                            <video
-                                class="absolute inset-0 object-cover w-full h-full border-4 border-white pointer-events-none preview">
-                                <fileDragging x-bind:src="files[index] ? loadFile(files[index]) : null" type="video/mp4"></fileDragging>
-                            </video>
-                        </template>
+                        </template>                        
 
                         <div class="absolute bottom-0 left-0 right-0 flex flex-col p-2 text-xs bg-white bg-opacity-50">
                         <span class="w-full font-bold text-gray-900 truncate"
@@ -75,11 +59,9 @@
         </template>
 
         <div class="flex justify-content-center mt-3">
-            <button type="button" class="mtv-button-secondary"
-                    @click="sendFiles($event)"
-                    :disabled="isUploading">
-                <span x-show="isUploading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                <span class="ml-1" x-text="isUploading ? 'Enviando...' : 'Siguiente'"></span>
+            <button type="submit" class="mtv-button-secondary"
+                    {{-- @click="sendFiles($event)" --}}>                
+                Siguiente
             </button>
         </div>
     </div>
@@ -96,8 +78,7 @@
             formData: null,
             files: [],
             fileDragging: null,
-            fileDropping: null,
-            isUploading: false,
+            fileDropping: null,            
             triggerUpdateEvent: false,
 
             humanFileSize(size) {
@@ -150,69 +131,70 @@
                 return blobUrl;
             },
             addFiles(e) {
-                const files = createFileList([...this.files], [...e.target.files]);
-                this.files = files;
+                const totalFiles = e.target.files.length + this.files.length;                
+
+                if (totalFiles <= 3) {
+                    const files = createFileList([...this.files], [...e.target.files]);
+                    this.files = files;
+                }                               
             },
-            sendFiles(e) {
-                this.triggerUpdateEvent = false;
-                this.formData = new FormData(document.getElementById('producto-archivos'));
-                for(let i = 0; i <= this.files.length - 1; i++) {
-                    this.formData.append('producto_archivos[]', this.files[i], this.files[i].name);
-                }
+            // sendFiles(e) {
+            //     this.triggerUpdateEvent = false;
+            //     this.formData = new FormData(document.getElementById('producto-archivos'));
+            //     for(let i = 0; i <= this.files.length - 1; i++) {
+            //         this.formData.append('producto_archivos[]', this.files[i], this.files[i].name);
+            //     }
 
-                {{--// TODO: Set csrf token con setRequestHeader(header, value)--}}
-                const request = new XMLHttpRequest();
-                request.addEventListener("load", () => {
-                    this.clearFiles();
-                    this.formData = null;
-                    this.isUploading = false;
-                    this.triggerUpdateEvent = true;
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: false,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
+            //     {{--// TODO: Set csrf token con setRequestHeader(header, value)--}}
+            //     const request = new XMLHttpRequest();
+            //     request.addEventListener("load", () => {
+            //         this.clearFiles();
+            //         this.formData = null;
+            //         this.isUploading = false;
+            //         this.triggerUpdateEvent = true;
+            //         const Toast = Swal.mixin({
+            //             toast: true,
+            //             position: 'top-end',
+            //             showConfirmButton: false,
+            //             timer: 3000,
+            //             timerProgressBar: false,
+            //             didOpen: (toast) => {
+            //                 toast.addEventListener('mouseenter', Swal.stopTimer)
+            //                 toast.addEventListener('mouseleave', Swal.resumeTimer)
+            //             }
+            //         })
 
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Archivo(s) enviados.'
-                    })
-                });
-                request.addEventListener("error", () => {
-                    this.isUploading = false;
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: false,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
+            //         Toast.fire({
+            //             icon: 'success',
+            //             title: 'Archivo(s) enviados.'
+            //         })
+            //     });
+            //     request.addEventListener("error", () => {
+            //         this.isUploading = false;
+            //         const Toast = Swal.mixin({
+            //             toast: true,
+            //             position: 'top-end',
+            //             showConfirmButton: false,
+            //             timer: 3000,
+            //             timerProgressBar: false,
+            //             didOpen: (toast) => {
+            //                 toast.addEventListener('mouseenter', Swal.stopTimer)
+            //                 toast.addEventListener('mouseleave', Swal.resumeTimer)
+            //             }
+            //         })
 
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'Ocurrió un error al enviar los archivos.'
-                    })
-                });
-                request.open('POST', '{{ route('productos-archivos.store', [$producto_id]) }}');
-                this.isUploading = true;
-                request.send(this.formData);
+            //         Toast.fire({
+            //             icon: 'error',
+            //             title: 'Ocurrió un error al enviar los archivos.'
+            //         })
+            //     });
+            //     request.open('POST', '{{ route('productos-archivos.store', [$producto_id]) }}');
+            //     this.isUploading = true;
+            //     request.send(this.formData);
 
-                e.preventDefault();
-            },
-            clearFiles(){
-                // for(let i = 0; i <= this.files.length-1; i++) {
-                //     this.remove(i);
-                // }
+            //     e.preventDefault();
+            // },
+            clearFiles(){                
                 this.files = [];
             }
         };

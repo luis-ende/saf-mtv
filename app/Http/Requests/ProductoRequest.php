@@ -9,6 +9,24 @@ use App\Models\Producto;
 
 class ProductoRequest extends FormRequest
 {
+    public const PRODUCTO_REQUEST_RULES = [
+        'id_cabms' => 'required|integer',
+        'tipo_producto' => [
+            'required', 
+            Rule::in([
+                Producto::TIPO_PRODUCTO_BIEN_ID, 
+                Producto::TIPO_PRODUCTO_SERVICIO_ID
+            ])
+        ],
+        'nombre' => 'required|string|max:255',
+        'descripcion' => 'required|string|max:140',
+        'marca' => 'string|max:255',
+        'modelo' => 'string|max:255',
+        'color' => 'string|max:30',
+        'material' => 'string|max:255',
+        'codigo_barras' => 'string|max:100',
+    ];
+
     /**          
      * @return bool
      */
@@ -23,21 +41,6 @@ class ProductoRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'clave_cabms' => ['required'],
-            'nombre_producto' => ['required'],
-            'descripcion_producto' => ['required'],            
-            'tipo_producto' => [
-                'required', 
-                Rule::in([
-                    Producto::TIPO_PRODUCTO_BIEN_ID, 
-                    Producto::TIPO_PRODUCTO_SERVICIO_ID,
-                ]),
-            ],
-            'marca' => ['max:255'],
-            'modelo' => ['max:255'],
-            'color' => ['max:30'],
-            'material' => ['max:255'],
-        ];
+        return self::PRODUCTO_REQUEST_RULES;
     }
 }

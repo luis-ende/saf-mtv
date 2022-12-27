@@ -103,8 +103,9 @@ Route::get('/catalogo-cabms/{criterio_busqueda}', [CatalogoCABMSController::clas
 Route::get('/catalogo-registro-inicio', [CatalogoProductosController::class, 'showRegistroInicio'])->middleware('auth')->name('catalogo-registro-inicio');
 
 Route::get('/alta-producto-1', [CatalogoProductosController::class, 'showAltaProducto1'])->middleware('auth')->name('alta-producto-1.show');
-Route::get('/alta-producto-2', [CatalogoProductosController::class, 'showAltaProducto2'])->middleware('auth')->name('alta-producto-2.show');
-Route::get('/alta-producto-3', [CatalogoProductosController::class, 'showAltaProducto3'])->middleware('auth')->name('alta-producto-3.show');
-Route::get('/alta-producto-4', [CatalogoProductosController::class, 'showAltaProducto4'])->middleware('auth')->name('alta-producto-4.show');
+Route::get('/alta-producto-2/{producto}', [CatalogoProductosController::class, 'showAltaProducto2'])->middleware('auth')->name('alta-producto-2.show');
+Route::get('/alta-producto-3/{producto}', [CatalogoProductosController::class, 'showAltaProducto3'])->middleware('auth')->name('alta-producto-3.show');
+Route::get('/alta-producto-4/{producto}', [CatalogoProductosController::class, 'showAltaProducto4'])->middleware('auth')->name('alta-producto-4.show');
+Route::post('/alta-producto/{paso}/{producto?}', [CatalogoProductosController::class, 'storeAltaProducto'])->middleware('auth')->name('alta-producto.store');
 
 require __DIR__.'/auth.php';
