@@ -137,7 +137,6 @@
     display: flex;
     flex-direction: column;
     margin-top: 110px;
-    margin-bottom: 30px;
 }
 
 .for-mtv-information-container-top {
@@ -155,7 +154,7 @@
     display: flex;
     margin-right: 140px;
     margin-left: 120px;
-    margin-bottom: 120px;
+    margin-bottom: 92px;
 }
 
 .for-mtv-information-container-bottom-red {
@@ -190,6 +189,9 @@
 .for-mtv-information-container-bottom-red li {
     color: #ddc9a3;
     font-size: 0.8rem;
+    line-height: 25px;
+    text-indent: -25px;
+    padding-left: 5px;
 }
 
 .for-mtv-information-container-bottom-red button {
@@ -200,7 +202,7 @@
     border-radius: 18px;
     background-color: #600a21;
     box-shadow: 2px 2px #3f0817;
-    margin-top: 50px;
+    margin-top: 38px;
 }
 
 .horizontal-plot-red {
@@ -208,7 +210,8 @@
     height: 50px;
     margin-right: -20px;
     margin-left: -20px;
-    margin-top: 22px;
+    margin-top: 6px;
+    margin-bottom: -300px;
 }
 
 .for-mtv-information-container-bottom-gold {
@@ -228,6 +231,9 @@
 .for-mtv-information-container-bottom-gold li {
     color: #ddc9a3;
     font-size: 0.8rem;
+    line-height: 25px;
+    text-indent: -25px;
+    padding-left: 5px;
 }
 
 .for-mtv-information-container-bottom-gold button {
@@ -246,6 +252,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 36px;
 }
 
 .horizontal-plot-gold {

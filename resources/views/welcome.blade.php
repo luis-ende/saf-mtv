@@ -3,17 +3,30 @@
     position:sticky;
     top: 60px;
 }
+
+.button-back-up {
+    width: 60px;
+    height: 60px;
+    color:#9F2241;
+    position:fixed;
+    bottom:50px;
+    right: 50px;
+    cursor:pointer;
+    transform: scale(0);
+}
 </style>
+
+
 
 <x-guest-layout>
     <div class="flex flex-col" style="background-color:#FFFFFF" id="back-main">
         <!-- Menú de preguntas -->
         <div class="flex flex-row bg-[#FFFFFF] space-x-7 py-3 px-5 md:justify-start md:flex-wrap border border-5 border-top-0 border-end-0 border-start-0" style="margin-top:-10px">
             <a class="text-[#8B1232] hover:text-[#BC955C] no-underline font-bold text-center" href="#">Inicio</a>
-            <a class="text-[#BC955C] hover:text-[#BC955C] no-underline font-bold text-center" href="#virtual-store">¿Qué es Mi Tiendita Virtual?</a>
-            <a class="text-[#BC955C] hover:text-[#BC955C] no-underline font-bold text-center" href="#">Preguntas frecuentes</a>
-            <a class="text-[#BC955C] hover:text-[#BC955C] no-underline font-bold text-center" href="#">Directorio CDMX</a>
-            <a class="text-[#BC955C] hover:text-[#BC955C] no-underline font-bold text-center" href="#">Ya soy proveedor</a>
+            <a class="text-[#BC955C] hover:text-[#8B1232] no-underline font-bold text-center" href="#virtual-store">¿Qué es Mi Tiendita Virtual?</a>
+            <a class="text-[#BC955C] hover:text-[#8B1232] no-underline font-bold text-center" href="#">Preguntas frecuentes</a>
+            <a class="text-[#BC955C] hover:text-[#8B1232] no-underline font-bold text-center" href="#">Directorio CDMX</a>
+            <a class="text-[#BC955C] hover:text-[#8B1232] no-underline font-bold text-center" href="#">Ya soy proveedor</a>
         </div>
 
         <!-- Carousel -->
@@ -62,8 +75,7 @@
     <div class="menu-bottom">
             <div class="card-menu-bottom">
                <div class="circle">
-               <img src="{{ asset('assets/icono01.png') }}" />
-               <!-- @svg('provider', ['class' => 'h-20 w-20 ']) -->
+               @svg('provider', ['class' => 'h-20 w-20 '])
                </div>
                <p class="message-one">Quiero ser proveedor</p>
                <p class="message-second">Quiero conocer cómo venderle a la CDMX</p>
@@ -71,8 +83,7 @@
             </div>
             <div class="card-menu-bottom">
                <div class="circle">
-               <img src="{{ asset('assets/icono02.png') }}" />
-               <!-- @svg('product', ['class' => 'h-20 w-20 ']) -->
+               @svg('product', ['class' => 'h-20 w-20 '])
                </div>
                <p class="message-one">Ofrece tu producto</p>
                <p class="message-second">Regístrate y ofrece tus productos</p>
@@ -80,17 +91,15 @@
             </div>
             <div class="card-menu-bottom">
                <div class="circle">
-               <img src="{{ asset('assets/icono03.png') }}" />
-               <!-- @svg('calendar', ['class' => 'h-20 w-20 ']) -->
+               @svg('planning', ['class' => 'h-20 w-20 '])
                </div>
-               <p class="message-one">Oportunidades para vender</p>
+               <p class="message-one">Conoce la planeación anual</p>
                <p class="message-second">Compras programadas para el próximo año</p>
                <button>Calendario de compras</button>
             </div>
             <div class="card-menu-bottom">
                <div class="circle">
-               <img src="{{ asset('assets/icono04.png') }}" />
-               <!-- @svg('oportunities', ['class' => 'h-20 w-20 ']) -->
+               @svg('serch', ['class' => 'h-20 w-20 '])
                </div>
                <p class="message-one">Ya soy proveedor</p>
                <p class="message-second">Estoy registrado en padrón de proveedores</p>
@@ -127,7 +136,7 @@
                bienes o servicios que ofrezcas y requieran.<br>
                Al mismo tiempo, tu catálogo se convertirá en <b>una herramienta de venta</b> la cual
                podrás <b>compartir con tus clientes y prospectos.</b></p>
-               <button>Quiero Registrarme @svg('circle-arrow-fill', ['class' => 'd-inline ml-2'])</button>
+               <button class=" hover hover:text-[#9f2241] hover:bg-[#ddc9a3]" type="button" onclick="window.location='{{ route('registro-inicio') }}'">Quiero Registrarme @svg('circle-arrow-fill', ['class' => 'd-inline ml-2'])</button>
                <p class="what-mtv-mesagge-note">*Para participar en los procedimientos se requiere constancia vigente en Padrón de Proveedores.</p>
             </div>
         </div>
@@ -143,11 +152,11 @@
             </div>
             <div class="for-mtv-information-container">
                 <div class="for-mtv-information-container-top">
-                <p class="for-mtv-information-container-top-title">¿Para quién es Mi Tiendita Virtual?</p>
-                <p class="for-mtv-information-container-top-message"> Es para empresarios o público en general que quieren conocer cómo venderle al Gobierno de la CDMX
-                pero no saben por dónde empezar. Esta plataforma los ayudará en sus primeros pasos y ya que estén
-                listos para venderle a la CDMX, podrán inscribirse al Padrón de Proveedores. En los siguientes
-                recuadros explora con qué perfil te identificas y cómo te ayuda Mi Tiendita Virtual.</p>
+                    <p class="for-mtv-information-container-top-title">¿Para quién es Mi Tiendita Virtual?</p>
+                    <p class="for-mtv-information-container-top-message"> Es para empresarios o público en general que quieren conocer cómo venderle al Gobierno de la CDMX
+                    pero no saben por dónde empezar. Esta plataforma los ayudará en sus primeros pasos y ya que estén
+                    listos para venderle a la CDMX, podrán inscribirse al Padrón de Proveedores. En los siguientes
+                    recuadros explora con qué perfil te identificas y cómo te ayuda Mi Tiendita Virtual.</p>
                 </div>
                 <div class="for-mtv-information-container-bottom">
                     <div class="for-mtv-information-container-bottom-red">
@@ -160,7 +169,7 @@
                         <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Crea tu catálogo de productos (sólo requieres contar con tu RFC con homoclave para registrarte).</li>
                       </ul>
                       <div class="for-mtv-information-button-container">
-                      <button>Regístrate</button>
+                      <button class=" hover hover:text-[#600a21] hover:bg-[#ddc9a3]" type="button" onclick="window.location='{{ route('registro-inicio') }}'">Regístrate</button>
                       </div>
                       <div class="horizontal-plot-red"></div>
                     </div>
@@ -169,9 +178,9 @@
                       <p class="for-mtv-information-notes">(estoy registrado en Padrón de proveedores)</p>
                       <p class="for-mtv-information-text">No es necesario que te registres. Ingresa con tu usuario de Padrón de Proveedores.<br>En Mi Tiendita Virtual puedes:</p>
                       <ul>
-                        <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Crear tu catálogo de productos.</li>
-                        <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Conocer qué planea comprar la CDMX el siguiente año.</li>
-                        <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Buscar oportunidades de negocio y activar notificaciones.</li>
+                     <li> @svg('circle-check', ['class' => 'd-inline mr-2'])Crear tu catálogo de productos.</li>
+                     <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Conocer qué planea comprar la CDMX el siguiente año.</li>
+                     <li> @svg('circle-check', ['class' => 'd-inline mr-2'])Buscar oportunidades de negocio y activar notificaciones.</li>
                       </ul>
                       <div class="for-mtv-information-button-container">
                       <button>Ingresa</button>
@@ -189,7 +198,7 @@
               <p class="how-part-information-title">¿Cómo formo parte de Mi Tiendita Virtual?</p>
               <p class="how-part-information-text">Sólo tienes que registrar tu empresa y al menos un producto. Además <b>con tu registro</b>
               <b>podrás activar notificaciones sobre convocatorias </b> y temas de tu interés todo para que estés al día sobre lo que compra la CDMX.</p>
-              <button>Regístrate aquí</button>
+              <button class=" hover hover:text-[#9f2241] hover:bg-[#ddc9a3]" type="button" onclick="window.location='{{ route('registro-inicio') }}'">Regístrate aquí</button>
             <p class="how-part-information-title">¿Por qué ser parte de Mi Tiendita Virtual</p>
           </div>
           <div class="why-be-part-of">
@@ -216,5 +225,31 @@
               </div>
           </div>
         </div>
+        <button class="button-back-up" id="button-back-up" type="button">
+           <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-bar-up" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 10a.5.5 0 0 0 .5-.5V3.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 3.707V9.5a.5.5 0 0 0 .5.5zm-7 2.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5z"/>
+           </svg>
+        </button>
     </div>
+    <script type="text/javascript">
+   const buttonUp =  document.getElementById("button-back-up")
+
+   const arrowBackFunction = () => {
+      let currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      if(currentScroll > 0) {
+          window.scrollTo (0,0);
+      }
+   }
+
+   buttonUp.addEventListener("click",arrowBackFunction)
+   window.onscroll = function () {
+    let scroll = document.body.scrollTop;
+    console.log(scroll)
+    if(scroll > 400) {
+        buttonUp.style.transform = "scale(1)";
+    }else if(scroll < 400) {
+        buttonUp.style.transform = "scale(0)"
+    }
+   }
+</script>
 </x-guest-layout>
