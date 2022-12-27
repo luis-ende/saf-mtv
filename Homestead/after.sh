@@ -35,6 +35,8 @@ psql -d saf_mtv -h homestead -U homestead -e -c "GRANT ALL PRIVILEGES ON DATABAS
 # Cargar catálogo de asentamientos de prueba para modo desarrollo
 psql -d saf_mtv -h homestead -U homestead -e -f /var/www/saf-mtv/Homestead/pgsql/cat_asentamientos.sql
 
+psql CREATE EXTENSION pg_trgm;
+
 sudo service php8.1-fpm restart
 sudo systemctl restart nginx
 
