@@ -71,7 +71,6 @@
             </div>
         </div>
     </div>
-
     <div class="menu-bottom">
             <div class="card-menu-bottom">
                <div class="circle">

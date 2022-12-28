@@ -34,9 +34,53 @@ window.Alpine = Alpine;
 
 Alpine.store('filesUploaded', { hasFilesUploaded: false });
 
-Alpine.start();
+// Función reutilizable para el componente cabms-categorias-select.blade.php
+Alpine.data('busquedaCABMS', () => ({
+    tipoProducto: 'B',
+    busquedaCABMSRoute: '/catalogo-cabms/',
+    cabmsChoices: new Choices('#id_cabms', {
+        allowHTML: false,
+        loadingText: 'Cargando...',
+        noChoicesText: 'Sin resultados para elegir',
+        noResultsText: 'No se encontraron resultados',
+        itemSelectText: 'Seleccionar',
+        searchResultLimit: 50,
+        searchFloor: 1,
+        searchChoices: false
+    }),
+    searchTimeOut: 500,
+    typingTimer: null,
+    currentKeyword: '',
+    initBusquedaCABMS() {
+        const cabmsElement = document.getElementById('id_cabms');
+        cabmsElement.addEventListener('search', () => {
+            clearTimeout(this.typingTimer);
+            this.currentKeyword = event.detail.value;
+            this.typingTimer = setTimeout(() => {
+                this.buscaCABMS(this.currentKeyword);
+                clearTimeout(this.typingTimer);
+            }, this.searchTimeOut);
+        });
+    },
+    buscaCABMS(keyword) {
+        this.cabmsChoices.clearChoices();
+        this.lastSearchKeyword = keyword;
+        this.cabmsChoices.setChoices(() => {
+            return fetch(
+                this.busquedaCABMSRoute + keyword + '?tipo_producto=' + this.tipoProducto
+            ).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                return data.map(function(item) {
+                    return {
+                        value: item.id,
+                        label: item.nombre_cabms + ' | ' + item.sector + ' | ' + item.categoria_scian,
+                    };
+                });
+            });
+        })
+    }
+}))
 
-// var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-// var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-//     return new bootstrap.Popover(popoverTriggerEl)
-// })
+
+Alpine.start();

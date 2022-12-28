@@ -117,11 +117,25 @@ class CatalogoProductosController extends Controller
         } elseif ($registroFase === 3) {
             $producto->addMedia($request->file['producto_fotos'])->toMediaCollection('fotos');
             $producto->update(['registro_fase' => $registroFase]);
+            
 
             return redirect()->route('alta-producto-4.show', [$producto]);
+        } elseif ($registroFase === 4) {            
+            $producto->update(['registro_fase' => $registroFase]);
+            
+            return redirect()->route('catalogo-registro-inicio');
         }
 
         // return redirect()->route('alta-producto-2.show');
     }
 
+    public function showImportacionProductos1() 
+    {
+        return view('catalogo-productos.importacion-productos-1');
+    }
+
+    public function showImportacionProductos2() 
+    {
+        return view('catalogo-productos.importacion-productos-2');
+    }
 }

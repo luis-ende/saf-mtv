@@ -8,16 +8,22 @@
                 <div class="w-fit mx-auto flex flex-col" x-data="tipoPersonaData()">
                     <label class="block basis-full text-xl font-bold text-mtv-secondary mt-4 mb-2 self-center">Agrega tus productos</label>
                     <div class="w-fit mx-auto flex flex-col my-10">
-                        <label class="text-mtv-gray font-bold">¿Quieres cargar solo un producto o uno por uno?</label>
+                        <label class="text-mtv-gray font-bold self-center">¿Quieres cargar solo un producto o uno por uno?</label>
                         <a href="{{ route('alta-producto-1.show') }}"
                            class="mtv-button-secondary self-center my-4 no-underline">
-                            Agrega tu producto
+                           @svg('polaris-major-add-product', ['class' => 'w-5 h-5 inline-block mr-3'])
+                           Agrega tu producto
                         </a>
-                        <label class="text-mtv-gray font-bold">¿Quieres cargar varios productos a la vez?</label>
-                        <a href="#"
-                           class="mtv-button-secondary self-center my-4 no-underline">
-                            Carga masiva de productos
+                        <label class="text-mtv-gray font-bold self-center mt-5">¿Quieres cargar varios productos a la vez?</label>
+                        <a href="{{ route('importacion-productos-1.show') }}"
+                           class="mtv-button-secondary self-center mt-4 no-underline">
+                           @svg('adjuntar_xls', ['class' => 'w-6 h-6 inline-block mr-3'])
+                           Carga masiva de productos
                         </a>
+                        <span class="text-mtv-primary text-basis self-center mb-4">
+                           @svg('feathericon-alert-circle', ['class' => 'w-5 h-5 inline-block mr-1'])
+                           La carga masiva se permite sólo una vez.
+                        </span>
                     </div>
                 </div>
             </div>

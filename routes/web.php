@@ -30,7 +30,7 @@ Route::get('/', function () {
 
 Route::get('/info-venderle-a-cdmx', function() {
     return view('info.show');
-});
+})->name('flujograma.show');
 
 Route::get('/oportunidades-de-negocio', [OportunidadesController::class, 'index'])->name('oportunidades-negocio');
 
@@ -107,5 +107,8 @@ Route::get('/alta-producto-2/{producto}', [CatalogoProductosController::class, '
 Route::get('/alta-producto-3/{producto}', [CatalogoProductosController::class, 'showAltaProducto3'])->middleware('auth')->name('alta-producto-3.show');
 Route::get('/alta-producto-4/{producto}', [CatalogoProductosController::class, 'showAltaProducto4'])->middleware('auth')->name('alta-producto-4.show');
 Route::post('/alta-producto/{paso}/{producto?}', [CatalogoProductosController::class, 'storeAltaProducto'])->middleware('auth')->name('alta-producto.store');
+
+Route::get('/carga-productos-1', [CatalogoProductosController::class, 'showImportacionProductos1'])->middleware('auth')->name('importacion-productos-1.show');
+Route::get('/carga-productos-2', [CatalogoProductosController::class, 'showImportacionProductos2'])->middleware('auth')->name('importacion-productos-2.show');
 
 require __DIR__.'/auth.php';
