@@ -34,5 +34,4 @@
             <span>Diseñado y operado por la Secretaría de Administración y Finanzas</span>
             <span>{{ now()->year }} Gobierno de la CDMX</span>
         </div>        
-    </div>
 </footer>

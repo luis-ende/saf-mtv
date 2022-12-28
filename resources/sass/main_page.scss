@@ -1,0 +1,340 @@
+@import "variables";
+
+// Menú inferior con iconos
+.menu-bottom {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+
+.menu-bottom img {
+    width: 80px;
+}
+
+.circle {
+    display: flex;
+    align-items: center;
+}
+
+.card-menu-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & button {
+        color: $gold;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 2px 8px 2px 8px;
+        border-radius: 30px;
+        border: 1px solid gray;
+        text-align: center;
+    }
+}
+
+.message-one {
+    font-size: 16px;
+    color: $primary;
+    font-weight: 700;
+}
+
+.message-second {
+    font-size: 12px;
+    color: #6f7271;
+    font-weight: 700;
+    margin-top: -12px;
+}
+
+.message-third {
+    font-size: 16px;
+    color: $gold;
+    font-weight: 500;
+    margin-top: -12px;
+}
+
+// Sección qué es MTV
+
+.what-mtv {
+    display: flex;
+    padding-top: 40px;
+}
+
+.what-mtv-right {
+    width: 50%;
+    padding-top: 40px;
+    padding-right: 140px;
+    margin-top: 50px;
+}
+
+.what-mtv-right button {
+    color: $ocre;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 2px 12px 2px 12px;
+    border-radius: 18px;
+    background-color: $primary;
+    margin-top: 30px;
+}
+
+.what-mtv-mesagge-note {
+    font-size: 0.8rem;
+    color: #6f7271;
+    margin-top: 30px;
+}
+
+.what-mtv-left {
+    width: 50%;
+    background-image: url("../svg/vertical-plot.svg");
+    background-repeat: no-repeat;
+}
+
+.what-mtv-left img {
+    width: 300px;
+    margin-top: 100px;
+    margin-left: 300px;
+}
+
+.what-mtv-right-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #9f2241;
+}
+
+.what-mtv-right-title-second {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $gold;
+    margin-top: 46px;
+}
+
+.what-mtv-mesagge {
+    color: #6f7271;
+    font-size: 1rem;
+}
+
+// Sección para quién es MTV
+
+.for-mtv {
+    display: flex;
+}
+
+.image-container {
+    width: 30%;
+    height: 400px;
+    margin-top: 110px;
+}
+
+.image-container-top {
+    display: flex;
+
+    & img {
+        width: 50%;
+    }
+}
+
+.for-mtv-information-container {
+    background-color: $ocre;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 110px;
+}
+
+.for-mtv-information-container-top {
+    background-color: $beige;
+    margin-right: 140px;
+    margin-left: 120px;
+    padding: 6px 90px 6px 12px;
+    text-align: center;
+    border-radius: 0 0 12px 12px;
+    font-weight: 600;
+    margin-bottom: 60px;
+}
+
+.for-mtv-information-container-bottom {
+    display: flex;
+    margin-right: 140px;
+    margin-left: 120px;
+    margin-bottom: 92px;
+}
+
+.for-mtv-information-container-bottom-red {
+    background-color: $primary;
+    width: 50%;
+    border-radius: 5px;
+    padding: 20px 20px 0 20px;
+    box-shadow: 5px 5px #8b1232;
+    margin-right: 80px;
+
+    & li {
+        color: $ocre;
+        font-size: 0.8rem;
+        line-height: 25px;
+        text-indent: -25px;
+        padding-left: 5px;
+    }
+
+    & button {
+        color: $ocre;
+        font-size: 18px;
+        font-weight: 700;
+        padding: 2px 12px 2px 12px;
+        border-radius: 18px;
+        background-color: $dark-primary;
+        box-shadow: 2px 2px #3f0817;
+        margin-top: 38px;
+    }
+}
+
+.for-mtv-information-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $ocre;
+    text-align: center;
+}
+.for-mtv-information-notes {
+    color: $ocre;
+    font-size: 0.7rem;
+    text-align: center;
+    margin-top: -20px;
+}
+
+.for-mtv-information-title-gold {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $ocre;
+    text-align: center;
+}
+
+.horizontal-plot-red {
+    background-image: url("../svg/red-horizontal-plot.svg");
+    height: 50px;
+    margin-right: -20px;
+    margin-left: -20px;
+    margin-top: 6px;
+    margin-bottom: -300px;
+}
+
+.for-mtv-information-container-bottom-gold {
+    background-color: $gold;
+    width: 50%;
+    border-radius: 5px;
+    padding: 20px 20px 0 20px;
+    box-shadow: 5px 5px #af9467;
+
+    & li {
+        color: $ocre;
+        font-size: 0.8rem;
+        line-height: 25px;
+        text-indent: -25px;
+        padding-left: 5px;
+    }
+
+    & button {
+        color: $gold;
+        font-size: 1.2rem;
+        font-weight: 700;
+        padding: 2px 12px 2px 12px;
+        border-radius: 18px;
+        background-color: $beige;
+        text-align: center;
+        box-shadow: 2px 2px #af9467;
+        margin-top: 10px;
+    }
+}
+
+.for-mtv-information-text {
+    color: $ocre;
+    font-size: 0.8rem;
+    margin-left: 30px;
+}
+
+.for-mtv-information-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 36px;
+}
+
+.horizontal-plot-gold {
+    background-image: url("../svg/gold-horizontal-plot.svg");
+    height: 50px;
+    margin-right: -20px;
+    margin-left: -20px;
+    margin-top: 5px;
+}
+
+.for-mtv-information-container-top-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $primary;
+}
+
+.for-mtv-information-container-top-message {
+    color: #6f7271;
+    font-size: 1rem;
+}
+
+// Sección cómo formo parte de MTV
+
+.how-part {
+    margin-top: 50px;
+}
+
+.how-part-information {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    margin: 0px auto;
+    text-align: center;
+    margin-top: -80px;
+
+    & button {
+        color: $ocre;
+        font-size: 18px;
+        font-weight: 700;
+        padding: 2px 12px 2px 12px;
+        border-radius: 18px;
+        background-color: $primary;
+        margin-top: 10px;
+        margin-bottom: 50px;
+    }
+}
+
+.how-part-information-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $primary;
+    margin-bottom: 40px;
+}
+
+.how-part-information-text {
+    font-size: 1rem;
+    color: #98989a;
+}
+
+.why-be-part-of {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.why-be-part-of-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+    text-align: center;
+}
+
+.why-be-part-of-container-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: $primary;
+}
+
+.why-be-part-of-container-text {
+    font-size: 1rem;
+    color: #6f7271;
+}
