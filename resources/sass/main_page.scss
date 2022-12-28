@@ -1,11 +1,11 @@
 @import "variables";
 
+// Menú inferior con iconos
 .menu-bottom {
     display: flex;
     justify-content: space-evenly;
     margin-top: 60px;
     margin-bottom: 40px;
-    background-color: #ffffff;
 }
 
 .menu-bottom img {
@@ -21,21 +21,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
 
-.card-menu-bottom button {
-    color: #bc955c;
-    font-size: 16px;
-    font-weight: 700;
-    padding: 2px 8px 2px 8px;
-    border-radius: 30px;
-    border: 1px solid gray;
-    text-align: center;
+    & button {
+        color: $gold;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 2px 8px 2px 8px;
+        border-radius: 30px;
+        border: 1px solid gray;
+        text-align: center;
+    }
 }
 
 .message-one {
     font-size: 16px;
-    color: #9f2241;
+    color: $primary;
     font-weight: 700;
 }
 
@@ -48,10 +48,12 @@
 
 .message-third {
     font-size: 16px;
-    color: #bc955c;
+    color: $gold;
     font-weight: 500;
     margin-top: -12px;
 }
+
+// Sección qué es MTV
 
 .what-mtv {
     display: flex;
@@ -66,7 +68,7 @@
 }
 
 .what-mtv-right button {
-    color: #ddc9a3;
+    color: $ocre;
     font-size: 18px;
     font-weight: 700;
     padding: 2px 12px 2px 12px;
@@ -83,7 +85,6 @@
 
 .what-mtv-left {
     width: 50%;
-    background-color: white;
     background-image: url("../svg/vertical-plot.svg");
     background-repeat: no-repeat;
 }
@@ -112,9 +113,10 @@
     font-size: 1rem;
 }
 
+// Sección para quién es MTV
+
 .for-mtv {
     display: flex;
-    background-color: white;
 }
 
 .image-container {
@@ -125,14 +127,14 @@
 
 .image-container-top {
     display: flex;
-}
 
-.image-container-top img {
-    width: 50%;
+    & img {
+        width: 50%;
+    }
 }
 
 .for-mtv-information-container {
-    background-color: #ddc9a3;
+    background-color: $ocre;
     width: 70%;
     display: flex;
     flex-direction: column;
@@ -140,7 +142,7 @@
 }
 
 .for-mtv-information-container-top {
-    background-color: #e0d8b0;
+    background-color: $beige;
     margin-right: 140px;
     margin-left: 120px;
     padding: 6px 90px 6px 12px;
@@ -158,22 +160,41 @@
 }
 
 .for-mtv-information-container-bottom-red {
-    background-color: #9f2241;
+    background-color: $primary;
     width: 50%;
     border-radius: 5px;
     padding: 20px 20px 0 20px;
     box-shadow: 5px 5px #8b1232;
     margin-right: 80px;
+
+    & li {
+        color: $ocre;
+        font-size: 0.8rem;
+        line-height: 25px;
+        text-indent: -25px;
+        padding-left: 5px;
+    }
+
+    & button {
+        color: $ocre;
+        font-size: 18px;
+        font-weight: 700;
+        padding: 2px 12px 2px 12px;
+        border-radius: 18px;
+        background-color: $dark-primary;
+        box-shadow: 2px 2px #3f0817;
+        margin-top: 38px;
+    }
 }
 
 .for-mtv-information-title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #ddc9a3;
+    color: $ocre;
     text-align: center;
 }
 .for-mtv-information-notes {
-    color: #ddc9a3;
+    color: $ocre;
     font-size: 0.7rem;
     text-align: center;
     margin-top: -20px;
@@ -182,27 +203,8 @@
 .for-mtv-information-title-gold {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #ddc9a3;
+    color: $ocre;
     text-align: center;
-}
-
-.for-mtv-information-container-bottom-red li {
-    color: #ddc9a3;
-    font-size: 0.8rem;
-    line-height: 25px;
-    text-indent: -25px;
-    padding-left: 5px;
-}
-
-.for-mtv-information-container-bottom-red button {
-    color: #ddc9a3;
-    font-size: 18px;
-    font-weight: 700;
-    padding: 2px 12px 2px 12px;
-    border-radius: 18px;
-    background-color: #600a21;
-    box-shadow: 2px 2px #3f0817;
-    margin-top: 38px;
 }
 
 .horizontal-plot-red {
@@ -220,32 +222,32 @@
     border-radius: 5px;
     padding: 20px 20px 0 20px;
     box-shadow: 5px 5px #af9467;
+
+    & li {
+        color: $ocre;
+        font-size: 0.8rem;
+        line-height: 25px;
+        text-indent: -25px;
+        padding-left: 5px;
+    }
+
+    & button {
+        color: $gold;
+        font-size: 1.2rem;
+        font-weight: 700;
+        padding: 2px 12px 2px 12px;
+        border-radius: 18px;
+        background-color: $beige;
+        text-align: center;
+        box-shadow: 2px 2px #af9467;
+        margin-top: 10px;
+    }
 }
 
 .for-mtv-information-text {
-    color: #ddc9a3;
+    color: $ocre;
     font-size: 0.8rem;
     margin-left: 30px;
-}
-
-.for-mtv-information-container-bottom-gold li {
-    color: #ddc9a3;
-    font-size: 0.8rem;
-    line-height: 25px;
-    text-indent: -25px;
-    padding-left: 5px;
-}
-
-.for-mtv-information-container-bottom-gold button {
-    color: $gold;
-    font-size: 1.2rem;
-    font-weight: 700;
-    padding: 2px 12px 2px 12px;
-    border-radius: 18px;
-    background-color: #e0d8b0;
-    text-align: center;
-    box-shadow: 2px 2px #af9467;
-    margin-top: 10px;
 }
 
 .for-mtv-information-button-container {
@@ -266,17 +268,20 @@
 .for-mtv-information-container-top-title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #9f2241;
+    color: $primary;
 }
 
 .for-mtv-information-container-top-message {
     color: #6f7271;
     font-size: 1rem;
 }
+
+// Sección cómo formo parte de MTV
+
 .how-part {
-    background-color: white;
     margin-top: 50px;
 }
+
 .how-part-information {
     display: flex;
     flex-direction: column;
@@ -285,22 +290,23 @@
     margin: 0px auto;
     text-align: center;
     margin-top: -80px;
+
+    & button {
+        color: $ocre;
+        font-size: 18px;
+        font-weight: 700;
+        padding: 2px 12px 2px 12px;
+        border-radius: 18px;
+        background-color: $primary;
+        margin-top: 10px;
+        margin-bottom: 50px;
+    }
 }
 
-.how-part-information button {
-    color: #ddc9a3;
-    font-size: 18px;
-    font-weight: 700;
-    padding: 2px 12px 2px 12px;
-    border-radius: 18px;
-    background-color: $primary;
-    margin-top: 10px;
-    margin-bottom: 50px;
-}
 .how-part-information-title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #9f2241;
+    color: $primary;
     margin-bottom: 40px;
 }
 

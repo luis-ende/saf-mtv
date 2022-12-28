@@ -231,7 +231,9 @@
            </svg>
         </button>
     </div>
-    <script type="text/javascript">
+</x-guest-layout>
+
+<script type="text/javascript">
    const buttonUp =  document.getElementById("button-back-up")
 
    const arrowBackFunction = () => {
@@ -242,14 +244,13 @@
    }
 
    buttonUp.addEventListener("click",arrowBackFunction)
-   window.onscroll = function () {
-    let scroll = document.body.scrollTop;
-    console.log(scroll)
-    if(scroll > 400) {
-        buttonUp.style.transform = "scale(1)";
-    }else if(scroll < 400) {
-        buttonUp.style.transform = "scale(0)"
+      window.onscroll = function () {
+      let scroll = document.body.scrollTop;
+      console.log(scroll)
+      if(scroll > 400) {
+          buttonUp.style.transform = "scale(1)";
+      }else if(scroll < 400) {
+          buttonUp.style.transform = "scale(0)"
+      }
     }
-   }
 </script>
-</x-guest-layout>

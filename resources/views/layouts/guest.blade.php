@@ -18,7 +18,7 @@
             @include('layouts.navigation-guest')
         </header>
 
-        <div class="min-h-screen" style="margin-top:80px">
+        <div class="min-h-screen mt-20">
             <!-- Page Content -->
             <main>
                 @include('layouts.alert-notification')
