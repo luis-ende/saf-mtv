@@ -98,7 +98,7 @@ class CatCiudadanoCABMSRepository
             ->where($searchCriteriaTipo)            
             ->whereRaw("'{$criterioBusqueda}' % ANY(STRING_TO_ARRAY(nombre_cabms, ' '))")            
             ->orderByDesc('similarity')
-            ->limit(100);
+            ->limit(200);
 
         $clavesCABMS = $query->get()->toArray();
 
