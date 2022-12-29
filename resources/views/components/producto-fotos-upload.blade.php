@@ -9,7 +9,7 @@
         <div x-ref="dnd"
              class="relative flex flex-col text-gray-400 border-2 border-mtv-gray-2 border-dashed rounded cursor-pointer">
             <input accept="image/png, image/jpeg" type="file" multiple
-                   id="producto_fotos"  name="producto_fotos"
+                   id="producto_fotos"  name="producto_fotos[]"
                    class="absolute inset-0 z-40 w-full h-full p-0 m-0 outline-none opacity-0 cursor-pointer"
                    @change="addFiles($event)"
                    @dragover="$refs.dnd.classList.add('border-blue-400'); $refs.dnd.classList.add('ring-4'); $refs.dnd.classList.add('ring-inset');"

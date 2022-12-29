@@ -111,5 +111,6 @@ Route::post('/alta-producto/{paso}/{producto?}', [CatalogoProductosController::c
 
 Route::get('/carga-productos-1', [CatalogoProductosController::class, 'showImportacionProductos1'])->middleware('auth')->name('importacion-productos-1.show');
 Route::get('/carga-productos-2', [CatalogoProductosController::class, 'showImportacionProductos2'])->middleware('auth')->name('importacion-productos-2.show');
+Route::post('/carga-productos/{paso}', [CatalogoProductosController::class, 'storeCargaProductos'])->middleware('auth')->name('carga-productos.store');
 
 require __DIR__.'/auth.php';

@@ -6,8 +6,9 @@
                         'titulo_icono' => 'adjuntar_xls',
                         'subtitulo' => '',
                         'texto_secuencia' => 'Paso 1 de 2'])
-            <div class="px-6">
-                <div class="mx-auto flex flex-col w-1/2">
+            <form id="cargaProductosForm" method="POST" action="{{ route('carga-productos.store', [1]) }}" class="px-6">
+                @csrf
+                <div class="mx-auto flex flex-col w-1/2" x-data="importacionProductos1()">
                     <a href="#"
                        class="mtv-button-secondary-white text-lg no-underline self-center my-4">
                         @svg('vaadin-file-table', ['class' => 'w-5 h-5 inline-block text-mtv-secondary'])
@@ -24,11 +25,34 @@
                         :id="__('productos_import_file')"
                     />
                     <button type="submit"
+                            @click="muestraConfirmacion($event)"
                             class="mtv-button-secondary self-center my-4">
                         Procesar
-                    </button>
-                </div>
-            </div>
+                    </button>                    
+                </div>                
+            </form>
+
+            <script type="text/javascript">
+                function importacionProductos1() {
+                    return {                        
+                        muestraConfirmacion(e) {    
+                            e.preventDefault();                                
+                            Swal.fire({
+                                ...SwalMTVCustom,
+                                title: 'Confirmación',
+                                html: "Sólo se te permite una carga masiva de datos." + 
+                                    '<p class="font-bold mt-3">¿Quieres importar tus productos en este momento?</p>',                                        
+                                confirmButtonText: 'Sí',
+                                cancelButtonText: 'Después',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    document.getElementById('cargaProductosForm').submit();                                    
+                                }
+                            })
+                        }
+                    }
+                }
+            </script>
         </div>
     </div>
 </x-app-layout>

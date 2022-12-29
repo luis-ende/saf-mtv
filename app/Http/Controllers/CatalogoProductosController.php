@@ -6,9 +6,11 @@ use App\Models\Producto;
 use Illuminate\Http\Request;
 
 use Illuminate\Validation\Rule;
+use App\Imports\ProductosImport;
 use App\Models\CatalogoProductos;
 use App\Models\ProductoCategoria;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Validation\ValidationException;
 
 class CatalogoProductosController extends Controller
@@ -125,7 +127,12 @@ class CatalogoProductosController extends Controller
 
             return redirect()->route('alta-producto-3.show', [$producto]);
         } elseif ($registroFase === 3) {
-            $producto->addMedia($request->file['producto_fotos'])->toMediaCollection('fotos');
+            $fotosFiles = $request->file['producto_fotos'];
+
+            foreach($fotosFiles as $file) {
+                $producto->addMedia($file)->toMediaCollection('fotos');
+            }
+            
             $producto->update(['registro_fase' => $registroFase]);
             
 
@@ -147,5 +154,27 @@ class CatalogoProductosController extends Controller
     public function showImportacionProductos2() 
     {
         return view('catalogo-productos.importacion-productos-2');
+    }
+
+    public function storeCargaProductos(Request $request, int $cargaFase) 
+    {
+        if ($cargaFase === 1) {
+            $this->validate($request, [
+                'productos_import_file' => 'required|file|mimes:xlsx|max:1000',                
+            ]);
+        }
+        
+        $archivoImportacion = $request->file('productos_import_file');
+        $archivoImportacionPath = $archivoImportacion->store('public/producto_importaciones');
+
+        $opciones['carga_fase'] = $cargaFase;
+        $catalogoId = $request->user()->persona->catalogoProductos->id;
+
+        try {            
+            // Excel::import(new ProductosImport($catalogoId, $opciones), $archivoImportacionPath);
+            $rows = Excel::toArray(new ProductosImport($catalogoId, $opciones), $archivoImportacionPath);            
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+
+        }
     }
 }
