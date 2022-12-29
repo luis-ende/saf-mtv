@@ -17,8 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_cat_productos')->constrained('cat_productos');
             $table->char('tipo', 1); // 'B' = 'Bien', 'S' = 'Servicio'
-            $table->unsignedBigInteger('id_cabms')->nullable();
-            $table->string('ids_categorias');
+            $table->unsignedBigInteger('id_cabms')->nullable();            
             $table->string('nombre', 255);
             $table->string('descripcion', 140);
             // Si el tipo de producto es 'Bien'

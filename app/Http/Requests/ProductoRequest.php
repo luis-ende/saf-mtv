@@ -9,8 +9,7 @@ use App\Models\Producto;
 
 class ProductoRequest extends FormRequest
 {
-    public const PRODUCTO_REQUEST_RULES = [
-        'id_cabms' => 'required|integer',
+    public const PRODUCTO_REQUEST_RULES = [        
         'tipo_producto' => [
             'required', 
             Rule::in([
@@ -18,6 +17,7 @@ class ProductoRequest extends FormRequest
                 Producto::TIPO_PRODUCTO_SERVICIO_ID
             ])
         ],
+        'ids_categorias_scian' => 'required|json',
         'nombre' => 'required|string|max:255',
         'descripcion' => 'required|string|max:140',
         'marca' => 'string|max:255',

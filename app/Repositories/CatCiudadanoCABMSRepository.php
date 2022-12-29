@@ -64,34 +64,12 @@ class CatCiudadanoCABMSRepository
         return $giros;
     }
 
-    public function obtieneClavesCABMS(string $criterioBusqueda, string $tipoProducto = Producto::TIPO_PRODUCTO_BIEN_ID): array {
-        // Ejemplo de query:
-        // SELECT * FROM cat_cabms cc  JOIN cat_categorias_scian ccs ON ccs.id = cc.id_categoria_scian
-        // WHERE SIMILARITY(LOWER(nombre_cabms), 'nopal') > 0.1 OR
-        // SIMILARITY(LOWER(palabras_clave_afines), 'nopal') > 0.1;
-
+    public function obtieneClavesCABMS(string $criterioBusqueda, string $tipoProducto = Producto::TIPO_PRODUCTO_BIEN_ID): array {        
         $clavesCABMS = [];
 
         if ($criterioBusqueda === '') {
             return $clavesCABMS;
         }
-
-        // Se aplica menor umbral de coincidencia para servicios (0.1) ya que los nombres cabms son más largos
-        $searchCriteria1 = [
-            [
-                DB::raw("SIMILARITY(LOWER(nombre_cabms), LOWER('{$criterioBusqueda}'))"),
-                '>',
-                $tipoProducto === Producto::TIPO_PRODUCTO_BIEN_ID ? '0.4' : '0.1',
-            ]
-        ];
-
-        $searchCriteria2 = [
-            [
-                DB::raw("SIMILARITY(LOWER(palabras_clave_afines), LOWER('{$criterioBusqueda}'))"),
-                '>',
-                '0.5',
-            ]
-        ];
 
         $searchCriteriaTipoBien = [
             [
@@ -113,13 +91,14 @@ class CatCiudadanoCABMSRepository
             ? $searchCriteriaTipoServicio : $searchCriteriaTipoBien;
 
         $query = DB::table('cat_cabms')
-            ->select( 'cat_cabms.id', 'cat_cabms.cabms', 'cat_cabms.nombre_cabms', 'cat_categorias_scian.categoria_scian', 'cat_sectores.sector')
+            ->select( 'cat_cabms.id', 'cat_cabms.cabms', 'cat_cabms.nombre_cabms', 'cat_categorias_scian.categoria_scian', 'cat_sectores.sector', 
+                DB::raw("SIMILARITY(nombre_cabms, '{$criterioBusqueda}') as similarity"))
             ->join('cat_categorias_scian', 'cat_categorias_scian.id', '=', 'cat_cabms.id_categoria_scian')
             ->join('cat_sectores', 'cat_sectores.id', '=', 'cat_categorias_scian.id_sector')
-            ->where($searchCriteriaTipo)
-            ->where($searchCriteria1)
-            ->orWhere($searchCriteria2)
-            ->orderBy('cat_cabms.nombre_cabms');
+            ->where($searchCriteriaTipo)            
+            ->whereRaw("'{$criterioBusqueda}' % ANY(STRING_TO_ARRAY(nombre_cabms, ' '))")            
+            ->orderByDesc('similarity')
+            ->limit(100);
 
         $clavesCABMS = $query->get()->toArray();
 

@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\ProductoCategoria;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Producto extends Model implements HasMedia
@@ -23,8 +24,7 @@ class Producto extends Model implements HasMedia
      */
     protected $fillable = [
         'id_cat_productos',
-        'tipo',
-        'id_cabms',
+        'tipo',        
         'nombre',
         'descripcion',        
         'marca',
@@ -75,5 +75,10 @@ class Producto extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb-cropped')
             ->crop('crop-center', 240, 160);
+    }
+
+    public function categorias() 
+    {
+        return $this->hasMany(ProductoCategoria::class, 'id_producto');
     }
 }

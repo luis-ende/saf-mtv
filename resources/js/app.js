@@ -50,7 +50,8 @@ Alpine.data('busquedaCABMS', () => ({
         removeItemButton: true,
         searchResultLimit: 50,
         searchFloor: 1,
-        searchChoices: false
+        searchChoices: false,
+        shouldSort: false, // El backend regresa los resultados ya ordenados por grado de similitud
     }),
     categoriasChoices: new Choices('#categorias_scian', {
         allowHTML: false,
@@ -117,7 +118,8 @@ Alpine.data('busquedaCABMS', () => ({
     setSeleccionCategorias(selectCategorias) {
         const selected = [...selectCategorias.selectedOptions]
                 .map(option => option.value);
-        this.seleccionCategorias = selected.join(',');
+        this.seleccionCategorias = JSON.stringify(selected);
+        console.log(this.seleccionCategorias);
     }
 }))
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Validation\Rule;
 use App\Models\CatalogoProductos;
+use App\Models\ProductoCategoria;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -62,14 +63,14 @@ class CatalogoProductosController extends Controller
         try {
             if ($registroFase === 1) {
                 // $rules = ProductoRequest::PRODUCTO_REQUEST_RULES
-                $this->validate($request, [
-                    'id_cabms' => 'required|integer',
+                $this->validate($request, [                    
                     'tipo_producto' => [
                         'required', 
                         Rule::in([
                             Producto::TIPO_PRODUCTO_BIEN_ID, 
                             Producto::TIPO_PRODUCTO_SERVICIO_ID])
                         ],
+                    'ids_categorias_scian' => 'required|json',
                 ]);    
             }            
 
@@ -97,21 +98,30 @@ class CatalogoProductosController extends Controller
                 ->withInput();
         }
             
-        if ($registroFase === 1) {
+        if ($registroFase === 1) {            
+            // TODO: Abrir db transaction
             $productoNuevo = Producto::create([
                 'id_cat_productos' => $catalogoId,
-                'tipo' => $request->input('tipo_producto'),
-                'id_cabms' => $request->input('id_cabms'),
+                'tipo' => $request->input('tipo_producto'),                
                 'nombre' => '[En proceso de registro]',
                 'descripcion' => '[En proceso de registro]',
                 'registro_fase' => $registroFase,
             ]);
 
+            $categorias = json_decode($request->input('ids_categorias_scian'), true);
+            foreach($categorias as $categoriaId) {
+                ProductoCategoria::create([
+                    'id_producto' => $productoNuevo->id,
+                    'id_categoria_scian' => $categoriaId,
+                ]);
+            }
+
             return redirect()->route('alta-producto-2.show', [$productoNuevo->id]);
         } elseif ($registroFase === 2) {
             $productoData = $request->only('nombre', 'descripcion', 'marca', 'modelo', 
                                             'color', 'material', 'codigo_barras');
-            $producto->update($productoData);
+            $productoData['registro_fase'] = $registroFase;
+            $producto->update($productoData);            
 
             return redirect()->route('alta-producto-3.show', [$producto]);
         } elseif ($registroFase === 3) {
