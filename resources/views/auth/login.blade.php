@@ -1,56 +1,68 @@
 <x-app-layout>
-    <x-auth-card>
-        <!-- Session Status -->
+<!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
-
-        <div class="text-slate-800 font-bold text-lg p-6 bg-white border-b border-gray-200">
-            Inicio de sesión en Mi Tiendita Virtual
-            @svg('entypo-login', ['class' => 'h-7 w-7 inline-block ml-1'])
-        </div>
-        <div class="p-6 bg-[#F7F3ED] rounded border-b border-gray-200 text-base text-center mb-3">
-            Inicia sesión para actualizar tus datos, dar a conocer tus productos, y consultar tus notificaciones de oportunidades de negocio.
+    <div class="login-page">
+        <div class="login-page-left">
+            <!-- Aquí va la imagen que falta -->
         </div>
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+        <div class="login-page-rigth">
+                <h1>Bienvenido a Mi Tiendita Virtual</h1>
+                <h2>Has llegado al espacio donde podrás crear tu catálogo de productos y dar seguimiento a las convocatorias del Gobierno de la Ciudad de México</h2>
 
-            <!-- RFC -->            
-            <x-rfc-validacion-input id="rfc"
-                                    name="rfc"
-                                    :modo="__('login')"
-                                    :value="old('rfc')" />                            
-            <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
+            <div class="form-register">
+                <form method="POST" action="{{ route('login') }}">
+                @csrf
 
-            <!-- Password -->
-            <x-password-input
-                id="password"
-                name="password"
-                label_id="password"
-                label="Contraseña"
-                required
-            />
+                <!-- RFC -->
+                <x-rfc-validacion-input id="rfc"
+                                        name="rfc"
+                                        :modo="__('login')"
+                                        :value="old('rfc')" />
+                <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
 
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Recordar credenciales') }}</span>
-                </label>
+                <!-- Password -->
+                <x-password-input
+                    id="password"
+                    name="password"
+                    label_id="password"
+                    label="Contraseña"
+                    required
+                />
+
+                <!-- Remember Me -->
+                <div class="remember-password">
+                        <label for="remember_me" class="inline-flex items-center">
+                            <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
+                            <span class="remember">{{ __('Recordar credenciales') }}</span>
+                        </label>
+
+                        @if (Route::has('password.request'))
+                            <a class="recover-password" href="{{ route('password.request') }}">
+                                {{ __('¿Olvidaste tu contraseña?') }}
+                            </a>
+                        @endif
+                        </div>
+
+                    <div class="button-content">
+                        <button id="btn_login" class="btn-signUp">
+                            Ingresar
+                        </button>
+                    </div>
+                </div>
+            </form>
+                <p class="font-bold my-3 register">¿Aún no estás regístrado?
+                    <br>
+                    <a class="register-link" href="{{ route('registro-inicio') }}">Regístrate</a>
+                </p>
+            <div class="register-providers">
+                    <p class="font-bold my-3">¿Estás registrado en el padrón de proveedores?
+                        <br>
+                        <a href="https://tianguisdigital.finanzas.cdmx.gob.mx/login">ingresa aquí.</a>
+                    </p>
             </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 px-3" href="{{ route('password.request') }}">
-                        {{ __('¿Olvidaste tu contraseña?') }}
-                    </a>
-                @endif
-
-                <button id="btn_login" class="btn btn-primary">
-                    Iniciar sesión
-                </button>
-            </div>
-        </form>
-        <p class="font-bold my-3">Si ya cuentas con tu registro en el Padrón de Proveedores,
-            <a href="https://tianguisdigital.finanzas.cdmx.gob.mx/login">ingresa aquí.</a></p>
-    </x-auth-card>
+        </div>
+    </div>
 </x-app-layout>
+
+

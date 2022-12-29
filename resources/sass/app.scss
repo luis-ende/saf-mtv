@@ -1,20 +1,21 @@
 // Variables
-@import 'variables';
+@import "variables";
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
-@import 'main_page';
+@import "~bootstrap/scss/bootstrap";
+@import "main_page";
+@import "login";
 
-@import 'choices.js/src/styles/choices.scss';
+@import "choices.js/src/styles/choices.scss";
 
-[type="checkbox"], [type="radio"] {
+[type="checkbox"],
+[type="radio"] {
     color: $secondary;
 }
 
 [type="search"]:focus {
-    --tw-ring-color: #235B4E !important;
+    --tw-ring-color: #235b4e !important;
 }
-
 
 // Bootstrap Accordion
 .accordion-button {
@@ -73,20 +74,21 @@
     flex-direction: column-reverse;
 }
 
-.mtv-text-input:invalid ~ label, .mtv-text-input:invalid {
-    color: #9F2241 !important;
-    border-color: #9F2241 !important;
+.mtv-text-input:invalid ~ label,
+.mtv-text-input:invalid {
+    color: #9f2241 !important;
+    border-color: #9f2241 !important;
     outline: none;
 }
 
 .mtv-input-wrapper:focus-within label {
-    color: #235B4E;
+    color: #235b4e;
 }
 
 // Estilos de sweetalert2
 
 .swal2-mtv-title {
-    background-color: #E6E6E6;
+    background-color: #e6e6e6;
     font-size: 1.2rem !important;
     font-weight: lighter !important;
     padding-top: 0.4em !important;
@@ -100,7 +102,7 @@
 }
 
 .swal2-mtv-title-warning:before {
-    color: #9F2241;
+    color: #9f2241;
     content: url("data:image/svg+xml,%3csvg width='30px' height='30px' version='1.2' baseProfile='tiny' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239F2241'%3e%3cpath d='M21.171 15.398l-5.912-9.854c-.776-1.293-1.963-2.033-3.259-2.033s-2.483.74-3.259 2.031l-5.912 9.856c-.786 1.309-.872 2.705-.235 3.83.636 1.126 1.878 1.772 3.406 1.772h12c1.528 0 2.77-.646 3.406-1.771.637-1.125.551-2.521-.235-3.831zm-9.171 2.151c-.854 0-1.55-.695-1.55-1.549 0-.855.695-1.551 1.55-1.551s1.55.696 1.55 1.551c0 .854-.696 1.549-1.55 1.549zm1.633-7.424c-.011.031-1.401 3.468-1.401 3.468-.038.094-.13.156-.231.156s-.193-.062-.231-.156l-1.391-3.438c-.09-.233-.129-.443-.129-.655 0-.965.785-1.75 1.75-1.75s1.75.785 1.75 1.75c0 .212-.039.422-.117.625z'%3e%3c/path%3e%3c/svg%3e");
     margin-right: 0.5em;
     vertical-align: middle;
@@ -111,15 +113,15 @@
 }
 
 .swal2-mtv-confirm-button {
-    background-color: #235B4E !important;
+    background-color: #235b4e !important;
     font-weight: bold !important;
     order: 2;
 }
 
 .swal2-mtv-cancel-button {
-    background-color: #E6E6E6 !important;
-    color: #98989A !important;
-    font-weight: bold !important;;
+    background-color: #e6e6e6 !important;
+    color: #98989a !important;
+    font-weight: bold !important;
     order: 1;
     margin-right: 1.5em !important;
     outline: none;
@@ -127,7 +129,7 @@
 
 .swal2-mtv-html-container .swal-mtv-html-container-action {
     margin-top: 1em;
-    color: #235B4E;
+    color: #235b4e;
     font-weight: bold;
     margin-bottom: 0;
 }
@@ -135,7 +137,6 @@
 .swal2-mtv-html-container-reg-completo {
     margin-top: 0.2em;
 }
-
 
 // Estilos de choices.js
 
@@ -175,7 +176,7 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-    -webkit-text-fill-color: #6F7271;
+    -webkit-text-fill-color: #6f7271;
     -webkit-box-shadow: 0 0 0px 1000px white inset;
     transition: background-color 5000s ease-in-out 0s;
 }
