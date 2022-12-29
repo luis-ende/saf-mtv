@@ -2,24 +2,24 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
         <div class="bg-white overflow-hidden shadow-sm h-screen">
             @include('catalogo-productos.registro-header',
-                       ['titulo' => '',                        
+                       ['titulo' => '',
                         'subtitulo' => '',
                         'texto_secuencia' => 'Paso 3 de 4'])
-            @php($productoId = request()->producto)            
+            @php($productoId = request()->producto)
             <form method="POST" action="{{ route('alta-producto.store', [3, request()->producto]) }}" class="px-6">
                 @csrf
-                <div class="mx-auto flex flex-col w-1/2">   
+                <div class="mx-auto flex flex-col w-1/2">
                     <label class="block basis-full text-xl font-bold text-mtv-secondary mt-2 mb-2 self-center">
                         Guarda tus fotografías
-                    </label>     
+                    </label>
                     <label class="text-mtv-gray text-base mb-3 self-center">
                         Hasta <span class="text-lg font-bold">3</span> imágenes de tu producto en formato jpg o png y de hasta 1 MB cada una.
-                    </label> 
+                    </label>
                     <x-producto-fotos-upload
                         :producto_id=$productoId
-                    />                                           
-                </div>                                
-            </form>            
+                    />
+                </div>
+            </form>
         </div>
     </div>
-</x-registro-layout>
+</x-app-layout>

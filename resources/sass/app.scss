@@ -148,6 +148,22 @@
     color: #6f7271;
 }
 
+.choices__list--multiple .choices__item {
+    background-color: #235b4e;
+    color: white;
+    border: 1px solid #e6e6e6;
+}
+
+.choices__list--multiple > .choices__item.is-highlighted {
+    background-color: #ddc9a3;
+    color: white;
+    border: 1px solid #e6e6e6;
+}
+
+.choices__inner--categorias {
+    padding-top: 0.7rem;
+    max-width: 32rem;
+}
 
 /* Change Autocomplete styles in Chrome */
 input:-webkit-autofill,

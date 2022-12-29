@@ -34,19 +34,36 @@ window.Alpine = Alpine;
 
 Alpine.store('filesUploaded', { hasFilesUploaded: false });
 
-// Función reutilizable para el componente cabms-categorias-select.blade.php
+// Función reutilizable para el componente resources/views/components/cabms-categorias-select.blade.php
+// Componente de selección de CABMS y Categorías SCIAN para productos
 Alpine.data('busquedaCABMS', () => ({
     tipoProducto: 'B',
+    seleccionCategorias: '',
     busquedaCABMSRoute: '/catalogo-cabms/',
+    busquedaCategoriasRoute: '/catalogo-cabms/categorias/',
     cabmsChoices: new Choices('#id_cabms', {
         allowHTML: false,
         loadingText: 'Cargando...',
         noChoicesText: 'Sin resultados para elegir',
         noResultsText: 'No se encontraron resultados',
         itemSelectText: 'Seleccionar',
+        removeItemButton: true,
         searchResultLimit: 50,
         searchFloor: 1,
         searchChoices: false
+    }),
+    categoriasChoices: new Choices('#categorias_scian', {
+        allowHTML: false,
+        loadingText: 'Cargando...',
+        noChoicesText: 'Sin categorías para elegir',
+        noResultsText: 'No se encontraron categorías',
+        itemSelectText: 'Seleccionar',
+        searchChoices: true,
+        duplicateItemsAllowed: false,
+        removeItemButton: true,
+        classNames: {
+            containerInner: 'choices__inner--categorias choices__inner',
+        }
     }),
     searchTimeOut: 500,
     typingTimer: null,
@@ -79,6 +96,28 @@ Alpine.data('busquedaCABMS', () => ({
                 });
             });
         })
+    },
+    buscaCategorias(cabmsId) {
+        this.categoriasChoices.clearChoices();
+        this.categoriasChoices.setChoices(() => {
+            return fetch(
+                this.busquedaCategoriasRoute + cabmsId
+            ).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                return data.map(function(item) {
+                    return {
+                        value: item.id,
+                        label: item.categoria_scian,
+                    };
+                });
+            });
+        });
+    },
+    setSeleccionCategorias(selectCategorias) {
+        const selected = [...selectCategorias.selectedOptions]
+                .map(option => option.value);
+        this.seleccionCategorias = selected.join(',');
     }
 }))
 

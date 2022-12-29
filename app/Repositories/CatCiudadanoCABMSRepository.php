@@ -126,6 +126,32 @@ class CatCiudadanoCABMSRepository
         return $clavesCABMS;
     }
 
+    public function obtieneCategoriasScianPorCABMS(int $cabmsId): array
+    {
+        $categoriasScian = [];
+
+        $cabmsRows = DB::table('cat_cabms')
+                    ->select('cabms')
+                    ->where('id', '=', $cabmsId)
+                    ->get();
+        $cabms = null;
+        if (count($cabmsRows) > 0) {
+            $cabms = $cabmsRows[0]->cabms;
+        }
+
+        if ($cabms) {
+            $query = DB::table('cat_cabms')
+                ->select('cat_categorias_scian.id', 'cat_categorias_scian.categoria_scian')
+                ->join('cat_categorias_scian', 'cat_categorias_scian.id', '=', 'cat_cabms.id_categoria_scian')
+                ->where('cat_cabms.cabms', '=', $cabms)
+                ->orderBy('cat_categorias_scian.categoria_scian');
+
+            $categoriasScian = $query->get()->toArray();
+        }
+
+        return $categoriasScian;
+    }
+
     private function getCategoriasScianQBuilder()
     {
         return DB::table('cat_categorias_scian')
