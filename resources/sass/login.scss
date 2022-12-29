@@ -1,0 +1,147 @@
+.btn-signUp {
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    background-color: #235b4e;
+    padding: 5px 20px;
+    margin-bottom: 20px;
+    opacity: 1;
+    transition: 0.3s;
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+}
+.btn-signUp:hover {
+    background-color: #bc955c;
+    border: 0;
+}
+
+.form-register {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-register button {
+    margin-top: 50px;
+}
+
+.login-page {
+    display: flex;
+    padding-top: 50px;
+}
+
+.login-page h1 {
+    font-size: 2.6rem;
+    font-weight: 900;
+    color: #235b4e;
+    padding: 0 0 30px 0;
+    text-shadow: 3px 3px 3px #d0d0d0;
+}
+
+.login-page h2 {
+    font-size: 12px;
+    font-size: 1.2rem;
+    font-weight: normal;
+    color: #235b4e;
+    padding: 0px 100px 20px 100px;
+}
+
+.welcome-message {
+    padding-right: 40px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.recover-password {
+    font-size: 10px;
+    font-weight: 600px;
+    color: #235b4e;
+    text-decoration: none;
+}
+
+.recover-password:hover {
+    color: #9f2241;
+}
+
+.remember-password {
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.remember {
+    color: #98989a;
+    font-size: 10px;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.button-content {
+    display: flex;
+    justify-content: center;
+}
+
+.register {
+    text-align: center;
+    border-bottom: 2px solid #bc955c;
+    border-style: dotted;
+    margin-top: -20px;
+    padding-bottom: 20px;
+    color: #6f7271;
+    font-size: 12px;
+}
+
+.register-link {
+    font-size: 16px;
+    font-weight: 600px;
+    color: #235b4e;
+    text-decoration: none;
+    padding-bottom: 20px;
+}
+
+.register a:hover {
+    color: #9f2241;
+}
+
+.register-providers {
+    text-align: center;
+}
+
+.register-providers p {
+    color: #bc955c;
+    font-size: 12px;
+}
+
+.register-providers a {
+    font-size: 16px;
+    font-weight: 600px;
+    color: #bc955c;
+    text-decoration: none;
+}
+
+.register-providers a:hover {
+    color: #9f2241;
+}
+
+.img-cdmx {
+    margin-top: -200px;
+    margin-left: -300px;
+}
+
+.login-page-left {
+    width: 60%;
+}
+
+.login-page-rigth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
