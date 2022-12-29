@@ -156,6 +156,11 @@ class CatalogoProductosController extends Controller
         return view('catalogo-productos.importacion-productos-2');
     }
 
+    public function showImportacionProductos3() 
+    {
+        return view('catalogo-productos.importacion-productos-3');
+    }
+
     public function storeCargaProductos(Request $request, int $cargaFase) 
     {
         if ($cargaFase === 1) {

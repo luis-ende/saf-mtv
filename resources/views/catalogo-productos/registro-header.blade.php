@@ -1,7 +1,7 @@
 <div class="flex flex-col flex-nowrap">
     <div class="py-3 bg-mtv-primary px-3 flex flex-row flex-nowrap font-bold md:text-base xs:text-sm h-14">
-        @php($currentRoute = Route::current()->getName())        
-        @if($currentRoute !== 'catalogo-registro-inicio')
+        @php($currentRoute = Route::current()->getName())                
+        @if(!in_array($currentRoute, ['catalogo-registro-inicio', 'importacion-productos-1.show', 'importacion-productos-2.show', 'importacion-productos-3.show']))
             <a href="#"
                 onclick="history.back()"
                 class="text-mtv-gold-light no-underline hover:text-white flex flex-row">

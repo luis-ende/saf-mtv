@@ -5,7 +5,7 @@
                        ['titulo' => 'Carga masiva de productos',
                         'titulo_icono' => 'adjuntar_xls',
                         'subtitulo' => '',
-                        'texto_secuencia' => 'Paso 1 de 2'])
+                        'texto_secuencia' => 'Paso 1 de 3'])
             <form id="cargaProductosForm" method="POST" action="{{ route('carga-productos.store', [1]) }}" class="px-6">
                 @csrf
                 <div class="mx-auto flex flex-col w-1/2" x-data="importacionProductos1()">
