@@ -46,6 +46,7 @@ Para realizar una actualización completa del ambiente de desarrollo ejecutar de
 ### Compilación de assets
 
 - Para generar los assets desde la carpeta raíz del proyecto ejecutar: `npm run build`
+  - Eventualmente puede ser necesario ejecutar primero `npm install`
 - `npm run dev` permite escuchar los cambios realizados en el código para refrescar el navegador sin tener que compilar los assets cada vez
 
 ### SVGs
