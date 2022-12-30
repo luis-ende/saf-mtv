@@ -174,6 +174,8 @@ class CatalogoProductosController extends Controller
 
     public function storeCargaProductos(Request $request, int $cargaFase)
     {
+        $catalogoProductos = $request->user()->persona->catalogoProductos;
+
         if ($cargaFase === 1) {
             $this->validate($request, [
                 /*'productos_import_file' => 'required|file|mimes:xlsx,csv|max:1000',*/
@@ -181,11 +183,13 @@ class CatalogoProductosController extends Controller
             ]);
         }
 
+        // Se guarda temporalmente el archivo de importación, eliminar archivo al completar la carga de productos.
         $archivoImportacion = $request->file('productos_import_file');
-        $archivoImportacionPath = $archivoImportacion->store('public/producto_importaciones');
+        $media = $catalogoProductos->addMedia($archivoImportacion)->toMediaCollection('importaciones');
+        $archivoImportacionPath = $media->getPath();
 
         $opciones['carga_fase'] = $cargaFase;
-        $catalogoId = $request->user()->persona->catalogoProductos->id;
+        $catalogoId = $catalogoProductos->id;
 
         try {
             // Excel::import(new ProductosImport($catalogoId, $opciones), $archivoImportacionPath);
