@@ -5,11 +5,12 @@
                        ['titulo' => '',
                         'subtitulo' => '',
                         'texto_secuencia' => 'Paso 4 de 4'])
-            <div class="px-6">
+            @php($productoId = request()->producto)
+            <form method="POST" enctype="multipart/form-data"
+                  action="{{ route('alta-producto.store', [4, $productoId]) }}"
+                  class="px-6">
+                @csrf
                 <div class="mx-auto flex flex-col w-1/2">
-                    <label class="block basis-full text-xl font-bold text-mtv-secondary mt-2 mb-2 self-center">
-                        Adjuntar documentos
-                    </label>
                     <label class="block basis-full text-xl font-bold text-mtv-secondary mt-2 mb-2 self-center">
                         1. Ficha técnica de tu producto
                     </label>
@@ -21,21 +22,22 @@
                         :id="__('ficha_tecnica_file')"
                      />
                     <label class="block basis-full text-xl font-bold text-mtv-secondary mt-2 mb-2 self-center">
-                        2. Ficha técnica de tu producto
+                        2. ¿Quieres subir otro documento?
                     </label>
                     <label class="text-mtv-gray text-base mb-3 self-center">
                         Por ejemplo: certificados , manual de uso, entre otros.
                     </label>
                     <x-input-upload
-                        :name="__('certificado_file')"
-                        :id="__('certificado_file')"
+                        :name="__('otro_documento_file')"
+                        :id="__('otro_documento_file')"
+                        :allow_delete="true"
                      />
                     <button type="submit"
                             class="mtv-button-secondary self-center my-4">
                             Finalizar
                     </button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </x-app-layout>

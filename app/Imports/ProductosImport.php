@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Producto;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\ToModel;
 use _PHPStan_582a9cb8b\Nette\Neon\Exception;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -28,32 +29,33 @@ class ProductosImport implements ToModel, WithHeadingRow, WithValidation
     */
     public function model(array $row)
     {
-        // TODO: Eventualmente remover clave restricción de requerido en Clave CABMS
-        if (empty($row[$this->opciones['map_clave_cabms']])) {
-            throw new \Exception('Clave CABMS vacía.');
-        }
-
-        if (empty($row[$this->opciones['map_nombre']])) {
-            throw new \Exception('Nombre de producto vacío.');
-        }
-
-        if (empty($row[$this->opciones['map_descripcion']])) {
-            throw new \Exception('Descripción de producto vacía.');
-        }
-
+        // TODO: Asignar índices de columnas según posición de columnas en la plantilla
         return new Producto([
             'id_cat_productos' => $this->catalogoId,
-            'tipo' => $this->opciones['map_tipo_producto'],
-            'clave_cabms' => $row[$this->opciones['map_clave_cabms']],
-            'nombre' => $row[$this->opciones['map_nombre']],
-            'descripcion' => $row[$this->opciones['map_descripcion']],
-            'precio' => floatval($row[$this->opciones['map_precio']],),
+            'tipo' => $row[3],
+            'nombre' => $row[4],
+            'descripcion' => $row[5],
+            'marca' => $row[6],
         ]);
     }
 
     public function rules(): array
     {
-        return [            
+        return [
+            'tipo_producto' => [
+                'required',
+                Rule::in([
+                    Producto::TIPO_PRODUCTO_BIEN_ID,
+                    Producto::TIPO_PRODUCTO_SERVICIO_ID
+                ])
+            ],
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:140',
+            'marca' => 'string|max:255',
+            'modelo' => 'string|max:255',
+            'color' => 'string|max:30',
+            'material' => 'string|max:255',
+            'codigo_barras' => 'string|max:100',
         ];
     }
 }

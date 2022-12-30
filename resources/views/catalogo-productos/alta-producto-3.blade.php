@@ -6,7 +6,9 @@
                         'subtitulo' => '',
                         'texto_secuencia' => 'Paso 3 de 4'])
             @php($productoId = request()->producto)
-            <form method="POST" action="{{ route('alta-producto.store', [3, request()->producto]) }}" class="px-6">
+            <form method="POST" enctype="multipart/form-data"
+                  action="{{ route('alta-producto.store', [3, $productoId]) }}"
+                  class="px-6">
                 @csrf
                 <div class="mx-auto flex flex-col w-1/2">
                     <label class="block basis-full text-xl font-bold text-mtv-secondary mt-2 mb-2 self-center">
@@ -16,7 +18,7 @@
                         Hasta <span class="text-lg font-bold">3</span> imágenes de tu producto en formato jpg o png y de hasta 1 MB cada una.
                     </label>
                     <x-producto-fotos-upload
-                        :producto_id=$productoId
+                        :producto_id="$productoId"
                     />
                 </div>
             </form>

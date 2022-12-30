@@ -6,7 +6,10 @@
                         'titulo_icono' => 'adjuntar_xls',
                         'subtitulo' => '',
                         'texto_secuencia' => 'Paso 1 de 3'])
-            <form id="cargaProductosForm" method="POST" action="{{ route('carga-productos.store', [1]) }}" class="px-6">
+            <form id="cargaProductosForm"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  action="{{ route('carga-productos.store', [1]) }}" class="px-6">
                 @csrf
                 <div class="mx-auto flex flex-col w-1/2" x-data="importacionProductos1()">
                     <a href="#"
@@ -28,25 +31,25 @@
                             @click="muestraConfirmacion($event)"
                             class="mtv-button-secondary self-center my-4">
                         Procesar
-                    </button>                    
-                </div>                
+                    </button>
+                </div>
             </form>
 
             <script type="text/javascript">
                 function importacionProductos1() {
-                    return {                        
-                        muestraConfirmacion(e) {    
-                            e.preventDefault();                                
+                    return {
+                        muestraConfirmacion(e) {
+                            e.preventDefault();
                             Swal.fire({
                                 ...SwalMTVCustom,
                                 title: 'Confirmación',
-                                html: "Sólo se te permite una carga masiva de datos." + 
-                                    '<p class="font-bold mt-3">¿Quieres importar tus productos en este momento?</p>',                                        
+                                html: "Sólo se te permite una carga masiva de datos." +
+                                    '<p class="font-bold mt-3">¿Quieres importar tus productos en este momento?</p>',
                                 confirmButtonText: 'Sí',
                                 cancelButtonText: 'Después',
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    document.getElementById('cargaProductosForm').submit();                                    
+                                    document.getElementById('cargaProductosForm').submit();
                                 }
                             })
                         }

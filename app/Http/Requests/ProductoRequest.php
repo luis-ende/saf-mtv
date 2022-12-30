@@ -9,11 +9,11 @@ use App\Models\Producto;
 
 class ProductoRequest extends FormRequest
 {
-    public const PRODUCTO_REQUEST_RULES = [        
+    /*public const PRODUCTO_REQUEST_RULES = [
         'tipo_producto' => [
-            'required', 
+            'required',
             Rule::in([
-                Producto::TIPO_PRODUCTO_BIEN_ID, 
+                Producto::TIPO_PRODUCTO_BIEN_ID,
                 Producto::TIPO_PRODUCTO_SERVICIO_ID
             ])
         ],
@@ -25,9 +25,9 @@ class ProductoRequest extends FormRequest
         'color' => 'string|max:30',
         'material' => 'string|max:255',
         'codigo_barras' => 'string|max:100',
-    ];
+    ];*/
 
-    /**          
+    /**
      * @return bool
      */
     public function authorize()
@@ -35,12 +35,13 @@ class ProductoRequest extends FormRequest
         return true;
     }
 
-    /**     
+    /**
      *
      * @return array<string, mixed>
      */
     public function rules()
     {
-        return self::PRODUCTO_REQUEST_RULES;
+        /*return self::PRODUCTO_REQUEST_RULES;*/
+        return [];
     }
 }

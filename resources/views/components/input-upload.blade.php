@@ -1,4 +1,4 @@
-@props(['name' => 'input_file', 'id' => 'input_label'])
+@props(['name' => 'input_file', 'id' => 'input_label', 'allow_delete' => false])
 
 <div class="relative flex flex-col text-gray-400 m-0" x-data="fileUpload_{{ $id }}()">
     <div x-ref="dnd"
@@ -19,7 +19,13 @@
     </div>
 
     <div class="text-mtv-text-gray my-3 self-center" x-show="upload_{{ $id }} !== null">
-        <label class="font-bold" x-text="upload_{{ $id }}"></label>        
+        <label class="font-bold" x-text="upload_{{ $id }}"></label>
+        @if($allow_delete)
+            @svg('sui-cross', [
+            'class' => 'h-3 w-3 inline-block ml-3 cursor-pointer',
+            '@click' => "document.getElementById('carta_presentacion').value = null; cartaPresentacion = null"
+            ])
+        @endif
     </div>
 </div>
 
