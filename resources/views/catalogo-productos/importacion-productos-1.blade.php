@@ -1,21 +1,22 @@
 <x-app-layout :show_main_menu="false">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
-        <div class="bg-white overflow-hidden shadow-sm">
+        <div class="bg-white overflow-hidden shadow-sm h-screen">
             @include('catalogo-productos.registro-header',
                        ['titulo' => 'Carga masiva de productos',
-                        'titulo_icono' => 'adjuntar_xls',
+                        'titulo_icono' => 'tabler-table-import',
                         'subtitulo' => '',
                         'texto_secuencia' => 'Paso 1 de 3'])
             <form id="cargaProductosForm"
                   method="POST"
                   enctype="multipart/form-data"
                   action="{{ route('carga-productos.store', [1]) }}" class="px-6">
-                @csrf
+                @csrf                
                 <div class="mx-auto flex flex-col w-1/2" x-data="importacionProductos1()">
-                    <a href="#"
-                       class="mtv-button-secondary-white text-lg no-underline self-center my-4">
-                        @svg('vaadin-file-table', ['class' => 'w-5 h-5 inline-block text-mtv-secondary'])
-                        Descarga la plantilla
+                    <a href="{{ Storage::url('plantillas/productos_carga_masiva.xlsx') }}"
+                       download="MTV_Plantilla_Productos.xlsx"
+                       class="mtv-button-secondary-white text-lg no-underline self-center my-4 flex flex-row items-center">
+                        @svg('vaadin-file-table', ['class' => 'w-4 h-4 inline-block mr-1'])
+                        <span>Descarga la plantilla</span>
                     </a>
                     <label class="block basis-full text-xl font-bold text-mtv-secondary mt-2 mb-2 self-center">
                         1. Selecciona el archivo

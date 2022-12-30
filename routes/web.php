@@ -110,7 +110,7 @@ Route::get('/alta-producto-4/{producto}', [CatalogoProductosController::class, '
 Route::post('/alta-producto/{paso}/{producto?}', [CatalogoProductosController::class, 'storeAltaProducto'])->middleware('auth')->name('alta-producto.store');
 
 Route::get('/carga-productos-1', [CatalogoProductosController::class, 'showImportacionProductos1'])->middleware('auth')->name('importacion-productos-1.show');
-Route::get('/carga-productos-2', [CatalogoProductosController::class, 'showImportacionProductos2'])->middleware('auth')->name('importacion-productos-2.show');
+// Route::get('/carga-productos-2', [CatalogoProductosController::class, 'showImportacionProductos2'])->middleware('auth')->name('importacion-productos-2.show');
 Route::get('/carga-productos-3', [CatalogoProductosController::class, 'showImportacionProductos3'])->middleware('auth')->name('importacion-productos-3.show');
 Route::post('/carga-productos/{paso}', [CatalogoProductosController::class, 'storeCargaProductos'])->middleware('auth')->name('carga-productos.store');
 

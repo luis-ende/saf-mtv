@@ -11,6 +11,7 @@ use App\Models\CatalogoProductos;
 use App\Models\ProductoCategoria;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class CatalogoProductosController extends Controller
@@ -174,29 +175,83 @@ class CatalogoProductosController extends Controller
 
     public function storeCargaProductos(Request $request, int $cargaFase)
     {
+        // TODO: Evitar carga masiva si el catálogo ya fue cargado anteriormente
+
         $catalogoProductos = $request->user()->persona->catalogoProductos;
 
-        if ($cargaFase === 1) {
-            $this->validate($request, [
-                /*'productos_import_file' => 'required|file|mimes:xlsx,csv|max:1000',*/
-                'productos_import_file' => 'required|file|max:1000',
-            ]);
-        }
-
-        // Se guarda temporalmente el archivo de importación, eliminar archivo al completar la carga de productos.
-        $archivoImportacion = $request->file('productos_import_file');
-        $media = $catalogoProductos->addMedia($archivoImportacion)->toMediaCollection('importaciones');
-        $archivoImportacionPath = $media->getPath();
-
-        $opciones['carga_fase'] = $cargaFase;
-        $catalogoId = $catalogoProductos->id;
-
         try {
-            // Excel::import(new ProductosImport($catalogoId, $opciones), $archivoImportacionPath);
-            $rows = Excel::toArray(new ProductosImport($catalogoId, $opciones), $archivoImportacionPath);
-            $a = 1;
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $opciones['carga_fase'] = $cargaFase;
+            $catalogoId = $catalogoProductos->id;
 
+            if ($cargaFase === 1) {
+                $this->validate($request, [
+                    /*'productos_import_file' => 'required|file|mimes:xlsx,csv|max:1000',*/
+                    'productos_import_file' => 'required|file|max:1000',
+                ]);
+
+                // Permitir carga de archivo mientras no se haya concluido el proceso de importación        
+                $catalogoProductos->clearMediaCollection('importaciones');                        
+
+                // Se guarda temporalmente el archivo de importación, eliminar archivo al completar la carga de productos.        
+                $archivoImportacion = $request->file('productos_import_file');
+                $media = $catalogoProductos->addMedia($archivoImportacion)->toMediaCollection('importaciones');
+                $archivoImportacionPath = $media->getPath();                
+
+                $plantillaPath = Storage::path('public/plantillas/productos_carga_masiva.xlsx');            
+                $plantillaRows = Excel::toArray(new ProductosImport($catalogoId, $opciones), $plantillaPath);            
+                
+                $rows = Excel::toArray(new ProductosImport($catalogoId, $opciones), $archivoImportacionPath);
+                
+                $plantillaColumnas = array_keys($plantillaRows[0][0]);
+                $importacionColumnas = array_keys($rows[0][0]);
+    
+                $diferencias = array_diff($plantillaColumnas, $importacionColumnas);            
+                if (count($diferencias) > 0) {
+                    throw new \Exception('Las columnas del archivo a cargar no coinciden con las de la plantilla.');
+                }
+                
+                $contadorErrores = 0;
+                $rowsPreviews = array_map(function($row) use(&$contadorErrores) {
+                    $errores = [];
+                    if (empty($row['tipo'])) {
+                        $errores[] = "Columna 'tipo' no contiene información.";
+                    }
+    
+                    if (empty($row['producto'])) {
+                        $errores[] = "Columna 'producto' no contiene información."; 
+                    }
+                    
+                    if (empty($row['descripcion'])) {
+                        $errores[] = "Columna 'descripcion' no contiene información.";
+                    }
+    
+                    if ($errores) {
+                        $contadorErrores++;
+                    }
+    
+                    $rowPreview = [ 
+                        ...$row,
+                        'errores' => count($errores) > 0 ? $errores : null,
+                    ];                
+    
+                    return $rowPreview;
+                }, $rows[0]);
+    
+                return view('catalogo-productos.importacion-productos-2', [
+                    'productos_rechazados' => $contadorErrores,
+                    'rows' => $rowsPreviews,
+                ]);
+            } elseif ($cargaFase === 2) {
+                $archivoImportacionPath = $catalogoProductos->getMedia('importaciones');
+                if ($archivoImportacionPath) {
+                    Excel::import(new ProductosImport($catalogoId, $opciones), $archivoImportacionPath);
+                }
+            }
+            
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator);
+        } catch(\Throwable $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 }

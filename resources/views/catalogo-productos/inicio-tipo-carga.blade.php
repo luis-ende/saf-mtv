@@ -17,7 +17,7 @@
                         <label class="text-mtv-gray font-bold self-center mt-5">¿Quieres cargar varios productos a la vez?</label>
                         <a href="{{ route('importacion-productos-1.show') }}"
                            class="mtv-button-secondary self-center mt-4 no-underline">
-                           @svg('adjuntar_xls', ['class' => 'w-6 h-6 inline-block mr-3'])
+                           @svg('tabler-table-import', ['class' => 'w-6 h-6 inline-block mr-3'])
                            Carga masiva de productos
                         </a>
                         <span class="text-mtv-primary text-basis self-center mb-4">
