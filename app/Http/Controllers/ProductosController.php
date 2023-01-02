@@ -72,14 +72,10 @@ class ProductosController extends Controller
             if ($producto->catalogo->persona->id === Auth::user()->id_persona) {
                 $producto->delete();
 
-                return redirect()->route('catalogo-productos')->with('success', 'Producto eliminado del catalogo.');
-            } else {
-                return redirect()->route('catalogo-productos')->with('error', 'No es posible eliminar el producto.');
+                // TODO: Eliminar fotos y archivos
+                return [$producto->id];
             }
-        }
-
-
-        return redirect()->route('catalogo-productos');
+        }        
     }
 
     public function storeFiles(Request $request, Producto $producto) {

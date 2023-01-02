@@ -25,6 +25,7 @@ class Producto extends Model implements HasMedia
     protected $fillable = [
         'id_cat_productos',
         'tipo',        
+        'id_cabms',
         'nombre',
         'descripcion',        
         'marca',
@@ -51,7 +52,7 @@ class Producto extends Model implements HasMedia
             ];
         }
 
-        $mediaArchivos = $this->getMedia('archivos');
+        $mediaArchivos = $this->getMedia('documentos');
         foreach($mediaArchivos as $archivo) {
             $mediaItems[] = [
                 'id' => $archivo['id'],

@@ -58,7 +58,7 @@
                                 @svg('heroicon-o-trash', ['class' => 'h-5 w-5 inline-block'])
                             </a>
                         </td>
-                    <tr>
+                    </tr>
                 </template>
                 </tbody>
             </table>

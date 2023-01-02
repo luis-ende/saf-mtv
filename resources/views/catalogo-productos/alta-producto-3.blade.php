@@ -17,9 +17,12 @@
                     <label class="text-mtv-gray text-base mb-3 self-center">
                         Hasta <span class="text-lg font-bold">3</span> imágenes de tu producto en formato jpg o png y de hasta 1 MB cada una.
                     </label>
-                    <x-producto-fotos-upload
-                        :producto_id="$productoId"
-                    />
+                    <x-producto-fotos-upload />
+                    <div class="flex justify-content-center mt-3">
+                        <button type="submit" class="mtv-button-secondary">                                
+                            Siguiente
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

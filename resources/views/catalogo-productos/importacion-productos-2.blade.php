@@ -5,8 +5,9 @@
                        ['titulo' => '',                        
                         'subtitulo' => '',
                         'texto_secuencia' => 'Paso 2 de 3'])
-            <form id="cargaProductosForm" method="POST" action="{{ route('carga-productos.store', [1]) }}" class="px-6">
-                @csrf
+            <form id="cargaProductosForm" method="POST" 
+                  action="{{ route('carga-productos.store', [2]) }}" class="px-6">
+                @csrf                
                 <div class="mx-auto flex flex-col w-1/2"">                    
                     <label class="block basis-full text-xl font-bold text-mtv-secondary mt-2 mb-4 self-center">
                         Procesamiento de datos
@@ -45,7 +46,7 @@
                                     <tr class="{{ $row['errores'] ? 'bg-red-100' : '' }}">
                                         <td class="font-bold">{{ $loop->index + 1 }}</td>
                                         <td>{{ $row['tipo'] === 'B' ? 'Bien' : ( $row['tipo'] === 'S' ? 'Servicio' : '') }}</td>
-                                        <td>{{ $row['producto'] }}</td>
+                                        <td>{{ $row['nombre_producto'] }}</td>
                                         <td>   
                                             @if($row['errores'])                                         
                                                 <ul class="text-mtv-primary list-outside list-disc m-0">
@@ -67,10 +68,10 @@
                             Cargar nuevo archivo
                         </a>                    
                     @else                    
-                        <a href="{{ route('carga-productos.store', [2]) }}"
-                           class="mtv-button-secondary self-center my-4 no-underline">
-                            Guardar y continuar
-                        </a>
+                        <button type="submit"
+                                class="mtv-button-secondary self-center my-4">
+                            Cargar productos
+                        </button>
                     @endif                    
                 </div>                
             </form>            

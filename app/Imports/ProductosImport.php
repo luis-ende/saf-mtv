@@ -5,7 +5,6 @@ namespace App\Imports;
 use App\Models\Producto;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\ToModel;
-use _PHPStan_582a9cb8b\Nette\Neon\Exception;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Imports\HeadingRowFormatter;
@@ -28,34 +27,37 @@ class ProductosImport implements ToModel, WithHeadingRow, WithValidation
     * @return \Illuminate\Database\Eloquent\Model|null
     */
     public function model(array $row)
-    {
-        // TODO: Asignar índices de columnas según posición de columnas en la plantilla
+    {        
         return new Producto([
             'id_cat_productos' => $this->catalogoId,
-            'tipo' => $row[3],
-            'nombre' => $row[4],
-            'descripcion' => $row[5],
-            'marca' => $row[6],
+            'tipo' => $row['tipo'],
+            'nombre' => $row['nombre_producto'],
+            'descripcion' => $row['descripcion'],
+            'marca' => $row['marca'],
+            'modelo' => $row['modelo'],
+            'color' => $row['color'],
+            'material' => $row['material'],
+            'codigo_barras' => $row['codigo_barras'],
         ]);
     }
 
     public function rules(): array
     {
         return [
-            'tipo_producto' => [
+            'tipo' => [
                 'required',
                 Rule::in([
                     Producto::TIPO_PRODUCTO_BIEN_ID,
                     Producto::TIPO_PRODUCTO_SERVICIO_ID
                 ])
             ],
-            'nombre' => 'required|string|max:255',
+            'nombre_producto' => 'required|string|max:255',
             'descripcion' => 'required|string|max:140',
-            'marca' => 'string|max:255',
-            'modelo' => 'string|max:255',
-            'color' => 'string|max:30',
-            'material' => 'string|max:255',
-            'codigo_barras' => 'string|max:100',
+            'marca' => 'max:255',
+            'modelo' => 'max:255',
+            'color' => 'max:30',
+            'material' => 'max:255',
+            'codigo_barras' => 'max:100',
         ];
     }
 }

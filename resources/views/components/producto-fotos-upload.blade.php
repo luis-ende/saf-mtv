@@ -1,5 +1,3 @@
-@props(['producto_id' => null])
-
 @php($maxNumFotos = 3)
 
 <div class="bg-white p7 rounded w-11/12 mx-auto">    
@@ -9,8 +7,8 @@
         <div x-ref="dnd"
              class="relative flex flex-col text-gray-400 border-2 border-mtv-gray-2 border-dashed rounded cursor-pointer">
             <input accept="image/png, image/jpeg" type="file" multiple
-                   id="producto_fotos"  name="producto_fotos[]"
-                   class="absolute inset-0 z-40 w-full h-full p-0 m-0 outline-none opacity-0 cursor-pointer"
+                   id="producto_fotos" name="producto_fotos[]"
+                   class="absolute inset-0 w-full h-full p-0 m-0 outline-none opacity-0 cursor-pointer"
                    @change="addFiles($event)"
                    @dragover="$refs.dnd.classList.add('border-blue-400'); $refs.dnd.classList.add('ring-4'); $refs.dnd.classList.add('ring-inset');"
                    @dragleave="$refs.dnd.classList.remove('border-blue-400'); $refs.dnd.classList.remove('ring-4'); $refs.dnd.classList.remove('ring-inset');"
@@ -56,14 +54,7 @@
                     </div>
                 </template>
             </div>
-        </template>
-
-        <div class="flex justify-content-center mt-3">
-            <button type="submit" class="mtv-button-secondary"
-                    {{-- @click="sendFiles($event)" --}}>                
-                Siguiente
-            </button>
-        </div>
+        </template>        
     </div>
 </div>
 
@@ -137,63 +128,7 @@
                     const files = createFileList([...this.files], [...e.target.files]);
                     this.files = files;
                 }                               
-            },
-            // sendFiles(e) {
-            //     this.triggerUpdateEvent = false;
-            //     this.formData = new FormData(document.getElementById('producto-archivos'));
-            //     for(let i = 0; i <= this.files.length - 1; i++) {
-            //         this.formData.append('producto_archivos[]', this.files[i], this.files[i].name);
-            //     }
-
-            //     {{--// TODO: Set csrf token con setRequestHeader(header, value)--}}
-            //     const request = new XMLHttpRequest();
-            //     request.addEventListener("load", () => {
-            //         this.clearFiles();
-            //         this.formData = null;
-            //         this.isUploading = false;
-            //         this.triggerUpdateEvent = true;
-            //         const Toast = Swal.mixin({
-            //             toast: true,
-            //             position: 'top-end',
-            //             showConfirmButton: false,
-            //             timer: 3000,
-            //             timerProgressBar: false,
-            //             didOpen: (toast) => {
-            //                 toast.addEventListener('mouseenter', Swal.stopTimer)
-            //                 toast.addEventListener('mouseleave', Swal.resumeTimer)
-            //             }
-            //         })
-
-            //         Toast.fire({
-            //             icon: 'success',
-            //             title: 'Archivo(s) enviados.'
-            //         })
-            //     });
-            //     request.addEventListener("error", () => {
-            //         this.isUploading = false;
-            //         const Toast = Swal.mixin({
-            //             toast: true,
-            //             position: 'top-end',
-            //             showConfirmButton: false,
-            //             timer: 3000,
-            //             timerProgressBar: false,
-            //             didOpen: (toast) => {
-            //                 toast.addEventListener('mouseenter', Swal.stopTimer)
-            //                 toast.addEventListener('mouseleave', Swal.resumeTimer)
-            //             }
-            //         })
-
-            //         Toast.fire({
-            //             icon: 'error',
-            //             title: 'Ocurrió un error al enviar los archivos.'
-            //         })
-            //     });
-            //     request.open('POST', '{{ route('productos-archivos.store', [$producto_id]) }}');
-            //     this.isUploading = true;
-            //     request.send(this.formData);
-
-            //     e.preventDefault();
-            // },
+            },            
             clearFiles(){                
                 this.files = [];
             }

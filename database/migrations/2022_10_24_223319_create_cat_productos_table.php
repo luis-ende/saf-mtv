@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_persona')->constrained('personas');
             $table->string('nombre_catalogo', 100);
+            $table->boolean('carga_masiva_completa')->default(false);
             $table->timestamps();
         });
     }

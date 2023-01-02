@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 
 use Illuminate\Validation\Rule;
 use App\Imports\ProductosImport;
-use App\Models\CatalogoProductos;
 use App\Models\ProductoCategoria;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
+use App\Repositories\ProductoRepository;
 use Illuminate\Validation\ValidationException;
 
 class CatalogoProductosController extends Controller
@@ -67,12 +67,13 @@ class CatalogoProductosController extends Controller
             if ($registroFase === 1) {
                 // $rules = ProductoRequest::PRODUCTO_REQUEST_RULES
                 $this->validate($request, [
+                    'id_cabms' => 'required|integer',
                     'tipo_producto' => [
                         'required',
                         Rule::in([
                             Producto::TIPO_PRODUCTO_BIEN_ID,
                             Producto::TIPO_PRODUCTO_SERVICIO_ID])
-                        ],
+                        ],                    
                     'ids_categorias_scian' => 'required|json',
                 ]);
             }
@@ -114,6 +115,7 @@ class CatalogoProductosController extends Controller
             $productoNuevo = Producto::create([
                 'id_cat_productos' => $catalogoId,
                 'tipo' => $request->input('tipo_producto'),
+                'id_cabms' => $request->input('id_cabms'),
                 'nombre' => '[En proceso de registro]',
                 'descripcion' => '[En proceso de registro]',
                 'registro_fase' => $registroFase,
@@ -127,7 +129,8 @@ class CatalogoProductosController extends Controller
                 ]);
             }
 
-            return redirect()->route('alta-producto-2.show', [$productoNuevo->id]);
+            return redirect()->route('alta-producto-2.show', [$productoNuevo->id])
+                                ->with('tipo_producto', $productoNuevo->tipo);
         } elseif ($registroFase === 2) {
             $productoData = $request->only('nombre', 'descripcion', 'marca', 'modelo',
                                             'color', 'material', 'codigo_barras');
@@ -158,26 +161,56 @@ class CatalogoProductosController extends Controller
         // return redirect()->route('alta-producto-2.show');
     }
 
-    public function showImportacionProductos1()
+    public function showImportacionProductos1(Request $request)
     {
+        $catalogoProductos = $request->user()->persona->catalogoProductos;        
+        if ($catalogoProductos->carga_masiva_completa === true) {
+            return redirect()->route('catalogo-registro-inicio')->with('warning', 'La carga masiva se permite sólo una vez.');
+        }
+
         return view('catalogo-productos.importacion-productos-1');
     }
 
-    public function showImportacionProductos2()
+    public function showImportacionProductos2(Request $request)
     {
-        return view('catalogo-productos.importacion-productos-2');
+        $catalogoProductos = $request->user()->persona->catalogoProductos;        
+        if ($catalogoProductos->carga_masiva_completa === true) {
+            return redirect()->route('catalogo-registro-inicio')->with('warning', 'La carga masiva se permite sólo una vez.');
+        }
+
+        $productosRechazados = session()->get('productos_rechazados') ?? 0;
+        $rows = session()->get('rows') ?? [];
+
+        return view('catalogo-productos.importacion-productos-2', [
+            'productos_rechazados' => $productosRechazados,
+            'rows' => $rows,
+        ]);
     }
 
-    public function showImportacionProductos3()
+    public function showImportacionProductos3(Request $request, ProductoRepository $productoRepo)
     {
-        return view('catalogo-productos.importacion-productos-3');
+        $catalogoProductos = $request->user()->persona->catalogoProductos;        
+        if ($catalogoProductos->carga_masiva_completa === true) {
+            return redirect()->route('catalogo-registro-inicio')->with('warning', 'La carga masiva se permite sólo una vez.');
+        }
+
+        $catalogoProductos = $request->user()->persona->catalogoProductos;        
+        $productos = array_map(function ($producto) use($productoRepo) {
+            $productoCABMSCategorias = $productoRepo->obtieneProductoCABMSCategorias($producto['id']);  
+
+            return array_merge($producto, $productoCABMSCategorias);
+        }, $catalogoProductos->productos->toArray());
+
+        return view('catalogo-productos.importacion-productos-3', [
+            'productos' => $productos,
+        ]);
     }
 
     public function storeCargaProductos(Request $request, int $cargaFase)
     {
         // TODO: Evitar carga masiva si el catálogo ya fue cargado anteriormente
 
-        $catalogoProductos = $request->user()->persona->catalogoProductos;
+        $catalogoProductos = $request->user()->persona->catalogoProductos;        
 
         try {
             $opciones['carga_fase'] = $cargaFase;
@@ -217,7 +250,7 @@ class CatalogoProductosController extends Controller
                         $errores[] = "Columna 'tipo' no contiene información.";
                     }
     
-                    if (empty($row['producto'])) {
+                    if (empty($row['nombre_producto'])) {
                         $errores[] = "Columna 'producto' no contiene información."; 
                     }
                     
@@ -237,21 +270,49 @@ class CatalogoProductosController extends Controller
                     return $rowPreview;
                 }, $rows[0]);
     
-                return view('catalogo-productos.importacion-productos-2', [
+                return redirect()->route('importacion-productos-2.show')->with([
                     'productos_rechazados' => $contadorErrores,
                     'rows' => $rowsPreviews,
                 ]);
             } elseif ($cargaFase === 2) {
-                $archivoImportacionPath = $catalogoProductos->getMedia('importaciones');
+                $archivoImportacionPath = $catalogoProductos->getFirstMedia('importaciones');                
                 if ($archivoImportacionPath) {
+                    $archivoImportacionPath = $archivoImportacionPath->getPath();
                     Excel::import(new ProductosImport($catalogoId, $opciones), $archivoImportacionPath);
-                }
-            }
-            
+                    // TODO: Descargar fotos desde URLs y guardar en colección de media del producto
+
+                    return redirect()->route('importacion-productos-3.show');
+                } // TODO: Archivo de importación eliminado indica que el proceso de carga ya concluyó
+            } elseif ($cargaFase === 3) {
+                $catalogoProductos->update(['carga_masiva_completa' => true]);
+                $catalogoProductos->clearMediaCollection('importaciones');
+
+                return redirect()->route('catalogo-registro-inicio')->with('success', 'Carga masiva de productos finalizada.');
+            }            
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             return redirect()->back()->withErrors($e->validator);
         } catch(\Throwable $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('error', 'Ocurrió un error al cargar los productos: ' . $e->getMessage());
         }
+    }
+
+    public function storeCargaProductosProducto(Request $request, Producto $producto, ProductoRepository $productoRepo) 
+    {
+        $this->validate($request, [
+            'id_cabms' => 'required|integer',            
+            'ids_categorias_scian' => 'required|json',            
+        ]);
+        
+        $producto->update($request->only('id_cabms'));
+        $categorias = json_decode($request->input('ids_categorias_scian'), true);
+            foreach($categorias as $categoriaId) {
+                ProductoCategoria::create([
+                    'id_producto' => $producto->id,
+                    'id_categoria_scian' => $categoriaId,
+                ]);
+            }
+
+
+        return $productoRepo->obtieneProductoCABMSCategorias($producto->id);                
     }
 }

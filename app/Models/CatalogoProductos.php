@@ -28,6 +28,7 @@ class CatalogoProductos extends Model implements HasMedia
     protected $fillable = [
         'id_persona',
         'nombre_catalogo',
+        'carga_masiva_completa',
     ];
 
      /**

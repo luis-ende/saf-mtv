@@ -118,8 +118,7 @@ Alpine.data('busquedaCABMS', () => ({
     setSeleccionCategorias(selectCategorias) {
         const selected = [...selectCategorias.selectedOptions]
                 .map(option => option.value);
-        this.seleccionCategorias = JSON.stringify(selected);
-        console.log(this.seleccionCategorias);
+        this.seleccionCategorias = JSON.stringify(selected);        
     }
 }))
 

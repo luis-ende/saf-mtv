@@ -9,12 +9,12 @@
                 Completa y actualiza tu catálogo de los bienes o servicios que te gustaría ofrecer a la Ciudad de México. Al agregar productos en tu catálogo recibirás notificaciones cada que haya algún procedimiento de compra de acuerdo a la categoría del bien o servicio que hayas registrado.
             </div>
             <div class="p-6">
-                <x-producto-form :mode="__('add')" />
+                {{-- <x-producto-form :mode="__('add')" /> --}}
                 <div class="text-xl text-slate-900 font-bold mb-3">
                     @svg('polaris-major-products', ['class' => 'h-5 w-5 inline-block mr-1'])
                     Tus productos y servicios
                 </div>
-                <x-productos-table :productos="$productosPersona" />
+                {{-- <x-productos-table :productos="$productosPersona" /> --}}
             </div>
         </div>
     </div>    
