@@ -59,6 +59,12 @@ Route::post('/productos/edit/{producto}', [ProductosController::class, 'update']
 Route::get('/productos/{producto}/archivos', [ProductosController::class, 'showArchivos'])
     ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('productos-archivos.show');
 
+Route::get('/productos/{producto}/fotos', [ProductosController::class, 'showFotos'])
+    ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('productos-fotos.show');
+
+Route::get('/productos/{producto}/cabms_categorias', [ProductosController::class, 'obtieneProductoCABMSCategorias'])
+    ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('productos-cabms-categorias.show');
+
 Route::post('/productos/{producto}/archivos', [ProductosController::class, 'storeFiles'])->middleware(['auth', 'verified'])->name('productos-archivos.store');
 
 Route::delete('/productos/archivos/{id}', [ProductosController::class, 'deleteFile'])->middleware(['auth', 'verified'])->name('productos-archivos.delete');

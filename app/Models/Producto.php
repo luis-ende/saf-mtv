@@ -24,16 +24,19 @@ class Producto extends Model implements HasMedia
      */
     protected $fillable = [
         'id_cat_productos',
-        'tipo',        
+        'tipo',
         'id_cabms',
         'nombre',
-        'descripcion',        
+        'descripcion',
         'marca',
         'modelo',
         'color',
         'material',
         'codigo_barras',
         'registro_fase',
+        'foto_url_1',
+        'foto_url_2',
+        'foto_url_3',
     ];
 
     public function getAllMedia()
@@ -78,7 +81,7 @@ class Producto extends Model implements HasMedia
             ->crop('crop-center', 240, 160);
     }
 
-    public function categorias() 
+    public function categorias()
     {
         return $this->hasMany(ProductoCategoria::class, 'id_producto');
     }

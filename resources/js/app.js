@@ -118,7 +118,23 @@ Alpine.data('busquedaCABMS', () => ({
     setSeleccionCategorias(selectCategorias) {
         const selected = [...selectCategorias.selectedOptions]
                 .map(option => option.value);
-        this.seleccionCategorias = JSON.stringify(selected);        
+        this.seleccionCategorias = JSON.stringify(selected);
+    },
+    cargaProductoCABMSCategorias(productoId) {
+        this.cabmsChoices.clearChoices();
+        this.cabmsChoices.clearInput();
+        this.categoriasChoices.clearChoices();
+        this.categoriasChoices.clearInput();
+        /*this.tipoProducto = 'B';*/
+        if (productoId) {
+            fetch('/productos/' + productoId + '/cabms_categorias')
+                .then(res => res.json())
+                .then(res => {
+                    this.tipoProducto = res.tipo;
+                    console.log(res);
+                });
+            /*this.cabmsChoices.setValue();*/
+        }
     }
 }))
 

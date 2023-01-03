@@ -1,8 +1,9 @@
 @php($maxNumFotos = 3)
 
-<div class="bg-white p7 rounded w-11/12 mx-auto">    
-    <div x-data="dataFileDnD()" 
-         x-init="$watch('triggerUpdateEvent', value => { $store.filesUploaded.hasFilesUploaded = true })" 
+<div class="bg-white p7 rounded w-11/12 mx-auto">
+    <div x-data="dataFileDnD()"
+         {{--x-init="$watch('triggerUpdateEvent', value => { $store.filesUploaded.hasFilesUploaded = true })"--}}
+         x-init="$watch('productoEditado', value => { cargaProductoFotos(value) })"
          class="relative flex flex-col p-4 text-gray-400">
         <div x-ref="dnd"
              class="relative flex flex-col text-gray-400 border-2 border-mtv-gray-2 border-dashed rounded cursor-pointer">
@@ -16,7 +17,7 @@
                    title="" />
 
             <div class="flex flex-col items-center justify-center py-10 text-center">
-                @svg('ri-image-add-fill', ['class' => 'w-7 h-7 mr-1 text-mtv-secondary'])                
+                @svg('ri-image-add-fill', ['class' => 'w-7 h-7 mr-1 text-mtv-secondary'])
                 <p class="m-0">Arrastra aquí tus archivos o haz clic en el recuadro para agregarlos</p>
             </div>
         </div>
@@ -34,16 +35,21 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
-                        </button>  
+                        </button>
 
-                        <template x-if="files[index]?.type.includes('image/')">
+                        <template x-if="!files[index]?.hasOwnProperty('original_url')">
                             <img class="absolute inset-0 z-0 object-cover w-full h-full border-4 border-white preview"
                                  x-bind:src="files[index] ? loadFile(files[index]) : null" />
-                        </template>                        
+                        </template>
+
+                        <template x-if="files[index]?.hasOwnProperty('original_url')">
+                            <img class="absolute inset-0 z-0 object-cover w-full h-full border-4 border-white preview"
+                                 x-bind:src="files[index]?.original_url" />
+                        </template>
 
                         <div class="absolute bottom-0 left-0 right-0 flex flex-col p-2 text-xs bg-white bg-opacity-50">
-                        <span class="w-full font-bold text-gray-900 truncate"
-                              x-text="files[index]?.name">Cargando</span>
+                            <span class="w-full font-bold text-gray-900 truncate"
+                                  x-text="files[index]?.name">Cargando</span>
                             <span class="text-xs text-gray-900" x-text="humanFileSize(files[index]?.size)">...</span>
                         </div>
 
@@ -54,7 +60,7 @@
                     </div>
                 </template>
             </div>
-        </template>        
+        </template>
     </div>
 </div>
 
@@ -68,10 +74,10 @@
         return {
             formData: null,
             files: [],
+            productoFotos: [],
             fileDragging: null,
-            fileDropping: null,            
+            fileDropping: null,
             triggerUpdateEvent: false,
-
             humanFileSize(size) {
                 const i = Math.floor(Math.log(size) / Math.log(1024));
                 return (
@@ -81,6 +87,12 @@
                 );
             },
             remove(index) {
+                if (this.files[index].hasOwnProperty('original_url')) {
+                    this.files.splice(index, 1);
+
+                    return;
+                }
+
                 let files = [...this.files];
                 files.splice(index, 1);
 
@@ -122,15 +134,24 @@
                 return blobUrl;
             },
             addFiles(e) {
-                const totalFiles = e.target.files.length + this.files.length;                
+                const totalFiles = e.target.files.length + this.files.length;
 
                 if (totalFiles <= 3) {
                     const files = createFileList([...this.files], [...e.target.files]);
                     this.files = files;
-                }                               
-            },            
-            clearFiles(){                
+                }
+            },
+            clearFiles(){
                 this.files = [];
+            },
+            cargaProductoFotos(productoId) {
+                if (productoId) {
+                    fetch('/productos/' + productoId + '/fotos')
+                        .then(res => res.json())
+                        .then(res => {
+                            this.files = res;
+                        });
+                }
             }
         };
     }

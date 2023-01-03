@@ -27,7 +27,7 @@ class ProductosImport implements ToModel, WithHeadingRow, WithValidation
     * @return \Illuminate\Database\Eloquent\Model|null
     */
     public function model(array $row)
-    {        
+    {
         return new Producto([
             'id_cat_productos' => $this->catalogoId,
             'tipo' => $row['tipo'],
@@ -38,6 +38,9 @@ class ProductosImport implements ToModel, WithHeadingRow, WithValidation
             'color' => $row['color'],
             'material' => $row['material'],
             'codigo_barras' => $row['codigo_barras'],
+            'foto_url_1' => $row['foto_url_1'],
+            'foto_url_2' => $row['foto_url_2'],
+            'foto_url_3' => $row['foto_url_3'],
         ]);
     }
 
@@ -58,6 +61,9 @@ class ProductosImport implements ToModel, WithHeadingRow, WithValidation
             'color' => 'max:30',
             'material' => 'max:255',
             'codigo_barras' => 'max:100',
+            'foto_url_1' => 'max:255',
+            'foto_url_2' => 'max:255',
+            'foto_url_3' => 'max:255',
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\ProductoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -75,7 +76,7 @@ class ProductosController extends Controller
                 // TODO: Eliminar fotos y archivos
                 return [$producto->id];
             }
-        }        
+        }
     }
 
     public function storeFiles(Request $request, Producto $producto) {
@@ -117,7 +118,15 @@ class ProductosController extends Controller
         return $producto->getAllMedia();
     }
 
-    public function importProductos(Request $request) {        
+    public function showFotos(Request $request, Producto $producto) {
+        return $producto->getMedia('fotos')->toArray();
+    }
+
+    public function obtieneProductoCABMSCategorias(Request $request, Producto $producto, ProductoRepository $productoRepo) {
+        return $productoRepo->obtieneProductoCABMSCategorias($producto->id);
+    }
+
+    public function importProductos(Request $request) {
         if (!Auth::user()) {
             return response()
                 ->json(['error' => 'Importación de productos disponible únicamente para usuarios registrados.'], 401);
@@ -130,9 +139,9 @@ class ProductosController extends Controller
             'map_descripcion' => 'required',
             'map_precio' => 'required',
             'productos_archivo' => 'required',
-            'map_tipo_producto' => ['required', Rule::in([                
-                    Producto::TIPO_PRODUCTO_BIEN_ID, 
-                    Producto::TIPO_PRODUCTO_SERVICIO_ID,                
+            'map_tipo_producto' => ['required', Rule::in([
+                    Producto::TIPO_PRODUCTO_BIEN_ID,
+                    Producto::TIPO_PRODUCTO_SERVICIO_ID,
                 ])],
         ];
 

@@ -73,7 +73,7 @@ class CatalogoProductosController extends Controller
                         Rule::in([
                             Producto::TIPO_PRODUCTO_BIEN_ID,
                             Producto::TIPO_PRODUCTO_SERVICIO_ID])
-                        ],                    
+                        ],
                     'ids_categorias_scian' => 'required|json',
                 ]);
             }
@@ -163,7 +163,7 @@ class CatalogoProductosController extends Controller
 
     public function showImportacionProductos1(Request $request)
     {
-        $catalogoProductos = $request->user()->persona->catalogoProductos;        
+        $catalogoProductos = $request->user()->persona->catalogoProductos;
         if ($catalogoProductos->carga_masiva_completa === true) {
             return redirect()->route('catalogo-registro-inicio')->with('warning', 'La carga masiva se permite sólo una vez.');
         }
@@ -173,7 +173,7 @@ class CatalogoProductosController extends Controller
 
     public function showImportacionProductos2(Request $request)
     {
-        $catalogoProductos = $request->user()->persona->catalogoProductos;        
+        $catalogoProductos = $request->user()->persona->catalogoProductos;
         if ($catalogoProductos->carga_masiva_completa === true) {
             return redirect()->route('catalogo-registro-inicio')->with('warning', 'La carga masiva se permite sólo una vez.');
         }
@@ -189,14 +189,14 @@ class CatalogoProductosController extends Controller
 
     public function showImportacionProductos3(Request $request, ProductoRepository $productoRepo)
     {
-        $catalogoProductos = $request->user()->persona->catalogoProductos;        
+        $catalogoProductos = $request->user()->persona->catalogoProductos;
         if ($catalogoProductos->carga_masiva_completa === true) {
             return redirect()->route('catalogo-registro-inicio')->with('warning', 'La carga masiva se permite sólo una vez.');
         }
 
-        $catalogoProductos = $request->user()->persona->catalogoProductos;        
+        $catalogoProductos = $request->user()->persona->catalogoProductos;
         $productos = array_map(function ($producto) use($productoRepo) {
-            $productoCABMSCategorias = $productoRepo->obtieneProductoCABMSCategorias($producto['id']);  
+            $productoCABMSCategorias = $productoRepo->obtieneProductoCABMSCategorias($producto['id']);
 
             return array_merge($producto, $productoCABMSCategorias);
         }, $catalogoProductos->productos->toArray());
@@ -210,7 +210,7 @@ class CatalogoProductosController extends Controller
     {
         // TODO: Evitar carga masiva si el catálogo ya fue cargado anteriormente
 
-        $catalogoProductos = $request->user()->persona->catalogoProductos;        
+        $catalogoProductos = $request->user()->persona->catalogoProductos;
 
         try {
             $opciones['carga_fase'] = $cargaFase;
@@ -222,73 +222,85 @@ class CatalogoProductosController extends Controller
                     'productos_import_file' => 'required|file|max:1000',
                 ]);
 
-                // Permitir carga de archivo mientras no se haya concluido el proceso de importación        
-                $catalogoProductos->clearMediaCollection('importaciones');                        
+                // Permitir carga de archivo mientras no se haya concluido el proceso de importación
+                $catalogoProductos->clearMediaCollection('importaciones');
 
-                // Se guarda temporalmente el archivo de importación, eliminar archivo al completar la carga de productos.        
+                // Se guarda temporalmente el archivo de importación, eliminar archivo al completar la carga de productos.
                 $archivoImportacion = $request->file('productos_import_file');
                 $media = $catalogoProductos->addMedia($archivoImportacion)->toMediaCollection('importaciones');
-                $archivoImportacionPath = $media->getPath();                
+                $archivoImportacionPath = $media->getPath();
 
-                $plantillaPath = Storage::path('public/plantillas/productos_carga_masiva.xlsx');            
-                $plantillaRows = Excel::toArray(new ProductosImport($catalogoId, $opciones), $plantillaPath);            
-                
+                $plantillaPath = Storage::path('public/plantillas/productos_carga_masiva.xlsx');
+                $plantillaRows = Excel::toArray(new ProductosImport($catalogoId, $opciones), $plantillaPath);
+
                 $rows = Excel::toArray(new ProductosImport($catalogoId, $opciones), $archivoImportacionPath);
-                
+
                 $plantillaColumnas = array_keys($plantillaRows[0][0]);
                 $importacionColumnas = array_keys($rows[0][0]);
-    
-                $diferencias = array_diff($plantillaColumnas, $importacionColumnas);            
+
+                $diferencias = array_diff($plantillaColumnas, $importacionColumnas);
                 if (count($diferencias) > 0) {
                     throw new \Exception('Las columnas del archivo a cargar no coinciden con las de la plantilla.');
                 }
-                
+
                 $contadorErrores = 0;
                 $rowsPreviews = array_map(function($row) use(&$contadorErrores) {
                     $errores = [];
                     if (empty($row['tipo'])) {
                         $errores[] = "Columna 'tipo' no contiene información.";
                     }
-    
+
                     if (empty($row['nombre_producto'])) {
-                        $errores[] = "Columna 'producto' no contiene información."; 
+                        $errores[] = "Columna 'producto' no contiene información.";
                     }
-                    
+
                     if (empty($row['descripcion'])) {
                         $errores[] = "Columna 'descripcion' no contiene información.";
                     }
-    
+
                     if ($errores) {
                         $contadorErrores++;
                     }
-    
-                    $rowPreview = [ 
+
+                    $rowPreview = [
                         ...$row,
                         'errores' => count($errores) > 0 ? $errores : null,
-                    ];                
-    
+                    ];
+
                     return $rowPreview;
                 }, $rows[0]);
-    
+
                 return redirect()->route('importacion-productos-2.show')->with([
                     'productos_rechazados' => $contadorErrores,
                     'rows' => $rowsPreviews,
                 ]);
             } elseif ($cargaFase === 2) {
-                $archivoImportacionPath = $catalogoProductos->getFirstMedia('importaciones');                
+                $archivoImportacionPath = $catalogoProductos->getFirstMedia('importaciones');
                 if ($archivoImportacionPath) {
+                    // TODO: Implementar barra de progreso de carga, el proceso puede tardar si el archivo contiene muchas imágenes y renglones
                     $archivoImportacionPath = $archivoImportacionPath->getPath();
                     Excel::import(new ProductosImport($catalogoId, $opciones), $archivoImportacionPath);
-                    // TODO: Descargar fotos desde URLs y guardar en colección de media del producto
+                    $productos = $catalogoProductos->productos;
+                    foreach ($productos as $producto) {
+                        if (!empty($producto->foto_url_1)) {
+                            $producto->addMediaFromUrl($producto->foto_url_1)->toMediaCollection('fotos');
+                        }
+                        if (!empty($producto->foto_url_2)) {
+                            $producto->addMediaFromUrl($producto->foto_url_2)->toMediaCollection('fotos');
+                        }
+                        if (!empty($producto->foto_url_3)) {
+                            $producto->addMediaFromUrl($producto->foto_url_3)->toMediaCollection('fotos');
+                        }
+                    }
 
                     return redirect()->route('importacion-productos-3.show');
-                } // TODO: Archivo de importación eliminado indica que el proceso de carga ya concluyó
+                }
             } elseif ($cargaFase === 3) {
                 $catalogoProductos->update(['carga_masiva_completa' => true]);
                 $catalogoProductos->clearMediaCollection('importaciones');
 
                 return redirect()->route('catalogo-registro-inicio')->with('success', 'Carga masiva de productos finalizada.');
-            }            
+            }
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             return redirect()->back()->withErrors($e->validator);
         } catch(\Throwable $e) {
@@ -296,23 +308,36 @@ class CatalogoProductosController extends Controller
         }
     }
 
-    public function storeCargaProductosProducto(Request $request, Producto $producto, ProductoRepository $productoRepo) 
+    public function storeCargaProductosProducto(Request $request, Producto $producto, ProductoRepository $productoRepo)
     {
-        $this->validate($request, [
-            'id_cabms' => 'required|integer',            
-            'ids_categorias_scian' => 'required|json',            
-        ]);
-        
+        try {
+            $this->validate($request, [
+                'id_cabms' => 'required|integer',
+                'ids_categorias_scian' => 'required|json',
+                'producto_fotos' => 'max:3',
+                'producto_fotos.*' => 'max:1000|mimes:jpg,png'
+            ]);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            return [$e->validator];
+        }
+
+        // TODO: Mover a respositorio
         $producto->update($request->only('id_cabms'));
         $categorias = json_decode($request->input('ids_categorias_scian'), true);
-            foreach($categorias as $categoriaId) {
-                ProductoCategoria::create([
-                    'id_producto' => $producto->id,
-                    'id_categoria_scian' => $categoriaId,
-                ]);
-            }
+        ProductoCategoria::where('id_producto', '=', $producto->id)->delete();
+        foreach($categorias as $categoriaId) {
+            ProductoCategoria::create([
+                'id_producto' => $producto->id,
+                'id_categoria_scian' => $categoriaId,
+            ]);
+        }
 
+        /*$fotosFiles = $request->file('producto_fotos');
+        $producto->clearMediaCollection('fotos');
+        foreach($fotosFiles as $file) {
+            $producto->addMedia($file)->toMediaCollection('fotos');
+        }*/
 
-        return $productoRepo->obtieneProductoCABMSCategorias($producto->id);                
+        return $productoRepo->obtieneProductoCABMSCategorias($producto->id);
     }
 }

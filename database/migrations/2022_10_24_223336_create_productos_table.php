@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_cat_productos')->constrained('cat_productos');
             $table->char('tipo', 1); // 'B' = 'Bien', 'S' = 'Servicio'
-            $table->unsignedBigInteger('id_cabms')->nullable();            
+            $table->unsignedBigInteger('id_cabms')->nullable();
             $table->string('nombre', 255);
             $table->string('descripcion', 140);
             // Si el tipo de producto es 'Bien'
@@ -26,6 +26,9 @@ return new class extends Migration
             $table->string('color', 30)->nullable();
             $table->string('material')->nullable();
             $table->string('codigo_barras', 100)->nullable();
+            $table->string('foto_url_1')->nullable();
+            $table->string('foto_url_2')->nullable();
+            $table->string('foto_url_3')->nullable();
             $table->unsignedSmallInteger('registro_fase')->default(1);
             $table->timestamps();
         });
