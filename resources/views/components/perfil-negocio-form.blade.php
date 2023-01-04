@@ -1,7 +1,7 @@
 @props(['mode' => 'edit', 'persona' => null, 'cat_paises' => [], 'grupos_prioritarios' => [], 'tipos_pyme' => [],'sectores' => [], 'tipos_vialidad' => null])
 
-@php($cartaPresentacion = isset($persona->perfilNegocio) ? $persona->perfilNegocio->getFirstMedia('documentos') : null)
-@php($catalogoProductosPDF = isset($persona->perfilNegocio) ? $persona->perfilNegocio->getFirstMedia('catalogos_pdf') : null)
+@php($cartaPresentacion = isset($persona->perfil_negocio) ? $persona->perfil_negocio->getFirstMedia('documentos') : null)
+@php($catalogoProductosPDF = isset($persona->perfil_negocio) ? $persona->perfil_negocio->getFirstMedia('catalogos_pdf') : null)
 @php($updateRoute = $mode === 'registro' ? route('registro-perfil-negocio.store') : ($mode === 'edit' ? route('perfil-negocio.update') : ''))
 
 <form method="POST" enctype="multipart/form-data" action="{{ $updateRoute }}">
@@ -71,11 +71,11 @@
                     ¿Quieres subir tu carta de presentación?
                 </label>
                 <div clasS="flex flex-row flex-wrap">
-                    <div class="flex flex-row justify-start text-mtv-gold font-bold border rounded px-3 w-48">
+                    <div class="flex flex-row justify-start text-mtv-gold font-bold border rounded px-3 w-32">
                         <div class="flex flex-row cursor-pointer"
                              @click="$refs.inputCartaPresentacion.click()">
                             @svg('uiw-paper-clip', ['class' => 'h-9 w-9 mr-3'])
-                            <span class="w-full self-center">Adjuntar documento</span>
+                            <span class="w-full self-center">Adjuntar</span>
                             <input id="carta_presentacion" name="carta_presentacion"
                                    class="invisible"
                                    type="file" accept="application/pdf"
@@ -112,11 +112,11 @@
                     ¿Tienes tus productos en un archivo PDF?
                 </label>
                 <div clasS="flex flex-row flex-wrap">
-                    <div class="flex flex-row justify-start text-mtv-gold font-bold border rounded px-3 w-48">
+                    <div class="flex flex-row justify-start text-mtv-gold font-bold border rounded px-3 w-32">
                         <div class="flex flex-row cursor-pointer"
                              @click="$refs.inputCatalogoProductosPDF.click()">
                             @svg('uiw-paper-clip', ['class' => 'h-9 w-9 mr-3'])
-                            <span class="w-full self-center">Adjuntar documento</span>
+                            <span class="w-full self-center">Adjuntar</span>
                             <input id="catalogo_productos_pdf" name="catalogo_productos_pdf"
                                    class="invisible"
                                    type="file" accept="application/pdf"

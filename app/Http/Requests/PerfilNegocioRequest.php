@@ -45,7 +45,9 @@ class PerfilNegocioRequest extends FormRequest
             'num_whatsapp' => 'max:15',
             'logotipo' => 'nullable|file|image',
             'carta_presentacion' => 'nullable|file|mimes:pdf|max:3000',
-            'eliminar_carta' => 'boolean'
+            'eliminar_carta' => 'boolean',
+            'catalogo_productos_pdf' => 'nullable|file|mimes:pdf|max:3000',
+            'eliminar_catalogo_pdf' => 'boolean',
         ];
     }
 }

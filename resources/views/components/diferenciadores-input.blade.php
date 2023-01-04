@@ -45,7 +45,7 @@
     <label class="mtv-input-label" for="diferenciadores">Diferencias que distinguen tu negocio</label>
 </div>
 
-<label class="text-xs text-slate-500" for="diferenciadores">Usa comas para separar las palabras</label>
+<label class="text-xs text-slate-500 italic" for="diferenciadores">Usa comas para separar las palabras</label>
 
 <script type="text/javascript">
     // TODO: Cambiar componente o corregir bug con un solo tag (no se guarda)

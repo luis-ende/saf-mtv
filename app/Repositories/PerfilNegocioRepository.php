@@ -23,5 +23,13 @@ class PerfilNegocioRepository
             $perfilNegocio->clearMediaCollection('documentos');
             $perfilNegocio->addMedia($perfilNegocioDatos['carta_presentacion'])->toMediaCollection('documentos');
         }
+
+        if (isset($perfilNegocioDatos['eliminar_catalogo_pdf'])) {
+            $perfilNegocio->clearMediaCollection('catalogos_pdf');
+        }
+        if (isset($perfilNegocioDatos['catalogo_productos_pdf'])) {
+            $perfilNegocio->clearMediaCollection('catalogos_pdf');
+            $perfilNegocio->addMedia($perfilNegocioDatos['catalogo_productos_pdf'])->toMediaCollection('catalogos_pdf');
+        }
     }
 }

@@ -64,7 +64,13 @@ class PerfilNegocioController extends Controller
             'num_whatsapp',
         ]);
 
-        $adjuntos = $request->safe()->only(['logotipo', 'carta_presentacion', 'eliminar_carta']);
+        $adjuntos = $request->safe()->only([
+            'logotipo', 
+            'carta_presentacion', 
+            'eliminar_carta', 
+            'catalogo_productos_pdf', 
+            'eliminar_catalogo_pdf'
+        ]);
         $perfilNegocioDatos = array_merge($perfilNegocioDatos, $adjuntos);
         $perfilNegocioRepository->updatePerfilNegocio($persona->perfil_negocio, $perfilNegocioDatos);
 
