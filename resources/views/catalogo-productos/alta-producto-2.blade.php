@@ -17,7 +17,7 @@
                                value="" required>
                         <label class="mtv-input-label" for="nombre">Nombre de tu producto</label>
                     </div>
-                    <label class="text-xs text-slate-500 mx-3" 
+                    <label class="text-xs text-slate-500 mx-3 italic" 
                            for="descripcion_producto">
                            Aparecerá como título en el catálogo
                     </label>
@@ -26,7 +26,7 @@
                                 name="descripcion" maxlength="140"></textarea>
                         <label class="mtv-input-label" for="descripcion">Describe tu producto</label>                        
                     </div>
-                    <label class="text-xs text-slate-500 mx-3" 
+                    <label class="text-xs text-slate-500 mx-3 italic" 
                                for="producto">
                                Indica en qué unidad de medida vendes tu producto, qué presentación tiene, fabricante y otras características importantes con las que cuenta tu producto.
                     </label>  

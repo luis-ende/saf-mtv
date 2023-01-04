@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="text-mtv-text-gray my-3 self-center" x-show="upload_{{ $id }} !== null">
+    <div class="text-mtv-gold my-3 self-center text-base" x-show="upload_{{ $id }} !== null">
         <label class="font-bold" x-text="upload_{{ $id }}"></label>
         @if($allow_delete)
             @svg('sui-cross', [
