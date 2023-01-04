@@ -201,6 +201,10 @@ class CatalogoProductosController extends Controller
             return array_merge($producto, $productoCABMSCategorias);
         }, $catalogoProductos->productos->toArray());
 
+//        $productos = array_filter($productos, function($producto) {
+//            return $producto->registro_fase === 1;
+//        });
+
         return view('catalogo-productos.importacion-productos-3', [
             'productos' => $productos,
         ]);
@@ -208,8 +212,6 @@ class CatalogoProductosController extends Controller
 
     public function storeCargaProductos(Request $request, int $cargaFase)
     {
-        // TODO: Evitar carga masiva si el catálogo ya fue cargado anteriormente
-
         $catalogoProductos = $request->user()->persona->catalogoProductos;
 
         try {
@@ -312,31 +314,42 @@ class CatalogoProductosController extends Controller
     {
         try {
             $this->validate($request, [
-                'id_cabms' => 'required|integer',
-                'ids_categorias_scian' => 'required|json',
+                'id_cabms' => 'integer',
                 'producto_fotos' => 'max:3',
-                'producto_fotos.*' => 'max:1000|mimes:jpg,png'
+                'producto_fotos.*' => 'max:1000|mimes:jpg,png',
+                'producto_fotos_eliminadas' => 'json',
             ]);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            return [$e->validator];
+            return ['error' => 'error general'];
+            /*return [$e->validator];*/
         }
 
         // TODO: Mover a respositorio
         $producto->update($request->only('id_cabms'));
-        $categorias = json_decode($request->input('ids_categorias_scian'), true);
-        ProductoCategoria::where('id_producto', '=', $producto->id)->delete();
-        foreach($categorias as $categoriaId) {
-            ProductoCategoria::create([
-                'id_producto' => $producto->id,
-                'id_categoria_scian' => $categoriaId,
-            ]);
+
+        if ($request->input('ids_categorias_scian')) {
+            $categorias = json_decode($request->input('ids_categorias_scian'), true);
+            ProductoCategoria::where('id_producto', '=', $producto->id)->delete();
+            foreach($categorias as $categoriaId) {
+                ProductoCategoria::create([
+                    'id_producto' => $producto->id,
+                    'id_categoria_scian' => $categoriaId,
+                ]);
+            }
         }
 
-        /*$fotosFiles = $request->file('producto_fotos');
-        $producto->clearMediaCollection('fotos');
-        foreach($fotosFiles as $file) {
-            $producto->addMedia($file)->toMediaCollection('fotos');
-        }*/
+        $fotosEliminadas = json_decode($request->input('producto_fotos_eliminadas'));
+        $fotosEliminadas = !empty($fotosEliminadas) ?  explode(',', $fotosEliminadas) : [];
+        foreach ($fotosEliminadas as $fotoEliminadaId) {
+            $producto->deleteMedia($fotoEliminadaId);
+        }
+
+        $fotosFiles = $request->file('producto_fotos');
+        if ($fotosFiles) {
+            foreach ($fotosFiles as $file) {
+                $producto->addMedia($file)->toMediaCollection('fotos');
+            }
+        }
 
         return $productoRepo->obtieneProductoCABMSCategorias($producto->id);
     }

@@ -24,7 +24,7 @@
                             <th>Tipo</th>
                             <th>Nombre producto</th>
                             <th>Nombre catálogo CDMX</th>
-                            <th>Categoría</th>
+                            <th>Categoría(s)</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -95,6 +95,11 @@
                                 const formData = new FormData();
                                 formData.append('id_cabms', document.getElementById('id_cabms').value);
                                 formData.append('ids_categorias_scian', document.getElementById('ids_categorias_scian').value);
+                                formData.append('producto_fotos_eliminadas', JSON.stringify(document.getElementById('producto_fotos_eliminadas').value));
+                                const productoFotos = document.getElementById('producto_fotos').files;
+                                for (let i = 0; i <= productoFotos.length - 1; i++) {
+                                    formData.append('producto_fotos[]', productoFotos[i], productoFotos[i].name);
+                                }
 
                                 fetch('/carga-productos/producto/' + id, {
                                     method: "POST",
@@ -127,6 +132,7 @@
                             },
                             editaProducto(id) {
                                 this.productoEditado = id;
+                                document.getElementById('producto_fotos').value = '';
                             },
                             editFormClose() {
                                 this.productoEditado = null;

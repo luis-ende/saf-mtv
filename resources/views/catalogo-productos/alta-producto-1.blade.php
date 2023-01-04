@@ -22,7 +22,9 @@
                     <label class="text-mtv-gray text-lg mb-3">
                         Busca y selecciona la categoría y nombre de tu producto o servicio
                     </label>
-                    <x-cabms-categorias-select />
+                    <x-cabms-categorias-select
+                        :modo="__('producto_registro')"
+                    />
                     <button type="submit"
                             class="mtv-button-secondary self-center my-10 mb-20">
                             Siguiente

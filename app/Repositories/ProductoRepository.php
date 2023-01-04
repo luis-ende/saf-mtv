@@ -37,7 +37,7 @@ class ProductoRepository
             'id_cabms' => $producto?->id_cabms,
             'nombre_cabms' => $producto?->nombre_cabms,
             'ids_categorias_scian' => $categoriasIds,
-            'categorias_scian' => implode(',', $categorias),
+            'categorias_scian' => implode(', ', $categorias),
         ];
     }
 }

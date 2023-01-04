@@ -64,41 +64,33 @@ class CatCiudadanoCABMSRepository
         return $giros;
     }
 
-    public function obtieneClavesCABMS(string $criterioBusqueda, string $tipoProducto = Producto::TIPO_PRODUCTO_BIEN_ID): array {        
+    public function obtieneClavesCABMS(string $criterioBusqueda, string $tipoProducto = Producto::TIPO_PRODUCTO_BIEN_ID): array {
         $clavesCABMS = [];
 
         if ($criterioBusqueda === '') {
             return $clavesCABMS;
         }
 
-        $searchCriteriaTipoBien = [
-            [
-                'cat_cabms.partida',
-                'not like',
-                '3%'
-            ],
-        ];
-
-        $searchCriteriaTipoServicio = [
-            [
-                'cat_cabms.partida',
-                'like',
-                '3%'
-            ],
-        ];
-
-        $searchCriteriaTipo = $tipoProducto === Producto::TIPO_PRODUCTO_SERVICIO_ID
-            ? $searchCriteriaTipoServicio : $searchCriteriaTipoBien;
-
         $query = DB::table('cat_cabms')
-            ->select( 'cat_cabms.id', 'cat_cabms.cabms', 'cat_cabms.nombre_cabms', 'cat_categorias_scian.categoria_scian', 'cat_sectores.sector', 
+            ->select( 'cat_cabms.id', 'cat_cabms.cabms', 'cat_cabms.nombre_cabms', 'cat_categorias_scian.categoria_scian', 'cat_sectores.sector',
                 DB::raw("SIMILARITY(nombre_cabms, '{$criterioBusqueda}') as similarity"))
             ->join('cat_categorias_scian', 'cat_categorias_scian.id', '=', 'cat_cabms.id_categoria_scian')
-            ->join('cat_sectores', 'cat_sectores.id', '=', 'cat_categorias_scian.id_sector')
-            ->where($searchCriteriaTipo)            
-            ->whereRaw("'{$criterioBusqueda}' % ANY(STRING_TO_ARRAY(nombre_cabms, ' '))")            
-            ->orderByDesc('similarity')
-            ->limit(200);
+            ->join('cat_sectores', 'cat_sectores.id', '=', 'cat_categorias_scian.id_sector');
+
+        if ($tipoProducto === Producto::TIPO_PRODUCTO_BIEN_ID) {
+            $query->where([['cat_cabms.partida', 'like', '1%']])
+                  ->orWhere([['cat_cabms.partida', 'like', '2%']])
+                  ->orWhere([['cat_cabms.partida', 'like', '4%']])
+                  ->orWhere([['cat_cabms.partida', 'like', '5%']]);
+        } elseif ($tipoProducto === Producto::TIPO_PRODUCTO_SERVICIO_ID) {
+            $query->where([['cat_cabms.partida', 'like', '1%']])
+                  ->orWhere([['cat_cabms.partida', 'like', '3%']])
+                  ->orWhere([['cat_cabms.partida', 'like', '4%']]);
+        }
+
+        $query->whereRaw("'{$criterioBusqueda}' % ANY(STRING_TO_ARRAY(nombre_cabms, ' '))")
+              ->orderByDesc('similarity')
+              ->limit(200);
 
         $clavesCABMS = $query->get()->toArray();
 

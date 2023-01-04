@@ -23,7 +23,7 @@
         @if($allow_delete)
             @svg('sui-cross', [
             'class' => 'h-3 w-3 inline-block ml-3 cursor-pointer',
-            '@click' => "document.getElementById('carta_presentacion').value = null; cartaPresentacion = null"
+            '@click' => "descartarUpload()"
             ])
         @endif
     </div>
@@ -33,6 +33,10 @@
     function fileUpload_{{ $id }}() {
         return {
             upload_{{ $id }}: null,
+            descartarUpload() {
+                document.getElementById('{{ $name }}').value = null;
+                this.upload_{{ $id }} = null;
+            }
         }
     }
 </script>

@@ -166,6 +166,10 @@
     max-width: 32rem;
 }
 
+.choices__list--dropdown, .choices__list[aria-expanded] {
+    z-index: 60;
+}
+
 /* Change Autocomplete styles in Chrome */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,

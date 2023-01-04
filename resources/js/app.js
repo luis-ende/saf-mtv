@@ -98,7 +98,7 @@ Alpine.data('busquedaCABMS', () => ({
             });
         })
     },
-    buscaCategorias(cabmsId) {
+    buscaCategorias(cabmsId, selectedItems = []) {
         this.categoriasChoices.clearChoices();
         this.categoriasChoices.setChoices(() => {
             return fetch(
@@ -107,10 +107,16 @@ Alpine.data('busquedaCABMS', () => ({
                 return response.json();
             }).then(function(data) {
                 return data.map(function(item) {
-                    return {
+                    let choice = {
                         value: item.id,
                         label: item.categoria_scian,
                     };
+
+                    if (selectedItems.includes(item.id)) {
+                        choice.selected = true;
+                    }
+
+                    return choice;
                 });
             });
         });
@@ -121,19 +127,22 @@ Alpine.data('busquedaCABMS', () => ({
         this.seleccionCategorias = JSON.stringify(selected);
     },
     cargaProductoCABMSCategorias(productoId) {
-        this.cabmsChoices.clearChoices();
-        this.cabmsChoices.clearInput();
-        this.categoriasChoices.clearChoices();
-        this.categoriasChoices.clearInput();
-        /*this.tipoProducto = 'B';*/
+        this.cabmsChoices.clearStore();
+        this.categoriasChoices.clearStore();
         if (productoId) {
             fetch('/productos/' + productoId + '/cabms_categorias')
                 .then(res => res.json())
                 .then(res => {
                     this.tipoProducto = res.tipo;
-                    console.log(res);
+                    this.cabmsChoices.setChoices([{
+                        value: res.id_cabms,
+                        label: res.nombre_cabms,
+                        selected: true,
+                    }]);
+                    if (res.id_cabms) {
+                        this.buscaCategorias(res.id_cabms, res.ids_categorias_scian);
+                    }
                 });
-            /*this.cabmsChoices.setValue();*/
         }
     }
 }))

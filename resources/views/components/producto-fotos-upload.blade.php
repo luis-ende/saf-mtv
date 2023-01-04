@@ -1,9 +1,12 @@
+@props(['modo' => 'producto_edicion'])
 @php($maxNumFotos = 3)
 
 <div class="bg-white p7 rounded w-11/12 mx-auto">
     <div x-data="dataFileDnD()"
          {{--x-init="$watch('triggerUpdateEvent', value => { $store.filesUploaded.hasFilesUploaded = true })"--}}
+         @if ($modo === 'producto_edicion')
          x-init="$watch('productoEditado', value => { cargaProductoFotos(value) })"
+         @endif
          class="relative flex flex-col p-4 text-gray-400">
         <div x-ref="dnd"
              class="relative flex flex-col text-gray-400 border-2 border-mtv-gray-2 border-dashed rounded cursor-pointer">
@@ -15,6 +18,7 @@
                    @dragleave="$refs.dnd.classList.remove('border-blue-400'); $refs.dnd.classList.remove('ring-4'); $refs.dnd.classList.remove('ring-inset');"
                    @drop="$refs.dnd.classList.remove('border-blue-400'); $refs.dnd.classList.remove('ring-4'); $refs.dnd.classList.remove('ring-inset');"
                    title="" />
+            <input id="producto_fotos_eliminadas" name="producto_fotos_eliminadas" type="hidden" x-model="fotosEliminadas">
 
             <div class="flex flex-col items-center justify-center py-10 text-center">
                 @svg('ri-image-add-fill', ['class' => 'w-7 h-7 mr-1 text-mtv-secondary'])
@@ -22,10 +26,11 @@
             </div>
         </div>
 
-        <template x-if="files.length > 0">
+        <template x-if="productoFotos.length > 0">
             <div class="grid grid-cols-3 gap-4 mt-4 self-center" @drop.prevent="drop($event)"
                  @dragover.prevent="$event.dataTransfer.dropEffect = 'move'">
-                <template x-for="(_, index) in Array.from({ length: files.length })">
+
+                <template x-for="(_, index) in Array.from({ length: productoFotos.length })">
                     <div class="relative flex flex-col items-center overflow-hidden text-center bg-gray-100 border rounded cursor-move select-none w-32 h-32"
                          style="padding-top: 100%;" @dragstart="dragstart($event)" @dragend="fileDragging = null"
                          :class="{'border-blue-600': fileDragging == index}" draggable="true" :data-index="index">
@@ -37,20 +42,20 @@
                             </svg>
                         </button>
 
-                        <template x-if="!files[index]?.hasOwnProperty('original_url')">
+                        <template x-if="productoFotos[index]?.type === 'file'">
                             <img class="absolute inset-0 z-0 object-cover w-full h-full border-4 border-white preview"
-                                 x-bind:src="files[index] ? loadFile(files[index]) : null" />
+                                 x-bind:src="files[productoFotos[index]?.file_index] ? loadFile(files[productoFotos[index]?.file_index]) : null" />
                         </template>
 
-                        <template x-if="files[index]?.hasOwnProperty('original_url')">
+                        <template x-if="productoFotos[index]?.type === 'url'">
                             <img class="absolute inset-0 z-0 object-cover w-full h-full border-4 border-white preview"
-                                 x-bind:src="files[index]?.original_url" />
+                                 x-bind:src="productoFotos[index].original_url" />
                         </template>
 
                         <div class="absolute bottom-0 left-0 right-0 flex flex-col p-2 text-xs bg-white bg-opacity-50">
                             <span class="w-full font-bold text-gray-900 truncate"
-                                  x-text="files[index]?.name">Cargando</span>
-                            <span class="text-xs text-gray-900" x-text="humanFileSize(files[index]?.size)">...</span>
+                                  x-text="productoFotos[index]?.name">Cargando</span>
+                            <span class="text-xs text-gray-900" x-text="humanFileSize(productoFotos[index]?.size)">...</span>
                         </div>
 
                         <div class="absolute inset-0 z-40 transition-colors duration-300" @dragenter="dragenter($event)"
@@ -75,9 +80,10 @@
             formData: null,
             files: [],
             productoFotos: [],
+            fotosEliminadas: [],
             fileDragging: null,
             fileDropping: null,
-            triggerUpdateEvent: false,
+            /*triggerUpdateEvent: false,*/
             humanFileSize(size) {
                 const i = Math.floor(Math.log(size) / Math.log(1024));
                 return (
@@ -87,16 +93,16 @@
                 );
             },
             remove(index) {
-                if (this.files[index].hasOwnProperty('original_url')) {
-                    this.files.splice(index, 1);
+                if (this.productoFotos[index].type === 'url') {
+                    this.fotosEliminadas.push(this.productoFotos[index].id);
+                    this.productoFotos.splice(index, 1);
+                } else {
+                    let files = [...this.files];
+                    files.splice(index, 1);
 
-                    return;
+                    this.files = createFileList(files);
+                    this.productoFotos.splice(index, 1);
                 }
-
-                let files = [...this.files];
-                files.splice(index, 1);
-
-                this.files = createFileList(files);
             },
             drop(e) {
                 let removed, add;
@@ -134,9 +140,18 @@
                 return blobUrl;
             },
             addFiles(e) {
-                const totalFiles = e.target.files.length + this.files.length;
+                const totalFiles = e.target.files.length + this.productoFotos.length;
 
                 if (totalFiles <= 3) {
+                    Array.from(e.target.files).forEach((file, index) => {
+                        this.productoFotos.push({
+                            type: 'file',
+                            file_index: this.files.length + index,
+                            name: file.name,
+                            size: file.size,
+                        })
+                    });
+
                     const files = createFileList([...this.files], [...e.target.files]);
                     this.files = files;
                 }
@@ -146,10 +161,17 @@
             },
             cargaProductoFotos(productoId) {
                 if (productoId) {
+                    this.files = [];
+                    document.getElementById('producto_fotos').value = null;
                     fetch('/productos/' + productoId + '/fotos')
                         .then(res => res.json())
                         .then(res => {
-                            this.files = res;
+                            this.productoFotos = res.map(item => {
+                                return {
+                                    ...item,
+                                    type: 'url'
+                                };
+                            });
                         });
                 }
             }
