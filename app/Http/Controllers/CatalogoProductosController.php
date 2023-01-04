@@ -312,6 +312,8 @@ class CatalogoProductosController extends Controller
 
     public function storeCargaProductosProducto(Request $request, Producto $producto, ProductoRepository $productoRepo)
     {
+        // TODO: Verificar que el producto pertenece al catálogo del usuario
+
         try {
             $this->validate($request, [
                 'id_cabms' => 'integer',
@@ -319,9 +321,9 @@ class CatalogoProductosController extends Controller
                 'producto_fotos.*' => 'max:1000|mimes:jpg,png',
                 'producto_fotos_eliminadas' => 'json',
             ]);
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            return ['error' => 'error general'];
-            /*return [$e->validator];*/
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {            
+            // TODO: Verificar si devulve errores en el formato correcto
+            return [$e->validator];
         }
 
         // TODO: Mover a respositorio
@@ -339,7 +341,7 @@ class CatalogoProductosController extends Controller
         }
 
         $fotosEliminadas = json_decode($request->input('producto_fotos_eliminadas'));
-        $fotosEliminadas = !empty($fotosEliminadas) ?  explode(',', $fotosEliminadas) : [];
+        $fotosEliminadas = !empty($fotosEliminadas) ? explode(',', $fotosEliminadas) : [];
         foreach ($fotosEliminadas as $fotoEliminadaId) {
             $producto->deleteMedia($fotoEliminadaId);
         }
