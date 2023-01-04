@@ -15,7 +15,6 @@
 @php($cuenta_linkedin = isset($perfilNegocio) ? $perfilNegocio->cuenta_linkedin : old('cuenta_linkedin'))
 @php($num_whatsapp = isset($perfilNegocio) ? $perfilNegocio->num_whatsapp : old('num_whatsapp'))
 @php($logotipoUrl = isset($perfilNegocio) ? $perfilNegocio->getFirstMediaUrl('logotipos') : null)
-@php($cartaPresentacion = isset($perfilNegocio) ? $perfilNegocio->getFirstMedia('documentos') : null)
 
 <div x-data="descripcionNegocioReglas()" x-init="initDescripcionNegocio()">
     <div class="flex flex-row flex-wrap">
@@ -108,44 +107,7 @@
             </div>
             <div class="form-group col-md-12">
                 <x-diferenciadores-input :diferenciadores="$diferenciadores" />
-            </div>
-            <div class="form-group col-md-12 w-full"
-                 x-data="{
-                    cartaPresentacion: {{ $cartaPresentacion ? "'" . $cartaPresentacion->file_name . "'" : 'null' }},
-                    cartaPresentacionURL: '{{ $cartaPresentacion ? $cartaPresentacion->original_url : '' }}',
-                }">
-                <label class="text-mtv-text-gray font-bold my-3">
-                    ¿Quieres subir tu carta de presentación? Agrégala en formato PDF de hasta 3MB.
-                </label>
-                <div class="flex flex-row justify-start text-mtv-gold font-bold">
-                    <div class="flex flex-row cursor-pointer"
-                         @click="$refs.inputCartaPresentacion.click()"
-                    >
-                        @svg('uiw-paper-clip', ['class' => 'h-9 w-9 mr-3'])
-                        <span class="w-full self-center">Adjuntar documento</span>
-                        <input id="carta_presentacion" name="carta_presentacion"
-                               class="invisible"
-                               type="file" accept="application/pdf"
-                               x-ref="inputCartaPresentacion"
-                               @change="cartaPresentacion = $event.target.value.replace(/^.*[\\\/]/, '')"
-                        >
-                        <input id="eliminar_carta"
-                               name="eliminar_carta"
-                               type="hidden"
-                               x-bind:value="cartaPresentacion === null ? 1 : 0">
-                    </div>
-                </div>
-                <div class="text-mtv-text-gray" x-show="cartaPresentacion !== null">
-                    <a x-bind:href="cartaPresentacionURL"
-                       class="font-bold no-underline text-mtv-text-gray hover:text-mtv-primary focus:text-mtv-text-gray"
-                       x-text="cartaPresentacion"
-                       target="_blank"></a>
-                    @svg('sui-cross', [
-                        'class' => 'h-3 w-3 inline-block ml-3 cursor-pointer',
-                        '@click' => "document.getElementById('carta_presentacion').value = null; cartaPresentacion = null"
-                    ])
-                </div>
-            </div>
+            </div>            
         </div>
     </div>
 
