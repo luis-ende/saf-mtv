@@ -37,9 +37,11 @@ class CatalogoProductosController extends Controller
     {
         return view('catalogo-productos.alta-producto-1');
     }
-    public function showAltaProducto2()
-    {
-        return view('catalogo-productos.alta-producto-2');
+    public function showAltaProducto2(Request $request, Producto $producto)
+    {        
+        return view('catalogo-productos.alta-producto-2', [
+            'producto' => $producto,
+        ]);
     }
     public function showAltaProducto3()
     {
@@ -84,7 +86,7 @@ class CatalogoProductosController extends Controller
                     'descripcion' => 'required|max:140',
                     'marca' => 'max:255',
                     'modelo' => 'max:255',
-                    'color' => 'max:30',
+                    'producto_colores.*' => 'string',
                     'material' => 'max:255',
                     'codigo_barras' => 'max:100',
                 ]);
@@ -129,11 +131,14 @@ class CatalogoProductosController extends Controller
                 ]);
             }
 
-            return redirect()->route('alta-producto-2.show', [$productoNuevo->id])
-                                ->with('tipo_producto', $productoNuevo->tipo);
+            return redirect()->route('alta-producto-2.show', [$productoNuevo->id]);
         } elseif ($registroFase === 2) {
             $productoData = $request->only('nombre', 'descripcion', 'marca', 'modelo',
-                                            'color', 'material', 'codigo_barras');
+                                           'material', 'codigo_barras');
+            $colores = $request->input('producto_colores');
+            if ($colores && count($colores) > 0) {
+                $productoData['color'] = implode(',', $colores);
+            }
             $productoData['registro_fase'] = $registroFase;
             $producto->update($productoData);
 

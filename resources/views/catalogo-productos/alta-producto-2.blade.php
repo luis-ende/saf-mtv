@@ -5,17 +5,20 @@
                        ['titulo' => '',                        
                         'subtitulo' => '',
                         'texto_secuencia' => 'Paso 2 de 4'])            
-            @php($tipoProducto = session()->get('tipo_producto'))
+            @php($tipoProducto = $producto->tipo)
             <form method="POST" action="{{ route('alta-producto.store', [2, request()->producto]) }}" class="px-6">
                 @csrf
                 <div class="mx-auto flex flex-col w-1/2">                       
                     <label class="block basis-full text-xl font-bold text-mtv-secondary mt-2 mb-2 self-center">
                         Describe tu producto
                     </label>                 
+                    <label class="text-mtv-gray text-base mb-3 self-center">
+                        Los campos marcados con <span class="text-mtv-primary">*</span> son obligatorios.                        
+                    </label>
                     <div class="mtv-input-wrapper">
                         <input type="text" class="mtv-text-input" id="nombre" name="nombre"
                                value="" required>
-                        <label class="mtv-input-label" for="nombre">Nombre de tu producto</label>
+                        <label class="mtv-input-label" for="nombre">Nombre de tu producto<span class="text-mtv-primary">*</span></label>
                     </div>
                     <label class="text-xs text-slate-500 mx-3 italic" 
                            for="descripcion_producto">
@@ -23,11 +26,11 @@
                     </label>
                     <div class="mtv-input-wrapper">
                         <textarea class="mtv-text-input" id="descripcion"
-                                name="descripcion" maxlength="140"></textarea>
-                        <label class="mtv-input-label" for="descripcion">Describe tu producto</label>                        
+                                name="descripcion" maxlength="140" required></textarea>
+                        <label class="mtv-input-label" for="descripcion">Describe tu producto<span class="text-mtv-primary">*</span></label>                        
                     </div>
                     <label class="text-xs text-slate-500 mx-3 italic" 
-                               for="producto">
+                           for="producto">
                                Indica en qué unidad de medida vendes tu producto, qué presentación tiene, fabricante y otras características importantes con las que cuenta tu producto.
                     </label>  
                     @if($tipoProducto === 'B')                  
@@ -42,30 +45,17 @@
                                     value="">
                                 <label class="mtv-input-label" for="modelo">Modelo o SKU</label>
                             </div>
-                            <div>
-                                <div class="mtv-input-wrapper">
-                                    <input type="text" class="mtv-text-input" id="color" name="color"
-                                        value="">
-                                    <label class="mtv-input-label" for="color">Color(es)</label>
-                                </div>
-                                <label class="text-xs text-slate-500 mx-3" 
-                                for="color">
-                                Usa comas para separar las palabras
-                                </label>                        
-                            </div>                        
-                            <div>
-                                <div class="mtv-input-wrapper">
-                                    <input type="text" class="mtv-text-input" id="material" name="material"
-                                        value="">
-                                    <label class="mtv-input-label" for="material">Material</label>
-                                </div>
-                                <label class="text-xs text-slate-500" 
-                                for="color">                               
-                                </label>                        
-                            </div>
+                            
+                            <x-input-producto-color-select />
+                                                        
+                            <div class="mtv-input-wrapper">
+                                <input type="text" class="mtv-text-input" id="material" name="material"
+                                    value="">
+                                <label class="mtv-input-label" for="material">Material</label>
+                            </div>                                                            
                             <div class="mtv-input-wrapper">
                                 <input type="text" class="mtv-text-input" id="codigo_barras" name="codigo_barras"
-                                    value="">
+                                       value="">
                                 <label class="mtv-input-label" for="material">Código de barras</label>
                             </div>
                         </div>
