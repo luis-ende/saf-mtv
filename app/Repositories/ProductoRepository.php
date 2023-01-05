@@ -49,7 +49,11 @@ class ProductoRepository
     public function obtieneProductosImportados(int $catalogoId): array
     {
         return Producto::select('id', 'tipo', 'nombre', 'descripcion', 'id_cabms')
-                            ->where('id_cat_productos', '=', $catalogoId)
+                            ->where([
+                                        ['id_cat_productos', '=', $catalogoId],
+                                        ['es_importado', '=', true],
+                                    ])
+                            ->orderBy('id') // Orden en el que fueron importados       
                             ->get()
                             ->toArray();
     }

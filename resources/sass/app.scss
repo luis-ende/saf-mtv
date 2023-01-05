@@ -150,9 +150,9 @@
 }
 
 .choices__list--multiple .choices__item {
-    background-color: #235b4e;
-    color: white;
-    border: 1px solid #e6e6e6;
+    background-color: white;
+    color: #235b4e;
+    border: 1px solid #235b4e;
 }
 
 .choices__list--multiple > .choices__item.is-highlighted {
@@ -168,6 +168,12 @@
 
 .choices__list--dropdown, .choices__list[aria-expanded] {
     z-index: 60;
+}
+
+.choices__button {
+    color: #235b4e;
+    border-left: 1px solid #235b4e !important; 
+    background-image: url("data:image/svg+xml,%3csvg width='21' height='21' viewBox='0 0 21 21' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='%23235b4e' fill-rule='evenodd'%3e%3cpath d='M2.592.044l18.364 18.364-2.548 2.548L.044 2.592z'/%3e%3cpath d='M0 18.364L18.364 0l2.548 2.548L2.548 20.912z'/%3e%3c/g%3e%3c/svg%3e") !important;
 }
 
 /* Change Autocomplete styles in Chrome */

@@ -28,11 +28,17 @@
                         :name="__('productos_import_file')"
                         :id="__('productos_import_file')"
                     />
-                    <button type="submit"
-                            @click="muestraConfirmacion($event)"
-                            class="mtv-button-secondary self-center my-4">
-                        Procesar
-                    </button>
+                    <div class="flex flex-row my-4 space-x-10 justify-center">
+                        <a href="{{ route('catalogo-registro-inicio') }}" class="mtv-button-secondary-white no-underline self-center">
+                            @svg('fas-arrow-left', ['class' => 'h-7 w-7 inline-block'])
+                            Atrás
+                        </a>
+                        <button type="submit"
+                                @click="muestraConfirmacion($event)"
+                                class="mtv-button-secondary self-center my-4">
+                            Procesar
+                        </button>
+                    </div>    
                 </div>
             </form>
 

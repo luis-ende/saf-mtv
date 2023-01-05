@@ -78,7 +78,8 @@ class CatalogoProductosController extends Controller
                             Producto::TIPO_PRODUCTO_BIEN_ID,
                             Producto::TIPO_PRODUCTO_SERVICIO_ID])
                         ],
-                    'ids_categorias_scian' => 'required|json',
+                    'ids_categorias_scian' => 'required|array',
+                    'ids_categorias_scian.*' => 'integer',
                 ]);
             }
 
@@ -125,7 +126,7 @@ class CatalogoProductosController extends Controller
                 'registro_fase' => $registroFase,
             ]);
 
-            $categorias = json_decode($request->input('ids_categorias_scian'), true);
+            $categorias = $request->input('ids_categorias_scian');
             foreach($categorias as $categoriaId) {
                 ProductoCategoria::create([
                     'id_producto' => $productoNuevo->id,
@@ -331,6 +332,8 @@ class CatalogoProductosController extends Controller
         try {
             $this->validate($request, [
                 'id_cabms' => 'integer',
+                'ids_categorias_scian' => 'required|array',
+                'ids_categorias_scian.*' => 'integer',
                 'producto_fotos' => 'max:3',
                 'producto_fotos.*' => 'max:1000|mimes:jpg,png',
                 'producto_fotos_eliminadas' => 'json',
@@ -347,7 +350,7 @@ class CatalogoProductosController extends Controller
         $producto->update($productoDatos);
 
         if ($request->input('ids_categorias_scian')) {
-            $categorias = json_decode($request->input('ids_categorias_scian'), true);
+            $categorias = $request->input('ids_categorias_scian');
             ProductoCategoria::where('id_producto', '=', $producto->id)->delete();
             foreach($categorias as $categoriaId) {
                 ProductoCategoria::create([

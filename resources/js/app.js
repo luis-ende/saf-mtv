@@ -37,8 +37,7 @@ Alpine.store('filesUploaded', { hasFilesUploaded: false });
 // Función reutilizable para el componente resources/views/components/cabms-categorias-select.blade.php
 // Componente de selección de CABMS y Categorías SCIAN para productos
 Alpine.data('busquedaCABMS', () => ({
-    tipoProducto: 'B',
-    seleccionCategorias: '',
+    tipoProducto: 'B',    
     busquedaCABMSRoute: '/catalogo-cabms/',
     busquedaCategoriasRoute: '/catalogo-cabms/categorias/',
     cabmsChoices: new Choices('#id_cabms', {
@@ -120,12 +119,7 @@ Alpine.data('busquedaCABMS', () => ({
                 });
             });
         });
-    },
-    setSeleccionCategorias(selectCategorias) {
-        const selected = [...selectCategorias.selectedOptions]
-                .map(option => option.value);
-        this.seleccionCategorias = JSON.stringify(selected);
-    },
+    },    
     cargaProductoCABMSCategorias(productoId) {
         this.cabmsChoices.clearStore();
         this.categoriasChoices.clearStore();

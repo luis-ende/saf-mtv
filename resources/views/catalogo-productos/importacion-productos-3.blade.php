@@ -97,7 +97,10 @@
                             guardaProducto(id) {
                                 const formData = new FormData();
                                 formData.append('id_cabms', document.getElementById('id_cabms').value);
-                                formData.append('ids_categorias_scian', document.getElementById('ids_categorias_scian').value);
+                                const categoriasSCian = document.getElementById('categorias_scian').options;
+                                for (let i = 0; i <= categoriasSCian.length - 1; i++) {
+                                    formData.append('ids_categorias_scian[]', categoriasSCian[i].value);
+                                }                                                                
                                 formData.append('producto_fotos_eliminadas', JSON.stringify(document.getElementById('producto_fotos_eliminadas').value));
                                 const productoFotos = document.getElementById('producto_fotos').files;
                                 for (let i = 0; i <= productoFotos.length - 1; i++) {

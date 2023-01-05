@@ -18,9 +18,8 @@
 <div class="mtv-input-wrapper w-full mx-auto">
     <select class="mtv-text-input text-base"
             id="categorias_scian"
-            @change="setSeleccionCategorias($event.target)"
+            name="ids_categorias_scian[]"            
             multiple>
     </select>
-    <label class="mtv-input-label" for="categorias_scian">Categoría(s)</label>
-    <input type="hidden" id="ids_categorias_scian" name="ids_categorias_scian" x-model="seleccionCategorias">
+    <label class="mtv-input-label" for="categorias_scian">Categoría(s)</label>    
 </div>
