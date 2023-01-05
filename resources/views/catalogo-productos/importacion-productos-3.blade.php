@@ -58,7 +58,10 @@
                     </table>
                 </div>
 
-                <form method="POST" action="{{ route('carga-productos.store', [3]) }}" class="self-center">
+                <form method="POST" 
+                      action="{{ route('carga-productos.store', [3]) }}" 
+                      class="self-center"
+                      @submit="validaProductos($event)">
                     @csrf
                     <button type="submit"
                             class="mtv-button-secondary my-4">
@@ -124,6 +127,7 @@
                                     }
                                 }).then(json => {
                                     const producto = this.productos.find(producto => producto.id == id);
+                                    producto.id_cabms = json.id_cabms;
                                     producto.nombre_cabms = json.nombre_cabms;
                                     producto.categorias_scian = json.categorias_scian;
                                 })
@@ -159,6 +163,25 @@
                                         });
                                     }
                                 })
+                            },
+                            // Valida que todos los productos importados hayan sido completados 
+                            // con su correspondiente cabms y categorias.
+                            validaProductos(e) {                                                                
+                                let existeProductoIncompleto = 
+                                    this.productos.some(producto => 
+                                        !producto.nombre_cabms || producto.categorias_scian === '');
+                            
+                                if (existeProductoIncompleto) {
+                                    Swal.fire({
+                                        ...SwalMTVCustom,
+                                        title: 'Datos incompletos',
+                                        html: "No es posible finalizar la carga de productos. Asigna el nombre y categoría correspondientes para cada producto.",                                    
+                                        showCancelButton: false,
+                                        confirmButtonText: 'Aceptar',
+                                    });                              
+                                    
+                                    e.preventDefault();
+                                }                                                                
                             }
                         }
                     }

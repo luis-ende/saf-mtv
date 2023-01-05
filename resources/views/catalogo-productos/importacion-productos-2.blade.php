@@ -1,6 +1,6 @@
 <x-app-layout :show_main_menu="false">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
-        <div class="bg-white overflow-hidden shadow-sm h-screen">
+        <div class="bg-white overflow-hidden shadow-sm h-fit">
             @include('catalogo-productos.registro-header',
                        ['titulo' => '',                        
                         'subtitulo' => '',
@@ -44,8 +44,8 @@
                             <tbody> 
                                 @foreach($rows as $row)                           
                                     <tr class="{{ $row['errores'] ? 'bg-red-100' : '' }}">
-                                        <td class="font-bold">{{ $loop->index + 1 }}</td>
-                                        <td>{{ $row['tipo'] === 'B' ? 'Bien' : ( $row['tipo'] === 'S' ? 'Servicio' : '') }}</td>
+                                        <td>{{ $loop->index + 1 }}</td>
+                                        <td class="uppercase">{{ $row['tipo'] === 'B' ? 'Bien' : ( $row['tipo'] === 'S' ? 'Servicio' : '') }}</td>
                                         <td>{{ $row['nombre_producto'] }}</td>
                                         <td>   
                                             @if($row['errores'])                                         

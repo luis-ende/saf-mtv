@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use App\Imports\ProductosImport;
 use App\Models\ProductoCategoria;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\ProductoRepository;
@@ -198,17 +199,13 @@ class CatalogoProductosController extends Controller
         if ($catalogoProductos->carga_masiva_completa === true) {
             return redirect()->route('catalogo-registro-inicio')->with('warning', 'La carga masiva se permite sólo una vez.');
         }
-
-        $catalogoProductos = $request->user()->persona->catalogoProductos;
+        
+        $productosImportados = $productoRepo->obtieneProductosImportados($catalogoProductos->id);
         $productos = array_map(function ($producto) use($productoRepo) {
             $productoCABMSCategorias = $productoRepo->obtieneProductoCABMSCategorias($producto['id']);
 
             return array_merge($producto, $productoCABMSCategorias);
-        }, $catalogoProductos->productos->toArray());
-
-//        $productos = array_filter($productos, function($producto) {
-//            return $producto->registro_fase === 1;
-//        });
+        }, $productosImportados);
 
         return view('catalogo-productos.importacion-productos-3', [
             'productos' => $productos,
@@ -237,6 +234,7 @@ class CatalogoProductosController extends Controller
                 $media = $catalogoProductos->addMedia($archivoImportacion)->toMediaCollection('importaciones');
                 $archivoImportacionPath = $media->getPath();
 
+                // TODO: Colocar ruta de plantilla en constante
                 $plantillaPath = Storage::path('public/plantillas/productos_carga_masiva.xlsx');
                 $plantillaRows = Excel::toArray(new ProductosImport($catalogoId, $opciones), $plantillaPath);
 
@@ -265,6 +263,15 @@ class CatalogoProductosController extends Controller
                         $errores[] = "Columna 'descripcion' no contiene información.";
                     }
 
+                    for($i = 1; $i <= 3; $i++) {
+                        if (!empty(($row['foto_url_' . $i])) ){
+                            $response = Http::get($row['foto_url_' . $i]);
+                            if ($response->status() !== 200) {
+                                $errores[] = "Columna 'foto_url_" . $i ."'" . " no contiene una URL válida.";
+                            }
+                        }
+                    }                    
+
                     if ($errores) {
                         $contadorErrores++;
                     }
@@ -289,6 +296,7 @@ class CatalogoProductosController extends Controller
                     Excel::import(new ProductosImport($catalogoId, $opciones), $archivoImportacionPath);
                     $productos = $catalogoProductos->productos;
                     foreach ($productos as $producto) {
+                        // TODO: Cachar errores de descarga de fotos (y verificar desde paso previo)
                         if (!empty($producto->foto_url_1)) {
                             $producto->addMediaFromUrl($producto->foto_url_1)->toMediaCollection('fotos');
                         }
@@ -317,7 +325,7 @@ class CatalogoProductosController extends Controller
 
     public function storeCargaProductosProducto(Request $request, Producto $producto, ProductoRepository $productoRepo)
     {
-        // TODO: Verificar que el producto pertenece al catálogo del usuario
+        // TODO: Verificar que el producto pertenece al catálogo del usuario. Regresar error 403 si no
 
         try {
             $this->validate($request, [
@@ -332,7 +340,10 @@ class CatalogoProductosController extends Controller
         }
 
         // TODO: Mover a respositorio
-        $producto->update($request->only('id_cabms'));
+        $productoDatos = $request->only('id_cabms');
+        // Al asignar cabms y categorías se completa el registro del producto
+        $productoDatos['registro_fase'] = 4;
+        $producto->update($productoDatos);
 
         if ($request->input('ids_categorias_scian')) {
             $categorias = json_decode($request->input('ids_categorias_scian'), true);

@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('foto_url_2')->nullable();
             $table->string('foto_url_3')->nullable();
             $table->unsignedSmallInteger('registro_fase')->default(1);
+            $table->boolean('es_importado')->default(0);
             $table->timestamps();
         });
     }

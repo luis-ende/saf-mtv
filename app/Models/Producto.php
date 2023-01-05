@@ -37,6 +37,7 @@ class Producto extends Model implements HasMedia
         'foto_url_1',
         'foto_url_2',
         'foto_url_3',
+        'es_importado',
     ];
 
     public function getAllMedia()

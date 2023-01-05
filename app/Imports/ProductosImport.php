@@ -41,6 +41,7 @@ class ProductosImport implements ToModel, WithHeadingRow, WithValidation
             'foto_url_1' => $row['foto_url_1'],
             'foto_url_2' => $row['foto_url_2'],
             'foto_url_3' => $row['foto_url_3'],
+            'es_importado' => true,
         ]);
     }
 

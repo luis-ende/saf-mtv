@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Models\Producto;
+use App\Models\CatalogoProductos;
 use Illuminate\Support\Facades\DB;
 
 class ProductoRepository
@@ -39,5 +41,16 @@ class ProductoRepository
             'ids_categorias_scian' => $categoriasIds,
             'categorias_scian' => implode(', ', $categorias),
         ];
+    }
+
+    /**
+     * Obtiene productos importados por carga masiva de un catálogo.
+     */
+    public function obtieneProductosImportados(int $catalogoId): array
+    {
+        return Producto::select('id', 'tipo', 'nombre', 'descripcion', 'id_cabms')
+                            ->where('id_cat_productos', '=', $catalogoId)
+                            ->get()
+                            ->toArray();
     }
 }
