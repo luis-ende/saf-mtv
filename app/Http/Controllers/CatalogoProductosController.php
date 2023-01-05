@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\ProductoRepository;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 class CatalogoProductosController extends Controller
@@ -234,11 +235,14 @@ class CatalogoProductosController extends Controller
                 $media = $catalogoProductos->addMedia($archivoImportacion)->toMediaCollection('importaciones');
                 $archivoImportacionPath = $media->getPath();
 
-                // TODO: Colocar ruta de plantilla en constante
-                $plantillaPath = Storage::path('public/plantillas/productos_carga_masiva.xlsx');
-                $plantillaRows = Excel::toArray(new ProductosImport($catalogoId, $opciones), $plantillaPath);
+                $productosImport = new ProductosImport($catalogoId, $opciones);
 
-                $rows = Excel::toArray(new ProductosImport($catalogoId, $opciones), $archivoImportacionPath);
+                // TODO: Colocar ruta de plantilla en constante
+                $plantillaPath = Storage::path('public/plantillas/productos_carga_masiva.xlsx');                
+
+                $plantillaRows = Excel::toArray($productosImport, $plantillaPath);
+                
+                $rows = Excel::toArray($productosImport, $archivoImportacionPath);
 
                 $plantillaColumnas = array_keys($plantillaRows[0][0]);
                 $importacionColumnas = array_keys($rows[0][0]);
@@ -249,25 +253,22 @@ class CatalogoProductosController extends Controller
                 }
 
                 $contadorErrores = 0;
-                $rowsPreviews = array_map(function($row) use(&$contadorErrores) {
+                $rowsPreviews = array_map(function($row) use(&$contadorErrores, $productosImport) {
                     $errores = [];
-                    if (empty($row['tipo'])) {
-                        $errores[] = "Columna 'tipo' no contiene información.";
-                    }
+                    
+                    $validator = Validator::make($row, $productosImport->rules());
 
-                    if (empty($row['nombre_producto'])) {
-                        $errores[] = "Columna 'producto' no contiene información.";
-                    }
-
-                    if (empty($row['descripcion'])) {
-                        $errores[] = "Columna 'descripcion' no contiene información.";
-                    }
+                    if  ($validator->fails()) {
+                        $errores = $validator->errors()->all();
+                    }                    
 
                     for($i = 1; $i <= 3; $i++) {
-                        if (!empty(($row['foto_url_' . $i])) ){
-                            $response = Http::get($row['foto_url_' . $i]);
+                        $fotoURLColumn = 'foto_url_' . $i;
+                        $fotoURL = $row[$fotoURLColumn];                        
+                        if (!$validator->errors()->get($fotoURLColumn) && !empty($fotoURL) ) {
+                            $response = Http::get($row[$fotoURLColumn]);
                             if ($response->status() !== 200) {
-                                $errores[] = "Columna 'foto_url_" . $i ."'" . " no contiene una URL válida.";
+                                $errores[] = "Columna 'foto_url_" . $i ."'" . " no contiene una URL válida o es inaccesible.";
                             }
                         }
                     }                    

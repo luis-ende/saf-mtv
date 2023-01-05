@@ -62,9 +62,9 @@ class ProductosImport implements ToModel, WithHeadingRow, WithValidation
             'color' => 'max:30',
             'material' => 'max:255',
             'codigo_barras' => 'max:100',
-            'foto_url_1' => 'max:255',
-            'foto_url_2' => 'max:255',
-            'foto_url_3' => 'max:255',
+            'foto_url_1' => 'nullable|max:255|url',
+            'foto_url_2' => 'nullable|max:255|url',
+            'foto_url_3' => 'nullable|max:255|url',
         ];
     }
 }
