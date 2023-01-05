@@ -8,10 +8,6 @@
     </select>
     <label class="mtv-input-label" for="producto_colores">Color(es)</label>    
 </div>
-{{-- <label class="text-xs text-slate-500 italic"
-       for="color">
-    Usa comas para separar las palabras
-</label>                         --}}
 
 <script type="text/javascript">
     function inputColores() {
@@ -165,10 +161,160 @@
             "Yellow",
             "YellowGreen",
         ];
+
+        const CSS_COLOR_LABELS = [
+            "AliceAzul",
+            "AntiqueBlanco",
+            "Aqua",
+            "Aquamarine",
+            "Azure",
+            "Beige",
+            "Bisque",
+            "Black",
+            "BlanchedAlmond",
+            "Azul",
+            "AzulVioleta",
+            "Cafe",
+            "BurlyWood",
+            "CadetAzul",
+            "Chartreuse",
+            "Chocolate",
+            "Coral",
+            "CornflowerAzul",
+            "Cornsilk",
+            "Crimson",
+            "Cyan",
+            "DarkAzul",
+            "DarkCyan",
+            "DarkOroRod",
+            "DarkGris",
+            "DarkGris",
+            "DarkVerde",
+            "DarkKhaki",
+            "DarkMagenta",
+            "DarkOlivaVerde",
+            "DarkNaranja",
+            "DarkOrchid",
+            "DarkRojo",
+            "DarkSalmon",
+            "DarkSeaVerde",
+            "DarkSlateAzul",
+            "DarkSlateGris",
+            "DarkSlateGris",
+            "DarkTurquoise",
+            "DarkVioleta",
+            "DeepRosa",
+            "DeepSkyAzul",
+            "DimGris",
+            "DimGris",
+            "DodgerAzul",
+            "FireBrick",
+            "FloralBlanco",
+            "ForestVerde",
+            "Fuchsia",
+            "Gainsboro",
+            "GhostBlanco",
+            "Oro",
+            "OroRod",
+            "Gris",
+            "Gris",
+            "Verde",
+            "VerdeAmarillo",
+            "HoneyDew",
+            "HotRosa",
+            "IndianRojo",
+            "Indigo",
+            "Ivory",
+            "Khaki",
+            "Lavender",
+            "LavenderBlush",
+            "LawnVerde",
+            "LemonChiffon",
+            "LightAzul",
+            "LightCoral",
+            "LightCyan",
+            "LightOroRodAmarillo",
+            "LightGris",
+            "LightGris",
+            "LightVerde",
+            "LightRosa",
+            "LightSalmon",
+            "LightSeaVerde",
+            "LightSkyAzul",
+            "LightSlateGris",
+            "LightSlateGris",
+            "LightSteelAzul",
+            "LightAmarillo",
+            "Lima",
+            "LimaVerde",
+            "Linen",
+            "Magenta",
+            "Maroon",
+            "MediumAquaMarine",
+            "MediumAzul",
+            "MediumOrchid",
+            "MediumPurpura",
+            "MediumSeaVerde",
+            "MediumSlateAzul",
+            "MediumSpringVerde",
+            "MediumTurquoise",
+            "MediumVioletaRojo",
+            "MidnightAzul",
+            "MintCream",
+            "MistyRose",
+            "Moccasin",
+            "NavajoBlanco",
+            "Navy",
+            "OldLace",
+            "Oliva",
+            "OlivaDrab",
+            "Naranja",
+            "NaranjaRojo",
+            "Orchid",
+            "PaleOroRod",
+            "PaleVerde",
+            "PaleTurquoise",
+            "PaleVioletaRojo",
+            "PapayaWhip",
+            "DuraznoPuff",
+            "Peru",
+            "Rosa",
+            "Plum",
+            "PowderAzul",
+            "Purpura",
+            "RebeccaPurpura",
+            "Rojo",
+            "RosyCafe",
+            "RoyalAzul",
+            "SaddleCafe",
+            "Salmon",
+            "SandyCafe",
+            "SeaVerde",
+            "SeaShell",
+            "Sienna",
+            "Silver",
+            "SkyAzul",
+            "SlateAzul",
+            "SlateGris",
+            "SlateGris",
+            "Snow",
+            "SpringVerde",
+            "SteelAzul",
+            "Tan",
+            "Teal",
+            "Thistle",
+            "Tomato",
+            "Turquoise",
+            "Violeta",
+            "Wheat",
+            "Blanco",
+            "BlancoSmoke",
+            "Amarillo",
+            "AmarilloVerde",
+        ];
         
         return {
-            inputColoresChoices: new Choices('#producto_colores', {
-                seleccionColores: [],
+            inputColoresChoices: new Choices('#producto_colores', {                
                 allowHTML: false,
                 loadingText: 'Cargando...',
                 noChoicesText: 'Sin colores para elegir',
@@ -177,6 +323,7 @@
                 searchChoices: true,
                 duplicateItemsAllowed: false,
                 removeItemButton: true,
+                searchResultLimit: 20,
                 classNames: {
                     containerInner: 'choices__inner--categorias choices__inner',
                 }, 
@@ -193,7 +340,7 @@
                                 }" data-item data-id="${data.id}" data-value="${data.value}" ${
                                 data.active ? 'aria-selected="true"' : ''
                                 } ${data.disabled ? 'aria-disabled="true"' : ''}>
-                                    <span>&#x025A8;</span>
+                                    <span>&nbsp;&nbsp;&nbsp;</span>
                                 </div>
                             `);
                         },
@@ -216,11 +363,12 @@
                 },
             }),
             initInputColores() {
-                this.inputColoresChoices.setChoices(
-                    CSS_COLOR_NAMES.map(item => { return { 
-                        label: item, 
-                        value: item, 
-                    }
+                this.inputColoresChoices.setChoices(                    
+                    CSS_COLOR_NAMES.map((item, index) => {                         
+                        return {                         
+                            label: CSS_COLOR_LABELS[index], 
+                            value: item, 
+                        }
                 }));                
             }
         }
