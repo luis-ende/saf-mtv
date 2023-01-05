@@ -71,7 +71,7 @@
             html: `{!! $dialogoHtml !!}`,
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = '/catalogo-productos';
+                    window.location.href = '/catalogo-registro-inicio';
                 }
             })                
         }    
