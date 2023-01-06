@@ -338,3 +338,23 @@
     font-size: 1rem;
     color: #6f7271;
 }
+
+@media only screen and (max-width: 600px) {
+    .message-one {
+        font-size: 14px;
+    }
+
+    .message-second {
+        font-size: 10px;
+    }
+
+    .message-third {
+        font-size: 14px;
+    }
+    .menu-bottom {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        margin-bottom: 40px;
+    }
+}
