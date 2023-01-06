@@ -14,8 +14,11 @@ class ProductoRepository
     public function obtieneProductoCABMSCategorias(int $productoId)
     {
         $producto = DB::table('productos')
-            ->select('productos.id', 'productos.tipo', 'productos.id_cabms', 'cat_cabms.nombre_cabms')
-            ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
+            ->select('productos.id', 'productos.tipo', 'productos.id_cabms', 
+                     'cat_cabms.nombre_cabms', 'cat_categorias_scian.categoria_scian', 'cat_sectores.sector')
+            ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')            
+            ->leftJoin('cat_categorias_scian', 'cat_categorias_scian.id', '=', 'cat_cabms.id_categoria_scian')
+            ->leftJoin('cat_sectores', 'cat_sectores.id', '=', 'cat_categorias_scian.id_sector')
             ->where('productos.id', '=', $productoId)
             ->get();
         $producto = isset($producto[0]) ? $producto[0] : null;
@@ -38,6 +41,8 @@ class ProductoRepository
             'tipo' => $producto?->tipo,
             'id_cabms' => $producto?->id_cabms,
             'nombre_cabms' => $producto?->nombre_cabms,
+            'categoria_scian' => $producto?->categoria_scian,
+            'sector' => $producto?->sector,
             'ids_categorias_scian' => $categoriasIds,
             'categorias_scian' => implode(', ', $categorias),
         ];

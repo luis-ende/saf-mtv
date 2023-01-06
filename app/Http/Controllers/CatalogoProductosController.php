@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 use Illuminate\Validation\Rule;
 use App\Imports\ProductosImport;
-use App\Models\ProductoCategoria;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
@@ -35,26 +34,24 @@ class CatalogoProductosController extends Controller
         return view('catalogo-productos.inicio-tipo-carga');
     }
 
-    public function showAltaProducto1()
+    public function showAltaProducto1(?Producto $producto)
     {
-        return view('catalogo-productos.alta-producto-1');
+        return view('catalogo-productos.alta-producto-1', ['producto' => $producto]);
     }
     public function showAltaProducto2(Request $request, Producto $producto)
     {        
-        return view('catalogo-productos.alta-producto-2', [
-            'producto' => $producto,
-        ]);
+        return view('catalogo-productos.alta-producto-2', ['producto' => $producto]);
     }
-    public function showAltaProducto3()
+    public function showAltaProducto3(Request $request, Producto $producto)
     {
-        return view('catalogo-productos.alta-producto-3');
+        return view('catalogo-productos.alta-producto-3', ['producto' => $producto]);
     }
-    public function showAltaProducto4()
+    public function showAltaProducto4(Request $request, Producto $producto)
     {
-        return view('catalogo-productos.alta-producto-4');
+        return view('catalogo-productos.alta-producto-4', ['producto' => $producto]);
     }
 
-    public function storeAltaProducto(Request $request, int $registroFase, ?Producto $producto)
+    public function storeAltaProducto(Request $request, int $registroFase, ?Producto $producto = null)
     {
         $catalogoId = Auth::user()->persona->catalogoProductos->id;
 
@@ -97,8 +94,9 @@ class CatalogoProductosController extends Controller
 
             if ($registroFase === 3) {
                 $this->validate($request, [
-                    'producto_fotos' => 'required|max:3',
-                    'producto_fotos.*' => 'max:1000|mimes:jpg,png'
+                    'producto_fotos' => 'max:3',
+                    'producto_fotos.*' => 'max:1000|mimes:jpg,png',
+                    'producto_fotos_eliminadas' => 'nullable|string',
                 ]);
             }
 
@@ -111,33 +109,34 @@ class CatalogoProductosController extends Controller
 
         } catch(ValidationException $e) {
             return redirect()->back()
-                ->withErrors($e->validator)
-                ->withInput();
+                             ->withErrors($e->validator)
+                             ->withInput();
         }
 
         if ($registroFase === 1) {
             // TODO: Abrir db transaction
-            $productoNuevo = Producto::create([
-                'id_cat_productos' => $catalogoId,
-                'tipo' => $request->input('tipo_producto'),
-                'id_cabms' => $request->input('id_cabms'),
-                'nombre' => '[En proceso de registro]',
-                'descripcion' => '[En proceso de registro]',
-                'registro_fase' => $registroFase,
-            ]);
-
-            $categorias = $request->input('ids_categorias_scian');
-            foreach($categorias as $categoriaId) {
-                ProductoCategoria::create([
-                    'id_producto' => $productoNuevo->id,
-                    'id_categoria_scian' => $categoriaId,
-                ]);
+            if ($producto) {
+                $producto->update($request->only('tipo', 'id_cabms'));
+            }
+            else {                
+                $producto = Producto::create([
+                    'id_cat_productos' => $catalogoId,
+                    'tipo' => $request->input('tipo_producto'),
+                    'id_cabms' => $request->input('id_cabms'),
+                    'nombre' => '[En proceso de registro]',
+                    'descripcion' => '[En proceso de registro]',
+                    'registro_fase' => $registroFase,
+                ]);                
             }
 
-            return redirect()->route('alta-producto-2.show', [$productoNuevo->id]);
+            $producto->actualizaCategoriasScian($request->input('ids_categorias_scian'));
+                        
+            return redirect()->route('alta-producto-2.show', [$producto]);
         } elseif ($registroFase === 2) {
             $productoData = $request->only('nombre', 'descripcion', 'marca', 'modelo',
                                            'material', 'codigo_barras');
+                                           
+            // TODO: Mover a método en Producto                               
             $colores = $request->input('producto_colores');
             if ($colores && count($colores) > 0) {
                 $productoData['color'] = implode(',', $colores);
@@ -146,12 +145,10 @@ class CatalogoProductosController extends Controller
             $producto->update($productoData);
 
             return redirect()->route('alta-producto-3.show', [$producto]);
-        } elseif ($registroFase === 3) {
-            $fotosFiles = $request->file('producto_fotos');
-            $producto->clearMediaCollection('fotos');
-            foreach($fotosFiles as $file) {
-                $producto->addMedia($file)->toMediaCollection('fotos');
-            }
+        } elseif ($registroFase === 3) {                
+            $producto->actualizaFotos($request->file('producto_fotos'), 
+                                      $request->input('producto_fotos_eliminadas'));
+
             $producto->update(['registro_fase' => $registroFase]);
 
             return redirect()->route('alta-producto-4.show', [$producto]);
@@ -336,42 +333,22 @@ class CatalogoProductosController extends Controller
                 'ids_categorias_scian.*' => 'integer',
                 'producto_fotos' => 'max:3',
                 'producto_fotos.*' => 'max:1000|mimes:jpg,png',
-                'producto_fotos_eliminadas' => 'json',
+                'producto_fotos_eliminadas' => 'nullable|string',
             ]);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {            
             // TODO: Verificar si devulve errores en el formato correcto
             return [$e->validator];
         }
-
-        // TODO: Mover a respositorio
+        
         $productoDatos = $request->only('id_cabms');
         // Al asignar cabms y categorías se completa el registro del producto
         $productoDatos['registro_fase'] = 4;
         $producto->update($productoDatos);
 
-        if ($request->input('ids_categorias_scian')) {
-            $categorias = $request->input('ids_categorias_scian');
-            ProductoCategoria::where('id_producto', '=', $producto->id)->delete();
-            foreach($categorias as $categoriaId) {
-                ProductoCategoria::create([
-                    'id_producto' => $producto->id,
-                    'id_categoria_scian' => $categoriaId,
-                ]);
-            }
-        }
+        $producto->actualizaCategoriasScian($request->input('ids_categorias_scian'));
 
-        $fotosEliminadas = json_decode($request->input('producto_fotos_eliminadas'));
-        $fotosEliminadas = !empty($fotosEliminadas) ? explode(',', $fotosEliminadas) : [];
-        foreach ($fotosEliminadas as $fotoEliminadaId) {
-            $producto->deleteMedia($fotoEliminadaId);
-        }
-
-        $fotosFiles = $request->file('producto_fotos');
-        if ($fotosFiles) {
-            foreach ($fotosFiles as $file) {
-                $producto->addMedia($file)->toMediaCollection('fotos');
-            }
-        }
+        $producto->actualizaFotos($request->file('producto_fotos'), 
+                                  $request->input('producto_fotos_eliminadas'));
 
         return $productoRepo->obtieneProductoCABMSCategorias($producto->id);
     }

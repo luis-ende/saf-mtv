@@ -1,9 +1,11 @@
+@props(['producto_colores' => ''])
+
 <div class="mtv-input-wrapper w-full mx-auto"
      x-data="inputColores()"
      x-init="initInputColores()">
     <select class="mtv-text-input text-base"
             id="producto_colores"
-            name="producto_colores[]"            
+            name="producto_colores[]"                        
             multiple>
     </select>
     <label class="mtv-input-label" for="producto_colores">Color(es)</label>    
@@ -363,11 +365,14 @@
                 },
             }),
             initInputColores() {
+                let productoColores = {!! json_encode($producto_colores) !!};
+                productoColores = productoColores.split(',');
                 this.inputColoresChoices.setChoices(                    
                     CSS_COLOR_NAMES.map((item, index) => {                         
                         return {                         
                             label: CSS_COLOR_LABELS[index], 
                             value: item, 
+                            selected: productoColores.includes(item),
                         }
                 }));                
             }

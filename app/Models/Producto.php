@@ -86,4 +86,35 @@ class Producto extends Model implements HasMedia
     {
         return $this->hasMany(ProductoCategoria::class, 'id_producto');
     }
+
+    public function actualizaCategoriasScian($categoriasIds) 
+    {
+        if (!empty($categoriasIds)) {
+            ProductoCategoria::where('id_producto', '=', $this->id)->delete();
+            $productoId = $this->id;
+            $categorias = array_map(function ($categoriaId) use($productoId) {
+                return [
+                    'id_producto' => $productoId,
+                    'id_categoria_scian' => $categoriaId,
+                ];
+            }, $categoriasIds);
+            $this->categorias()->createMany($categorias);                
+        }
+    }
+
+    public function actualizaFotos(?array $productoFotos, ?string $fotosEliminadas) 
+    {        
+        if (!empty($fotosEliminadas)) {
+            $fotosEliminadas = explode(',', $fotosEliminadas);
+            foreach ($fotosEliminadas as $fotoEliminadaId) {
+                $this->deleteMedia($fotoEliminadaId);
+            }
+        }        
+        
+        if ($productoFotos) {
+            foreach ($productoFotos as $file) {
+                $this->addMedia($file)->toMediaCollection('fotos');
+            }
+        }
+    }
 }

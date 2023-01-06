@@ -1,11 +1,11 @@
 <x-app-layout :show_main_menu="false">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
-        <div class="bg-white overflow-hidden shadow-sm h-screen">
+        <div class="bg-white overflow-hidden shadow-sm h-fit">
             @include('catalogo-productos.registro-header',
                        ['titulo' => '',
                         'subtitulo' => '',
                         'texto_secuencia' => 'Paso 4 de 4'])
-            @php($productoId = request()->producto)
+            @php($productoId = isset($producto) ? $producto->id : null)
             <form method="POST" enctype="multipart/form-data"
                   action="{{ route('alta-producto.store', [4, $productoId]) }}"
                   class="px-6">
@@ -32,10 +32,17 @@
                         :id="__('otro_documento_file')"
                         :allow_delete="true"
                      />
-                    <button type="submit"
-                            class="mtv-button-secondary self-center my-4">
-                            Finalizar
-                    </button>
+                     <div class="flex flex-row my-4 space-x-10 justify-center">
+                        <a href="{{ route('alta-producto-3.show', [$productoId]) }}" 
+                            class="mtv-button-secondary-white no-underline self-center">
+                            @svg('fas-arrow-left', ['class' => 'h-7 w-7 inline-block'])
+                            Atrás
+                        </a>
+                        <button type="submit"
+                                class="mtv-button-secondary self-center my-4">
+                                Finalizar
+                        </button>
+                     </div>    
                 </div>
             </form>
         </div>

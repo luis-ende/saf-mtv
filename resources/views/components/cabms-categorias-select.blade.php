@@ -1,8 +1,8 @@
 @props(['modo' => 'producto_edicion'])
 
 <div class="mtv-input-wrapper w-full mx-auto"
-     @if ($modo === 'producto_edicion')
-     x-init="$watch('productoEditado', value => { cargaProductoCABMSCategorias(value) })"
+    @if ($modo === 'producto_edicion')
+        x-init="$watch('productoEditado', value => { cargaProductoCABMSCategorias(value) })"
     @endif
     >
     <div class="mtv-input-wrapper">

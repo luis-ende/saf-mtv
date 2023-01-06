@@ -101,7 +101,7 @@
                                 for (let i = 0; i <= categoriasSCian.length - 1; i++) {
                                     formData.append('ids_categorias_scian[]', categoriasSCian[i].value);
                                 }                                                                
-                                formData.append('producto_fotos_eliminadas', JSON.stringify(document.getElementById('producto_fotos_eliminadas').value));
+                                formData.append('producto_fotos_eliminadas', document.getElementById('producto_fotos_eliminadas').value);
                                 const productoFotos = document.getElementById('producto_fotos').files;
                                 for (let i = 0; i <= productoFotos.length - 1; i++) {
                                     formData.append('producto_fotos[]', productoFotos[i], productoFotos[i].name);

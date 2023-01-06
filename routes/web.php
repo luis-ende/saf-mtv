@@ -99,7 +99,7 @@ Route::middleware(['auth', 'registro_mtv.status'])->group(function() {
     Route::controller(CatalogoProductosController::class)->group(function () {
         Route::get('/catalogo-registro-inicio', 'showRegistroInicio')->name('catalogo-registro-inicio');
 
-        Route::get('/alta-producto-1', 'showAltaProducto1')->name('alta-producto-1.show');
+        Route::get('/alta-producto-1/{producto?}', 'showAltaProducto1')->name('alta-producto-1.show');
         Route::get('/alta-producto-2/{producto}', 'showAltaProducto2')->name('alta-producto-2.show');
         Route::get('/alta-producto-3/{producto}', 'showAltaProducto3')->name('alta-producto-3.show');
         Route::get('/alta-producto-4/{producto}', 'showAltaProducto4')->name('alta-producto-4.show');

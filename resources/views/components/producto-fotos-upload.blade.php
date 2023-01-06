@@ -1,11 +1,14 @@
-@props(['modo' => 'producto_edicion'])
+@props(['modo' => 'producto_edicion', 'producto_editado' => null])
 @php($maxNumFotos = 3)
 
 <div class="bg-white p7 rounded w-11/12 mx-auto">
-    <div x-data="dataFileDnD()"
-         {{--x-init="$watch('triggerUpdateEvent', value => { $store.filesUploaded.hasFilesUploaded = true })"--}}
+    <div x-data="productoFotos()"
          @if ($modo === 'producto_edicion')
-         x-init="$watch('productoEditado', value => { cargaProductoFotos(value) })"
+            @if(isset($producto_editado))
+                x-init="cargaProductoFotos({{ $producto_editado }})"
+            @else
+                x-init="$watch('productoEditado', value => { cargaProductoFotos(value) })"
+            @endif    
          @endif
          class="relative flex flex-col p-4 text-gray-400">
         <div x-ref="dnd"
@@ -75,15 +78,14 @@
 
 <script src="https://unpkg.com/create-file-list"></script>
 <script>
-    function dataFileDnD() {
+    function productoFotos() {
         return {
             formData: null,
             files: [],
             productoFotos: [],
             fotosEliminadas: [],
             fileDragging: null,
-            fileDropping: null,
-            /*triggerUpdateEvent: false,*/
+            fileDropping: null,            
             humanFileSize(size) {
                 const i = Math.floor(Math.log(size) / Math.log(1024));
                 return (
@@ -130,7 +132,7 @@
             loadFile(file) {
                 const preview = document.querySelectorAll(".preview");
                 const blobUrl = URL.createObjectURL(file);
-
+ 
                 preview.forEach(elem => {
                     elem.onload = () => {
                         URL.revokeObjectURL(elem.src); // free memory
@@ -159,7 +161,7 @@
             clearFiles(){
                 this.files = [];
             },
-            cargaProductoFotos(productoId) {
+            cargaProductoFotos(productoId) {                
                 if (productoId) {
                     this.files = [];
                     document.getElementById('producto_fotos').value = null;
