@@ -327,7 +327,8 @@
                 removeItemButton: true,
                 searchResultLimit: 20,
                 classNames: {
-                    containerInner: 'choices__inner--categorias choices__inner',
+                    containerInner: 'choices__inner--categorias choices__inner',                    
+                    item: 'colores__choices__item',
                 }, 
                 callbackOnCreateTemplates: function(template) {
                     return {

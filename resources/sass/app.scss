@@ -176,6 +176,12 @@
     background-image: url("data:image/svg+xml,%3csvg width='21' height='21' viewBox='0 0 21 21' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='%23235b4e' fill-rule='evenodd'%3e%3cpath d='M2.592.044l18.364 18.364-2.548 2.548L.044 2.592z'/%3e%3cpath d='M0 18.364L18.364 0l2.548 2.548L2.548 20.912z'/%3e%3c/g%3e%3c/svg%3e") !important;
 }
 
+.colores__choices__item {
+    @extend .choices__item;
+    color: transparent !important;
+    border: none !important;
+}
+
 /* Change Autocomplete styles in Chrome */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
