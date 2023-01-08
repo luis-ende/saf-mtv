@@ -45,8 +45,8 @@ class CatalogoProductosController extends Controller
         return view('catalogo-productos.alta-producto-1', ['producto' => $producto]);
     }
     public function showAltaProducto2(Request $request, Producto $producto)
-    {        
-        if ($producto && $producto->registro_fase >= RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS) {
+    {
+        if ($producto->registro_fase >= RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS) {
             return redirect()->route('catalogo-registro-inicio')->with('error', 'El producto ya ha completado su proceso de registro previamente.');
         }
 
@@ -54,7 +54,7 @@ class CatalogoProductosController extends Controller
     }
     public function showAltaProducto3(Request $request, Producto $producto)
     {
-        if ($producto && $producto->registro_fase >= RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS) {
+        if ($producto->registro_fase >= RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS) {
             return redirect()->route('catalogo-registro-inicio')->with('error', 'El producto ya ha completado su proceso de registro previamente.');
         }
 
@@ -62,7 +62,7 @@ class CatalogoProductosController extends Controller
     }
     public function showAltaProducto4(Request $request, Producto $producto)
     {
-        if ($producto && $producto->registro_fase >= RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS) {
+        if ($producto->registro_fase >= RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS) {
             return redirect()->route('catalogo-registro-inicio')->with('error', 'El producto ya ha completado su proceso de registro previamente.');
         }
 
@@ -117,7 +117,7 @@ class CatalogoProductosController extends Controller
                         'otro_documento_file' => 'max:3000|mimes:pdf',
                     ]);
                     break;
-            }                
+            }
 
         } catch(ValidationException $e) {
             return redirect()->back()
@@ -126,12 +126,12 @@ class CatalogoProductosController extends Controller
         }
 
         switch($registroFase) {
-            case RegistroProductosService::ALTA_PRODUCTO_FASE_CABMS_CATEGORIAS:                
+            case RegistroProductosService::ALTA_PRODUCTO_FASE_CABMS_CATEGORIAS:
                 // TODO: Abrir db transaction
                 if ($producto) {
                     $producto->update($request->only('tipo', 'id_cabms'));
                 }
-                else {                
+                else {
                     $producto = Producto::create([
                         'id_cat_productos' => $catalogoId,
                         'tipo' => $request->input('tipo_producto'),
@@ -139,17 +139,17 @@ class CatalogoProductosController extends Controller
                         'nombre' => '[En proceso de registro]',
                         'descripcion' => '[En proceso de registro]',
                         'registro_fase' => $registroFase,
-                    ]);                
+                    ]);
                 }
 
                 $producto->actualizaCategoriasScian($request->input('ids_categorias_scian'));
-                            
+
                 return redirect()->route('alta-producto-2.show', [$producto]);
             case RegistroProductosService::ALTA_PRODUCTO_FASE_DESCRIPCION:
                 $productoData = $request->only('nombre', 'descripcion', 'marca', 'modelo',
                                            'material', 'codigo_barras');
-                                           
-                // TODO: Mover a método en Producto                               
+
+                // TODO: Mover a método en Producto
                 $colores = $request->input('producto_colores');
                 if ($colores && count($colores) > 0) {
                     $productoData['color'] = implode(',', $colores);
@@ -157,14 +157,14 @@ class CatalogoProductosController extends Controller
                 $productoData['registro_fase'] = $registroFase;
                 $producto->update($productoData);
 
-                return redirect()->route('alta-producto-3.show', [$producto]);                
+                return redirect()->route('alta-producto-3.show', [$producto]);
             case RegistroProductosService::ALTA_PRODUCTO_FASE_FOTOS:
-                $producto->actualizaFotos($request->file('producto_fotos'), 
+                $producto->actualizaFotos($request->file('producto_fotos'),
                                       $request->input('producto_fotos_eliminadas'));
 
                 $producto->update(['registro_fase' => $registroFase]);
 
-                return redirect()->route('alta-producto-4.show', [$producto]);                
+                return redirect()->route('alta-producto-4.show', [$producto]);
             case RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS:
                 $documentos = $request->only('ficha_tecnica_file', 'otro_documento_file');
                 foreach ($documentos as $documento) {
@@ -173,7 +173,7 @@ class CatalogoProductosController extends Controller
 
                 $producto->update(['registro_fase' => $registroFase]);
 
-                return redirect()->route('catalogo-registro-inicio')->with('success', 'Un nuevo producto ha sido agregado a tu catálogo.');                
+                return redirect()->route('catalogo-registro-inicio')->with('success', 'Un nuevo producto ha sido agregado a tu catálogo.');
         }
     }
 
@@ -212,7 +212,7 @@ class CatalogoProductosController extends Controller
         if ($catalogoProductos->carga_masiva_completa === true) {
             return redirect()->route('catalogo-registro-inicio')->with('warning', 'La carga masiva se permite sólo una vez.');
         }
-        
+
         $productosImportados = $productoRepo->obtieneProductosImportados($catalogoProductos->id);
         $productos = array_map(function ($producto) use($productoRepo) {
             $productoCABMSCategorias = $productoRepo->obtieneProductoCABMSCategorias($producto['id']);
@@ -230,7 +230,6 @@ class CatalogoProductosController extends Controller
         $catalogoProductos = $request->user()->persona->catalogoProductos;
 
         try {
-            $opciones['carga_fase'] = $cargaFase;
             $catalogoId = $catalogoProductos->id;
 
             switch($cargaFase) {
@@ -239,65 +238,65 @@ class CatalogoProductosController extends Controller
                         /*'productos_import_file' => 'required|file|mimes:xlsx,csv|max:1000',*/
                         'productos_import_file' => 'required|file|max:1000',
                     ]);
-    
+
                     // Permitir carga de archivo mientras no se haya concluido el proceso de importación
                     $catalogoProductos->clearMediaCollection('importaciones');
-    
+
                     // Se guarda temporalmente el archivo de importación, eliminar archivo al completar la carga de productos.
                     $archivoImportacion = $request->file('productos_import_file');
                     $media = $catalogoProductos->addMedia($archivoImportacion)->toMediaCollection('importaciones');
                     $archivoImportacionPath = $media->getPath();
-    
-                    $productosImport = new ProductosImport($catalogoId, $opciones);
-    
+
+                    $productosImport = new ProductosImport($catalogoId);
+
                     // TODO: Colocar ruta de plantilla en constante
-                    $plantillaPath = Storage::path('public/plantillas/productos_carga_masiva.xlsx');                
-    
+                    $plantillaPath = Storage::path('public/plantillas/productos_carga_masiva.xlsx');
+
                     $plantillaRows = Excel::toArray($productosImport, $plantillaPath);
-                    
+
                     $rows = Excel::toArray($productosImport, $archivoImportacionPath);
-    
+
                     $plantillaColumnas = array_keys($plantillaRows[0][0]);
                     $importacionColumnas = array_keys($rows[0][0]);
-    
+
                     $diferencias = array_diff($plantillaColumnas, $importacionColumnas);
                     if (count($diferencias) > 0) {
                         throw new \Exception('Las columnas del archivo a cargar no coinciden con las de la plantilla.');
                     }
-    
+
                     $contadorErrores = 0;
                     $rowsPreviews = array_map(function($row) use(&$contadorErrores, $productosImport) {
                         $errores = [];
-                        
+
                         $validator = Validator::make($row, $productosImport->rules());
-    
+
                         if  ($validator->fails()) {
                             $errores = $validator->errors()->all();
-                        }                    
-    
+                        }
+
                         for($i = 1; $i <= 3; $i++) {
                             $fotoURLColumn = 'foto_url_' . $i;
-                            $fotoURL = $row[$fotoURLColumn];                        
+                            $fotoURL = $row[$fotoURLColumn];
                             if (!$validator->errors()->get($fotoURLColumn) && !empty($fotoURL) ) {
                                 $response = Http::get($row[$fotoURLColumn]);
                                 if ($response->status() !== 200) {
                                     $errores[] = "Columna 'foto_url_" . $i ."'" . " no contiene una URL válida o es inaccesible.";
                                 }
                             }
-                        }                    
-    
+                        }
+
                         if ($errores) {
                             $contadorErrores++;
                         }
-    
+
                         $rowPreview = [
                             ...$row,
                             'errores' => count($errores) > 0 ? $errores : null,
                         ];
-    
+
                         return $rowPreview;
                     }, $rows[0]);
-    
+
                     return redirect()->route('importacion-productos-2.show')->with([
                         'productos_rechazados' => $contadorErrores,
                         'rows' => $rowsPreviews,
@@ -307,7 +306,7 @@ class CatalogoProductosController extends Controller
                     if ($archivoImportacionPath) {
                         // TODO: Implementar barra de progreso de carga, el proceso puede tardar si el archivo contiene muchas imágenes y renglones
                         $archivoImportacionPath = $archivoImportacionPath->getPath();
-                        Excel::import(new ProductosImport($catalogoId, $opciones), $archivoImportacionPath);
+                        Excel::import(new ProductosImport($catalogoId), $archivoImportacionPath);
                         $productos = $catalogoProductos->productos;
                         foreach ($productos as $producto) {
                             // TODO: Cachar errores de descarga de fotos (y verificar desde paso previo)
@@ -328,9 +327,9 @@ class CatalogoProductosController extends Controller
                 case RegistroProductosService::IMPORTACION_FASE_PRODUCTOS_IMPORTADOS:
                     $catalogoProductos->update(['carga_masiva_completa' => true]);
                     $catalogoProductos->clearMediaCollection('importaciones');
-    
+
                     return redirect()->route('catalogo-registro-inicio')->with('success', 'Carga masiva de productos finalizada.');
-            }            
+            }
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             return redirect()->back()->withErrors($e->validator);
         } catch(\Throwable $e) {
@@ -351,11 +350,11 @@ class CatalogoProductosController extends Controller
                 'producto_fotos.*' => 'max:1000|mimes:jpg,png',
                 'producto_fotos_eliminadas' => 'nullable|string',
             ]);
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {            
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             // TODO: Verificar si devulve errores en el formato correcto
             return [$e->validator];
         }
-        
+
         $productoDatos = $request->only('id_cabms');
         // Al asignar cabms y categorías se completa el registro del producto
         $productoDatos['registro_fase'] = 4;
@@ -363,7 +362,7 @@ class CatalogoProductosController extends Controller
 
         $producto->actualizaCategoriasScian($request->input('ids_categorias_scian'));
 
-        $producto->actualizaFotos($request->file('producto_fotos'), 
+        $producto->actualizaFotos($request->file('producto_fotos'),
                                   $request->input('producto_fotos_eliminadas'));
 
         return $productoRepo->obtieneProductoCABMSCategorias($producto->id);

@@ -65,10 +65,10 @@ class PerfilNegocioController extends Controller
         ]);
 
         $adjuntos = $request->safe()->only([
-            'logotipo', 
-            'carta_presentacion', 
-            'eliminar_carta', 
-            'catalogo_productos_pdf', 
+            'logotipo',
+            'carta_presentacion',
+            'eliminar_carta',
+            'catalogo_productos_pdf',
             'eliminar_catalogo_pdf'
         ]);
         $perfilNegocioDatos = array_merge($perfilNegocioDatos, $adjuntos);
@@ -95,7 +95,7 @@ class PerfilNegocioController extends Controller
         }, $categorias);
     }
 
-    public function categoriasScianPorPalabraClave(Request $request, int $keyword, CatCiudadanoCABMSRepository $catCiudadanoCABMSRepository)
+    public function categoriasScianPorPalabraClave(Request $request, string $keyword, CatCiudadanoCABMSRepository $catCiudadanoCABMSRepository)
     {
         $categorias = $catCiudadanoCABMSRepository->buscaCategoriasScianPorPalabraClave($keyword);
 

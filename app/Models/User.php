@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -19,7 +20,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'rfc',        
+        'rfc',
         'id_persona',
         'activo',
         'last_login',
@@ -48,7 +49,7 @@ class User extends Authenticatable
     /**
      * Obtener catálogo de productos asociado al perfil.
      */
-    public function persona()
+    public function persona(): HasOne
     {
         return $this->hasOne(Persona::class, 'id', 'id_persona');
     }

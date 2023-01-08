@@ -12,11 +12,9 @@ use Maatwebsite\Excel\Imports\HeadingRowFormatter;
 class ProductosImport implements ToModel, WithHeadingRow, WithValidation
 {
     private int $catalogoId;
-    private array $opciones;
 
-    public function __construct(int $catalogoId, array $opciones)
+    public function __construct(int $catalogoId)
     {
-        $this->opciones = $opciones;
         $this->catalogoId = $catalogoId;
         HeadingRowFormatter::default('none');
     }

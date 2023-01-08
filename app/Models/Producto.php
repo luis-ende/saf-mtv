@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\ProductoCategoria;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -44,6 +45,9 @@ class Producto extends Model implements HasMedia
     {
         $mediaItems = [];
         $mediaFotos = $this->getMedia('fotos');
+        /**
+         * @var Media $foto
+         */
         foreach($mediaFotos as $foto) {
             $mediaItems[] = [
                 'id' => $foto['id'],
@@ -71,7 +75,7 @@ class Producto extends Model implements HasMedia
         return $mediaItems;
     }
 
-    public function catalogo()
+    public function catalogo(): BelongsTo
     {
         return $this->belongsTo(CatalogoProductos::class, 'id_cat_productos');
     }
@@ -87,7 +91,7 @@ class Producto extends Model implements HasMedia
         return $this->hasMany(ProductoCategoria::class, 'id_producto');
     }
 
-    public function actualizaCategoriasScian($categoriasIds) 
+    public function actualizaCategoriasScian($categoriasIds)
     {
         if (!empty($categoriasIds)) {
             ProductoCategoria::where('id_producto', '=', $this->id)->delete();
@@ -98,19 +102,19 @@ class Producto extends Model implements HasMedia
                     'id_categoria_scian' => $categoriaId,
                 ];
             }, $categoriasIds);
-            $this->categorias()->createMany($categorias);                
+            $this->categorias()->createMany($categorias);
         }
     }
 
-    public function actualizaFotos(?array $productoFotos, ?string $fotosEliminadas) 
-    {        
+    public function actualizaFotos(?array $productoFotos, ?string $fotosEliminadas)
+    {
         if (!empty($fotosEliminadas)) {
             $fotosEliminadas = explode(',', $fotosEliminadas);
             foreach ($fotosEliminadas as $fotoEliminadaId) {
                 $this->deleteMedia($fotoEliminadaId);
             }
-        }        
-        
+        }
+
         if ($productoFotos) {
             foreach ($productoFotos as $file) {
                 $this->addMedia($file)->toMediaCollection('fotos');

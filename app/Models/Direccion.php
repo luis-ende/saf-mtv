@@ -7,7 +7,7 @@ use App\Services\BusquedaCPService;
 final class Direccion
 {
     public ?int $id_pais;
-    public ?string $id_asentamiento;
+    public ?int $id_asentamiento;
     public ?string $cp = '';
     public ?int $id_tipo_vialidad;
     public ?string $vialidad;
@@ -25,7 +25,7 @@ final class Direccion
         $this ->id_asentamiento = $idAsentamiento;
         if ($idAsentamiento) {
             $this->cp = $busquedaCPService->buscaAsentamientoCP($idAsentamiento);
-        }        
+        }
         $this->id_tipo_vialidad = $idTipoVialidad;
         $this->vialidad = $vialidad;
         $this->num_ext = $numExt;

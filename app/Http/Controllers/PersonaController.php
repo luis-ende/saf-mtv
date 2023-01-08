@@ -17,7 +17,7 @@ class PersonaController extends Controller
                 'contactos_lista' => 'required|json',
             ]);
         } catch (ValidationException $e) {
-            return response()->json(['error' => $e->errors()->all()], 401);
+            return response()->json(['error' => $e->errors()], 401);
         }
 
         try {

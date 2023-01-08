@@ -18,9 +18,6 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ProductosController extends Controller
 {
-    /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
     public function store(ProductoRequest $request): RedirectResponse
     {
         $productoFields = $request->validated();
@@ -69,17 +66,15 @@ class ProductosController extends Controller
 
     public function destroy(Request $request, Producto $producto)
     {
-        if ($producto) {
-            if ($producto->catalogo->persona->id === Auth::user()->id_persona) {
-                $producto->clearMediaCollection('fotos');
-                $producto->clearMediaCollection('documentos');
-                $producto->delete();
+        if ($producto->catalogo->persona->id === Auth::user()->id_persona) {
+            $producto->clearMediaCollection('fotos');
+            $producto->clearMediaCollection('documentos');
+            $producto->delete();
 
-                // TODO: Eliminar fotos y archivos
-                return [$producto->id];
-            }
+            // TODO: Eliminar fotos y archivos
+            return [$producto->id];
         }
-    }    
+    }
 
     public function showFotos(Request $request, Producto $producto) {
         // TODO Validar que el producto pertenezca al catálogo del usuario
@@ -89,5 +84,5 @@ class ProductosController extends Controller
 
     public function obtieneProductoCABMSCategorias(Request $request, Producto $producto, ProductoRepository $productoRepo) {
         return $productoRepo->obtieneProductoCABMSCategorias($producto->id);
-    }    
+    }
 }
