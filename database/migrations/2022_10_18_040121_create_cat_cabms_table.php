@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('partida');
             $table->foreignId('id_categoria_scian')->constrained('cat_categorias_scian');
             $table->timestamps();
+            
+            $table->index('nombre_cabms');
         });
     }
 

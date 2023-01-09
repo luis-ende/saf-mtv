@@ -20,7 +20,7 @@ return new class extends Migration
             $table->char('genero', 1);
             $table->string('nombre', 120);
             $table->string('primer_ap', 60);
-            $table->string('segundo_ap', 60);
+            $table->string('segundo_ap', 60)->nullable();
             $table->timestamps();
         });
     }

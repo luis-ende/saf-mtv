@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('palabras_clave_afines')->nullable();
             $table->foreignId('id_sector')->constrained('cat_sectores');
             $table->timestamps();
+
+            $table->index('categoria_scian');
         });
     }
 
