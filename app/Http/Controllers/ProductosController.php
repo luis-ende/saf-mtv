@@ -17,40 +17,10 @@ use App\Http\Requests\ProductoRequest;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ProductosController extends Controller
-{
-    public function store(ProductoRequest $request): RedirectResponse
-    {
-        $productoFields = $request->validated();
-        Producto::create([
-            'id_cat_productos' => Auth::user()->persona->catalogoProductos->id,
-            'clave_cabms' => $productoFields['clave_cabms'],
-            'nombre' => $productoFields['nombre_producto'],
-            'descripcion' => $productoFields['descripcion_producto'],
-            'tipo' => $productoFields['tipo_producto'],
-            'precio' => $productoFields['precio'],
-            'marca' => $productoFields['marca'],
-            'modelo' => $productoFields['modelo'],
-            'color' => $productoFields['color'],
-            'material' => $productoFields['material'],
-        ]);
-
-        return redirect()->route('catalogo-productos')
-            ->with('success', 'Nuevo producto agregado al catálogo de productos.');
-    }
-
+{    
     public function update(ProductoRequest $request, Producto $producto)
     {
-        $productoFields = $request->validated();
-        $producto['clave_cabms'] = $productoFields['clave_cabms'];
-        $producto['nombre'] = $productoFields['nombre_producto'];
-        $producto['descripcion'] = $productoFields['descripcion_producto'];
-        $producto['tipo'] = $productoFields['tipo_producto'];
-        $producto['precio'] = $productoFields['precio'];
-        $producto['marca'] = $productoFields['marca'];
-        $producto['modelo'] = $productoFields['modelo'];
-        $producto['color'] = $productoFields['color'];
-        $producto['material'] = $productoFields['material'];
-        $producto->save();
+        // TODO: Implementar junto con la vista de formulario de edición de producto
 
         return redirect()->route('catalogo-productos')
             ->with('success', 'Producto actualizado.');
@@ -70,8 +40,7 @@ class ProductosController extends Controller
             $producto->clearMediaCollection('fotos');
             $producto->clearMediaCollection('documentos');
             $producto->delete();
-
-            // TODO: Eliminar fotos y archivos
+            
             return [$producto->id];
         }
     }
