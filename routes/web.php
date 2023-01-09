@@ -47,11 +47,6 @@ Route::post('persona/{persona}/contactos', [PersonaController::class, 'storeCont
 Route::get('/catalogo-productos', [CatalogoProductosController::class, 'index'])
     ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('catalogo-productos');
 
-Route::get('/perfil-negocio', [PerfilNegocioController::class, 'show'])
-    ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('perfil-negocio');
-
-Route::post('/perfil-negocio/update', [PerfilNegocioController::class, 'update'])->middleware(['auth', 'verified'])->name('perfil-negocio.update');
-
 Route::post('/productos', [ProductosController::class, 'store'])->middleware(['auth', 'verified'])->name('productos.store');
 
 Route::post('/productos/edit/{producto}', [ProductosController::class, 'update'])->middleware(['auth', 'verified'])->name('productos.update');
@@ -92,7 +87,10 @@ Route::get('/perfil-negocio/categorias_scian/{keyword}', [PerfilNegocioControlle
 Route::get('/catalogo-cabms/{criterio_busqueda}', [CatalogoCABMSController::class, 'buscaClavesCABMS'])->middleware('auth')->name('catalogo-cabms.search');
 Route::get('/catalogo-cabms/categorias/{cabms}', [CatalogoCABMSController::class, 'buscaCategorias'])->middleware('auth')->name('catalogo-cabms-categorias.search');
 
-Route::middleware(['auth', 'registro_mtv.status'])->group(function() {    
+Route::middleware(['auth', 'verified', 'registro_mtv.status'])->group(function() {    
+    Route::get('/perfil-negocio', [PerfilNegocioController::class, 'show'])->name('perfil-negocio');
+    Route::post('/perfil-negocio/update', [PerfilNegocioController::class, 'update'])->name('perfil-negocio.update');
+
     Route::get('/configuracion', [UsuarioConfiguracionController::class, 'show'])->name('usuario-configuracion.show');
     Route::post('/configuracion', [UsuarioConfiguracionController::class, 'update'])->name('usuario-configuracion.update');
 
