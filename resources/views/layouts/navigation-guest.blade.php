@@ -52,9 +52,9 @@
                             {{ __('Cerrar sesión') }}
                         </x-dropdown-link>
                     </form>
-                @else
-                    <a class="font-bold no-underline mr-5" href="{{ route('registro-inicio') }}">Regístrate</a>
-                    <a class="font-bold no-underline mr-5" href="{{ route('login') }}">Ingresa</a>
+                @else                    
+                    <a class="font-bold no-underline mr-7" href="{{ route('login') }}">Ingresa</a>
+                    <a class="mtv-button-primary no-underline mr-5" href="{{ route('registro-inicio') }}">Regístrate</a>
                 @endif
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
