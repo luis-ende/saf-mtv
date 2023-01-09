@@ -47,20 +47,8 @@ Route::post('persona/{persona}/contactos', [PersonaController::class, 'storeCont
 Route::get('/catalogo-productos', [CatalogoProductosController::class, 'index'])
     ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('catalogo-productos');
 
-Route::post('/productos', [ProductosController::class, 'store'])->middleware(['auth', 'verified'])->name('productos.store');
-
-Route::post('/productos/edit/{producto}', [ProductosController::class, 'update'])->middleware(['auth', 'verified'])->name('productos.update');
-
-Route::get('/productos/{producto}/fotos', [ProductosController::class, 'showFotos'])
-    ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('productos-fotos.show');
-
 Route::get('/productos/{producto}/cabms_categorias', [ProductosController::class, 'obtieneProductoCABMSCategorias'])
     ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('productos-cabms-categorias.show');
-
-Route::get('/productos/edit/{producto}', [ProductosController::class, 'show'])
-    ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('productos.edit');
-
-Route::delete('/productos/delete/{producto}', [ProductosController::class, 'destroy'])->middleware(['auth', 'verified'])->name('productos.destroy');
 
 
 Route::controller(RegistroMTVController::class)->group(function () {
@@ -109,6 +97,11 @@ Route::middleware(['auth', 'verified', 'registro_mtv.status'])->group(function()
         Route::post('/carga-productos/{paso}', 'storeCargaProductos')->name('carga-productos.store');
         Route::post('/carga-productos/producto/{producto}', 'storeCargaProductosProducto')->name('carga-productos.producto.store');    
     });    
+
+    Route::get('/productos/edit/{producto}', [ProductosController::class, 'show'])->name('productos.edit');
+    Route::post('/productos/edit/{producto}', [ProductosController::class, 'update'])->name('productos.update');
+    Route::delete('/productos/delete/{producto}', [ProductosController::class, 'destroy'])->name('productos.destroy');
+    Route::get('/productos/{producto}/fotos', [ProductosController::class, 'showFotos'])->name('productos-fotos.show');
 });
 
 
