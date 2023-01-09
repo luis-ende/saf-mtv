@@ -73,8 +73,7 @@ class CatalogoProductosController extends Controller
     {
         $catalogoId = Auth::user()->persona->catalogoProductos->id;
 
-        if ($producto && $producto->registro_fase >= 4) {
-            // TODO: Validar si la fase de registro coincide con la fase de registro en el producto...
+        if ($producto && $producto->registro_fase >= 4) {            
             return redirect()->route('catalogo-registro-inicio')->with('error', 'El producto ya ha completado su proceso de registro previamente.');
         }
 
@@ -167,9 +166,8 @@ class CatalogoProductosController extends Controller
                 return redirect()->route('alta-producto-4.show', [$producto]);
             case RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS:
                 $documentos = $request->only('ficha_tecnica_file', 'otro_documento_file');
-                foreach ($documentos as $documento) {
-                    $producto->addMedia($documento)->toMediaCollection('documentos');
-                }
+                $producto->addMedia($documentos['ficha_tecnica_file'])->toMediaCollection('fichas_tecnicas');
+                $producto->addMedia($documentos['otro_documento_file'])->toMediaCollection('otros_documentos');
 
                 $producto->update(['registro_fase' => $registroFase]);
 
