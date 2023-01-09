@@ -28,7 +28,7 @@ class ProductosImport implements ToModel, WithHeadingRow, WithValidation
     {
         return new Producto([
             'id_cat_productos' => $this->catalogoId,
-            'tipo' => $row['tipo'],
+            'tipo' => strtoupper(substr($row['tipo'], 0, 1)),
             'nombre' => $row['nombre_producto'],
             'descripcion' => $row['descripcion'],
             'marca' => $row['marca'],
@@ -48,10 +48,8 @@ class ProductosImport implements ToModel, WithHeadingRow, WithValidation
         return [
             'tipo' => [
                 'required',
-                Rule::in([
-                    Producto::TIPO_PRODUCTO_BIEN_ID,
-                    Producto::TIPO_PRODUCTO_SERVICIO_ID
-                ])
+                'starts_with:' . Producto::TIPO_PRODUCTO_BIEN_ID . ',' . Producto::TIPO_PRODUCTO_SERVICIO_ID . ',' .
+                                 strtolower(Producto::TIPO_PRODUCTO_BIEN_ID) . ',' . strtolower(Producto::TIPO_PRODUCTO_SERVICIO_ID),
             ],
             'nombre_producto' => 'required|string|max:255',
             'descripcion' => 'required|string|max:140',

@@ -45,7 +45,7 @@
                                 @foreach($rows as $row)                           
                                     <tr class="{{ $row['errores'] ? 'bg-red-100' : '' }}">
                                         <td>{{ $loop->index + 1 }}</td>
-                                        <td class="uppercase">{{ $row['tipo'] === 'B' ? 'Bien' : ( $row['tipo'] === 'S' ? 'Servicio' : '') }}</td>
+                                        <td class="uppercase">{{ $row['tipo'] }}</td>
                                         <td>{{ $row['nombre_producto'] }}</td>
                                         <td>   
                                             @if($row['errores'])                                         

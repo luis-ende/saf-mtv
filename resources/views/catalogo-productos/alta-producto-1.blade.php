@@ -1,6 +1,6 @@
 <x-app-layout :show_main_menu="false">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
-        <div class="bg-white overflow-hidden shadow-sm h-fit">
+        <div class="bg-white overflow-hidden shadow-sm h-screen">
             @include('catalogo-productos.registro-header',
                        ['titulo' => 'Agrega tu producto',
                         'titulo_icono' => 'polaris-major-add-product',
@@ -9,7 +9,7 @@
             @php($productoId = isset($producto) ? $producto->id : null)
             @php($productoTipo = isset($producto) ? $producto->tipo : 'B')            
             <form method="POST" action="{{ route('alta-producto.store', ['paso' => 1, 'producto' => $productoId]) }}"                   
-                  class="px-6">
+                  class="px-6 h-full">
                 @csrf
                 <div class="w-fit mx-auto flex flex-col"
                      {{-- TIP: Buscar inicialización de esta función reutilizable 'busquedaCABMS()' en resources/js/app.js --}}
