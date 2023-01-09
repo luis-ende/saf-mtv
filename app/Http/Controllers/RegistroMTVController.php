@@ -85,6 +85,10 @@ class RegistroMTVController extends Controller
     public function storeRegistroCreaCuenta(Request $request, RegistroPersonaService $registroService, PersonaRepository $personaRepository)
     {
         try {
+            $errorMessages = [
+                'rfc.unique' => 'El RFC: ' . $request->input('rfc') . ' ya está registrado en Mi Tiendita Virtual',
+            ];
+
             $this->validate($request, [
                 'tipo_persona' => [
                     'required',
@@ -124,20 +128,20 @@ class RegistroMTVController extends Controller
                     'email' => 'required|email|same:email_confirmacion|max:255',
                 ]);
                 $personaDatos['email'] = $request->input('email');
-
+                
                 if ($tipoPersona === Persona::TIPO_PERSONA_FISICA_ID) {
                     $this->validate($request, [
                         'persona_datos' => 'required|json',
                         'curp' => 'required|max:18',
                         'rfc' => 'required|max:13|unique:users,rfc',
-                    ]);
+                    ], $errorMessages);
                     $personaDatos = array_merge($personaDatos, $request->only(['curp', 'rfc']));
                 } elseif ($tipoPersona === Persona::TIPO_PERSONA_MORAL_ID) {
                     $this->validate($request, [
                         'rfc' => 'required|max:12|unique:users,rfc',
                         'razon_social' => 'required',
                         'fecha_constitucion' => 'required|date',
-                    ]);
+                    ], $errorMessages);
                     $personaDatos = array_merge($personaDatos, $request->only(['rfc', 'razon_social', 'fecha_constitucion']));
                 }
             }
