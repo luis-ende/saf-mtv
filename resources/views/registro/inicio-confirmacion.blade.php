@@ -28,7 +28,10 @@
                                     </div>
                                 @endif
                                     <div class="w-48 sm:basis-full basis-1/2">
-                                        <x-rfc-validacion-input value="" :modo="__('registro')" />
+                                        <x-rfc-validacion-input 
+                                            value="" 
+                                            :modo="__('registro')" 
+                                            :tipo_persona="$tipoPersona" />
                                         <x-input-error :messages="$errors->get('rfc')" class="mt-2"/>
                                     </div>
                                 @if($tipoPersona === 'M')

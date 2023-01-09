@@ -5,6 +5,7 @@
            name="rfc"
            type="text"
            {{ $attributes }}
+           maxlength=13
            required
            oninput="this.value = this.value.toUpperCase()" {!! $attributes->merge(['class' => 'mtv-text-input']) !!}>
     <label class="mtv-input-label" for="rfc">{{ $rfc_input_label }}</label>
