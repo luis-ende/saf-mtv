@@ -166,8 +166,12 @@ class CatalogoProductosController extends Controller
                 return redirect()->route('alta-producto-4.show', [$producto]);
             case RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS:
                 $documentos = $request->only('ficha_tecnica_file', 'otro_documento_file');
-                $producto->addMedia($documentos['ficha_tecnica_file'])->toMediaCollection('fichas_tecnicas');
-                $producto->addMedia($documentos['otro_documento_file'])->toMediaCollection('otros_documentos');
+                if (array_key_exists('ficha_tecnica_file', $documentos)) {
+                    $producto->addMedia($documentos['ficha_tecnica_file'])->toMediaCollection('fichas_tecnicas');
+                }                
+                if (array_key_exists('otro_documento_file', $documentos)) {
+                    $producto->addMedia($documentos['otro_documento_file'])->toMediaCollection('otros_documentos');
+                }                
 
                 $producto->update(['registro_fase' => $registroFase]);
 
