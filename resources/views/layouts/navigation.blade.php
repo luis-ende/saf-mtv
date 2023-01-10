@@ -77,7 +77,7 @@
                                 {{ __('Inicio') }}
                             </x-nav-link>
                             <x-nav-link :href="route('catalogo-productos')" :active="request()->routeIs('catalogo-productos')">
-                                {{ __('Mi catálogo') }}
+                                {{ __('Catálogo') }}
                             </x-nav-link>
                             <x-nav-link :href="route('oportunidades-negocio')" :active="request()->routeIs('oportunidades-negocio')">
                                 {{ __('Oportunidades') }}

@@ -21,12 +21,22 @@ class CatalogoProductosController extends Controller
      /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function index()
+    public function index(Request $request, ProductoRepository $productoRepo)
     {
-        $productosPersona = Auth::user()->persona->catalogoProductos->productos;
+        $catalogoId = Auth::user()->persona->catalogoProductos->id;
+        $productos = $productoRepo->obtieneProductosPorCatalogo($catalogoId);
+        $productosBien = $productos->filter(function ($producto, $key) {
+            return $producto->tipo === Producto::TIPO_PRODUCTO_BIEN_ID;
+        });
+        $productosServicio = $productos->filter(function ($producto, $key) {
+            return $producto->tipo === Producto::TIPO_PRODUCTO_SERVICIO_ID;
+        });
+
+        // TODO Agregar información de proveedor solamente si el rol del usuario es URG
 
         return view('catalogo-productos', [
-            'productosPersona' => $productosPersona,
+            'productos_bien' => $productosBien,
+            'productos_servicio' => $productosServicio,
         ]);
     }
 
@@ -98,7 +108,7 @@ class CatalogoProductosController extends Controller
                         'descripcion' => 'required|max:140',
                         'marca' => 'max:255',
                         'modelo' => 'max:255',
-                        'producto_colores.*' => 'string',
+                        'producto_colores.*' => 'string', // TODO: Validar longitud máxima de 140 caracteres
                         'material' => 'max:255',
                         'codigo_barras' => 'max:100',
                     ]);

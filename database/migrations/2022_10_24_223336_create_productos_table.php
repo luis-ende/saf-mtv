@@ -23,7 +23,7 @@ return new class extends Migration
             // Si el tipo de producto es 'Bien'
             $table->string('marca')->nullable();
             $table->string('modelo')->nullable();
-            $table->string('color')->nullable();
+            $table->string('color', 130)->nullable();
             $table->string('material')->nullable();
             $table->string('codigo_barras', 100)->nullable();
             $table->string('foto_url_1')->nullable();

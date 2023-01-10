@@ -62,4 +62,14 @@ class ProductoRepository
                             ->get()
                             ->toArray();
     }
+
+    public function obtieneProductosPorCatalogo(int $catalogoProductosId) {
+        return Producto::select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre', 
+                                'productos.descripcion', 'cat_cabms.cabms', 'cat_cabms.partida')
+                            ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')                            
+                            ->where('id_cat_productos', '=', $catalogoProductosId)                            
+                            ->orderBy('tipo')
+                            ->orderBy('nombre')
+                            ->get();                            
+    }
 }
