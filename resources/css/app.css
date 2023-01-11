@@ -56,4 +56,10 @@
       hover:bg-white hover:text-mtv-primary hover:underline
       active:text-mtv-primary;
   }
+
+  .mtv-link-download-gold {
+    @apply text-mtv-gold bg-white no-underline font-bold
+    hover:bg-white hover:text-mtv-primary hover:no-underline
+    active:text-mtv-primary;
+}
 }

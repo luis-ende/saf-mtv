@@ -39,10 +39,10 @@
                                     <td>
                                         <div class="flex flex-row justify-end">
                                             <a href="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#productoModal"
-                                            @click="event.preventDefault(); editaProducto(producto.id)" aria-label="Editar"
-                                            class="text-mtv-text-gray text-base no-underline hover:text-mtv-secondary flex-basis-1/2 self-center">
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#productoModal"
+                                               @click="event.preventDefault(); editaProducto(producto.id)" aria-label="Editar"
+                                               class="text-mtv-text-gray text-base no-underline hover:text-mtv-secondary flex-basis-1/2 self-center">
                                                 @svg('carbon-edit', ['class' => 'h-5 w-5 inline-block mr-3'])
                                             </a>
                                             <a href="#" @click="event.preventDefault(); eliminaProducto(producto.id)"

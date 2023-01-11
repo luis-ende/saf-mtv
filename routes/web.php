@@ -95,7 +95,7 @@ Route::middleware(['role:proveedor', 'auth', 'verified', 'registro_mtv.status'])
 
     Route::get('/catalogo-productos', [CatalogoProductosController::class, 'index'])->name('catalogo-productos');
 
-    Route::get('/productos/edit/{producto}', [ProductosController::class, 'show'])->name('productos.edit');
+    Route::get('/productos/edit/{producto}', [ProductosController::class, 'show'])->name('productos.show');
     Route::post('/productos/edit/{producto}', [ProductosController::class, 'update'])->name('productos.update');
     Route::delete('/productos/delete/{producto}', [ProductosController::class, 'destroy'])->name('productos.destroy');
     Route::get('/productos/{producto}/fotos', [ProductosController::class, 'showFotos'])->name('productos-fotos.show');

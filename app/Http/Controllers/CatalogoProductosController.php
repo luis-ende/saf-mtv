@@ -25,10 +25,14 @@ class CatalogoProductosController extends Controller
     {
         $catalogoId = Auth::user()->persona->catalogoProductos->id;
         $productos = $productoRepo->obtieneProductosPorCatalogo($catalogoId);
-        $productosBien = $productos->filter(function ($producto, $key) {
+        $productos->each(function (&$producto) {
+            $producto['foto_info'] = $producto->getFirstMedia('fotos');
+        });
+        
+        $productosBien = $productos->filter(function ($producto) {
             return $producto->tipo === Producto::TIPO_PRODUCTO_BIEN_ID;
         });
-        $productosServicio = $productos->filter(function ($producto, $key) {
+        $productosServicio = $productos->filter(function ($producto) {
             return $producto->tipo === Producto::TIPO_PRODUCTO_SERVICIO_ID;
         });
 

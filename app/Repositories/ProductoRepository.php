@@ -11,7 +11,7 @@ class ProductoRepository
     /**
      * Obtiene producto con nombre CAMBS y lista de categorías SCIAN asociadas.
      */
-    public function obtieneProductoCABMSCategorias(int $productoId)
+    public function obtieneProductoCABMSCategorias(int $productoId): array
     {
         $producto = DB::table('productos')
             ->select('productos.id', 'productos.tipo', 'productos.id_cabms', 
@@ -46,7 +46,7 @@ class ProductoRepository
             'ids_categorias_scian' => $categoriasIds,
             'categorias_scian' => implode(', ', $categorias),
         ];
-    }
+    }    
 
     /**
      * Obtiene productos importados por carga masiva de un catálogo.
@@ -62,14 +62,35 @@ class ProductoRepository
                             ->get()
                             ->toArray();
     }
-
+    
     public function obtieneProductosPorCatalogo(int $catalogoProductosId) {
         return Producto::select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre', 
                                 'productos.descripcion', 'cat_cabms.cabms', 'cat_cabms.partida')
                             ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')                            
-                            ->where('id_cat_productos', '=', $catalogoProductosId)                            
+                            ->where('id_cat_productos', '=', $catalogoProductosId)
                             ->orderBy('tipo')
                             ->orderBy('nombre')
                             ->get();                            
+    }
+
+    public function obtieneProductoInfo(int $productoId)
+    {
+        $productoInfo = Producto::select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre', 
+                                'productos.descripcion', 'productos.marca', 'productos.modelo', 'productos.color',
+                                'productos.material', 'productos.codigo_barras',
+                                'cat_cabms.cabms', 'cat_cabms.nombre_cabms', 'cat_cabms.partida')
+                                ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
+                                ->where('productos.id', '=', $productoId)
+                                ->firstOrFail();
+
+        $categoriasScian = DB::table('productos_categorias')
+                                ->select('cat_categorias_scian.categoria_scian')
+                                ->join('cat_categorias_scian', 'cat_categorias_scian.id', '=', 'productos_categorias.id_categoria_scian')
+                                ->where('productos_categorias.id_producto', '=', $productoId)
+                                ->get()
+                                ->implode('categoria_scian', ', ');
+        $productoInfo['categorias_scian'] = $categoriasScian;
+
+        return $productoInfo;
     }
 }

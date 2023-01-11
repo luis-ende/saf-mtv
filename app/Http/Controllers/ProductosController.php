@@ -4,17 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ProductoRepository;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 use App\Models\Producto;
-use App\Imports\ProductosImport;
 
 use Illuminate\Support\Facades\Auth;
-use Maatwebsite\Excel\Facades\Excel;
 
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\ProductoRequest;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ProductosController extends Controller
 {    
@@ -23,15 +18,20 @@ class ProductosController extends Controller
         // TODO: Implementar junto con la vista de formulario de edición de producto
 
         return redirect()->route('catalogo-productos')
-            ->with('success', 'Producto actualizado.');
+                         ->with('success', 'Producto actualizado.');
     }
 
     /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function show(Request $request, Producto $producto)
+    public function show(Request $request, int $productoId, ProductoRepository $productoRepo)
     {
-        return view('productos.edit', ['producto' => $producto]);
+        $productoInfo = $productoRepo->obtieneProductoInfo($productoId);
+        $productoInfo['fotos_info'] = $productoInfo->getMedia('fotos');
+        $productoInfo['ficha_tecnica'] = $productoInfo->getFirstMedia('fichas_tecnicas');
+        $productoInfo['otro_documento'] = $productoInfo->getFirstMedia('otros_documentos');
+
+        return view('productos.views.view-proveedor', ['producto' => $productoInfo]);
     }
 
     public function destroy(Request $request, Producto $producto)

@@ -6,13 +6,15 @@
                     Catálogo
                 </div>
                 <div class="basis-1/2 text-end">
-                    <a href="{{ route('alta-producto-1.show') }}"
+                    <a href="{{ route('catalogo-registro-inicio') }}"
                         class="mtv-button-secondary text-base no-underline">
                         @svg('polaris-major-add-product', ['class' => 'w-5 h-5 inline-block mr-3'])
                         Agregar producto
                     </a>
                 </div>
-            </div>            
+            </div>      
+            @php($numProductosBien = count($productos_bien))      
+            @php($numProductosServicio = count($productos_servicio))      
             <div class="py-6 px-12">
                 <div x-data="{ tab: 'bienes' }">
                     <nav class="font-bold text-lg text-mtv-gold flex flex-row mb-5">                        
@@ -20,13 +22,13 @@
                            :class="tab === 'bienes' ? 'text-mtv-secondary border-mtv-secondary hover:text-mtv-secondary' : 'text-mtv-gold border-mtv-gold-light hover:text-mtv-gold'"
                            x-on:click.prevent="tab = 'bienes'" 
                            href="#">
-                           {{ count($productos_bien) }} Productos
+                           {{ $numProductosBien }} Productos
                         </a>
-                        <a class="hover:text-mtv-gold no-underline border-b-4 border-mtv-gold-light basis-1/2 text-center" 
-                        :class="tab === 'servicios' ? 'text-mtv-secondary border-mtv-secondary hover:text-mtv-secondary' : 'text-mtv-gold border-mtv-gold-light hover:text-mtv-gold'"
+                        <a class="no-underline border-b-4 basis-1/2 text-center" 
+                           :class="tab === 'servicios' ? 'text-mtv-secondary border-mtv-secondary hover:text-mtv-secondary' : 'text-mtv-gold border-mtv-gold-light hover:text-mtv-gold'"
                            x-on:click.prevent="tab = 'servicios'" 
                            href="#">
-                           {{ count($productos_servicio) }} Servicios
+                           {{ $numProductosServicio }} Servicios
                         </a>
                     </nav>
                     <div x-show="tab === 'bienes'">

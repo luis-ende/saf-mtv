@@ -21,7 +21,7 @@
                         Describe tu producto
                     </label>                 
                     <label class="text-mtv-gray text-base mb-3 self-center">
-                        Los campos marcados con <span class="text-mtv-primary">*</span> son obligatorios.                        
+                        Los campos marcados con <span class="text-mtv-primary">*</span> son obligatorios.
                     </label>
                     <div class="mtv-input-wrapper">
                         <input type="text" class="mtv-text-input" id="nombre" name="nombre"
