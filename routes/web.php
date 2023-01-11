@@ -44,30 +44,25 @@ Route::get('/dashboard', function () {
 
 Route::post('persona/{persona}/contactos', [PersonaController::class, 'storeContactos'])->middleware('auth')->name('persona-contactos.store');
 
-Route::get('/catalogo-productos', [CatalogoProductosController::class, 'index'])
-    ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('catalogo-productos');
-
 Route::get('/productos/{producto}/cabms_categorias', [ProductosController::class, 'obtieneProductoCABMSCategorias'])
     ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('productos-cabms-categorias.show');
 
-
 Route::controller(RegistroMTVController::class)->group(function () {
-    Route::get('/registro-inicio', 'showRegistroInicio')->name('registro-inicio');
+    Route::middleware(['guest'])->group(function() {
+        Route::get('/registro-inicio', 'showRegistroInicio')->name('registro-inicio');
+        Route::get('/registro-identificacion/{tipoPersona}/{tipoRegistro}', 'showRegistroIdentificacion')->name('registro-inicio-identificacion');
+        Route::post('/registro-identificacion', 'storeRegistroCert')->name('registro-inicio-identificacion.store');
+        Route::post('/registro-confirmacion', 'storeRegistroCreaCuenta')->name('registro-inicio-confirmacion.store');
+    });
 
-    Route::get('/registro-identificacion/{tipoPersona}/{tipoRegistro}', 'showRegistroIdentificacion')->name('registro-inicio-identificacion');
-    
-    Route::post('/registro-identificacion', 'storeRegistroCert')->name('registro-inicio-identificacion.store');
-    
-    Route::post('/registro-confirmacion', 'storeRegistroCreaCuenta')->name('registro-inicio-confirmacion.store');
-    
-    Route::get('/registro-contactos', 'showRegistroContactos')->middleware(['auth'])->name('registro-contactos.show');
-    
-    Route::post('/registro-contactos', 'storeRegistroContactos')->middleware(['auth'])->name('registro-contactos.store');
+    Route::middleware(['auth', 'role:proveedor'])->group(function() {
+        Route::get('/registro-perfil-negocio', 'showRegistroPerfilNegocio')->middleware(['auth'])->name('registro-perfil-negocio.show');
+        Route::post('/registro-perfil-negocio', 'storeRegistroPerfilNegocio')->middleware(['auth'])->name('registro-perfil-negocio.store');
 
-    Route::get('/registro-perfil-negocio', 'showRegistroPerfilNegocio')->middleware(['auth'])->name('registro-perfil-negocio.show');
-    Route::post('/registro-perfil-negocio', 'storeRegistroPerfilNegocio')->middleware(['auth'])->name('registro-perfil-negocio.store');            
+        Route::get('/registro-contactos', 'showRegistroContactos')->middleware(['auth'])->name('registro-contactos.show');
+        Route::post('/registro-contactos', 'storeRegistroContactos')->middleware(['auth'])->name('registro-contactos.store');
+    });
 });
-
 
 Route::get('/perfil-negocio/categorias_scian/{id_sector?}', [PerfilNegocioController::class, 'categoriasScianIndex'])->middleware('auth')->name('categorias-scian.index');
 Route::get('/perfil-negocio/categorias_scian/{keyword}', [PerfilNegocioController::class, 'categoriasScianPorPalabraClave'])->middleware('auth')->name('categorias-scian.search');
@@ -75,7 +70,7 @@ Route::get('/perfil-negocio/categorias_scian/{keyword}', [PerfilNegocioControlle
 Route::get('/catalogo-cabms/{criterio_busqueda}', [CatalogoCABMSController::class, 'buscaClavesCABMS'])->middleware('auth')->name('catalogo-cabms.search');
 Route::get('/catalogo-cabms/categorias/{cabms}', [CatalogoCABMSController::class, 'buscaCategorias'])->middleware('auth')->name('catalogo-cabms-categorias.search');
 
-Route::middleware(['auth', 'verified', 'registro_mtv.status'])->group(function() {    
+Route::middleware(['role:proveedor', 'auth', 'verified', 'registro_mtv.status'])->group(function() {
     Route::get('/perfil-negocio', [PerfilNegocioController::class, 'show'])->name('perfil-negocio');
     Route::post('/perfil-negocio/update', [PerfilNegocioController::class, 'update'])->name('perfil-negocio.update');
 
@@ -90,13 +85,15 @@ Route::middleware(['auth', 'verified', 'registro_mtv.status'])->group(function()
         Route::get('/alta-producto-3/{producto}', 'showAltaProducto3')->name('alta-producto-3.show');
         Route::get('/alta-producto-4/{producto}', 'showAltaProducto4')->name('alta-producto-4.show');
         Route::post('/alta-producto/{paso}/{producto?}', 'storeAltaProducto')->name('alta-producto.store');
-        
+
         Route::get('/carga-productos-1', 'showImportacionProductos1')->name('importacion-productos-1.show');
         Route::get('/carga-productos-2', 'showImportacionProductos2')->name('importacion-productos-2.show');
         Route::get('/carga-productos-3', 'showImportacionProductos3')->name('importacion-productos-3.show');
         Route::post('/carga-productos/{paso}', 'storeCargaProductos')->name('carga-productos.store');
-        Route::post('/carga-productos/producto/{producto}', 'storeCargaProductosProducto')->name('carga-productos.producto.store');    
-    });    
+        Route::post('/carga-productos/producto/{producto}', 'storeCargaProductosProducto')->name('carga-productos.producto.store');
+    });
+
+    Route::get('/catalogo-productos', [CatalogoProductosController::class, 'index'])->name('catalogo-productos');
 
     Route::get('/productos/edit/{producto}', [ProductosController::class, 'show'])->name('productos.edit');
     Route::post('/productos/edit/{producto}', [ProductosController::class, 'update'])->name('productos.update');
