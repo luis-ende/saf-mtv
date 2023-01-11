@@ -24,10 +24,7 @@ class CatalogoProductosController extends Controller
     public function index(Request $request, ProductoRepository $productoRepo)
     {
         $catalogoId = Auth::user()->persona->catalogoProductos->id;
-        $productos = $productoRepo->obtieneProductosPorCatalogo($catalogoId);
-        $productos->each(function (&$producto) {
-            $producto['foto_info'] = $producto->getFirstMedia('fotos');
-        });
+        $productos = $productoRepo->obtieneProductosPorCatalogo($catalogoId);        
         
         $productosBien = $productos->filter(function ($producto) {
             return $producto->tipo === Producto::TIPO_PRODUCTO_BIEN_ID;

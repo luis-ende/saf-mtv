@@ -8,6 +8,7 @@ use App\Http\Controllers\RegistroMTVController;
 use App\Http\Controllers\CatalogoCABMSController;
 use App\Http\Controllers\OportunidadesController;
 use App\Http\Controllers\PerfilNegocioController;
+use App\Http\Controllers\BusquedaProductosController;
 use App\Http\Controllers\CatalogoProductosController;
 use App\Http\Controllers\ProgramacionAnualController;
 use App\Http\Controllers\CentroNotificacionesController;
@@ -101,10 +102,11 @@ Route::middleware(['role:proveedor', 'auth', 'verified', 'registro_mtv.status'])
     Route::get('/productos/{producto}/fotos', [ProductosController::class, 'showFotos'])->name('productos-fotos.show');
 });
 
+Route::get('/busqueda-productos', [BusquedaProductosController::class, 'index'])->name('busqueda-productos.index');
+Route::post('/busqueda-productos', [BusquedaProductosController::class, 'search'])->name('busqueda-productos.search');
 
 Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'index'])->middleware(['auth', 'verified'])->name('centro-notificaciones');
 
 Route::get('/programacion-anual', [ProgramacionAnualController::class, 'index'])->name('programacion-anual');
-
 
 require __DIR__.'/auth.php';

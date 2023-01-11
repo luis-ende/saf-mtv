@@ -30,7 +30,7 @@
                 @isset($num_resultados)
                     @if($num_resultados === 0 and !empty($term_busqueda))
                         <div class="p-0 mt-2 text-slate-700">
-                            No se encontraron oportunidades con el término <span class="font-bold">"{{ $term_busqueda }}</span>".
+                            No se encontraron oportunidades con el término <span class="font-bold">"{{ $term_busqueda }}"</span>.
                         </div>
                     @endif
                     @if($num_resultados > 0 && !empty($term_busqueda))
@@ -134,7 +134,7 @@
 
                         <x-oportunidades-listado
                             :categorias="$categorias"
-                         />
+                        />
                     </div>
                 </div>
             </div>
