@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,9 +18,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->seedTiposVialidad();
         $this->seedPaises();
+        $this->crearMTVRoles();
+        $this->crearUsuarioURG();
     }
 
-    private function seedTiposVialidad() 
+    private function seedTiposVialidad()
     {
         DB::table('cat_tipo_vialidad')->insert([
             'tipo_vialidad' => 'CALLE',
@@ -152,11 +156,24 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 
-    private function seedPaises() 
+    private function seedPaises()
     {
         $path = base_path('database/data/cat_paises.sql');
         $sql = file_get_contents($path);
 
         DB::unprepared($sql);
+    }
+
+    private function crearMTVRoles()
+    {
+        Role::create(['name' => 'proveedor']);
+        Role::create(['name' => 'urg']);
+    }
+
+    private function crearUsuarioURG()
+    {
+        // TODO Tomar password para esta cuenta del archivo .env
+        $user = User::create(['rfc' => 'URG', 'activo' => true, 'last_login' => now(), 'password' => bcrypt('urg_password')]);
+        $user->assignRole('urg');
     }
 }

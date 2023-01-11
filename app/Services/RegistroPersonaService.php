@@ -52,6 +52,8 @@ class RegistroPersonaService
                 'last_login' => now(),
                 'password' => bcrypt($personaRegistroDatos['password'])
             ]);
+
+            $user->assignRole('proveedor');
         });
 
         return $user;
