@@ -8,9 +8,12 @@ use App\Repositories\ProductoRepository;
 
 class BusquedaProductosController extends Controller
 {
-    public function index()
+    public function index(ProductoRepository $productoRepo)
     {
-        return view('catalogo-productos.search-index');
+        return view('catalogo-productos.search-index', [
+            'num_productos_registrados' => $productoRepo->obtieneNumeroProductosRegistrados(), // TODO: Obtener de cache
+            'num_proveedores_registrados' => 1,
+        ]);
     }
 
     public function search(Request $request, ProductoRepository $productoRepo) 

@@ -28,7 +28,7 @@
                            :class="tab === 'productos' ? 'text-mtv-secondary border-mtv-secondary hover:text-mtv-secondary' : 'text-mtv-gold border-mtv-gold-light hover:text-mtv-gold'"
                            x-on:click.prevent="tab = 'productos'" 
                            href="#">
-                            Más de {{ $num_productos_regisrados }} productos registrados
+                            Más de {{ $num_productos_registrados }} productos registrados
                         </a>
                         <a class="no-underline border-b-4 basis-1/2 text-center" 
                            :class="tab === 'proveedores' ? 'text-mtv-secondary border-mtv-secondary hover:text-mtv-secondary' : 'text-mtv-gold border-mtv-gold-light hover:text-mtv-gold'"
