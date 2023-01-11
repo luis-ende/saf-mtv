@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->seedTiposVialidad();
         $this->seedPaises();
-        $this->crearRolesMTV();
+        $this->crearMTVRoles();
         $this->crearUsuarioURG();
     }
 
