@@ -27,11 +27,9 @@
         <div class="bg-gray-100">
         <div class="min-h-screen">
             <!-- Page Content -->
-            <main>                
-                <div class="mt-3">
-                    @include('layouts.alert-notification')
-                </div>
-                {{ $slot }}                
+            <main>
+                @include('layouts.alert-notification')
+                {{ $slot }}
             </main>
 
             <!-- Page Footer -->

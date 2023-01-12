@@ -5,38 +5,38 @@
      x-data="busquedaCABMS"
      x-init="initBusquedaCABMS()"
      @endrole
-     >     
-    <div class="md:basis-4/12 xs:basis-full mb-3">        
+     >
+    <div class="md:basis-4/12 xs:basis-full mb-3">
         <div class="flex flex-col space-y-3">
             <div class="basis-full border rounded">
                 @if(isset($producto->fotos_info[0]))
-                    <img class="object-cover w-80 h-80 mx-auto my-6" 
+                    <img class="object-cover w-80 h-80 mx-auto my-6"
                         src="{{ isset($producto->fotos_info[0]) ? $producto->fotos_info[0]->original_url : '' }}">
                 @else
-                    @svg('ri-image-fill', ['class' => 'text-mtv-gray-light w-80 h-80 inline-block'])
-                @endif                
+                    @svg('ri-image-fill', ['class' => 'text-mtv-gray-light w-80 h-80 mx-auto'])
+                @endif
             </div>
             <div class="basis-full flex flex-row space-x-5">
                 <div class="basis-1/2 border rounded">
                     @if(isset($producto->fotos_info[1]))
-                        <img class="object-cover w-24 h-24 mx-auto my-3" 
+                        <img class="object-cover w-24 h-24 mx-auto my-3"
                              src="{{ isset($producto->fotos_info[1]) ? $producto->fotos_info[1]->original_url : '' }}">
                     @else
                         @svg('ri-image-fill', ['class' => 'text-mtv-gray-light w-24 h-24 mx-auto'])
-                    @endif                    
+                    @endif
                 </div>
                 <div class="basis-1/2 border rounded">
                     @if(isset($producto->fotos_info[2]))
-                        <img class="object-cover w-24 h-24 mx-auto my-3" 
+                        <img class="object-cover w-24 h-24 mx-auto my-3"
                              src="{{ isset($producto->fotos_info[2]) ? $producto->fotos_info[1]->original_url : '' }}">
                     @else
                         @svg('ri-image-fill', ['class' => 'text-mtv-gray-light w-24 h-24 mx-auto'])
-                    @endif                    
+                    @endif
                 </div>
             </div>
         </div>
     </div>
-    <div class="md:basis-8/12 xs:basis-full" 
+    <div class="md:basis-8/12 xs:basis-full"
          @role('proveedor')
          x-data="productoInfo()"
          @endrole
@@ -77,9 +77,9 @@
                 <td class="text-mtv-text-gray pl-3">
                     @php($colores = !empty($producto->color) ? explode(',', $producto->color) : [] )
                     @foreach($colores as $color)
-                        <span class="w-5 h-5 mt-2 inline-block border rounded-xl" 
+                        <span class="w-5 h-5 mt-2 inline-block border rounded-xl"
                              style="background-color: {{ $color }}"></span>
-                    @endforeach                    
+                    @endforeach
                 </td>
             </tr>
             <tr class="border-b">
@@ -99,9 +99,9 @@
             </tr>
         </table>
 
-        <div class="flex flex-row">           
-            <div class="basis-1/2 text-mtv-gold">  
-                @if($producto->ficha_tecnica)                    
+        <div class="flex flex-row">
+            <div class="basis-1/2 text-mtv-gold">
+                @if($producto->ficha_tecnica)
                     <a href="{{ $producto->ficha_tecnica->original_url }}"
                        class="mtv-link-download-gold"
                        download>
@@ -110,8 +110,8 @@
                     </a>
                 @endif
             </div>
-            <div class="basis-1/2">  
-                @if($producto->otro_documento)                    
+            <div class="basis-1/2">
+                @if($producto->otro_documento)
                     <a href="{{ $producto->otro_documento->original_url }}"
                        class="mtv-link-download-gold"
                        download>
@@ -140,20 +140,20 @@
                                         value="{{ $producto->nombre }}" required>
                                     <label class="mtv-input-label" for="nombre">Nombre de tu producto<span class="text-mtv-primary">*</span></label>
                                 </div>
-                                <label class="text-xs text-slate-500 mx-3 italic" 
+                                <label class="text-xs text-slate-500 mx-3 italic"
                                     for="descripcion_producto">
                                     Aparecerá como título en el catálogo
                                 </label>
                                 <div class="mtv-input-wrapper">
-                                    <textarea class="mtv-text-input" id="descripcion"                                  
+                                    <textarea class="mtv-text-input" id="descripcion"
                                             name="descripcion" maxlength="140" required>{{ $producto->descripcion }}</textarea>
-                                    <label class="mtv-input-label" for="descripcion">Describe tu producto<span class="text-mtv-primary">*</span></label>                        
+                                    <label class="mtv-input-label" for="descripcion">Describe tu producto<span class="text-mtv-primary">*</span></label>
                                 </div>
-                                <label class="text-xs text-slate-500 mx-3 italic" 
+                                <label class="text-xs text-slate-500 mx-3 italic"
                                     for="producto">
                                         Indica en qué unidad de medida vendes tu producto, qué presentación tiene, fabricante y otras características importantes con las que cuenta tu producto.
-                                </label>  
-                                @if($producto->tipo === 'B')                  
+                                </label>
+                                @if($producto->tipo === 'B')
                                     <div class="md:grid md:grid-cols-2 md:gap-2">
                                         <div class="mtv-input-wrapper">
                                             <input type="text" class="mtv-text-input" id="marca" name="marca"
@@ -165,23 +165,23 @@
                                                 value="{{ $producto->modelo }}">
                                             <label class="mtv-input-label" for="modelo">Modelo o SKU</label>
                                         </div>
-                                        
+
                                         <x-input-producto-color-select
                                             :producto_colores="$producto->productoColor"
                                         />
-                                                                    
+
                                         <div class="mtv-input-wrapper">
                                             <input type="text" class="mtv-text-input" id="material" name="material"
                                                 value="{{ $producto->material }}">
                                             <label class="mtv-input-label" for="material">Material</label>
-                                        </div>                                                            
+                                        </div>
                                         <div class="mtv-input-wrapper">
                                             <input type="text" class="mtv-text-input" id="codigo_barras" name="codigo_barras"
                                                 value="{{ $producto->codigoBarras }}">
                                             <label class="mtv-input-label" for="material">Código de barras</label>
                                         </div>
                                     </div>
-                                @endif  
+                                @endif
 
                                 <label class="block basis-full text-xl font-bold text-mtv-secondary mt-2 mb-2 self-center">
                                     Fotografías
@@ -222,7 +222,7 @@
             </div>
 
             <script type="text/javascript">
-                function productoInfo() {        
+                function productoInfo() {
                     return {
                         productoEditado: null,
                         productoModalForm: new bootstrap.Modal(document.getElementById('productoModal'), { keyboard: true }),

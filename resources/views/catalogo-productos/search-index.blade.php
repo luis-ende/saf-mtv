@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden h-fit">
+        <div class="bg-white overflow-hidden h-screen">
             <div class="py-6 px-12 bg-white border-b border-gray-200 flex flex-col">
                 <div class="self-center">
                     <label class="text-mtv-gray-2 text-xl">
@@ -8,7 +8,7 @@
                     </label>
                     <div class="text-mtv-primary font-bold text-3xl">
                         Buscador de productos y proveedores de Mi Tiendita Virtual
-                    </div>      
+                    </div>
                 </div>
                 <div class="self-center">
                     <div class="flex flex-row space-x-4 mt-2">
@@ -19,20 +19,20 @@
                         <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
                         <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
                     </div>
-                </div>    
-            </div>                  
+                </div>
+            </div>
             <div class="py-6 px-12">
                 <div x-data="{ tab: 'productos' }">
                     <nav class="font-bold text-lg text-mtv-gold flex flex-row mb-3">
-                        <a class="no-underline border-b-4 basis-1/2 text-center" 
+                        <a class="no-underline border-b-4 basis-1/2 text-center"
                            :class="tab === 'productos' ? 'text-mtv-secondary border-mtv-secondary hover:text-mtv-secondary' : 'text-mtv-gold border-mtv-gold-light hover:text-mtv-gold'"
-                           x-on:click.prevent="tab = 'productos'" 
+                           x-on:click.prevent="tab = 'productos'"
                            href="#">
                             Más de {{ $num_productos_registrados }} productos registrados
                         </a>
-                        <a class="no-underline border-b-4 basis-1/2 text-center" 
+                        <a class="no-underline border-b-4 basis-1/2 text-center"
                            :class="tab === 'proveedores' ? 'text-mtv-secondary border-mtv-secondary hover:text-mtv-secondary' : 'text-mtv-gold border-mtv-gold-light hover:text-mtv-gold'"
-                            x-on:click.prevent="tab = 'proveedores'" 
+                            x-on:click.prevent="tab = 'proveedores'"
                             href="#">
                             Más de {{ $num_proveedores_registrados }} proveedores registrados
                         </a>
@@ -57,7 +57,7 @@
                                            value="{{ $term_busqueda ?? '' }}">
                                     <button type="submit" class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1">Buscar</button>
                                 </div>
-                            </form>                            
+                            </form>
                             @isset($num_resultados)
                                 @if($num_resultados === 0 && !empty($term_busqueda))
                                     <div class="p-0 mt-2 text-slate-700">
@@ -69,21 +69,21 @@
                                         <span class="font-bold">{{ $num_resultados }}</span> Productos encontrados con el término <span class="font-bold">"{{ $term_busqueda }}</span>
                                     </div>
                                 @endif
-                            @endisset                                                        
+                            @endisset
                         </div>
 
                         @isset($productos)
                         <div class="w-full">
-                            <x-productos-grid 
+                            <x-productos-grid
                                 :productos="$productos" />
                         </div>
                         @endisset
                     </div>
                     <div x-show="tab === 'proveedores'">
-                        
-                    </div>                    
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 </x-app-layout>

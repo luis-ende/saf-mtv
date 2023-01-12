@@ -16,10 +16,13 @@ class BusquedaProductosController extends Controller
         ]);
     }
 
-    public function search(Request $request, ProductoRepository $productoRepo) 
-    {        
-        $busquedaTermino = $request->input('productos_search');        
-        $productos = $productoRepo->buscaProductosPorTermino($busquedaTermino);
+    public function search(Request $request, ProductoRepository $productoRepo)
+    {
+        $busquedaTermino = $request->input('productos_search');
+        $productos = [];
+        if ($busquedaTermino) {
+            $productos = $productoRepo->buscaProductosPorTermino($busquedaTermino);
+        }
 
         return view('catalogo-productos.search-index', [
             'term_busqueda' => $request->input('productos_search'),
