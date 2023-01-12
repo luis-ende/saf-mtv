@@ -47,8 +47,8 @@
                 @endauth
                 
                 @guest
-                    <a class="font-bold no-underline mr-7" href="{{ route('login') }}">Ingresa</a>
-                    <a class="mtv-button-primary no-underline mr-5" href="{{ route('registro-inicio') }}">Regístrate</a>
+                    <a class="font-bold no-underline mr-5" href="{{ route('login') }}">Ingresa</a>
+                    <a class="font-bold no-underline mr-5 bg-[#9F2241] text-[#FFFFFF]  hover:text-[#BC955C] rounded p-1 " href="{{ route('registro-inicio') }}">Regístrate</a>
                 @endguest
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -103,8 +103,11 @@
                     </x-responsive-nav-link>
                 </form>
             @else
-            <x-responsive-nav-link>
-                    {{ __('Inicio') }}
+                <x-responsive-nav-link :href="route('login')">
+                    {{ __('Inicia Sesión') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('registro-inicio')">
+                    {{ __('Regístrate') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link >
                     {{ __('Preguntas frecuentes') }}
