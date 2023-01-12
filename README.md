@@ -53,6 +53,11 @@ Para realizar una actualización completa del ambiente de desarrollo ejecutar de
 
 - Los íconos utilizados en format SVG se encuentran en la carpeta `resources/svg` como archivos .svg y se utilizan en plantillas Blade con la directiva `@svg`, por ejemplo: `@svg('govicon-building')`. Ver más acerca sobre los íconos de [Blade UI Kit](https://blade-ui-kit.com/blade-icons).
 
+### Paquetes utilizados
+
+- Spatie Laravel Permission - https://spatie.be/docs/laravel-permission/v5/introduction
+- Spatie Media Library - https://spatie.be/docs/laravel-medialibrary/v10/introduction
+
 ## MTV en Docker
 
 - Instrucciones para instalar Docker y Docker Compose en Linux: [https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
