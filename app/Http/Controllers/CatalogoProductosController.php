@@ -5,15 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
-use Illuminate\Validation\Rule;
 use App\Imports\ProductosImport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Requests\ProductoRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\ProductoRepository;
-use App\Services\RegistroProductosService;
 use Illuminate\Support\Facades\Validator;
+use App\Services\RegistroProductosService;
 use Illuminate\Validation\ValidationException;
 
 class CatalogoProductosController extends Controller
@@ -92,40 +92,18 @@ class CatalogoProductosController extends Controller
             switch($registroFase) {
                 case RegistroProductosService::ALTA_PRODUCTO_FASE_CABMS_CATEGORIAS:
                     $this->validate($request, [
-                        'id_cabms' => 'required|integer',
-                        'tipo_producto' => [
-                            'required',
-                            Rule::in([
-                                Producto::TIPO_PRODUCTO_BIEN_ID,
-                                Producto::TIPO_PRODUCTO_SERVICIO_ID])
-                            ],
-                        'ids_categorias_scian' => 'required|array',
-                        'ids_categorias_scian.*' => 'integer',
+                        ...ProductoRequest::rulesProductoTipo(),
+                        ...ProductoRequest::rulesProductoCABMSCategorias(),
                     ]);
                     break;
                 case RegistroProductosService::ALTA_PRODUCTO_FASE_DESCRIPCION:
-                    $this->validate($request, [
-                        'nombre' => 'required|max:255',
-                        'descripcion' => 'required|max:140',
-                        'marca' => 'max:255',
-                        'modelo' => 'max:255',
-                        'producto_colores.*' => 'string', // TODO: Validar longitud máxima de 140 caracteres
-                        'material' => 'max:255',
-                        'codigo_barras' => 'max:100',
-                    ]);
+                    $this->validate($request, ProductoRequest::rulesProductoDescripcion());
                     break;
                 case RegistroProductosService::ALTA_PRODUCTO_FASE_FOTOS:
-                    $this->validate($request, [
-                        'producto_fotos' => 'max:3',
-                        'producto_fotos.*' => 'max:1000|mimes:jpg,png',
-                        'producto_fotos_eliminadas' => 'nullable|string',
-                    ]);
+                    $this->validate($request, ProductoRequest::rulesProductoFotos());
                     break;
                 case RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS:
-                    $this->validate($request, [
-                        'ficha_tecnica_file' => 'required|max:3000|mimes:pdf',
-                        'otro_documento_file' => 'max:3000|mimes:pdf',
-                    ]);
+                    $this->validate($request, ProductoRequest::rulesProductoAdjuntos());
                     break;
             }
 
@@ -363,7 +341,7 @@ class CatalogoProductosController extends Controller
                 'producto_fotos.*' => 'max:1000|mimes:jpg,png',
                 'producto_fotos_eliminadas' => 'nullable|string',
             ]);
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+        } catch (ValidationException $e) {
             // TODO: Verificar si devulve errores en el formato correcto
             return [$e->validator];
         }

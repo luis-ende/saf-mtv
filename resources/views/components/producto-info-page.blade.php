@@ -38,6 +38,7 @@
     </div>
     <div class="md:basis-8/12 xs:basis-full"
          @role('proveedor')
+         x-init="initProductoInfo()"
          x-data="productoInfo()"
          @endrole
          >
@@ -143,66 +144,34 @@
                             <button type="button" class="btn-close" @click="editFormClose()" aria-label="Close"></button>
                         </div>
                         <div id="productoFormContainer" class="modal-body px-4">
-                            <form id="productoForm">
-                                <x-cabms-categorias-select />
+                            <form id="productoForm"                                     
+                                  method="POST" 
+                                  action="{{ route('productos.update', [$producto->id]) }}">
+                                @csrf
 
-                                <div class="mtv-input-wrapper">
-                                    <input type="text" class="mtv-text-input" id="nombre" name="nombre"
-                                        value="{{ $producto->nombre }}" required>
-                                    <label class="mtv-input-label" for="nombre">Nombre de tu producto<span class="text-mtv-primary">*</span></label>
-                                </div>
-                                <label class="text-xs text-slate-500 mx-3 italic"
-                                    for="descripcion_producto">
-                                    Aparecerá como título en el catálogo
-                                </label>
-                                <div class="mtv-input-wrapper">
-                                    <textarea class="mtv-text-input" id="descripcion"
-                                            name="descripcion" maxlength="140" required>{{ $producto->descripcion }}</textarea>
-                                    <label class="mtv-input-label" for="descripcion">Describe tu producto<span class="text-mtv-primary">*</span></label>
-                                </div>
-                                <label class="text-xs text-slate-500 mx-3 italic"
-                                    for="producto">
-                                        Indica en qué unidad de medida vendes tu producto, qué presentación tiene, fabricante y otras características importantes con las que cuenta tu producto.
-                                </label>
-                                @if($producto->tipo === 'B')
-                                    <div class="md:grid md:grid-cols-2 md:gap-2">
-                                        <div class="mtv-input-wrapper">
-                                            <input type="text" class="mtv-text-input" id="marca" name="marca"
-                                                    value="{{ $producto->marca }}">
-                                            <label class="mtv-input-label" for="marca">Marca</label>
-                                        </div>
-                                        <div class="mtv-input-wrapper">
-                                            <input type="text" class="mtv-text-input" id="modelo" name="modelo"
-                                                value="{{ $producto->modelo }}">
-                                            <label class="mtv-input-label" for="modelo">Modelo o SKU</label>
-                                        </div>
+                                <x-cabms-categorias-select 
+                                    :modo="__('producto_edicion')"
+                                />
 
-                                        <x-input-producto-color-select
-                                            :producto_colores="$producto->productoColor"
-                                        />
+                                <x-producto-nombre-input
+                                    :value="$producto->nombre" />
+                                
+                                <x-producto-descripcion-textarea 
+                                    :value="$producto->descripcion" />
 
-                                        <div class="mtv-input-wrapper">
-                                            <input type="text" class="mtv-text-input" id="material" name="material"
-                                                value="{{ $producto->material }}">
-                                            <label class="mtv-input-label" for="material">Material</label>
-                                        </div>
-                                        <div class="mtv-input-wrapper">
-                                            <input type="text" class="mtv-text-input" id="codigo_barras" name="codigo_barras"
-                                                value="{{ $producto->codigoBarras }}">
-                                            <label class="mtv-input-label" for="material">Código de barras</label>
-                                        </div>
-                                    </div>
-                                @endif
+                                <x-producto-bien-inputs 
+                                    :producto="$producto" />
 
-                                <label class="block basis-full text-xl font-bold text-mtv-secondary mt-2 mb-2 self-center">
+                                <label class="block basis-full text-lg font-bold text-mtv-primary mt-2 mb-2 self-center">
                                     Fotografías
                                 </label>
                                 <label class="text-mtv-gray text-base mb-3 self-center">
                                     Hasta <span class="text-lg font-bold">3</span> imágenes de tu producto en formato jpg o png y de hasta 1 MB cada una.
                                 </label>
+
                                 <x-producto-fotos-upload />
 
-                                <label class="block basis-full text-xl font-bold text-mtv-secondary mt-2 mb-2 self-center">
+                                <label class="block basis-full text-lg font-bold text-mtv-primary mt-2 mb-2 self-center">
                                     Ficha técnica
                                 </label>
                                 <label class="text-mtv-gray text-base mb-3 self-center">
@@ -212,7 +181,7 @@
                                     :name="__('ficha_tecnica_file')"
                                     :id="__('ficha_tecnica_file')"
                                 />
-                                <label class="block basis-full text-xl font-bold text-mtv-secondary mt-2 mb-2 self-center">
+                                <label class="block basis-full text-lg font-bold text-mtv-primary mt-2 mb-2 self-center">
                                     Otro documento
                                 </label>
                                 <label class="text-mtv-gray text-base mb-3 self-center">
@@ -226,7 +195,9 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="mtv-button-secondary" @click="guardaProducto(productoEditado)">Guardar</button>
+                            <button type="button" 
+                                    @click.preventDefault="enviarProductoForm()"
+                                    class="mtv-button-secondary">Guardar</button>
                         </div>
                     </div>
                 </div>
@@ -235,11 +206,39 @@
             <script type="text/javascript">
                 function productoInfo() {
                     return {
+                        productoId: {!! json_encode($producto->id) !!},
                         productoEditado: null,
                         productoModalForm: new bootstrap.Modal(document.getElementById('productoModal'), { keyboard: true }),
-                        editFormClose() {
-                            this.productoEditado = null;
+                        errores: null,
+                        initProductoInfo() {
+                            document.getElementById('productoModal').addEventListener('show.bs.modal', () => {
+                                this.productoEditado = null;
+                                this.productoEditado = this.productoId;                                
+                            });
+                            document.getElementById('productoModal').addEventListener('hidden.bs.modal', () => {
+                                this.productoEditado = null;
+                            });
+                        },
+                        editFormClose() {                            
                             this.productoModalForm.hide();
+                        },                        
+                        enviarProductoForm() {
+                            const productoForm = document.getElementById('productoForm');
+                            const data = new FormData(productoForm);
+ 
+                            fetch('{{ route("productos.update", [$producto->id]) }}', {
+                                accept: 'application/json',
+                                method: 'POST',
+                                body: new URLSearchParams(data)
+                            }).then(res => {                                
+                                console.log(res);
+                                if (res.ok) {
+                                    this.productoModalForm.hide();
+                                    location.reload();
+                                } else {
+                                    this.errores = res.errors;
+                                }                                
+                            });
                         },
                     }
                 }

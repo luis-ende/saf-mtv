@@ -23,53 +23,16 @@
                     <label class="text-mtv-gray text-base mb-3 self-center">
                         Los campos marcados con <span class="text-mtv-primary">*</span> son obligatorios.
                     </label>
-                    <div class="mtv-input-wrapper">
-                        <input type="text" class="mtv-text-input" id="nombre" name="nombre"
-                               value="{{ $nombre }}" required>
-                        <label class="mtv-input-label" for="nombre">Nombre de tu producto<span class="text-mtv-primary">*</span></label>
-                    </div>
-                    <label class="text-xs text-slate-500 mx-3 italic" 
-                           for="descripcion_producto">
-                           Aparecerá como título en el catálogo
-                    </label>
-                    <div class="mtv-input-wrapper">
-                        <textarea class="mtv-text-input" id="descripcion"                                  
-                                  name="descripcion" maxlength="140" required>{{ $descripcion }}</textarea>
-                        <label class="mtv-input-label" for="descripcion">Describe tu producto<span class="text-mtv-primary">*</span></label>                        
-                    </div>
-                    <label class="text-xs text-slate-500 mx-3 italic" 
-                           for="producto">
-                               Indica en qué unidad de medida vendes tu producto, qué presentación tiene, fabricante y otras características importantes con las que cuenta tu producto.
-                    </label>  
-                    @if($tipoProducto === 'B')                  
-                        <div class="md:grid md:grid-cols-2 md:gap-2">
-                            <div class="mtv-input-wrapper">
-                                <input type="text" class="mtv-text-input" id="marca" name="marca"
-                                        value="{{ $marca }}">
-                                <label class="mtv-input-label" for="marca">Marca</label>
-                            </div>
-                            <div class="mtv-input-wrapper">
-                                <input type="text" class="mtv-text-input" id="modelo" name="modelo"
-                                    value="{{ $modelo }}">
-                                <label class="mtv-input-label" for="modelo">Modelo o SKU</label>
-                            </div>
-                            
-                            <x-input-producto-color-select
-                                :producto_colores="$productoColor"
-                             />
-                                                        
-                            <div class="mtv-input-wrapper">
-                                <input type="text" class="mtv-text-input" id="material" name="material"
-                                    value="{{ $material }}">
-                                <label class="mtv-input-label" for="material">Material</label>
-                            </div>                                                            
-                            <div class="mtv-input-wrapper">
-                                <input type="text" class="mtv-text-input" id="codigo_barras" name="codigo_barras"
-                                       value="{{ $codigoBarras }}">
-                                <label class="mtv-input-label" for="material">Código de barras</label>
-                            </div>
-                        </div>
-                    @endif    
+
+                    <x-producto-nombre-input
+                        :value="$nombre" />
+                
+                    <x-producto-descripcion-textarea 
+                        :value="$descripcion" />
+                
+                    <x-producto-bien-inputs 
+                        :producto="$producto" />
+                        
                     <div class="flex flex-row my-4 space-x-10 justify-center">
                         <a href="{{ route('alta-producto-1.show', [$productoId]) }}" 
                             class="mtv-button-secondary-white no-underline self-center">

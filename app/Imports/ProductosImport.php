@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Producto;
-use Illuminate\Validation\Rule;
+use App\Http\Requests\ProductoRequest;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
@@ -51,13 +51,8 @@ class ProductosImport implements ToModel, WithHeadingRow, WithValidation
                 'starts_with:' . Producto::TIPO_PRODUCTO_BIEN_ID . ',' . Producto::TIPO_PRODUCTO_SERVICIO_ID . ',' .
                                  strtolower(Producto::TIPO_PRODUCTO_BIEN_ID) . ',' . strtolower(Producto::TIPO_PRODUCTO_SERVICIO_ID),
             ],
-            'nombre_producto' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:140',
-            'marca' => 'max:255',
-            'modelo' => 'max:255',
+            ...ProductoRequest::rulesProductoDescripcion(),
             'color' => 'max:30',
-            'material' => 'max:255',
-            'codigo_barras' => 'max:100',
             'foto_url_1' => 'nullable|max:255|url',
             'foto_url_2' => 'nullable|max:255|url',
             'foto_url_3' => 'nullable|max:255|url',

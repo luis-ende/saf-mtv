@@ -9,24 +9,6 @@ use App\Models\Producto;
 
 class ProductoRequest extends FormRequest
 {
-    /*public const PRODUCTO_REQUEST_RULES = [
-        'tipo_producto' => [
-            'required',
-            Rule::in([
-                Producto::TIPO_PRODUCTO_BIEN_ID,
-                Producto::TIPO_PRODUCTO_SERVICIO_ID
-            ])
-        ],
-        'ids_categorias_scian' => 'required|json',
-        'nombre' => 'required|string|max:255',
-        'descripcion' => 'required|string|max:140',
-        'marca' => 'string|max:255',
-        'modelo' => 'string|max:255',
-        'color' => 'string|max:30',
-        'material' => 'string|max:255',
-        'codigo_barras' => 'string|max:100',
-    ];*/
-
     /**
      * @return bool
      */
@@ -35,13 +17,82 @@ class ProductoRequest extends FormRequest
         return true;
     }
 
-    /**
-     *
+    /**     
      * @return array<string, mixed>
      */
     public function rules()
+    {        
+        return array_merge(
+            self::rulesProductoCABMS(),
+            self::rulesProductoDescripcion(),
+            self::rulesProductoFotos(),
+            self::rulesProductoAdjuntos()
+        );
+    }
+
+    /**     
+     * @return array<string, mixed>
+     */
+    public static function rulesProductoTipo(): array
     {
-        /*return self::PRODUCTO_REQUEST_RULES;*/
-        return [];
+        return [            
+            'tipo_producto' => [
+                'required',
+                Rule::in([
+                    Producto::TIPO_PRODUCTO_BIEN_ID,
+                    Producto::TIPO_PRODUCTO_SERVICIO_ID])
+                ],            
+        ];
+    }
+
+    /**     
+     * @return array<string, mixed>
+     */
+    public static function rulesProductoCABMSCategorias(): array 
+    {
+        return [
+            'id_cabms' => 'required|integer',
+            'ids_categorias_scian' => 'required|array',
+            'ids_categorias_scian.*' => 'integer',
+        ];
+    }
+
+    /**     
+     * @return array<string, mixed>
+     */
+    public static function rulesProductoDescripcion(): array
+    {
+        return [
+            'nombre' => 'required|max:255',
+            'descripcion' => 'required|max:140',
+            'marca' => 'max:255',
+            'modelo' => 'max:255',
+            'producto_colores.*' => 'nulllable|string', // TODO: Validar longitud máxima de 140 caracteres
+            'material' => 'max:255',
+            'codigo_barras' => 'max:100',
+        ];
+    }
+
+    /**     
+     * @return array<string, mixed>
+     */
+    public static function rulesProductoFotos(): array
+    {
+        return [
+            'producto_fotos' => 'min:1|max:3',
+            'producto_fotos.*' => 'max:1000|mimes:jpg,png',
+            'producto_fotos_eliminadas' => 'nullable|string',
+        ];
+    }
+
+    /**     
+     * @return array<string, mixed>
+     */
+    public static function rulesProductoAdjuntos(): array 
+    {
+        return [
+            'ficha_tecnica_file' => 'required|max:3000|mimes:pdf',
+            'otro_documento_file' => 'max:3000|mimes:pdf',
+        ];
     }
 }

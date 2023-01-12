@@ -1,7 +1,7 @@
 @props(['modo' => 'producto_edicion', 'producto_editado' => null])
 @php($maxNumFotos = 3)
 
-<div class="bg-white p7 rounded w-11/12 mx-auto">
+<div class="bg-white rounded w-10/12 mx-auto">
     <div x-data="productoFotos()"
          @if ($modo === 'producto_edicion')
             @if(isset($producto_editado))

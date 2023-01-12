@@ -2,23 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\ProductoRepository;
-use Illuminate\Http\Request;
-
 use App\Models\Producto;
+use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\ProductoRequest;
+use App\Repositories\ProductoRepository;
+use Illuminate\Validation\ValidationException;
 
 class ProductosController extends Controller
 {    
-    public function update(ProductoRequest $request, Producto $producto)
+    public function update(Request $request, Producto $producto)
     {
-        // TODO: Implementar junto con la vista de formulario de edición de producto
+        // TODO Producto debe pertenecer al catálogo del usuario
 
-        return redirect()->route('catalogo-productos')
-                         ->with('success', 'Producto actualizado.');
+        try {
+            $this->validate($request, [
+                ...ProductoRequest::rulesProductoCABMSCategorias(),
+                ...ProductoRequest::rulesProductoDescripcion(),
+                ...ProductoRequest::rulesProductoFotos(),
+                ...ProductoRequest::rulesProductoAdjuntos(),
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'errors' => $e->errors()
+            ], 422);
+        }
+
+        if ($producto) {
+            $producto->update($request->only('id_cabms'));
+            $producto->actualizaCategoriasScian($request->input('ids_categorias_scian'));            
+        }
+
+        return [true];        
     }
 
     /**
