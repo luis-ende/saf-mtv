@@ -4,6 +4,11 @@
     top: 60px;
 }
 
+.menu-mtv-border {
+    position:sticky;
+    top:114px;
+}
+
 .button-back-up {
     width: 60px;
     height: 60px;
@@ -21,13 +26,14 @@
 <x-guest-layout>
     <div class="flex flex-col" style="background-color:#FFFFFF" id="back-main">
         <!-- Menú de preguntas -->
-        <div class="flex flex-row bg-[#FFFFFF] space-x-7 py-3 px-5 md:justify-start md:flex-wrap border border-5 border-top-0 border-end-0 border-start-0" style="margin-top:-10px">
+        <div class="d-none d-xl-block flex flex-row bg-[#FFFFFF] space-x-7 py-3 px-5 md:justify-start md:flex-wrap" style="margin-top:-10px">
             <a class="text-[#8B1232] hover:text-[#BC955C] no-underline font-bold text-center" href="#">Inicio</a>
             <a class="text-[#BC955C] hover:text-[#8B1232] no-underline font-bold text-center" href="#virtual-store">¿Qué es Mi Tiendita Virtual?</a>
             <a class="text-[#BC955C] hover:text-[#8B1232] no-underline font-bold text-center" href="#">Preguntas frecuentes</a>
             <a class="text-[#BC955C] hover:text-[#8B1232] no-underline font-bold text-center" href="#">Directorio CDMX</a>
             <a class="text-[#BC955C] hover:text-[#8B1232] no-underline font-bold text-center" href="#">Ya soy proveedor</a>
         </div>
+        <div class="d-none d-xl-block w-full h-2 bg-mtv-gold-light"></div>
 
         <!-- Carousel -->
         <div class="h-96"> 
@@ -106,17 +112,18 @@
             </div>
         </div>
 <!-- Menú de mi Tiendita virtual-->
-        <div class="flex flex-row bg-[#9F2241] space-x-7 py-3 px-5 md:justify-center md:flex-wrap menu-mtv">
+        <div class="d-none d-xl-block flex flex-row bg-[#9F2241] space-x-7 py-3 px-5 md:justify-center md:flex-wrap menu-mtv">
             <a class="text-[#DDC9A3] hover:text-[#FFFFFF] no-underline font-bold text-center" href="#">Inicio</a>
             <a class="text-[#DDC9A3] hover:text-[#FFFFFF] no-underline font-bold text-center" href="#virtual-store">¿Qué es Mi Tiendita Virtual</a>
             <a class="text-[#DDC9A3] hover:text-[#FFFFFF] no-underline font-bold text-center" href="#for-virtual-store">¿Para quién es?</a>
             <a class="text-[#DDC9A3] hover:text-[#FFFFFF] no-underline font-bold text-center" href="#how-part-virtual-store">¿Cómo formo parte?</a>
             <a class="text-[#DDC9A3] hover:text-[#FFFFFF] no-underline font-bold text-center" href="#">¿Tienes dudas?</a>
         </div>
+        <div class="d-none d-xl-block w-full h-2 bg-mtv-gold-light menu-mtv-border"></div>
 
 <!-- sección qué es mtv-->
         <div class="what-mtv" id="virtual-store">
-            <div class="what-mtv-left">
+            <div class="what-mtv-left ">
                 <img src="{{ asset('assets/smartphone_01.png') }}" />
             </div>
             <div class="what-mtv-right">
@@ -141,13 +148,15 @@
         </div>
 <!-- sección para quién es mtv-->
         <div class="for-mtv" id="for-virtual-store">
-            <div class="image-container">
+            <div class="image-container d-none d-xl-block">
                 <div class="image-container-top">
-                   <img src="{{ asset('assets/img_01.jpg') }}" />
-                   <img src="{{ asset('assets/img_02.jpg') }}" />
+                    <img src="{{ asset('assets/img_01.jpg') }}" />
+                    <img src="{{ asset('assets/img_02.jpg') }}" />
                 </div>
-                <img src="{{ asset('assets/img_03.jpg') }}" />
-                <img src="{{ asset('assets/img_04.jpg') }}" />
+                <div class="image-container-bottom">
+                    <img src="{{ asset('assets/img_03.jpg') }}" />
+                    <img  class="image-responsive" src="{{ asset('assets/img_04.jpg') }}" />
+                </div>
             </div>
             <div class="for-mtv-information-container">
                 <div class="for-mtv-information-container-top">
@@ -159,32 +168,31 @@
                 </div>
                 <div class="for-mtv-information-container-bottom">
                     <div class="for-mtv-information-container-bottom-red">
-                      <p class="for-mtv-information-title">No soy proveedor</p>
-                      <p class="for-mtv-information-notes">(No le he vendido al Gobierno de la CDMX)</span>
-                      <ul>
-                        <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Conoce cómo venderle a la CDMX.</li>
-                        <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Identifica los requisitos y documentos para ser proveedor.</li>
-                        <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Descubre si tu producto lo compra la CDMX.</li>
-                        <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Crea tu catálogo de productos (sólo requieres contar con tu RFC con homoclave para registrarte).</li>
-                      </ul>
-                      <div class="for-mtv-information-button-container">
-                      <button class=" hover hover:text-[#600a21] hover:bg-[#ddc9a3]" type="button" onclick="window.location='{{ route('registro-inicio') }}'">Regístrate</button>
-                      </div>
-                      <div class="horizontal-plot-red"></div>
+                        <p class="for-mtv-information-title">No soy proveedor</p>
+                        <p class="for-mtv-information-notes">(No le he vendido al Gobierno de la CDMX)</span>
+                        <ul>
+                            <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Conoce cómo venderle a la CDMX.</li>
+                            <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Identifica los requisitos y documentos para ser proveedor.</li>
+                            <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Descubre si tu producto lo compra la CDMX.</li>
+                            <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Crea tu catálogo de productos (sólo requieres contar con tu RFC con homoclave para registrarte).</li>
+                        </ul>
+                        <div class="divider"></div>
+                        <div class="for-mtv-information-button-container">
+                            <button class=" hover hover:text-[#600a21] hover:bg-[#ddc9a3]" type="button" onclick="window.location='{{ route('registro-inicio') }}'">Regístrate</button>
+                        </div>
                     </div>
                     <div class="for-mtv-information-container-bottom-gold">
-                      <p class="for-mtv-information-title-gold">Ya soy proveedor</p>
-                      <p class="for-mtv-information-notes">(estoy registrado en Padrón de proveedores)</p>
-                      <p class="for-mtv-information-text">No es necesario que te registres. Ingresa con tu usuario de Padrón de Proveedores.<br>En Mi Tiendita Virtual puedes:</p>
-                      <ul>
-                     <li> @svg('circle-check', ['class' => 'd-inline mr-2'])Crear tu catálogo de productos.</li>
-                     <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Conocer qué planea comprar la CDMX el siguiente año.</li>
-                     <li> @svg('circle-check', ['class' => 'd-inline mr-2'])Buscar oportunidades de negocio y activar notificaciones.</li>
-                      </ul>
-                      <div class="for-mtv-information-button-container">
-                      <button>Ingresa</button>
-                      </div>
-                      <div class="horizontal-plot-gold"></div>
+                        <p class="for-mtv-information-title-gold">Ya soy proveedor</p>
+                        <p class="for-mtv-information-notes">(estoy registrado en Padrón de proveedores)</p>
+                        <p class="for-mtv-information-text">No es necesario que te registres. Ingresa con tu usuario de Padrón de Proveedores.<br>En Mi Tiendita Virtual puedes:</p>
+                        <ul>
+                            <li> @svg('circle-check', ['class' => 'd-inline mr-2'])Crear tu catálogo de productos.</li>
+                            <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Conocer qué planea comprar la CDMX el siguiente año.</li>
+                            <li> @svg('circle-check', ['class' => 'd-inline mr-2'])Buscar oportunidades de negocio y activar notificaciones.</li>
+                        </ul>
+                        <div class="for-mtv-information-button-container">
+                            <button>Ingresa</button>
+                        </div>
                     </div>
 
                 </div>
@@ -192,13 +200,13 @@
         </div>
 <!-- sección para cómo formo parte de MTV-->
         <div class="how-part" id="how-part-virtual-store">
-          @svg('horizontal-plot')
+            @svg('horizontal-plot',['class' => 'd-none d-xl-block'])
           <div class="how-part-information">
-              <p class="how-part-information-title">¿Cómo formo parte de Mi Tiendita Virtual?</p>
-              <p class="how-part-information-text">Sólo tienes que registrar tu empresa y al menos un producto. Además <b>con tu registro</b>
-              <b>podrás activar notificaciones sobre convocatorias </b> y temas de tu interés todo para que estés al día sobre lo que compra la CDMX.</p>
-              <button class=" hover hover:text-[#9f2241] hover:bg-[#ddc9a3]" type="button" onclick="window.location='{{ route('registro-inicio') }}'">Regístrate aquí</button>
-            <p class="how-part-information-title">¿Por qué ser parte de Mi Tiendita Virtual</p>
+                <p class="how-part-information-title">¿Cómo formo parte de Mi Tiendita Virtual?</p>
+                <p class="how-part-information-text">Sólo tienes que registrar tu empresa y al menos un producto. Además <b>con tu registro</b>
+                <b>podrás activar notificaciones sobre convocatorias </b> y temas de tu interés todo para que estés al día sobre lo que compra la CDMX.</p>
+                <button class=" hover hover:text-[#9f2241] hover:bg-[#ddc9a3]" type="button" onclick="window.location='{{ route('registro-inicio') }}'">Regístrate aquí</button>
+                <p class="how-part-information-title">¿Por qué ser parte de Mi Tiendita Virtual</p>
           </div>
           <div class="why-be-part-of">
               <div class="why-be-part-of-container">
@@ -225,31 +233,41 @@
           </div>
         </div>
         <button class="button-back-up" id="button-back-up" type="button">
-           <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-bar-up" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-bar-up" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M8 10a.5.5 0 0 0 .5-.5V3.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 3.707V9.5a.5.5 0 0 0 .5.5zm-7 2.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5z"/>
-           </svg>
+            </svg>
         </button>
     </div>
 </x-guest-layout>
 
 <script type="text/javascript">
-   const buttonUp =  document.getElementById("button-back-up")
+const buttonUp =  document.getElementById("button-back-up")
 
-   const arrowBackFunction = () => {
-      let currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
-      if(currentScroll > 0) {
-          window.scrollTo (0,0);
-      }
-   }
-
-   buttonUp.addEventListener("click",arrowBackFunction)
-      window.onscroll = function () {
-      let scroll = document.body.scrollTop;
-      console.log(scroll)
-      if(scroll > 400) {
-          buttonUp.style.transform = "scale(1)";
-      }else if(scroll < 400) {
-          buttonUp.style.transform = "scale(0)"
-      }
+const arrowBackFunction = () => {
+    let currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+        if(currentScroll > 0) {
+            window.scrollTo (0,0);
+        }
     }
+
+buttonUp.addEventListener("click",arrowBackFunction)
+
+let screenWidth = +screen.width
+const scrollFunction = (min,max) => {
+    window.onscroll = function () {
+        let scroll = document.body.scrollTop;
+        if(scroll < min || scroll > max) {
+            buttonUp.style.transform = "scale(0)"
+        }else {
+            buttonUp.style.transform = "scale(1)";
+        }
+    }
+}
+if (screenWidth < 450){
+    scrollFunction(700,4700);
+
+} else {
+    scrollFunction(500,2700)
+}
+
 </script>
