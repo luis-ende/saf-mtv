@@ -1,6 +1,6 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100 fixed-top">
     <!-- Primary Navigation Menu -->
-    <div class="mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto px-4  sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
@@ -103,11 +103,17 @@
                     </x-responsive-nav-link>
                 </form>
             @else
-                <x-responsive-nav-link :href="route('login')">
-                    {{ __('Ingresa') }}
+            <x-responsive-nav-link>
+                    {{ __('Inicio') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('registro-inicio')">
-                    {{ __('Regístrate') }}
+                <x-responsive-nav-link >
+                    {{ __('Preguntas frecuentes') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link >
+                    {{ __('Directorio CDMX') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link>
+                    {{ __('Ya soy proveedor') }}
                 </x-responsive-nav-link>
             @endif
             {{-- <x-responsive-nav-link :href="route('oportunidades-negocio')">
