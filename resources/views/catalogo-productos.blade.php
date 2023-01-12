@@ -1,10 +1,10 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden h-fit">
-            <div class="py-6 px-12 bg-white border-b border-gray-200 flex flex-row items-baseline">
-                <div class="uppercase text-mtv-primary font-bold p-2 md:basis-1/2 xs:basis-4/12 md:text-2xl xs:text-base">
-                    Catálogo
-                </div>
+            <div class="px-6 bg-white border-b border-gray-200 flex flex-row items-baseline">
+                <div class="basis-1/2">
+                    <x-page-header-label title="Catálogo" />
+                </div>    
                 <div class="md:basis-1/2 xs:basis-8/12 text-end">
                     <a href="{{ route('catalogo-registro-inicio') }}"
                         class="mtv-button-secondary md:text-base no-underline md:text-base xs:text-sm">

@@ -42,7 +42,7 @@
         </x-field-group-card>
 
         <x-field-group-card
-            title="Domicilio de tu negocio" >
+            title="Domicilio" >
             <x-direccion-input                        
                         :direccion="isset($persona) ? $persona->direccion() : null"
                         :tipos_vialidad="$tipos_vialidad"
@@ -51,7 +51,7 @@
         </x-field-group-card>
 
         <x-field-group-card
-            title="Describe tu negocio" >
+            title="Descripción del negocio" >
             <x-descripcion-negocio-form
                 :perfil-negocio="$persona->perfil_negocio"
                 :grupos_prioritarios="$grupos_prioritarios"

@@ -1,11 +1,10 @@
 <x-app-layout>    
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden">
-            <div class="text-2xl p-6 bg-white border-b border-gray-200">
-                <div class="uppercase text-mtv-primary font-bold border-l-4 border-mtv-primary p-2"> 
-                    Configuración
-                </div>                    
-            </div>             
+        <div class="bg-white overflow-hidden">            
+            <div class="border-b border-gray-200">
+                <x-page-header-label title="Configuración" />
+            </div>
+                
             <form action="{{ route('usuario-configuracion.update') }}" method="POST" class="px-10 py-3 flex flex-column space-y-4">
                 @csrf                
 
