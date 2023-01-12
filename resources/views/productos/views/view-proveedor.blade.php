@@ -10,7 +10,7 @@
                         <a class="mtv-button-secondary cursor-pointer text-base no-underline md:text-base xs:text-sm"
                         data-bs-toggle="modal"
                         data-bs-target="#productoModal">
-                            @svg('carbon-edit', ['class' => 'w-5 h-5 inline-block mr-3'])
+                            @svg('bxs-edit-alt', ['class' => 'w-5 h-5 inline-block mr-3'])
                             Editar
                         </a>
                     @endrole

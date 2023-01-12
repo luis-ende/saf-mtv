@@ -24,7 +24,7 @@
                {{ $producto->nombre }}
             </a>
             <div class="text-mtv-primary my-2">
-                @svg('heroicon-s-heart', ['class' => 'w-5 h-5 inline-block mr-2'])
+                @svg('gmdi-favorite-r', ['class' => 'w-5 h-5 inline-block mr-2'])
                 1
             </div>
         </div>
