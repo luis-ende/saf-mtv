@@ -95,7 +95,18 @@
         <label class="text-mtv-primary font-bold my-2">Descripción</label>
         <table class="mb-4 w-1/2">
             <tr class="border-b border-t">
-                <td class="text-mtv-text-gray">{{ $producto->descripcion }}</td>
+                <td class="text-mtv-text-gray">
+                    @php($descripcionLineas = explode("\n", $producto->descripcion))                    
+                    @if(count($descripcionLineas) > 1) 
+                        <ul class="list-disc list-outside">
+                            @foreach($descripcionLineas as $linea)
+                                <li>{{ $linea }}</li>
+                            @endforeach
+                        </ul>                    
+                    @else 
+                        {{ $producto->descripcion }}
+                    @endif
+                </td>
             </tr>
         </table>
 
