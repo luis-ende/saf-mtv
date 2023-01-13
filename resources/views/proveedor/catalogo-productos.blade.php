@@ -3,11 +3,18 @@
         <div class="bg-white overflow-hidden h-fit">
             <div class="px-6 bg-white border-b border-gray-200 flex flex-row items-baseline">
                 <div class="basis-1/2">
-                    <x-page-header-label title="Catálogo" />
+                    <x-page-header-label title="Catálogo">
+                        @isset($proveedor)
+                            <div>LAZZAR</div>
+                            <div>LAZZAR</div>
+                            <div>LAZZAR</div>
+                            <div>LAZZAR</div>
+                        @endisset
+                    </x-page-header-label>                    
                 </div>    
                 <div class="md:basis-1/2 xs:basis-8/12 text-end">
                     <a href="{{ route('catalogo-registro-inicio') }}"
-                        class="mtv-button-secondary md:text-base no-underline md:text-base xs:text-sm">
+                        class="mtv-button-secondary no-underline md:text-base xs:text-sm">
                         @svg('polaris-major-add-product', ['class' => 'w-5 h-5 inline-block mr-3 md:inline xs:hidden'])
                         Agregar producto
                     </a>
@@ -33,11 +40,13 @@
                     </nav>
                     <div x-show="tab === 'bienes'">
                         <x-productos-grid
+                            modo="catalogo"
                             :productos="$productos_bien"
                         />
                     </div>
                     <div x-show="tab === 'servicios'">
                         <x-productos-grid
+                            modo="catalogo"
                             :productos="$productos_servicio"
                         />
                     </div>

@@ -14,8 +14,8 @@
                 <div class="basis-1/2 text-end">
                     @role('proveedor')
                         <a href="{{ route('catalogo-productos') }}"
-                            class="mtv-button-secondary-white mr-3 md:text-base xs:text-xs no-underline">
-                            {{-- @svg('bxs-edit-alt', ['class' => 'w-5 h-5 inline-block mr-3']) --}}
+                            class="mtv-button-secondary-white mr-3 md:text-base xs:text-xs no-underline py-2">
+                            @svg('icono_catalogo', ['class' => 'w-7 h-7 text-mtv-secondary inline-block mr-3'])
                             Catálogo
                         </a>
                         <a class="mtv-button-secondary cursor-pointer no-underline md:text-base xs:text-sm"
@@ -29,6 +29,7 @@
             </div>
             <div class="py-6 px-12">
                 <x-producto-info-page
+                    modo="proveedor"
                     :producto="$producto" />
             </div>
         </div>

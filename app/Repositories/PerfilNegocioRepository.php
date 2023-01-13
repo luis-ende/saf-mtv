@@ -7,6 +7,15 @@ use App\Models\Persona;
 
 class PerfilNegocioRepository
 {
+    public function obtieneDatosProveedor(int $personaId)
+    {
+        // TODO Obtener nombre o razón social según tipo de persona
+        return PerfilNegocio::select('perfil_negocio.nombre_negocio', 'cat_sectores.sector', 'cat_categorias_scian.categoria_scian')
+                                ->leftJoin('cat_sectores', 'cat_sectores.id', '=', 'perfil_negocio.id_sector')
+                                ->leftJoin('cat_categorias_scian', 'cat_categorias_scian.id', '=', 'perfil_negocio.id_categoria_scian')
+                                ->firstOrFail();
+    }
+
     public function updatePerfilNegocio(PerfilNegocio $perfilNegocio, array $perfilNegocioDatos): void
     {
         $perfilNegocio->update($perfilNegocioDatos);

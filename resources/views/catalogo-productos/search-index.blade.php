@@ -73,10 +73,11 @@
                         </div>
 
                         @isset($productos)
-                        <div class="w-full">
-                            <x-productos-grid
-                                :productos="$productos" />
-                        </div>
+                            <div class="w-full">
+                                <x-productos-grid
+                                    modo="busqueda"
+                                    :productos="$productos" />
+                            </div>
                         @endisset
                     </div>
                     <div x-show="tab === 'proveedores'">

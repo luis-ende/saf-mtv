@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProductosController;
+use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\RegistroMTVController;
 use App\Http\Controllers\CatalogoCABMSController;
 use App\Http\Controllers\OportunidadesController;
@@ -96,11 +96,14 @@ Route::middleware(['role:proveedor', 'auth', 'verified', 'registro_mtv.status'])
 
     Route::get('/catalogo-productos', [CatalogoProductosController::class, 'index'])->name('catalogo-productos');
 
-    Route::get('/productos/edit/{producto}', [ProductosController::class, 'show'])->name('productos.show');
+    Route::get('/productos/show/{producto}', [ProductosController::class, 'show'])->name('productos.show');
     Route::post('/productos/edit/{producto}', [ProductosController::class, 'update'])->name('productos.update');
     Route::delete('/productos/delete/{producto}', [ProductosController::class, 'destroy'])->name('productos.destroy');
     Route::get('/productos/{producto}/fotos', [ProductosController::class, 'showFotos'])->name('productos-fotos.show');
 });
+
+Route::get('/proveedor/catalogo-productos/{catalogo}', [ProveedorController::class, 'showCatalogoProductos'])->name('proveedor-catalogo-productos.show');
+Route::get('/proveedor/producto/{producto}', [ProveedorController::class, 'showProducto'])->name('proveedor-producto.show');
 
 Route::get('/busqueda-productos', [BusquedaProductosController::class, 'index'])->name('busqueda-productos.index');
 Route::post('/busqueda-productos', [BusquedaProductosController::class, 'search'])->name('busqueda-productos.search');

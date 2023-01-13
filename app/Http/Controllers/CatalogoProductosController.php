@@ -31,11 +31,9 @@ class CatalogoProductosController extends Controller
         });
         $productosServicio = $productos->filter(function ($producto) {
             return $producto->tipo === Producto::TIPO_PRODUCTO_SERVICIO_ID;
-        });
+        });        
 
-        // TODO Agregar información de proveedor solamente si el rol del usuario es URG
-
-        return view('catalogo-productos', [
+        return view('proveedor.catalogo-productos', [
             'productos_bien' => $productosBien,
             'productos_servicio' => $productosServicio,
         ]);

@@ -1,4 +1,7 @@
-@props(['producto' => null])
+@props([
+    'modo' => 'proveedor', // 'proveedor', 'guest'
+    'producto' => null
+])
 
 <div class="flex md:flex-row xs:flex-col md:space-x-5"
      @role('proveedor')
@@ -42,7 +45,18 @@
          x-data="productoInfo()"
          @endrole
          >
-        <p class="text-mtv-primary text-lg font-bold">{{ $producto->nombre }}</p>
+        <p class="text-mtv-primary text-lg font-bold my-0">{{ $producto->nombre }}</p>
+        @if($modo === 'guest')
+            <div class="my-2">
+                <a href="#" 
+                class="mtv-link-gold uppercase m-0">
+                    {{ $producto->nombre_negocio }}
+                </a>
+            </div>
+            <div class="mt-2 mb-3">
+                <x-producto-favoritos-input />
+            </div>
+        @endif
         <label class="text-mtv-primary font-bold my-2">Categoría</label>
         <table class="mb-4">
             <tr class="border-b border-t">
@@ -227,25 +241,7 @@
                         },
                         enviarProductoForm() {
                             const productoForm = document.getElementById('productoForm');
-                            productoForm.submit();
-                            // const formData = new FormData(productoForm);                            
-                            // console.log(formData.getAll('otro_documento_file'))
-
-                            // fetch('{{ route("productos.update", [$producto->id]) }}', {                                
-                            //     credentials: 'same-origin',
-                            //     headers: {
-                            //         'X-CSRF-Token': '{{ csrf_token() }}',
-                            //     },
-                            //     method: 'POST',
-                            //     body: formData
-                            // }).then(res => {                                
-                            //     if (res.ok) {
-                            //         this.productoModalForm.hide();
-                            //         //location.reload();
-                            //     } else {
-                            //         this.errores = res.errors;
-                            //     }
-                            // });
+                            productoForm.submit();                            
                         },
                     }
                 }

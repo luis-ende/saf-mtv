@@ -53,7 +53,7 @@
 
   .mtv-link-gold {
       @apply text-mtv-gold bg-white no-underline
-      hover:bg-white hover:text-mtv-primary hover:underline
+      hover:bg-white hover:text-mtv-primary hover:no-underline
       active:text-mtv-primary;
   }
 

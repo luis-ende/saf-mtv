@@ -86,9 +86,12 @@ class ProductoRepository
     public function buscaProductosPorTermino(string $terminoBusqueda)
     {
         $terminoBusqueda = strtolower($terminoBusqueda);
-        $productos = Producto::select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
-                                      'cat_cabms.cabms', 'cat_cabms.partida')
+        $productos = Producto::select('productos.id', 'productos.id_cat_productos', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
+                                      'cat_cabms.cabms', 'cat_cabms.partida',
+                                      'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio')
                                         ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
+                                        ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')                                        
+                                        ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona')
                                         ->where(DB::raw('LOWER(productos.nombre)'), 'like', '%' . $terminoBusqueda . '%')
                                         ->orWhere(DB::raw('LOWER(cat_cabms.nombre_cabms)'), 'like', '%' . $terminoBusqueda . '%')
                                         ->orderBy('nombre')
@@ -101,15 +104,23 @@ class ProductoRepository
         return $productos;
     }
 
-    public function obtieneProductoInfo(int $productoId)
+    public function obtieneProductoInfo(int $productoId, bool $conProveedor = false)
     {
-        $productoInfo = Producto::select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
+        $query = Producto::select('productos.id', 'productos.id_cat_productos', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
                                 'productos.descripcion', 'productos.marca', 'productos.modelo', 'productos.color',
                                 'productos.material', 'productos.codigo_barras',
                                 'cat_cabms.cabms', 'cat_cabms.nombre_cabms', 'cat_cabms.partida')
-                                ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
-                                ->where('productos.id', '=', $productoId)
-                                ->firstOrFail();
+                                ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms');                            
+
+        if ($conProveedor) {
+            $query = $query->addSelect('perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio')
+                           ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')                                        
+                           ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona');
+        }
+
+        $productoInfo = $query->where('productos.id', '=', $productoId)
+                              ->firstOrFail();
+
 
         $categoriasScian = DB::table('productos_categorias')
                                 ->select('cat_categorias_scian.categoria_scian')
