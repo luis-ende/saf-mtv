@@ -63,35 +63,37 @@
             </tr>
         </table>
 
-        <label class="text-mtv-primary font-bold my-2">Características</label>
-        <table class="mb-4">
-            <tr class="border-b border-t">
-                <td class="text-mtv-gray-2">Marca</td>
-                <td class="text-mtv-text-gray pl-3">{{ $producto->marca }}</td>
-            </tr>
-            <tr class="border-b">
-                <td class="text-mtv-gray-2">Modelo o SKU</td>
-                <td class="text-mtv-text-gray pl-3">{{ $producto->modelo }}</td>
-            </tr>
-            <tr class="border-b">
-                <td class="text-mtv-gray-2">Colores</td>
-                <td class="text-mtv-text-gray pl-3">
-                    @php($colores = !empty($producto->color) ? explode(',', $producto->color) : [] )
-                    @foreach($colores as $color)
-                        <span class="w-5 h-5 mt-2 inline-block border rounded-xl"
-                             style="background-color: {{ $color }}"></span>
-                    @endforeach
-                </td>
-            </tr>
-            <tr class="border-b">
-                <td class="text-mtv-gray-2">Material</td>
-                <td class="text-mtv-text-gray pl-3">{{ $producto->material }}</td>
-            </tr>
-            <tr class="border-b">
-                <td class="text-mtv-gray-2">Código de barras</td>
-                <td class="text-mtv-text-gray pl-3">{{ $producto->codigo_barras }}</td>
-            </tr>
-        </table>
+        @if($producto->tipo === 'B')
+            <label class="text-mtv-primary font-bold my-2">Características</label>
+            <table class="mb-4">
+                <tr class="border-b border-t">
+                    <td class="text-mtv-gray-2">Marca</td>
+                    <td class="text-mtv-text-gray pl-3">{{ $producto->marca }}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="text-mtv-gray-2">Modelo o SKU</td>
+                    <td class="text-mtv-text-gray pl-3">{{ $producto->modelo }}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="text-mtv-gray-2">Colores</td>
+                    <td class="text-mtv-text-gray pl-3">
+                        @php($colores = !empty($producto->color) ? explode(',', $producto->color) : [] )
+                        @foreach($colores as $color)
+                            <span class="w-5 h-5 mt-2 inline-block border rounded-xl"
+                                style="background-color: {{ $color }}"></span>
+                        @endforeach
+                    </td>
+                </tr>
+                <tr class="border-b">
+                    <td class="text-mtv-gray-2">Material</td>
+                    <td class="text-mtv-text-gray pl-3">{{ $producto->material }}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="text-mtv-gray-2">Código de barras</td>
+                    <td class="text-mtv-text-gray pl-3">{{ $producto->codigo_barras }}</td>
+                </tr>
+            </table>
+        @endif
 
         <label class="text-mtv-primary font-bold my-2">Descripción</label>
         <table class="mb-4 w-1/2">

@@ -61,5 +61,11 @@
     @apply text-mtv-gold bg-white no-underline font-bold
     hover:bg-white hover:text-mtv-primary hover:no-underline
     active:text-mtv-primary;
-}
+  }
+
+  .mtv-link-breadcrumbs-gray {
+    @apply text-mtv-gray bg-white no-underline text-sm
+    hover:bg-white hover:text-mtv-primary hover:no-underline
+    active:text-mtv-primary;
+  }
 }
