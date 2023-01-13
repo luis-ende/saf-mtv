@@ -12,17 +12,22 @@ use App\Repositories\ProductoRepository;
 use Illuminate\Validation\ValidationException;
 
 class ProductosController extends Controller
-{    
-    public function update(Request $request, Producto $producto)
+{
+    public function update(Request $request, Producto $producto, ProductoRepository $productoRepo)
     {
         // TODO Producto debe pertenecer al catálogo del usuario
 
+        $rulesAdjuntos = ProductoRequest::rulesProductoAdjuntos();
+        $requiredRule = array_search('required', $rulesAdjuntos['ficha_tecnica_file']);
+        unset($rulesAdjuntos['ficha_tecnica_file'][$requiredRule]);
+        $rulesFotos = ProductoRequest::rulesProductoFotos();
+        unset($rulesFotos['producto_fotos']);
         try {
             $this->validate($request, [
                 ...ProductoRequest::rulesProductoCABMSCategorias(),
                 ...ProductoRequest::rulesProductoDescripcion(),
-                ...ProductoRequest::rulesProductoFotos(),
-                ...ProductoRequest::rulesProductoAdjuntos(),
+                ...$rulesFotos,
+                ...$rulesAdjuntos,
             ]);
         } catch (ValidationException $e) {
             return response()->json([
@@ -30,12 +35,21 @@ class ProductosController extends Controller
             ], 422);
         }
 
-        if ($producto) {
-            $producto->update($request->only('id_cabms'));
-            $producto->actualizaCategoriasScian($request->input('ids_categorias_scian'));            
+        $productoData = $request->only('id_cabms', 'nombre', 'descripcion', 'marca',
+                                            'modelo', 'material', 'codigo_barras');
+        if ($request->has('producto_colores')) {
+            $productoData['color'] = $producto->obtieneColoresValue($request->input('producto_colores'));
         }
 
-        return [true];        
+        $productoRepo->actualizaProducto(
+            $producto,
+            $productoData,
+            $request->input('ids_categorias_scian'),
+            $request->only('producto_fotos','producto_fotos_eliminadas'),
+            $request->only('ficha_tecnica_file', 'otro_documento_file')
+        );
+
+        return [true];
     }
 
     /**
@@ -57,7 +71,7 @@ class ProductosController extends Controller
             $producto->clearMediaCollection('fotos');
             $producto->clearMediaCollection('documentos');
             $producto->delete();
-            
+
             return [$producto->id];
         }
     }

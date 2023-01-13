@@ -2,13 +2,13 @@
 
 <div class="mtv-input-wrapper w-full mx-auto"
      x-data="inputColores()"
-     x-init="initInputColores()">
+     x-init="initInputColores(); if(productoEditado) { $watch('productoEditado', value => { initInputColores() }) }">
     <select class="mtv-text-input text-base"
             id="producto_colores"
-            name="producto_colores[]"                        
+            name="producto_colores[]"
             multiple>
     </select>
-    <label class="mtv-input-label" for="producto_colores">Color(es)</label>    
+    <label class="mtv-input-label" for="producto_colores">Color(es)</label>
 </div>
 
 <script type="text/javascript">
@@ -314,9 +314,9 @@
             "Amarillo",
             "AmarilloVerde",
         ];
-        
+
         return {
-            inputColoresChoices: new Choices('#producto_colores', {                
+            inputColoresChoices: new Choices('#producto_colores', {
                 allowHTML: false,
                 loadingText: 'Cargando...',
                 noChoicesText: 'Sin colores para elegir',
@@ -327,9 +327,9 @@
                 removeItemButton: true,
                 searchResultLimit: 20,
                 classNames: {
-                    containerInner: 'choices__inner--categorias choices__inner',                    
+                    containerInner: 'choices__inner--categorias choices__inner',
                     item: 'colores__choices__item',
-                }, 
+                },
                 callbackOnCreateTemplates: function(template) {
                     return {
                         item: ({ classNames }, data) => {
@@ -362,20 +362,21 @@
                                 </div>
                             `);
                         },
-                    }                    
+                    }
                 },
             }),
             initInputColores() {
                 let productoColores = {!! json_encode($producto_colores) !!};
                 productoColores = productoColores.split(',');
-                this.inputColoresChoices.setChoices(                    
-                    CSS_COLOR_NAMES.map((item, index) => {                         
-                        return {                         
-                            label: CSS_COLOR_LABELS[index], 
-                            value: item, 
+                this.inputColoresChoices.clearStore();
+                this.inputColoresChoices.setChoices(
+                    CSS_COLOR_NAMES.map((item, index) => {
+                        return {
+                            label: CSS_COLOR_LABELS[index],
+                            value: item,
                             selected: productoColores.includes(item),
                         }
-                }));                
+                }));
             }
         }
     }

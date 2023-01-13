@@ -1,8 +1,8 @@
-@props(['name' => 'input_file', 'id' => 'input_label', 'allow_delete' => false])
+@props(['name' => 'input_file', 'id' => 'input_label', 'allow_delete' => false, 'size' => 'normal'])
 
 <div class="relative flex flex-col text-gray-400 m-0" x-data="fileUpload_{{ $id }}()">
     <div x-ref="dnd"
-         class="relative flex flex-col text-gray-400 border-2 border-gray-200 border-dashed rounded cursor-pointer">
+         class="relative flex flex-col text-gray-400 border-2 border-gray-200 border-dashed rounded cursor-pointer {{ $size === 'compact' ? 'h-12' : '' }}">
         <input accept="application/xlsx" type="file"
                id={{ $id }}
                name="{{ $name }}"
@@ -13,7 +13,7 @@
                @drop="$refs.dnd.classList.remove('border-mtv-gold-light'); $refs.dnd.classList.remove('ring-4'); $refs.dnd.classList.remove('ring-inset');"
                title=""
         >
-        <div class="flex flex-col items-center justify-center p-10 text-center">
+        <div class="flex flex-col items-center justify-center {{ $size === 'compact' ? 'text-xs p-3' : 'p-10' }} text-center">
             <p class="m-0">Arrastra tu archivo aquí o haz clic para seleccionar.</p>
         </div>
     </div>

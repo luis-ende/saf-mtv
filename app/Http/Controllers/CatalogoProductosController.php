@@ -24,8 +24,8 @@ class CatalogoProductosController extends Controller
     public function index(Request $request, ProductoRepository $productoRepo)
     {
         $catalogoId = Auth::user()->persona->catalogoProductos->id;
-        $productos = $productoRepo->obtieneProductosPorCatalogo($catalogoId);        
-        
+        $productos = $productoRepo->obtieneProductosPorCatalogo($catalogoId);
+
         $productosBien = $productos->filter(function ($producto) {
             return $producto->tipo === Producto::TIPO_PRODUCTO_BIEN_ID;
         });
@@ -84,7 +84,7 @@ class CatalogoProductosController extends Controller
     {
         $catalogoId = Auth::user()->persona->catalogoProductos->id;
 
-        if ($producto && $producto->registro_fase >= 4) {            
+        if ($producto && $producto->registro_fase >= 4) {
             return redirect()->route('catalogo-registro-inicio')->with('error', 'El producto ya ha completado su proceso de registro previamente.');
         }
 
@@ -135,12 +135,9 @@ class CatalogoProductosController extends Controller
                 return redirect()->route('alta-producto-2.show', [$producto]);
             case RegistroProductosService::ALTA_PRODUCTO_FASE_DESCRIPCION:
                 $productoData = $request->only('nombre', 'descripcion', 'marca', 'modelo',
-                                           'material', 'codigo_barras');
-
-                // TODO: Mover a método en Producto
-                $colores = $request->input('producto_colores');
-                if ($colores && count($colores) > 0) {
-                    $productoData['color'] = implode(',', $colores);
+                                                    'material', 'codigo_barras');
+                if ($request->has('producto_colores')) {
+                    $productoData['color'] = $producto->obtieneColoresValue($request->input('producto_colores'));
                 }
                 $productoData['registro_fase'] = $registroFase;
                 $producto->update($productoData);
@@ -157,10 +154,10 @@ class CatalogoProductosController extends Controller
                 $documentos = $request->only('ficha_tecnica_file', 'otro_documento_file');
                 if (array_key_exists('ficha_tecnica_file', $documentos)) {
                     $producto->addMedia($documentos['ficha_tecnica_file'])->toMediaCollection('fichas_tecnicas');
-                }                
+                }
                 if (array_key_exists('otro_documento_file', $documentos)) {
                     $producto->addMedia($documentos['otro_documento_file'])->toMediaCollection('otros_documentos');
-                }                
+                }
 
                 $producto->update(['registro_fase' => $registroFase]);
 

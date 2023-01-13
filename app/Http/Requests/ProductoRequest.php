@@ -17,11 +17,11 @@ class ProductoRequest extends FormRequest
         return true;
     }
 
-    /**     
+    /**
      * @return array<string, mixed>
      */
     public function rules()
-    {        
+    {
         return array_merge(
             self::rulesProductoCABMS(),
             self::rulesProductoDescripcion(),
@@ -30,25 +30,25 @@ class ProductoRequest extends FormRequest
         );
     }
 
-    /**     
+    /**
      * @return array<string, mixed>
      */
     public static function rulesProductoTipo(): array
     {
-        return [            
+        return [
             'tipo_producto' => [
                 'required',
                 Rule::in([
                     Producto::TIPO_PRODUCTO_BIEN_ID,
                     Producto::TIPO_PRODUCTO_SERVICIO_ID])
-                ],            
+                ],
         ];
     }
 
-    /**     
+    /**
      * @return array<string, mixed>
      */
-    public static function rulesProductoCABMSCategorias(): array 
+    public static function rulesProductoCABMSCategorias(): array
     {
         return [
             'id_cabms' => 'required|integer',
@@ -57,7 +57,7 @@ class ProductoRequest extends FormRequest
         ];
     }
 
-    /**     
+    /**
      * @return array<string, mixed>
      */
     public static function rulesProductoDescripcion(): array
@@ -67,13 +67,13 @@ class ProductoRequest extends FormRequest
             'descripcion' => 'required|max:140',
             'marca' => 'max:255',
             'modelo' => 'max:255',
-            'producto_colores.*' => 'nulllable|string', // TODO: Validar longitud máxima de 140 caracteres
+            'producto_colores.*' => 'nullable|string', // TODO: Validar longitud máxima de 140 caracteres
             'material' => 'max:255',
             'codigo_barras' => 'max:100',
         ];
     }
 
-    /**     
+    /**
      * @return array<string, mixed>
      */
     public static function rulesProductoFotos(): array
@@ -85,13 +85,17 @@ class ProductoRequest extends FormRequest
         ];
     }
 
-    /**     
+    /**
      * @return array<string, mixed>
      */
-    public static function rulesProductoAdjuntos(): array 
+    public static function rulesProductoAdjuntos(): array
     {
         return [
-            'ficha_tecnica_file' => 'required|max:3000|mimes:pdf',
+            'ficha_tecnica_file' => [
+                'required',
+                'max:3000',
+                'mimes:pdf'
+            ],
             'otro_documento_file' => 'max:3000|mimes:pdf',
         ];
     }

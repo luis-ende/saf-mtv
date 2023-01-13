@@ -33,7 +33,7 @@
             @elseif($persona->id_tipo_persona === 'M')
                 <span class="xs:basis-full md:basis-1/4">
                     Razón social: <span class="text-gray-700 uppercase">{{ $persona->nombre_o_razon_social() }}</span>
-                </span>                
+                </span>
                 <span class="xs:basis-full md:basis-1/4">
                     Fecha constitución: <span class="text-gray-700">{{ $persona->tipo_persona->fecha_constitucion }}</span>
                 </span>
@@ -43,7 +43,7 @@
 
         <x-field-group-card
             title="Domicilio" >
-            <x-direccion-input                        
+            <x-direccion-input
                         :direccion="isset($persona) ? $persona->direccion() : null"
                         :tipos_vialidad="$tipos_vialidad"
                         :cat_paises="$cat_paises"
@@ -93,15 +93,15 @@
                            x-text="cartaPresentacion"
                            target="_blank"></a>
                         <label class="font-bold text-mtv-text-gray"
-                               x-show="cartaPresentacionURL === ''" 
+                               x-show="cartaPresentacionURL === ''"
                                x-text="cartaPresentacion"></label>
                         @svg('sui-cross', [
                             'class' => 'h-3 w-3 inline-block ml-3 cursor-pointer',
                             '@click' => "document.getElementById('carta_presentacion').value = null; cartaPresentacion = null"
                         ])
                     </div>
-                </div>                
-            </div>            
+                </div>
+            </div>
 
             <div class="w-full"
                  x-data="{
@@ -134,21 +134,21 @@
                            x-text="catalogoProductosPDF"
                            target="_blank"></a>
                         <label class="font-bold text-mtv-text-gray"
-                               x-show="catalogoProductosURL === ''" 
+                               x-show="catalogoProductosURL === ''"
                                x-text="catalogoProductosPDF"></label>
                         @svg('sui-cross', [
                             'class' => 'h-3 w-3 inline-block ml-3 cursor-pointer',
                             '@click' => "document.getElementById('catalogo_productos_pdf').value = null; catalogoProductosPDF = null"
                         ])
                     </div>
-                </div>                
-            </div>              
+                </div>
+            </div>
         </x-field-group-card>
-        <label class="text-base text-mtv-text-gray italic mt-2">Archivos en formato PDF de hasta 3MB.</label>
+        <label class="text-xs text-mtv-text-gray italic mt-2">Formato PDF de hasta 3MB.</label>
 
         @if($mode === 'registro')
             <button type="submit" class="mtv-button-secondary my-4 self-end">Guardar y continuar</button>
-        @elseif($mode === 'edit')    
+        @elseif($mode === 'edit')
             <button type="submit" class="mtv-button-secondary self-end">Actualizar</button>
         @endif
     </div>

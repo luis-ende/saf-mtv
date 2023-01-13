@@ -91,7 +91,7 @@ class Producto extends Model implements HasMedia
         return $this->hasMany(ProductoCategoria::class, 'id_producto');
     }
 
-    public function actualizaCategoriasScian($categoriasIds)
+    public function actualizaCategoriasScian(?array $categoriasIds)
     {
         if (!empty($categoriasIds)) {
             ProductoCategoria::where('id_producto', '=', $this->id)->delete();
@@ -120,5 +120,17 @@ class Producto extends Model implements HasMedia
                 $this->addMedia($file)->toMediaCollection('fotos');
             }
         }
+    }
+
+    /**
+     * Convierte un arreglo de códigos de colores en un valor para el campo color (string).
+     */
+    public function obtieneColoresValue(array $colores): ?string
+    {
+        if ($colores && count($colores) > 0) {
+            return implode(',', $colores);
+        }
+
+        return null;
     }
 }

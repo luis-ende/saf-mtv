@@ -45,13 +45,17 @@ class ProductosImport implements ToModel, WithHeadingRow, WithValidation
 
     public function rules(): array
     {
+        $rulesDescripcion = ProductoRequest::rulesProductoDescripcion();
+        $rulesDescripcion['nombre_producto'] = $rulesDescripcion['nombre'];
+        unset($rulesDescripcion['nombre']);
+
         return [
             'tipo' => [
                 'required',
                 'starts_with:' . Producto::TIPO_PRODUCTO_BIEN_ID . ',' . Producto::TIPO_PRODUCTO_SERVICIO_ID . ',' .
                                  strtolower(Producto::TIPO_PRODUCTO_BIEN_ID) . ',' . strtolower(Producto::TIPO_PRODUCTO_SERVICIO_ID),
             ],
-            ...ProductoRequest::rulesProductoDescripcion(),
+            ...$rulesDescripcion,
             'color' => 'max:30',
             'foto_url_1' => 'nullable|max:255|url',
             'foto_url_2' => 'nullable|max:255|url',

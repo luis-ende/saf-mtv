@@ -14,7 +14,7 @@
         </div>
 
         <x-input-producto-color-select
-            :producto_colores="$producto->productoColor"
+            :producto_colores="$producto->color"
         />
 
         <div class="mtv-input-wrapper">

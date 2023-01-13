@@ -126,4 +126,20 @@ class ProductoRepository
     {
         return DB::table('productos')->count();
     }
+
+    public function actualizaProducto(Producto $producto, array $productoData, ?array $categorias, array $fotosInfo, array $adjuntos) {
+        $producto->update($productoData);
+        $producto->actualizaCategoriasScian($categorias);
+        $producto->actualizaFotos($fotosInfo['producto_fotos'] ?? null, $fotosInfo['producto_fotos_eliminadas']);
+        if (array_key_exists('ficha_tecnica_file', $adjuntos)) {
+            // Reemplazar documento
+            $producto->clearMediaCollection('fichas_tecnicas');
+            $producto->addMedia($adjuntos['ficha_tecnica_file'])->toMediaCollection('fichas_tecnicas');
+        }
+        if (array_key_exists('otro_documento_file', $adjuntos)) {
+            // Reemplazar documento
+            $producto->clearMediaCollection('otros_documentos');
+            $producto->addMedia($adjuntos['otro_documento_file'])->toMediaCollection('otros_documentos');
+        }
+    }
 }

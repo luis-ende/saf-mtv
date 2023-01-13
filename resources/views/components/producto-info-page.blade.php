@@ -28,7 +28,7 @@
                 <div class="basis-1/2 border rounded">
                     @if(isset($producto->fotos_info[2]))
                         <img class="object-cover w-24 h-24 mx-auto my-3"
-                             src="{{ isset($producto->fotos_info[2]) ? $producto->fotos_info[1]->original_url : '' }}">
+                             src="{{ isset($producto->fotos_info[2]) ? $producto->fotos_info[2]->original_url : '' }}">
                     @else
                         @svg('ri-image-fill', ['class' => 'text-mtv-gray-light w-24 h-24 mx-auto'])
                     @endif
@@ -97,14 +97,14 @@
         <table class="mb-4 w-1/2">
             <tr class="border-b border-t">
                 <td class="text-mtv-text-gray">
-                    @php($descripcionLineas = explode("\n", $producto->descripcion))                    
-                    @if(count($descripcionLineas) > 1) 
+                    @php($descripcionLineas = explode("\n", $producto->descripcion))
+                    @if(count($descripcionLineas) > 1)
                         <ul class="list-disc list-outside">
                             @foreach($descripcionLineas as $linea)
                                 <li>{{ $linea }}</li>
                             @endforeach
-                        </ul>                    
-                    @else 
+                        </ul>
+                    @else
                         {{ $producto->descripcion }}
                     @endif
                 </td>
@@ -144,58 +144,57 @@
                             <button type="button" class="btn-close" @click="editFormClose()" aria-label="Close"></button>
                         </div>
                         <div id="productoFormContainer" class="modal-body px-4">
-                            <form id="productoForm"                                     
-                                  method="POST" 
+                            <form id="productoForm"
+                                  method="POST"
+                                  enctype="multipart/form-data"
                                   action="{{ route('productos.update', [$producto->id]) }}">
                                 @csrf
 
-                                <x-cabms-categorias-select 
-                                    :modo="__('producto_edicion')"
-                                />
+                                <x-field-group-card title="Descripción">
+                                    <x-cabms-categorias-select
+                                        modo="producto_edicion"
+                                    />
 
-                                <x-producto-nombre-input
-                                    :value="$producto->nombre" />
-                                
-                                <x-producto-descripcion-textarea 
-                                    :value="$producto->descripcion" />
+                                    <x-producto-nombre-input
+                                        :value="$producto->nombre" />
 
-                                <x-producto-bien-inputs 
-                                    :producto="$producto" />
+                                    <x-producto-descripcion-textarea
+                                        :value="$producto->descripcion" />
 
-                                <label class="block basis-full text-lg font-bold text-mtv-primary mt-2 mb-2 self-center">
-                                    Fotografías
-                                </label>
-                                <label class="text-mtv-gray text-base mb-3 self-center">
-                                    Hasta <span class="text-lg font-bold">3</span> imágenes de tu producto en formato jpg o png y de hasta 1 MB cada una.
-                                </label>
+                                    <x-producto-bien-inputs
+                                        :producto="$producto" />
+                                </x-field-group-card>
 
-                                <x-producto-fotos-upload />
+                                <br>
+                                <x-field-group-card title="Fotografías">
+                                    <x-producto-fotos-upload size="compact" />
+                                </x-field-group-card>
 
-                                <label class="block basis-full text-lg font-bold text-mtv-primary mt-2 mb-2 self-center">
-                                    Ficha técnica
-                                </label>
-                                <label class="text-mtv-gray text-base mb-3 self-center">
-                                    Adjunta tu documento en formato PDF de hasta 3MB.
-                                </label>
-                                <x-input-upload
-                                    :name="__('ficha_tecnica_file')"
-                                    :id="__('ficha_tecnica_file')"
-                                />
-                                <label class="block basis-full text-lg font-bold text-mtv-primary mt-2 mb-2 self-center">
-                                    Otro documento
-                                </label>
-                                <label class="text-mtv-gray text-base mb-3 self-center">
-                                    Por ejemplo: certificados , manual de uso, entre otros.
-                                </label>
-                                <x-input-upload
-                                    :name="__('otro_documento_file')"
-                                    :id="__('otro_documento_file')"
-                                    :allow_delete="true"
-                                />
+                                <br>
+                                <x-field-group-card title="Adjuntos">
+                                    <label class="block basis-full text-sm font-bold text-mtv-text-gray mt-2 mb-2 self-center">
+                                        Ficha técnica
+                                    </label>
+                                    <x-input-upload
+                                        size="compact"
+                                        name="ficha_tecnica_file"
+                                        id="ficha_tecnica_file"
+                                    />
+                                    <label class="block basis-full text-sm font-bold text-mtv-text-gray mt-2 mb-2 self-center">
+                                        Otro documento. Por ejemplo: certificados , manual de uso, entre otros.
+                                    </label>
+                                    <x-input-upload
+                                        size="compact"
+                                        name="otro_documento_file"
+                                        id="otro_documento_file"
+                                        :allow_delete="true"
+                                    />
+                                </x-field-group-card>
+                                <label class="text-xs text-mtv-text-gray italic mt-2">Formato PDF de hasta 3MB.</label>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" 
+                            <button type="button"
                                     @click.preventDefault="enviarProductoForm()"
                                     class="mtv-button-secondary">Guardar</button>
                         </div>
@@ -213,31 +212,35 @@
                         initProductoInfo() {
                             document.getElementById('productoModal').addEventListener('show.bs.modal', () => {
                                 this.productoEditado = null;
-                                this.productoEditado = this.productoId;                                
+                                this.productoEditado = this.productoId;
                             });
                             document.getElementById('productoModal').addEventListener('hidden.bs.modal', () => {
                                 this.productoEditado = null;
                             });
                         },
-                        editFormClose() {                            
+                        editFormClose() {
                             this.productoModalForm.hide();
-                        },                        
+                        },
                         enviarProductoForm() {
                             const productoForm = document.getElementById('productoForm');
-                            const data = new FormData(productoForm);
- 
+                            const formData = new FormData(productoForm);
+
                             fetch('{{ route("productos.update", [$producto->id]) }}', {
-                                accept: 'application/json',
+                                /*accept: 'application/json',*/
+                                credentials: 'same-origin',
+                                headers: {
+                                    'X-CSRF-Token': '{{ csrf_token() }}',
+                                },
                                 method: 'POST',
-                                body: new URLSearchParams(data)
-                            }).then(res => {                                
+                                body: formData
+                            }).then(res => {
                                 console.log(res);
                                 if (res.ok) {
                                     this.productoModalForm.hide();
                                     location.reload();
                                 } else {
                                     this.errores = res.errors;
-                                }                                
+                                }
                             });
                         },
                     }

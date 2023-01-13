@@ -1,4 +1,4 @@
-@props(['modo' => 'producto_edicion', 'producto_editado' => null])
+@props(['modo' => 'producto_edicion', 'producto_editado' => null, 'size' => 'normal'])
 @php($maxNumFotos = 3)
 
 <div class="bg-white rounded w-10/12 mx-auto">
@@ -8,11 +8,11 @@
                 x-init="cargaProductoFotos({{ $producto_editado }})"
             @else
                 x-init="$watch('productoEditado', value => { cargaProductoFotos(value) })"
-            @endif    
+            @endif
          @endif
          class="relative flex flex-col p-4 text-gray-400">
         <div x-ref="dnd"
-             class="relative flex flex-col text-gray-400 border-2 border-mtv-gray-2 border-dashed rounded cursor-pointer">
+             class="relative flex flex-col text-gray-400 border-2 border-mtv-gray-2 border-dashed rounded cursor-pointer {{ $size === 'compact' ? 'h-16' : ''}}">
             <input accept="image/png, image/jpeg" type="file" multiple
                    id="producto_fotos" name="producto_fotos[]"
                    class="absolute inset-0 w-full h-full p-0 m-0 outline-none opacity-0 cursor-pointer"
@@ -23,8 +23,10 @@
                    title="" />
             <input id="producto_fotos_eliminadas" name="producto_fotos_eliminadas" type="hidden" x-model="fotosEliminadas">
 
-            <div class="flex flex-col items-center justify-center py-10 text-center">
-                @svg('ri-image-add-fill', ['class' => 'w-7 h-7 mr-1 text-mtv-secondary'])
+            <div class="flex flex-col items-center justify-center {{ $size === 'compact' ? 'text-xs p-3' : 'py-10'}} text-center">
+                @if($size !== 'compact')
+                    @svg('ri-image-add-fill', ['class' => 'w-7 h-7 mr-1 text-mtv-secondary'])
+                @endif
                 <p class="m-0">Arrastra aquí tus archivos o haz clic en el recuadro para agregarlos</p>
             </div>
         </div>
@@ -34,7 +36,7 @@
                  @dragover.prevent="$event.dataTransfer.dropEffect = 'move'">
 
                 <template x-for="(_, index) in Array.from({ length: productoFotos.length })">
-                    <div class="relative flex flex-col items-center overflow-hidden text-center bg-gray-100 border rounded cursor-move select-none w-32 h-32"
+                    <div class="relative flex flex-col items-center overflow-hidden text-center bg-gray-100 border rounded cursor-move select-none {{ $size === 'compact' ? 'w-24 h-24' : 'w-32 h-32' }}"
                          style="padding-top: 100%;" @dragstart="dragstart($event)" @dragend="fileDragging = null"
                          :class="{'border-blue-600': fileDragging == index}" draggable="true" :data-index="index">
                         <button class="absolute top-0 right-0 z-50 p-1 bg-white rounded-bl focus:outline-none" type="button" @click="remove(index)">
@@ -52,7 +54,7 @@
 
                         <template x-if="productoFotos[index]?.type === 'url'">
                             <img class="absolute inset-0 z-0 object-cover w-full h-full border-4 border-white preview"
-                                 x-bind:src="productoFotos[index].original_url" />
+                                 x-bind:src="productoFotos[index]?.original_url" />
                         </template>
 
                         <div class="absolute bottom-0 left-0 right-0 flex flex-col p-2 text-xs bg-white bg-opacity-50">
@@ -85,7 +87,7 @@
             productoFotos: [],
             fotosEliminadas: [],
             fileDragging: null,
-            fileDropping: null,            
+            fileDropping: null,
             humanFileSize(size) {
                 const i = Math.floor(Math.log(size) / Math.log(1024));
                 return (
@@ -132,7 +134,7 @@
             loadFile(file) {
                 const preview = document.querySelectorAll(".preview");
                 const blobUrl = URL.createObjectURL(file);
- 
+
                 preview.forEach(elem => {
                     elem.onload = () => {
                         URL.revokeObjectURL(elem.src); // free memory
@@ -145,6 +147,7 @@
                 const totalFiles = e.target.files.length + this.productoFotos.length;
 
                 if (totalFiles <= 3) {
+                    this.productoFotos = this.productoFotos.filter(foto => foto.type !== 'file');
                     Array.from(e.target.files).forEach((file, index) => {
                         this.productoFotos.push({
                             type: 'file',
@@ -161,7 +164,7 @@
             clearFiles(){
                 this.files = [];
             },
-            cargaProductoFotos(productoId) {                
+            cargaProductoFotos(productoId) {
                 if (productoId) {
                     this.files = [];
                     document.getElementById('producto_fotos').value = null;
