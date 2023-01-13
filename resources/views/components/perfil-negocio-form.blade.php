@@ -89,14 +89,14 @@
                     </div>
                     <div class="text-mtv-text-gray ml-5 self-center" x-show="cartaPresentacion !== null">
                         <a x-show="cartaPresentacionURL !== ''" x-bind:href="cartaPresentacionURL"
-                           class="font-bold no-underline text-mtv-text-gray hover:text-mtv-primary focus:text-mtv-text-gray"
+                           class="mtv-link-download-gold"
                            x-text="cartaPresentacion"
                            target="_blank"></a>
-                        <label class="font-bold text-mtv-text-gray"
+                        <label class="mtv-link-download-gold"
                                x-show="cartaPresentacionURL === ''"
                                x-text="cartaPresentacion"></label>
                         @svg('sui-cross', [
-                            'class' => 'h-3 w-3 inline-block ml-3 cursor-pointer',
+                            'class' => 'h-3 w-3 inline-block ml-3 mtv-link-download-gold',
                             '@click' => "document.getElementById('carta_presentacion').value = null; cartaPresentacion = null"
                         ])
                     </div>
@@ -130,14 +130,14 @@
                     </div>
                     <div class="text-mtv-text-gray ml-5 self-center" x-show="catalogoProductosPDF !== null">
                         <a x-show="catalogoProductosURL !== ''" x-bind:href="catalogoProductosURL"
-                           class="font-bold no-underline text-mtv-text-gray hover:text-mtv-primary focus:text-mtv-text-gray"
+                           class="mtv-link-download-gold"
                            x-text="catalogoProductosPDF"
                            target="_blank"></a>
-                        <label class="font-bold text-mtv-text-gray"
+                        <label class="mtv-link-download-gold"
                                x-show="catalogoProductosURL === ''"
                                x-text="catalogoProductosPDF"></label>
                         @svg('sui-cross', [
-                            'class' => 'h-3 w-3 inline-block ml-3 cursor-pointer',
+                            'class' => 'h-3 w-3 inline-block ml-3 mtv-link-download-gold',
                             '@click' => "document.getElementById('catalogo_productos_pdf').value = null; catalogoProductosPDF = null"
                         ])
                     </div>
