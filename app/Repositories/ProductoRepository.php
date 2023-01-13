@@ -131,13 +131,19 @@ class ProductoRepository
         $producto->update($productoData);
         $producto->actualizaCategoriasScian($categorias);
         $producto->actualizaFotos($fotosInfo['producto_fotos'] ?? null, $fotosInfo['producto_fotos_eliminadas']);
-        if (array_key_exists('ficha_tecnica_file', $adjuntos)) {
-            // Reemplazar documento
+        if (isset($adjuntos['eliminar_ficha_tecnica']) && 
+            $adjuntos['eliminar_ficha_tecnica'] == true) {
+            $producto->clearMediaCollection('fichas_tecnicas');
+        }
+        if (isset($adjuntos['ficha_tecnica_file'])) {            
             $producto->clearMediaCollection('fichas_tecnicas');
             $producto->addMedia($adjuntos['ficha_tecnica_file'])->toMediaCollection('fichas_tecnicas');
         }
-        if (array_key_exists('otro_documento_file', $adjuntos)) {
-            // Reemplazar documento
+        if (isset($adjuntos['eliminar_otro_documento']) && 
+            $adjuntos['eliminar_otro_documento'] == true) {
+            $producto->clearMediaCollection('otros_documentos');
+        }
+        if (isset($adjuntos['otro_documento_file'])) {
             $producto->clearMediaCollection('otros_documentos');
             $producto->addMedia($adjuntos['otro_documento_file'])->toMediaCollection('otros_documentos');
         }

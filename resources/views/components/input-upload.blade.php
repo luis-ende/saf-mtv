@@ -1,7 +1,7 @@
 @props(['name' => 'input_file', 'id' => 'input_label', 'allow_delete' => false, 'size' => 'normal'])
 
 <div class="relative flex flex-col text-gray-400 m-0" x-data="fileUpload_{{ $id }}()">
-    <div x-ref="dnd"
+    <div x-ref="dnd_{{ $id }}"
          class="relative flex flex-col text-gray-400 border-2 border-gray-200 border-dashed rounded cursor-pointer {{ $size === 'compact' ? 'h-12' : '' }}">
         <input accept="application/xlsx" type="file"
                id={{ $id }}

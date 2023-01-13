@@ -3,7 +3,7 @@
 
 <div class="bg-white rounded w-10/12 mx-auto">
     <div x-data="productoFotos()"
-         @if ($modo === 'producto_edicion')
+         @if($modo === 'producto_edicion')
             @if(isset($producto_editado))
                 x-init="cargaProductoFotos({{ $producto_editado }})"
             @else
@@ -73,10 +73,6 @@
         </template>
     </div>
 </div>
-
-<form id="producto-archivos" enctype="multipart/form-data" method="post">
-    @csrf
-</form>
 
 <script src="https://unpkg.com/create-file-list"></script>
 <script>

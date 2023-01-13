@@ -16,7 +16,8 @@ class PerfilNegocioRepository
             $perfilNegocio->addMedia($perfilNegocioDatos['logotipo'])->toMediaCollection('logotipos');
         }
         
-        if (isset($perfilNegocioDatos['eliminar_carta'])) {
+        if (isset($perfilNegocioDatos['eliminar_carta']) && 
+            $perfilNegocioDatos['eliminar_carta'] == true) {
             $perfilNegocio->clearMediaCollection('documentos');
         }
         if (isset($perfilNegocioDatos['carta_presentacion'])) {
@@ -24,7 +25,8 @@ class PerfilNegocioRepository
             $perfilNegocio->addMedia($perfilNegocioDatos['carta_presentacion'])->toMediaCollection('documentos');
         }
 
-        if (isset($perfilNegocioDatos['eliminar_catalogo_pdf'])) {
+        if (isset($perfilNegocioDatos['eliminar_catalogo_pdf']) && 
+            $perfilNegocioDatos['eliminar_catalogo_pdf'] == true) {
             $perfilNegocio->clearMediaCollection('catalogos_pdf');
         }
         if (isset($perfilNegocioDatos['catalogo_productos_pdf'])) {

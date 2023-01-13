@@ -97,6 +97,8 @@ class ProductoRequest extends FormRequest
                 'mimes:pdf'
             ],
             'otro_documento_file' => 'max:3000|mimes:pdf',
+            'eliminar_ficha_tecnica' => 'boolean',
+            'eliminar_otro_documento' => 'boolean',
         ];
     }
 }

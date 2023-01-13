@@ -135,6 +135,8 @@
         </div>
 
         @role('proveedor')
+            @php($fichaTecnica = $producto->getFirstMedia('fichas_tecnicas'))
+            @php($otroDocumento = $producto->getFirstMedia('otros_documentos'))
             <!-- Modal -->
             <div class="modal fade" id="productoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -172,25 +174,25 @@
 
                                 <br>
                                 <x-field-group-card title="Adjuntos">
-                                    <label class="block basis-full text-sm font-bold text-mtv-text-gray mt-2 mb-2 self-center">
-                                        Ficha técnica
-                                    </label>
-                                    <x-input-upload
-                                        size="compact"
-                                        name="ficha_tecnica_file"
+                                    <x-button-upload 
+                                        title="Ficha técnica"
+                                        :file_info="$fichaTecnica"
                                         id="ficha_tecnica_file"
+                                        name="ficha_tecnica_file"
+                                        eliminar_input_name="eliminar_ficha_tecnica"
+                                        eliminar_input_id="eliminar_ficha_tecnica"
                                     />
-                                    <label class="block basis-full text-sm font-bold text-mtv-text-gray mt-2 mb-2 self-center">
-                                        Otro documento. Por ejemplo: certificados , manual de uso, entre otros.
-                                    </label>
-                                    <x-input-upload
-                                        size="compact"
-                                        name="otro_documento_file"
+                                                
+                                    <x-button-upload 
+                                        title="Otro documento. Por ejemplo: certificados, manual de uso, entre otros."
+                                        :file_info="$otroDocumento"
                                         id="otro_documento_file"
-                                        :allow_delete="true"
+                                        name="otro_documento_file"
+                                        eliminar_input_name="eliminar_otro_documento"
+                                        eliminar_input_id="eliminar_otro_documento"
                                     />
-                                </x-field-group-card>
-                                <label class="text-xs text-mtv-text-gray italic mt-2">Formato PDF de hasta 3MB.</label>
+                                </x-field-group-card>                                
+                                <label class="text-xs text-mtv-text-gray italic mt-2">Formato PDF de hasta 3MB.</label>                                
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -223,25 +225,25 @@
                         },
                         enviarProductoForm() {
                             const productoForm = document.getElementById('productoForm');
-                            const formData = new FormData(productoForm);
+                            productoForm.submit();
+                            // const formData = new FormData(productoForm);                            
+                            // console.log(formData.getAll('otro_documento_file'))
 
-                            fetch('{{ route("productos.update", [$producto->id]) }}', {
-                                /*accept: 'application/json',*/
-                                credentials: 'same-origin',
-                                headers: {
-                                    'X-CSRF-Token': '{{ csrf_token() }}',
-                                },
-                                method: 'POST',
-                                body: formData
-                            }).then(res => {
-                                console.log(res);
-                                if (res.ok) {
-                                    this.productoModalForm.hide();
-                                    location.reload();
-                                } else {
-                                    this.errores = res.errors;
-                                }
-                            });
+                            // fetch('{{ route("productos.update", [$producto->id]) }}', {                                
+                            //     credentials: 'same-origin',
+                            //     headers: {
+                            //         'X-CSRF-Token': '{{ csrf_token() }}',
+                            //     },
+                            //     method: 'POST',
+                            //     body: formData
+                            // }).then(res => {                                
+                            //     if (res.ok) {
+                            //         this.productoModalForm.hide();
+                            //         //location.reload();
+                            //     } else {
+                            //         this.errores = res.errors;
+                            //     }
+                            // });
                         },
                     }
                 }

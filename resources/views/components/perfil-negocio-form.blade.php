@@ -60,89 +60,24 @@
                 :mode="$mode" />
         </x-field-group-card >
 
-        <x-field-group-card
-            title="Documentos adjuntos">
-            <div class="w-full"
-                 x-data="{
-                    cartaPresentacion: {{ $cartaPresentacion ? "'" . $cartaPresentacion->file_name . "'" : 'null' }},
-                    cartaPresentacionURL: '{{ $cartaPresentacion ? $cartaPresentacion->original_url : '' }}',
-                }">
-                <label class="text-mtv-text-gray font-bold my-3">
-                    ¿Quieres subir tu carta de presentación?
-                </label>
-                <div clasS="flex flex-row flex-wrap">
-                    <div class="flex flex-row justify-start text-mtv-gold font-bold border rounded px-3 w-32">
-                        <div class="flex flex-row cursor-pointer"
-                             @click="$refs.inputCartaPresentacion.click()">
-                            @svg('uiw-paper-clip', ['class' => 'h-9 w-9 mr-3'])
-                            <span class="w-full self-center">Adjuntar</span>
-                            <input id="carta_presentacion" name="carta_presentacion"
-                                   class="invisible"
-                                   type="file" accept="application/pdf"
-                                   x-ref="inputCartaPresentacion"
-                                   @change="cartaPresentacion = $event.target.value.replace(/^.*[\\\/]/, '')">
-                            <input id="eliminar_carta"
-                                   name="eliminar_carta"
-                                   type="hidden"
-                                   x-bind:value="cartaPresentacion === null ? 1 : 0">
-                        </div>
-                    </div>
-                    <div class="text-mtv-text-gray ml-5 self-center" x-show="cartaPresentacion !== null">
-                        <a x-show="cartaPresentacionURL !== ''" x-bind:href="cartaPresentacionURL"
-                           class="mtv-link-download-gold"
-                           x-text="cartaPresentacion"
-                           target="_blank"></a>
-                        <label class="mtv-link-download-gold"
-                               x-show="cartaPresentacionURL === ''"
-                               x-text="cartaPresentacion"></label>
-                        @svg('sui-cross', [
-                            'class' => 'h-3 w-3 inline-block ml-3 mtv-link-download-gold',
-                            '@click' => "document.getElementById('carta_presentacion').value = null; cartaPresentacion = null"
-                        ])
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-full"
-                 x-data="{
-                    catalogoProductosPDF: {{ $catalogoProductosPDF ? "'" . $catalogoProductosPDF->file_name . "'" : 'null' }},
-                    catalogoProductosURL: '{{ $catalogoProductosPDF ? $catalogoProductosPDF->original_url : '' }}',
-                }">
-                <label class="text-mtv-text-gray font-bold my-3">
-                    ¿Tienes tus productos en un archivo PDF?
-                </label>
-                <div clasS="flex flex-row flex-wrap">
-                    <div class="flex flex-row justify-start text-mtv-gold font-bold border rounded px-3 w-32">
-                        <div class="flex flex-row cursor-pointer"
-                             @click="$refs.inputCatalogoProductosPDF.click()">
-                            @svg('uiw-paper-clip', ['class' => 'h-9 w-9 mr-3'])
-                            <span class="w-full self-center">Adjuntar</span>
-                            <input id="catalogo_productos_pdf" name="catalogo_productos_pdf"
-                                   class="invisible"
-                                   type="file" accept="application/pdf"
-                                   x-ref="inputCatalogoProductosPDF"
-                                   @change="catalogoProductosPDF = $event.target.value.replace(/^.*[\\\/]/, '')">
-                            <input id="eliminar_catalogo_pdf"
-                                   name="eliminar_catalogo_pdf"
-                                   type="hidden"
-                                   x-bind:value="catalogoProductosPDF === null ? 1 : 0">
-                        </div>
-                    </div>
-                    <div class="text-mtv-text-gray ml-5 self-center" x-show="catalogoProductosPDF !== null">
-                        <a x-show="catalogoProductosURL !== ''" x-bind:href="catalogoProductosURL"
-                           class="mtv-link-download-gold"
-                           x-text="catalogoProductosPDF"
-                           target="_blank"></a>
-                        <label class="mtv-link-download-gold"
-                               x-show="catalogoProductosURL === ''"
-                               x-text="catalogoProductosPDF"></label>
-                        @svg('sui-cross', [
-                            'class' => 'h-3 w-3 inline-block ml-3 mtv-link-download-gold',
-                            '@click' => "document.getElementById('catalogo_productos_pdf').value = null; catalogoProductosPDF = null"
-                        ])
-                    </div>
-                </div>
-            </div>
+        <x-field-group-card title="Documentos adjuntos">
+            <x-button-upload 
+                title="¿Quieres subir tu carta de presentación?"
+                :file_info="$cartaPresentacion"
+                id="carta_presentacion"
+                name="carta_presentacion"
+                eliminar_input_name="eliminar_carta"
+                eliminar_input_id="eliminar_carta"
+            />
+                        
+            <x-button-upload 
+                title="¿Tienes tus productos en un archivo PDF?"
+                :file_info="$catalogoProductosPDF"
+                id="catalogo_productos_pdf"
+                name="catalogo_productos_pdf"
+                eliminar_input_name="eliminar_catalogo_pdf"
+                eliminar_input_id="eliminar_catalogo_pdf"
+            />            
         </x-field-group-card>
         <label class="text-xs text-mtv-text-gray italic mt-2">Formato PDF de hasta 3MB.</label>
 

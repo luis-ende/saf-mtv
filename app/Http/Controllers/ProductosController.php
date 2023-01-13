@@ -30,9 +30,7 @@ class ProductosController extends Controller
                 ...$rulesAdjuntos,
             ]);
         } catch (ValidationException $e) {
-            return response()->json([
-                'errors' => $e->errors()
-            ], 422);
+            return redirect()->back()->withErrors($e->validator);
         }
 
         $productoData = $request->only('id_cabms', 'nombre', 'descripcion', 'marca',
@@ -46,10 +44,10 @@ class ProductosController extends Controller
             $productoData,
             $request->input('ids_categorias_scian'),
             $request->only('producto_fotos','producto_fotos_eliminadas'),
-            $request->only('ficha_tecnica_file', 'otro_documento_file')
+            $request->only('ficha_tecnica_file', 'otro_documento_file', 'eliminar_ficha_tecnica', 'eliminar_otro_documento')
         );
 
-        return [true];
+        return redirect()->route('productos.show', [$producto->id])->with('success', 'Producto modificado.');
     }
 
     /**
