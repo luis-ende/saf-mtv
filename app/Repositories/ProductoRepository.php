@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Producto;
+use App\Services\RegistroProductosService;
 use Illuminate\Support\Facades\DB;
 
 class ProductoRepository
@@ -13,9 +14,9 @@ class ProductoRepository
     public function obtieneProductoCABMSCategorias(int $productoId): array
     {
         $producto = DB::table('productos')
-            ->select('productos.id', 'productos.tipo', 'productos.id_cabms', 
+            ->select('productos.id', 'productos.tipo', 'productos.id_cabms',
                      'cat_cabms.nombre_cabms', 'cat_categorias_scian.categoria_scian', 'cat_sectores.sector')
-            ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')            
+            ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
             ->leftJoin('cat_categorias_scian', 'cat_categorias_scian.id', '=', 'cat_cabms.id_categoria_scian')
             ->leftJoin('cat_sectores', 'cat_sectores.id', '=', 'cat_categorias_scian.id_sector')
             ->where('productos.id', '=', $productoId)
@@ -45,7 +46,7 @@ class ProductoRepository
             'ids_categorias_scian' => $categoriasIds,
             'categorias_scian' => implode(', ', $categorias),
         ];
-    }    
+    }
 
     /**
      * Obtiene productos importados por carga masiva de un catálogo.
@@ -57,48 +58,52 @@ class ProductoRepository
                                         ['id_cat_productos', '=', $catalogoId],
                                         ['es_importado', '=', true],
                                     ])
-                            ->orderBy('id') // Orden en el que fueron importados       
+                            ->orderBy('id') // Orden en el que fueron importados
                             ->get()
                             ->toArray();
     }
-    
+
     public function obtieneProductosPorCatalogo(int $catalogoProductosId) {
-        $productos = Producto::select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre', 
+        $productos = Producto::select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
                                       'cat_cabms.cabms', 'cat_cabms.partida')
-                                ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')                            
-                                ->where('id_cat_productos', '=', $catalogoProductosId)
+                                ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
+                                ->where([
+                                    ['id_cat_productos', '=', $catalogoProductosId],
+                                    // Descartar registros de productos que por alguna razón no se completaron
+                                    ['registro_fase', '>=', RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS]
+                                ])
                                 ->orderBy('tipo')
                                 ->orderBy('nombre')
-                                ->get();          
-                            
+                                ->get();
+
         $productos->each(function (&$producto) {
             $producto['foto_info'] = $producto->getFirstMedia('fotos');
-        });                            
+        });
 
         return $productos;
     }
 
-    public function buscaProductosPorTermino(string $terminoBusqueda) 
+    public function buscaProductosPorTermino(string $terminoBusqueda)
     {
         $terminoBusqueda = strtolower($terminoBusqueda);
-        $productos = Producto::select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre', 
+        $productos = Producto::select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
                                       'cat_cabms.cabms', 'cat_cabms.partida')
                                         ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
                                         ->where(DB::raw('LOWER(productos.nombre)'), 'like', '%' . $terminoBusqueda . '%')
                                         ->orWhere(DB::raw('LOWER(cat_cabms.nombre_cabms)'), 'like', '%' . $terminoBusqueda . '%')
                                         ->orderBy('nombre')
-                                        ->get();          
-                            
+                                        ->get();
+
         $productos->each(function (&$producto) {
             $producto['foto_info'] = $producto->getFirstMedia('fotos');
-        });                            
+        });
 
         return $productos;
     }
 
     public function obtieneProductoInfo(int $productoId)
     {
-        $productoInfo = Producto::select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre', 
+        $productoInfo = Producto::select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
                                 'productos.descripcion', 'productos.marca', 'productos.modelo', 'productos.color',
                                 'productos.material', 'productos.codigo_barras',
                                 'cat_cabms.cabms', 'cat_cabms.nombre_cabms', 'cat_cabms.partida')
@@ -117,7 +122,7 @@ class ProductoRepository
         return $productoInfo;
     }
 
-    public function obtieneNumeroProductosRegistrados() 
+    public function obtieneNumeroProductosRegistrados()
     {
         return DB::table('productos')->count();
     }
