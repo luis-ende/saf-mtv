@@ -74,7 +74,7 @@
 
                         @isset($productos)
                             <div class="w-full">
-                                <x-productos-grid
+                                <x-productos.productos-grid
                                     modo="busqueda"
                                     :productos="$productos" />
                             </div>

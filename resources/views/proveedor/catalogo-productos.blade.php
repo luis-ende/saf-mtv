@@ -6,7 +6,7 @@
                     <x-page-header-label title="Catálogo">
                         @isset($proveedor)
                             <div class="uppercase">
-                                <a href=""
+                                <a href="{{ route('proveedor-perfil.show', $proveedor->persona->id) }}"
                                    class="mtv-link-gold md:text-lg sm:text-sm xs:text-xs">
                                     {{ $proveedor->nombre_negocio }}
                                 </a>
@@ -56,14 +56,14 @@
                     </nav>
                     @php($modo = isset($proveedor) ? 'visitante' : 'proveedor')
                     <div x-show="tab === 'bienes'">
-                        <x-productos-grid
+                        <x-productos.productos-grid
                             :modo="$modo"
                             :productos="$productos_bien"
                         />
                     </div>
                     <div x-show="tab === 'servicios'">
-                        <x-productos-grid
-                            modo="$modo"
+                        <x-productos.productos-grid
+                            :modo="$modo"
                             :productos="$productos_servicio"
                         />
                     </div>

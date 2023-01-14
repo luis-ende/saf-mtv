@@ -43,7 +43,7 @@
 
         <x-field-group-card
             title="Domicilio" >
-            <x-direccion-input
+            <x-perfil-negocio.direccion-input
                         :direccion="isset($persona) ? $persona->direccion() : null"
                         :tipos_vialidad="$tipos_vialidad"
                         :cat_paises="$cat_paises"
@@ -52,7 +52,7 @@
 
         <x-field-group-card
             title="Descripción del negocio" >
-            <x-descripcion-negocio-form
+            <x-perfil-negocio.descripcion-negocio-form
                 :perfil-negocio="$persona->perfil_negocio"
                 :grupos_prioritarios="$grupos_prioritarios"
                 :tipos_pyme="$tipos_pyme"
@@ -61,7 +61,7 @@
         </x-field-group-card >
 
         <x-field-group-card title="Documentos adjuntos">
-            <x-button-upload 
+            <x-button-upload
                 title="¿Quieres subir tu carta de presentación?"
                 :file_info="$cartaPresentacion"
                 id="carta_presentacion"
@@ -69,15 +69,15 @@
                 eliminar_input_name="eliminar_carta"
                 eliminar_input_id="eliminar_carta"
             />
-                        
-            <x-button-upload 
+
+            <x-button-upload
                 title="¿Tienes tus productos en un archivo PDF?"
                 :file_info="$catalogoProductosPDF"
                 id="catalogo_productos_pdf"
                 name="catalogo_productos_pdf"
                 eliminar_input_name="eliminar_catalogo_pdf"
                 eliminar_input_id="eliminar_catalogo_pdf"
-            />            
+            />
         </x-field-group-card>
         <label class="text-xs text-mtv-text-gray italic mt-2">Formato PDF de hasta 3MB.</label>
 

@@ -35,7 +35,7 @@
             </a>
 
             <div class="my-2">
-                <x-producto-favoritos-input />
+                <x-productos.producto-favoritos-input />
             </div>
         </div>
     </div>

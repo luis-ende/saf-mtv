@@ -54,7 +54,7 @@
                 </a>
             </div>
             <div class="mt-2 mb-3">
-                <x-producto-favoritos-input />
+                <x-productos.producto-favoritos-input />
             </div>
         @endif
         <label class="text-mtv-primary font-bold my-2">Categoría</label>
@@ -163,23 +163,23 @@
                                 @csrf
 
                                 <x-field-group-card title="Descripción">
-                                    <x-cabms-categorias-select
+                                    <x-productos.cabms-categorias-select
                                         modo="producto_edicion"
                                     />
 
-                                    <x-producto-nombre-input
+                                    <x-productos.producto-nombre-input
                                         :value="$producto->nombre" />
 
-                                    <x-producto-descripcion-textarea
+                                    <x-productos.producto-descripcion-textarea
                                         :value="$producto->descripcion" />
 
-                                    <x-producto-bien-inputs
+                                    <x-productos.producto-bien-inputs
                                         :producto="$producto" />
                                 </x-field-group-card>
 
                                 <br>
                                 <x-field-group-card title="Fotografías">
-                                    <x-producto-fotos-upload size="compact" />
+                                    <x-productos.producto-fotos-upload size="compact" />
                                 </x-field-group-card>
 
                                 <br>

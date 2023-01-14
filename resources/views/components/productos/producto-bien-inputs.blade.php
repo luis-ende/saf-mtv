@@ -13,7 +13,7 @@
             <label class="mtv-input-label" for="modelo">Modelo o SKU</label>
         </div>
 
-        <x-input-producto-color-select
+        <x-productos.input-producto-color-select
             :producto_colores="$producto->color"
         />
 

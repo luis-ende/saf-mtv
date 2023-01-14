@@ -108,7 +108,7 @@
                 <x-input-error :messages="$errors->get('descripcion_negocio')" class="mt-2"/>
             </div>
             <div class="form-group col-md-12">
-                <x-diferenciadores-input :diferenciadores="$diferenciadores" />
+                <x-perfil-negocio.diferenciadores-input :diferenciadores="$diferenciadores" />
             </div>
         </div>
     </div>

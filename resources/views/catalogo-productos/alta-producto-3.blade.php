@@ -17,21 +17,21 @@
                     <label class="text-mtv-gray text-base mb-3 self-center">
                         Hasta <span class="text-lg font-bold">3</span> imágenes de tu producto en formato jpg o png y de hasta 1 MB cada una.
                     </label>
-                    <x-producto-fotos-upload
+                    <x-productos.producto-fotos-upload
                         :modo="__('producto_edicion')"
                         :producto_editado="$productoId"
                     />
                     <div class="flex flex-row my-4 space-x-10 justify-center">
-                        <a href="{{ route('alta-producto-2.show', [$productoId]) }}" 
+                        <a href="{{ route('alta-producto-2.show', [$productoId]) }}"
                             class="mtv-button-secondary-white no-underline self-center">
                             @svg('fas-arrow-left', ['class' => 'h-7 w-7 inline-block'])
                             Atrás
-                        </a>                    
+                        </a>
                         <button type="submit" class="mtv-button-secondary self-center my-4">
                             Siguiente
                         </button>
                     </div>
-                </div>                
+                </div>
             </form>
         </div>
     </div>

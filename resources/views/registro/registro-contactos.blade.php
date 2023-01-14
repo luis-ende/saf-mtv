@@ -7,7 +7,7 @@
             <div class="px-6">
                 <form action="{{ route('registro-contactos.store') }}" method="POST">
                     @csrf
-                    <x-contactos-lista
+                    <x-perfil-negocio.contactos-lista
                         :persona="$persona"
                     />
 

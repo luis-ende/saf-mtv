@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="py-6 px-12">
-                <x-producto-info-page
+                <x-productos.producto-info-page
                     modo="proveedor"
                     :producto="$producto" />
             </div>

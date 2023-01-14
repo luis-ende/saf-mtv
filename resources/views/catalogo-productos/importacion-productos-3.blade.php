@@ -58,8 +58,8 @@
                     </table>
                 </div>
 
-                <form method="POST" 
-                      action="{{ route('carga-productos.store', [3]) }}" 
+                <form method="POST"
+                      action="{{ route('carga-productos.store', [3]) }}"
                       class="self-center"
                       @submit="validaProductos($event)">
                     @csrf
@@ -78,8 +78,8 @@
                                 <button type="button" class="btn-close" @click="editFormClose()" aria-label="Close"></button>
                             </div>
                             <div id="productoFormContainer" class="modal-body">
-                                <x-cabms-categorias-select />
-                                <x-producto-fotos-upload />
+                                <x-productos.cabms-categorias-select />
+                                <x-productos.producto-fotos-upload />
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="mtv-button-secondary" @click="guardaProducto(productoEditado)">Guardar</button>
@@ -100,7 +100,7 @@
                                 const categoriasSCian = document.getElementById('categorias_scian').options;
                                 for (let i = 0; i <= categoriasSCian.length - 1; i++) {
                                     formData.append('ids_categorias_scian[]', categoriasSCian[i].value);
-                                }                                                                
+                                }
                                 formData.append('producto_fotos_eliminadas', document.getElementById('producto_fotos_eliminadas').value);
                                 const productoFotos = document.getElementById('producto_fotos').files;
                                 for (let i = 0; i <= productoFotos.length - 1; i++) {
@@ -167,24 +167,24 @@
                                     }
                                 })
                             },
-                            // Valida que todos los productos importados hayan sido completados 
+                            // Valida que todos los productos importados hayan sido completados
                             // con su correspondiente cabms y categorias.
-                            validaProductos(e) {                                                                
-                                let existeProductoIncompleto = 
-                                    this.productos.some(producto => 
+                            validaProductos(e) {
+                                let existeProductoIncompleto =
+                                    this.productos.some(producto =>
                                         !producto.nombre_cabms || producto.categorias_scian === '');
-                            
+
                                 if (existeProductoIncompleto) {
                                     Swal.fire({
                                         ...SwalMTVCustom,
                                         title: 'Datos incompletos',
-                                        html: "No es posible finalizar la carga de productos. Asigna el nombre y categoría correspondientes para cada producto.",                                    
+                                        html: "No es posible finalizar la carga de productos. Asigna el nombre y categoría correspondientes para cada producto.",
                                         showCancelButton: false,
                                         confirmButtonText: 'Aceptar',
-                                    });                              
-                                    
+                                    });
+
                                     e.preventDefault();
-                                }                                                                
+                                }
                             }
                         }
                     }
