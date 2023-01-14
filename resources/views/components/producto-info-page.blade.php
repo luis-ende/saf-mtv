@@ -48,7 +48,7 @@
         <p class="text-mtv-primary text-lg font-bold my-0">{{ $producto->nombre }}</p>
         @if($modo === 'guest')
             <div class="my-2">
-                <a href="#" 
+                <a href="{{ route('proveedor-perfil.show', [$producto->id_persona]) }}"
                 class="mtv-link-gold uppercase m-0">
                     {{ $producto->nombre_negocio }}
                 </a>
@@ -128,24 +128,18 @@
         </table>
 
         <div class="flex flex-row">
-            <div class="basis-1/2 text-mtv-gold">
+            <div class="basis-1/2">
                 @if($producto->ficha_tecnica)
-                    <a href="{{ $producto->ficha_tecnica->original_url }}"
-                       class="mtv-link-download-gold"
-                       download>
-                        @svg('carbon-document-download', ['class' => 'w-7 h-7 inline-block'])
+                    <x-file-download-link href="{{ $producto->ficha_tecnica->original_url }}">
                         {{ $producto->ficha_tecnica->file_name }}
-                    </a>
+                    </x-file-download-link>
                 @endif
             </div>
             <div class="basis-1/2">
                 @if($producto->otro_documento)
-                    <a href="{{ $producto->otro_documento->original_url }}"
-                       class="mtv-link-download-gold"
-                       download>
-                        @svg('carbon-document-download', ['class' => 'w-7 h-7 inline-block'])
+                    <x-file-download-link href="{{ $producto->otro_documento->original_url }}">
                         {{ $producto->otro_documento->file_name }}
-                    </a>
+                    </x-file-download-link>
                 @endif
             </div>
         </div>
@@ -190,7 +184,7 @@
 
                                 <br>
                                 <x-field-group-card title="Adjuntos">
-                                    <x-button-upload 
+                                    <x-button-upload
                                         title="Ficha técnica"
                                         :file_info="$fichaTecnica"
                                         id="ficha_tecnica_file"
@@ -198,8 +192,8 @@
                                         eliminar_input_name="eliminar_ficha_tecnica"
                                         eliminar_input_id="eliminar_ficha_tecnica"
                                     />
-                                                
-                                    <x-button-upload 
+
+                                    <x-button-upload
                                         title="Otro documento. Por ejemplo: certificados, manual de uso, entre otros."
                                         :file_info="$otroDocumento"
                                         id="otro_documento_file"
@@ -207,8 +201,8 @@
                                         eliminar_input_name="eliminar_otro_documento"
                                         eliminar_input_id="eliminar_otro_documento"
                                     />
-                                </x-field-group-card>                                
-                                <label class="text-xs text-mtv-text-gray italic mt-2">Formato PDF de hasta 3MB.</label>                                
+                                </x-field-group-card>
+                                <label class="text-xs text-mtv-text-gray italic mt-2">Formato PDF de hasta 3MB.</label>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -241,7 +235,7 @@
                         },
                         enviarProductoForm() {
                             const productoForm = document.getElementById('productoForm');
-                            productoForm.submit();                            
+                            productoForm.submit();
                         },
                     }
                 }

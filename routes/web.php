@@ -104,6 +104,7 @@ Route::middleware(['role:proveedor', 'auth', 'verified', 'registro_mtv.status'])
 
 Route::get('/proveedor/catalogo-productos/{catalogo}', [ProveedorController::class, 'showCatalogoProductos'])->name('proveedor-catalogo-productos.show');
 Route::get('/proveedor/producto/{producto}', [ProveedorController::class, 'showProducto'])->name('proveedor-producto.show');
+Route::get('/proveedor/perfil/{persona}', [ProveedorController::class, 'showPerfilNegocio'])->name('proveedor-perfil.show');
 
 Route::get('/busqueda-productos', [BusquedaProductosController::class, 'index'])->name('busqueda-productos.index');
 Route::post('/busqueda-productos', [BusquedaProductosController::class, 'search'])->name('busqueda-productos.search');

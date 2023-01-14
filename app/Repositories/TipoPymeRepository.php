@@ -20,7 +20,11 @@ class TipoPymeRepository
     ];
 
     public static function obtieneTiposPyme(): array {
-        // TODO: Implementar catálogo en tabla de la bd u obtener lista de otra fuente
         return self::TIPOS_PYME;
+    }
+
+    public static function findTipoPyme(int $id)
+    {
+        return self::TIPOS_PYME[$id + 1]['tipo_pyme'];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Repositories\GrupoPrioritarioRepository;
+use App\Repositories\TipoPymeRepository;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -46,5 +48,15 @@ class PerfilNegocio extends Model implements HasMedia
     public function persona(): BelongsTo
     {
         return $this->belongsTo(Persona::class, 'id_persona');
+    }
+
+    public function tipoPyme()
+    {
+        return TipoPymeRepository::findTipoPyme($this->id_tipo_pyme);
+    }
+
+    public function grupoPrioritario()
+    {
+        return GrupoPrioritarioRepository::findGrupoPrioritario($this->id_grupo_prioritario);
     }
 }

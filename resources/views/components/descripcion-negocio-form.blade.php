@@ -18,20 +18,22 @@
 
 <div x-data="descripcionNegocioReglas()" x-init="initDescripcionNegocio()">
     <div class="flex flex-row flex-wrap">
-        <div class="md:basis-1/4 xs:basis-full mt-3 px-8">
+        <div class="md:basis-1/4 xs:basis-full mt-3 md:pr-8 md:pl-0 xs:px-8">
             <x-input-image-viewer
                 :id="__('logotipo')"
                 :name="__('logotipo')"
                 :image_url="$logotipoUrl"
             />
             <input type="hidden" id="logotipo_path" name="logotipo_path" value="{{ $logotipoUrl ?? '' }}">
-            <label class="to-mtv-text-gray my-2">Sitio web y redes sociales</label>
-            <div class="flex flex-row flex-nowrap justify-between mb-3 text-mtv-gold cursor-pointer border-t-2 pt-3">
-                @svg('iconoir-internet', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('sitio_web')"])
-                @svg('entypo-facebook', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('cuenta_facebook')"])
-                @svg('fab-twitter-square', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('cuenta_twitter')"])
-                @svg('uiw-linkedin', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('cuenta_linkedin')"])
-                @svg('icomoon-whatsapp', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('num_whatsapp')"])
+            <div class="px-3 pb-1 bg-gray-50 rounded">
+                <label class="text-mtv-gray-2 my-2">Sitio web y redes sociales</label>
+                <div class="flex flex-row flex-nowrap justify-between mb-3 text-mtv-gold cursor-pointer border-t-2 pt-3">
+                    @svg('iconoir-internet', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('sitio_web')"])
+                    @svg('entypo-facebook', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('cuenta_facebook')"])
+                    @svg('fab-twitter-square', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('cuenta_twitter')"])
+                    @svg('uiw-linkedin', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('cuenta_linkedin')"])
+                    @svg('icomoon-whatsapp', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('num_whatsapp')"])
+                </div>
             </div>
         </div>
         <div class="md:basis-3/4 xs:basis-full row mx-0">
@@ -107,7 +109,7 @@
             </div>
             <div class="form-group col-md-12">
                 <x-diferenciadores-input :diferenciadores="$diferenciadores" />
-            </div>            
+            </div>
         </div>
     </div>
 

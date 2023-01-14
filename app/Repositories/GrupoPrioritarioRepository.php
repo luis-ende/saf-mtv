@@ -24,7 +24,11 @@ class GrupoPrioritarioRepository
     ];
 
     public static function obtieneGruposPrioritarios(): array {
-        // TODO: Implementar catálogo en tabla de la bd u obtener lista de otra fuente
         return self::GRUPOS_PRIORITARIOS;
+    }
+
+    public static function findGrupoPrioritario($id)
+    {
+        return self::GRUPOS_PRIORITARIOS[$id + 1]['grupo'];
     }
 }

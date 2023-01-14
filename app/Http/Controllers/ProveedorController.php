@@ -3,14 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\CatalogoProductos;
+use App\Models\CategoriaScian;
+use App\Models\Persona;
 use App\Models\Producto;
+use App\Models\Sector;
+use App\Repositories\GrupoPrioritarioRepository;
 use App\Repositories\PerfilNegocioRepository;
 use App\Repositories\ProductoRepository;
+use App\Repositories\TipoPymeRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProveedorController extends Controller
 {
-    public function showProducto(int $productoId, ProductoRepository $productoRepo) 
+    public function showProducto(int $productoId, ProductoRepository $productoRepo)
     {
         $productoInfo = $productoRepo->obtieneProductoInfo($productoId, true);
         $productoInfo['fotos_info'] = $productoInfo->getMedia('fotos');
@@ -22,10 +27,10 @@ class ProveedorController extends Controller
         ]);
     }
 
-    public function showCatalogoProductos(int $catalogoId, ProductoRepository $productoRepo, PerfilNegocioRepository $perfNegRepo) 
+    public function showCatalogoProductos(int $catalogoId, ProductoRepository $productoRepo, PerfilNegocioRepository $perfNegRepo)
     {
         $catProductos = CatalogoProductos::select('id_persona')->where('id', $catalogoId)->firstOrFail();
-        
+
         $proveedorInfo = $perfNegRepo->obtieneDatosProveedor($catProductos->id_persona);
 
         $productos = $productoRepo->obtieneProductosPorCatalogo($catalogoId);
@@ -35,12 +40,26 @@ class ProveedorController extends Controller
         });
         $productosServicio = $productos->filter(function ($producto) {
             return $producto->tipo === Producto::TIPO_PRODUCTO_SERVICIO_ID;
-        });        
+        });
 
         return view('proveedor.catalogo-productos', [
             'proveedor' => $proveedorInfo,
             'productos_bien' => $productosBien,
             'productos_servicio' => $productosServicio,
         ]);
+    }
+
+    public function showPerfilNegocio(int $personaId)
+    {
+        $persona = Persona::findOrFail($personaId);
+        $sector = Sector::where('id', $persona->perfil_negocio->id_sector)->value('sector');
+        $categoria_scian = CategoriaScian::where('id', $persona->perfil_negocio->id_categoria_scian)
+                                            ->value('categoria_scian');
+        $carta_presentacion = $persona->perfil_negocio->getFirstMedia('documentos');
+        $catalogo_pdf = $persona->perfil_negocio->getFirstMedia('catalogos_pdf');
+
+        return view('proveedor.perfil-negocio-info',
+            compact('persona', 'sector', 'categoria_scian',
+                             'carta_presentacion', 'catalogo_pdf'));
     }
 }

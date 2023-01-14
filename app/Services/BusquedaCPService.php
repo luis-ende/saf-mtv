@@ -27,7 +27,7 @@ class BusquedaCPService
         if (env('APP_ENV') === 'local') {
             // TODO: Falta establecer fuente de datos del catálogo para producción
             $asentamiento = DB::table('cat_asentamientos')
-                                ->select('cp', 'entidad', 'ciudad')
+                                ->select('cp', 'entidad', 'ciudad', 'municipio')
                                 ->where('id', $idAsentamiento)
                                 ->get()
                                 ->firstOrFail();
