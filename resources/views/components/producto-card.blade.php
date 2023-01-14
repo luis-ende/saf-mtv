@@ -1,5 +1,5 @@
 @props([
-    'modo' => 'catalogo', // 'catalogo', 'busqueda'
+    'modo' => 'proveedor', // 'proveedor', 'busqueda', 'visitante'
     'producto' => null
 ])
 
@@ -9,7 +9,7 @@
             <span class="text-mtv-gold uppercase text-xs basis-1/2 text-start">PARTIDA: {{ $producto?->partida }}</span>
             <span class="text-mtv-gold uppercase text-xs basis-1/2 text-end">CABMS-{{ $producto?->cabms }}</span>
         </div>
-        @php($productoRoute = $modo === 'catalogo' ? route('productos.show', [$producto->id]) : route('proveedor-producto.show', [$producto->id]))
+        @php($productoRoute = $modo === 'proveedor' ? route('productos.show', [$producto->id]) : route('proveedor-producto.show', [$producto->id]))
         <div class="border rounded border-mtv-gray p-2">
             <div class="mb-3">
                 <a href="{{ $productoRoute }}">
@@ -22,13 +22,13 @@
             </div>
             @if($modo === 'busqueda')
                 <div>
-                    <a href="{{ route('proveedor-producto.show', [$producto->id]) }}" 
+                    <a href="{{ $productoRoute }}"
                        class="mtv-link-gold uppercase m-0">
                         {{ $producto->nombre_negocio }}
                     </a>
                 </div>
-            @endif            
-                        
+            @endif
+
             <a href="{{ $productoRoute }}"
                class="text-mtv-primary hover:text-mtv-primary no-underline font-bold m-0" >
                {{ $producto->nombre }}

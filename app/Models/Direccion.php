@@ -13,6 +13,8 @@ final class Direccion
     public ?string $vialidad;
     public ?string $num_ext;
     public ?string $num_int;
+    public ?string $entidad;
+    public ?string $ciudad;
 
     public function __construct(?int              $idPais,
                                 ?int              $idAsentamiento,
@@ -24,7 +26,10 @@ final class Direccion
     {
         $this ->id_asentamiento = $idAsentamiento;
         if ($idAsentamiento) {
-            $this->cp = $busquedaCPService->buscaAsentamientoCP($idAsentamiento);
+            $asentamiento = $busquedaCPService->buscaAsentamientoInfo($idAsentamiento);
+            $this->cp = $asentamiento->cp;
+            $this->entidad = $asentamiento->entidad;
+            $this->ciudad = $asentamiento->ciudad;
         }
         $this->id_tipo_vialidad = $idTipoVialidad;
         $this->vialidad = $vialidad;

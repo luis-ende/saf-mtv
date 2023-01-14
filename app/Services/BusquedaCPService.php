@@ -22,23 +22,19 @@ class BusquedaCPService
         return $asentamientos;
     }
 
-    public function buscaAsentamientoCP(int $idAsentamiento)
+    public function buscaAsentamientoInfo(int $idAsentamiento)
     {
-        $cp = '';
-
         if (env('APP_ENV') === 'local') {
             // TODO: Falta establecer fuente de datos del catálogo para producción
-            $rows = DB::table('cat_asentamientos')
-                ->select('cp')
-                ->where('id', $idAsentamiento)
-                ->get()
-                ->toArray();
+            $asentamiento = DB::table('cat_asentamientos')
+                                ->select('cp', 'entidad', 'ciudad')
+                                ->where('id', $idAsentamiento)
+                                ->get()
+                                ->firstOrFail();
 
-            if (count($rows) > 0) {
-                $cp = $rows[0]->cp;
-            }
+            return $asentamiento;
         }
 
-        return $cp;
+        return null;
     }
 }

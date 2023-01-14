@@ -5,19 +5,35 @@
                 <div class="basis-1/2">
                     <x-page-header-label title="Catálogo">
                         @isset($proveedor)
-                            <div>LAZZAR</div>
-                            <div>LAZZAR</div>
-                            <div>LAZZAR</div>
-                            <div>LAZZAR</div>
+                            <div class="uppercase">
+                                <a href=""
+                                   class="mtv-link-gold md:text-lg sm:text-sm xs:text-xs">
+                                    {{ $proveedor->nombre_negocio }}
+                                </a>
+                            </div>
+                            <div class="text-mtv-text-gray sm:text-sm xs:text-xs uppercase">
+                                {{ $proveedor->persona->nombre_o_razon_social() }}
+                            </div>
+                            <div class="text-mtv-text-gray sm:text-sm xs:text-xs uppercase">
+                                Sector: {{ $proveedor->sector }}
+                            </div>
+                            <div class="text-mtv-text-gray sm:text-sm xs:text-xs uppercase">
+                                Giro: {{ $proveedor->categoria_scian }}
+                            </div>
+                            <div class="text-mtv-text-gray sm:text-sm xs:text-xs uppercase">
+                                México, {{ $proveedor->persona->direccion()->ciudad }}
+                            </div>
                         @endisset
-                    </x-page-header-label>                    
-                </div>    
+                    </x-page-header-label>
+                </div>
                 <div class="md:basis-1/2 xs:basis-8/12 text-end">
-                    <a href="{{ route('catalogo-registro-inicio') }}"
-                        class="mtv-button-secondary no-underline md:text-base xs:text-sm">
-                        @svg('polaris-major-add-product', ['class' => 'w-5 h-5 inline-block mr-3 md:inline xs:hidden'])
-                        Agregar producto
-                    </a>
+                    @role('proveedor')
+                        <a href="{{ route('catalogo-registro-inicio') }}"
+                            class="mtv-button-secondary no-underline md:text-base xs:text-sm">
+                            @svg('polaris-major-add-product', ['class' => 'w-5 h-5 inline-block mr-3 md:inline xs:hidden'])
+                            Agregar producto
+                        </a>
+                    @endrole
                 </div>
             </div>
             @php($numProductosBien = count($productos_bien))
@@ -38,15 +54,16 @@
                            {{ $numProductosServicio }} Servicios
                         </a>
                     </nav>
+                    @php($modo = isset($proveedor) ? 'visitante' : 'proveedor')
                     <div x-show="tab === 'bienes'">
                         <x-productos-grid
-                            modo="catalogo"
+                            :modo="$modo"
                             :productos="$productos_bien"
                         />
                     </div>
                     <div x-show="tab === 'servicios'">
                         <x-productos-grid
-                            modo="catalogo"
+                            modo="$modo"
                             :productos="$productos_servicio"
                         />
                     </div>
