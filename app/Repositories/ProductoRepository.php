@@ -90,13 +90,14 @@ class ProductoRepository
                                       'cat_cabms.cabms', 'cat_cabms.partida',
                                       'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio')
                                         ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
-                                        ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')                                        
+                                        ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')
                                         ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona')
                                         ->where(DB::raw('LOWER(productos.nombre)'), 'like', '%' . $terminoBusqueda . '%')
                                         ->orWhere(DB::raw('LOWER(cat_cabms.nombre_cabms)'), 'like', '%' . $terminoBusqueda . '%')
                                         ->orderBy('nombre')
                                         ->get();
 
+        // TODO Obtener información en join!
         $productos->each(function (&$producto) {
             $producto['foto_info'] = $producto->getFirstMedia('fotos');
         });
@@ -110,11 +111,11 @@ class ProductoRepository
                                 'productos.descripcion', 'productos.marca', 'productos.modelo', 'productos.color',
                                 'productos.material', 'productos.codigo_barras',
                                 'cat_cabms.cabms', 'cat_cabms.nombre_cabms', 'cat_cabms.partida')
-                                ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms');                            
+                                ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms');
 
         if ($conProveedor) {
             $query = $query->addSelect('perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio')
-                           ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')                                        
+                           ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')
                            ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona');
         }
 
@@ -142,15 +143,15 @@ class ProductoRepository
         $producto->update($productoData);
         $producto->actualizaCategoriasScian($categorias);
         $producto->actualizaFotos($fotosInfo['producto_fotos'] ?? null, $fotosInfo['producto_fotos_eliminadas']);
-        if (isset($adjuntos['eliminar_ficha_tecnica']) && 
+        if (isset($adjuntos['eliminar_ficha_tecnica']) &&
             $adjuntos['eliminar_ficha_tecnica'] == true) {
             $producto->clearMediaCollection('fichas_tecnicas');
         }
-        if (isset($adjuntos['ficha_tecnica_file'])) {            
+        if (isset($adjuntos['ficha_tecnica_file'])) {
             $producto->clearMediaCollection('fichas_tecnicas');
             $producto->addMedia($adjuntos['ficha_tecnica_file'])->toMediaCollection('fichas_tecnicas');
         }
-        if (isset($adjuntos['eliminar_otro_documento']) && 
+        if (isset($adjuntos['eliminar_otro_documento']) &&
             $adjuntos['eliminar_otro_documento'] == true) {
             $producto->clearMediaCollection('otros_documentos');
         }

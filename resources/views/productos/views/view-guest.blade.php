@@ -16,7 +16,7 @@
                         @svg('icono_catalogo', ['class' => 'w-7 h-7 inline-block mr-3'])
                         Catálogo
                     </a>
-                    <a href="{{ route('busqueda-productos.index') }}"
+                    <a href="{{ route('buscador-mtv.index') }}"
                         class="mtv-button-secondary cursor-pointer no-underline md:text-base xs:text-sm">
                         @svg('jam-search-plus', ['class' => 'w-5 h-5 inline-block mr-3'])
                         Nueva búsqueda

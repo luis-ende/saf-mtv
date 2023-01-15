@@ -1,10 +1,10 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden h-screen">
+        <div class="bg-white overflow-hidden h-screen" x-data="{ terminoBusqueda: '', tipoBusqueda: '{{ $tipo_busqueda }}' }">
             <div class="py-6 px-12 bg-white border-b border-gray-200 flex flex-col">
                 <div class="self-center">
-                    <label class="text-mtv-gray-2 text-xl">
-                        Catálogo de productos
+                    <label class="text-mtv-gray-2 text-xl"
+                           x-text="tipoBusqueda === 'productos' ? 'Catálogo de productos' : 'Catálogo de proveedores'">
                     </label>
                     <div class="text-mtv-primary font-bold text-3xl">
                         Buscador de productos y proveedores de Mi Tiendita Virtual
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="py-6 px-12">
-                <div x-data="{ tab: 'productos' }">
+                <div x-data="{ tab: 'productos' }" x-modelable="tab" x-model="tipoBusqueda">
                     <nav class="font-bold text-lg text-mtv-gold flex flex-row mb-3">
                         <a class="no-underline border-b-4 basis-1/2 text-center"
                            :class="tab === 'productos' ? 'text-mtv-secondary border-mtv-secondary hover:text-mtv-secondary' : 'text-mtv-gold border-mtv-gold-light hover:text-mtv-gold'"
@@ -39,7 +39,8 @@
                     </nav>
                     <div class="flex flex-col" x-show="tab === 'productos'">
                         <div class="w-3/4 self-center">
-                            <form method="POST" action="{{ route('busqueda-productos.search') }}">
+                            <form method="POST"
+                                  x-bind:action="'/buscador-mtv/' + $data.tipoBusqueda + '/' + $data.terminoBusqueda">
                                 @csrf
 
                                 <label for="productos_search" class="text-mtv-gray-2 text-base mb-2">
@@ -47,41 +48,101 @@
                                 </label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                        @svg('forkawesome-search', ['class' => 'w-5 h-5 text-mtv-gray-2'])
                                     </div>
                                     <input type="search"
                                            id="productos_search" name="productos_search"
                                            class="block w-full pt-3 pb-3 pl-10 text-sm text-mtv-text-gray border border-gray-300 rounded-lg bg-gray-50 focus:ring-mtv-primary focus:border-mtv-primary"
                                            placeholder="Buscar por palabras clave..."
                                            autofocus
+                                           x-model="terminoBusqueda"
                                            value="{{ $term_busqueda ?? '' }}">
-                                    <button type="submit" class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1">Buscar</button>
+                                    <input id="tipo_busqueda" name="tipo_busqueda" type="hidden" x-model="tipoBusqueda">
+                                    <button type="submit"
+                                            class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1"
+                                            x-bind:disabled="!terminoBusqueda">
+                                        Buscar
+                                    </button>
                                 </div>
                             </form>
-                            @isset($num_resultados)
-                                @if($num_resultados === 0 && !empty($term_busqueda))
-                                    <div class="p-0 mt-2 text-slate-700">
-                                        No se encontraron productos con el término <span class="font-bold">"{{ $term_busqueda }}"</span>.
-                                    </div>
-                                @endif
-                                @if($num_resultados > 0 && !empty($term_busqueda))
-                                    <div class="p-0 mt-2 mb-5 text-slate-700">
-                                        <span class="font-bold">{{ $num_resultados }}</span> Productos encontrados con el término <span class="font-bold">"{{ $term_busqueda }}</span>
-                                    </div>
-                                @endif
-                            @endisset
+                            @if($tipo_busqueda === 'productos')
+                                @isset($num_resultados)
+                                    @if($num_resultados === 0 && !empty($term_busqueda))
+                                        <div class="p-0 mt-2 text-slate-700">
+                                            No se encontraron productos con el término <span class="font-bold">"{{ $term_busqueda }}"</span>.
+                                        </div>
+                                    @endif
+                                    @if($num_resultados > 0 && !empty($term_busqueda))
+                                        <div class="p-0 mt-2 mb-5 text-slate-700">
+                                            <span class="font-bold">{{ $num_resultados }}</span> Productos encontrados con el término <span class="font-bold">"{{ $term_busqueda }}</span>
+                                        </div>
+                                    @endif
+                                @endisset
+                            @endif
                         </div>
 
-                        @isset($productos)
-                            <div class="w-full">
-                                <x-productos.productos-grid
-                                    modo="busqueda"
-                                    :productos="$productos" />
-                            </div>
-                        @endisset
+                        @if($tipo_busqueda === 'productos')
+                            @isset($resultados)
+                                <div class="w-full">
+                                    <x-productos.productos-grid
+                                        modo="busqueda"
+                                        :productos="$resultados" />
+                                </div>
+                            @endisset
+                        @endif
                     </div>
-                    <div x-show="tab === 'proveedores'">
+                    <div class="flex flex-col" x-show="tab === 'proveedores'">
+                        <div class="w-3/4 self-center">
+                            <form method="POST"
+                                  x-bind:action="'/buscador-mtv/' + $data.tipoBusqueda + '/' + $data.terminoBusqueda">
+                                @csrf
 
+                                <label for="productos_search" class="text-mtv-gray-2 text-base mb-2">
+                                    Tu búsqueda es por proveedores:
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                        @svg('forkawesome-search', ['class' => 'w-5 h-5 text-mtv-gray-2'])
+                                    </div>
+                                    <input type="search"
+                                           id="proveedores_search" name="proveedores_search"
+                                           class="block w-full pt-3 pb-3 pl-10 text-sm text-mtv-text-gray border border-gray-300 rounded-lg bg-gray-50 focus:ring-mtv-primary focus:border-mtv-primary"
+                                           placeholder="Buscar por palabras clave..."
+                                           autofocus
+                                           x-model="terminoBusqueda"
+                                           value="{{ $term_busqueda ?? '' }}">
+                                    <input id="tipo_busqueda" name="tipo_busqueda" type="hidden" x-model="tipoBusqueda">
+                                    <button type="submit"
+                                            class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1"
+                                            x-bind:disabled="!terminoBusqueda">
+                                        Buscar
+                                    </button>
+                                </div>
+                            </form>
+                            @if($tipo_busqueda === 'proveedores')
+                                @isset($num_resultados)
+                                    @if($num_resultados === 0 && !empty($term_busqueda))
+                                        <div class="p-0 mt-2 text-slate-700">
+                                            No se encontraron proveedores con el término <span class="font-bold">"{{ $term_busqueda }}"</span>.
+                                        </div>
+                                    @endif
+                                    @if($num_resultados > 0 && !empty($term_busqueda))
+                                        <div class="p-0 mt-2 mb-5 text-slate-700">
+                                            <span class="font-bold">{{ $num_resultados }}</span> Proveedores encontrados con el término <span class="font-bold">"{{ $term_busqueda }}</span>
+                                        </div>
+                                    @endif
+                                @endisset
+                            @endif
+                        </div>
+
+                        @if($tipo_busqueda === 'proveedores')
+                            @isset($resultados)
+                                <div class="w-full">
+                                    <x-proveedores.proveedor-grid
+                                        :proveedores="$resultados" />
+                                </div>
+                            @endisset
+                        @endif
                     </div>
                 </div>
             </div>

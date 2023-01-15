@@ -67,16 +67,7 @@
                                                 :image_url="$logotipoUrl"
                                             />
                                             <input type="hidden" id="logotipo_path" name="logotipo_path" value="{{ $logotipoUrl ?? '' }}">
-                                            <div class="px-3 pb-1 bg-gray-50 rounded">
-                                                <label class="text-mtv-gray-2 mb-2">Sitio web y redes sociales</label>
-                                                <div class="flex flex-row flex-nowrap justify-between mb-3 text-mtv-gold cursor-pointer border-t-2 pt-3">
-                                                    @svg('iconoir-internet', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('sitio_web')"])
-                                                    @svg('entypo-facebook', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('cuenta_facebook')"])
-                                                    @svg('fab-twitter-square', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('cuenta_twitter')"])
-                                                    @svg('uiw-linkedin', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('cuenta_linkedin')"])
-                                                    @svg('icomoon-whatsapp', ['class' => 'h-5 w-5 hover:text-mtv-primary', '@click' => "event.preventDefault(); showFormEdit('num_whatsapp')"])
-                                                </div>
-                                            </div>
+                                            <x-perfil-negocio.redes-sociales-links :links="$persona->perfil_negocio->enlacesRedesSociales()" />
                                             <div class="text-center">
                                                 <button type="button" class="mtv-button-secondary">
                                                     @svg('ri-mail-send-line', ['class' => 'w-5 h-5 inline-block'])

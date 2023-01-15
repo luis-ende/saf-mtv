@@ -59,4 +59,21 @@ class PerfilNegocio extends Model implements HasMedia
     {
         return GrupoPrioritarioRepository::findGrupoPrioritario($this->id_grupo_prioritario);
     }
+
+    /**
+     * Obtiene los enlaces válidos de redes sociales del perfil de negocio.
+     */
+    public function enlacesRedesSociales(): array
+    {
+        $enlaces = [
+            'sitio_web' => filter_var($this->sitio_web, FILTER_VALIDATE_URL) ? $this->sitio_web : '',
+            'cuenta_facebook' => filter_var($this->cuenta_facebook, FILTER_VALIDATE_URL) ? $this->cuenta_facebook : '',
+            'cuenta_twitter' => filter_var($this->cuenta_twitter, FILTER_VALIDATE_URL) ? $this->cuenta_twitter : '',
+            'cuenta_linkedin' => filter_var($this->cuenta_linkedin, FILTER_VALIDATE_URL) ? $this->cuenta_linkedin : '',
+            'num_whatsapp' => !empty($this->num_whatsapp) ? 'https://wa.me/' . $this->num_whatsapp : '',
+        ];
+
+        // Remover enlaces vacíos
+        return array_filter($enlaces);
+    }
 }

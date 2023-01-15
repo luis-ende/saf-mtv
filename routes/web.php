@@ -8,7 +8,7 @@ use App\Http\Controllers\RegistroMTVController;
 use App\Http\Controllers\CatalogoCABMSController;
 use App\Http\Controllers\OportunidadesController;
 use App\Http\Controllers\PerfilNegocioController;
-use App\Http\Controllers\BusquedaProductosController;
+use App\Http\Controllers\BuscadorMTVController;
 use App\Http\Controllers\CatalogoProductosController;
 use App\Http\Controllers\ProgramacionAnualController;
 use App\Http\Controllers\CentroNotificacionesController;
@@ -106,8 +106,8 @@ Route::get('/proveedor/catalogo-productos/{catalogo}', [ProveedorController::cla
 Route::get('/proveedor/producto/{producto}', [ProveedorController::class, 'showProducto'])->name('proveedor-producto.show');
 Route::get('/proveedor/perfil/{persona}', [ProveedorController::class, 'showPerfilNegocio'])->name('proveedor-perfil.show');
 
-Route::get('/busqueda-productos', [BusquedaProductosController::class, 'index'])->name('busqueda-productos.index');
-Route::post('/busqueda-productos', [BusquedaProductosController::class, 'search'])->name('busqueda-productos.search');
+Route::get('/buscador-mtv/{tipo?}', [BuscadorMTVController::class, 'index'])->name('buscador-mtv.index');
+Route::post('/buscador-mtv/{tipo}/{keyword}', [BuscadorMTVController::class, 'search'])->name('buscador-mtv.search');
 
 Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'index'])->middleware(['auth', 'verified'])->name('centro-notificaciones');
 
