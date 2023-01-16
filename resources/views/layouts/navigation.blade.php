@@ -36,11 +36,11 @@
                     {{ __('Inicio') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('catalogo-productos')" :active="request()->routeIs('catalogo-productos')">
-                    {{ __('Mis productos') }}
+                    {{ __('Catálogo') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('oportunidades-negocio')">
                     {{ __('Oportunidades') }}
-                </x-responsive-nav-link>
+                </x-responsive-nav-link>                
             </div>
     
             <!-- Responsive Settings Options -->
@@ -81,8 +81,30 @@
                             </x-nav-link>
                             <x-nav-link :href="route('oportunidades-negocio')" :active="request()->routeIs('oportunidades-negocio')">
                                 {{ __('Oportunidades') }}
-                            </x-nav-link>
-                        </div>
+                            </x-nav-link>                            
+                            <div class="inline-flex items-center px-1 pt-1 text-base font-base leading-5 text-mtv-gold hover:text-mtv-primary hover:border-gray-300 focus:outline-none focus:text-mtv-primary focus:border-gray-300 transition duration-150 ease-in-out no-underline">
+                                <x-dropdown align="right" width="48">
+                                    <x-slot name="trigger">
+                                        <button class="flex items-center transition duration-150 ease-in-out">                                            
+                                            Catálogo                                            
+                                            <div class="ml-1">
+                                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                        </button>
+                                    </x-slot>
+                                    <x-slot name="content">
+                                        <x-dropdown-link href="{{ route('buscador-mtv.index', ['tipo' => 'productos']) }}">
+                                            {{ __('Catálogo de productos') }}
+                                        </x-dropdown-link>
+                                        <x-dropdown-link href="{{ route('buscador-mtv.index', ['tipo' => 'proveedores']) }}">
+                                            {{ __('Directorio de proveedores') }}
+                                        </x-dropdown-link>                        
+                                    </x-slot>
+                                </x-dropdown>
+                            </div>                            
+                        </div>                        
                     </div>                
                 </div>
             </div>        
