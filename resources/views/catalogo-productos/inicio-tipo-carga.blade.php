@@ -1,6 +1,6 @@
-<x-app-layout :show_main_menu="false">
+<x-app-layout :show_main_menu="true">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
-        <div class="bg-white overflow-hidden shadow-sm">
+        <div class="bg-white overflow-hidden shadow-sm min-h-screen">
             @include('catalogo-productos.registro-header',
                        ['titulo' => 'Mi Tiendita Virtual',
                         'subtitulo' => 'Ofrece tus productos. Al registrar tu catálogo recibirás notificaciones al realizarse algún procedimiento de compra de acuerdo al perfil de tu negocio, bien o servicio que hayas registrado.'])
