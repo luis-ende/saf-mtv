@@ -24,10 +24,10 @@
                         Los campos marcados con <span class="text-mtv-primary">*</span> son obligatorios.
                     </label>
 
-                    <x-producto-nombre-input
+                    <x-productos.producto-nombre-input
                         :value="$nombre" />
 
-                    <x-producto-descripcion-textarea
+                    <x-productos.producto-descripcion-textarea
                         :value="$descripcion" />
 
                     <x-productos.producto-bien-inputs

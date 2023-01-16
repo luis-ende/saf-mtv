@@ -83,7 +83,7 @@
                                 {{ __('Oportunidades') }}
                             </x-nav-link>                            
                             <div class="inline-flex items-center px-1 pt-1 text-base font-base leading-5 text-mtv-gold hover:text-mtv-primary hover:border-gray-300 focus:outline-none focus:text-mtv-primary focus:border-gray-300 transition duration-150 ease-in-out no-underline">
-                                <x-dropdown align="right" width="48">
+                                <x-dropdown align="left" width="56">
                                     <x-slot name="trigger">
                                         <button class="flex items-center transition duration-150 ease-in-out">                                            
                                             Catálogo                                            
