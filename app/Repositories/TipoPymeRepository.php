@@ -25,6 +25,6 @@ class TipoPymeRepository
 
     public static function findTipoPyme(int $id)
     {
-        return self::TIPOS_PYME[$id + 1]['tipo_pyme'];
+        return self::TIPOS_PYME[$id - 1]['tipo_pyme'];
     }
 }
