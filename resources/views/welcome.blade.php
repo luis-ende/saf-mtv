@@ -24,17 +24,7 @@
 
 
 <x-guest-layout>
-    <div class="flex flex-col" style="background-color:#FFFFFF" id="back-main">
-        <!-- Menú de preguntas -->
-        <div class="d-none d-xl-block flex flex-row bg-[#FFFFFF] space-x-7 py-3 px-5 md:justify-start md:flex-wrap" style="margin-top:-10px">
-            <a class="text-[#8B1232] hover:text-[#BC955C] no-underline font-bold text-center" href="#">Inicio</a>
-            <a class="text-[#BC955C] hover:text-[#8B1232] no-underline font-bold text-center" href="#virtual-store">¿Qué es Mi Tiendita Virtual?</a>
-            <a class="text-[#BC955C] hover:text-[#8B1232] no-underline font-bold text-center" href="#">Preguntas frecuentes</a>
-            <a class="text-[#BC955C] hover:text-[#8B1232] no-underline font-bold text-center" href="#">Directorio CDMX</a>
-            <a class="text-[#BC955C] hover:text-[#8B1232] no-underline font-bold text-center" href="#">Ya soy proveedor</a>
-        </div>
-        <div class="d-none d-xl-block w-full h-2 bg-mtv-gold-light"></div>
-
+    <div class="flex flex-col" style="background-color:#FFFFFF" id="back-main">        
         <!-- Carousel -->
         <div class="h-96"> 
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
