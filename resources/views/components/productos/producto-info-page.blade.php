@@ -243,3 +243,9 @@
         @endrole
     </div>
 </div>
+
+@if($modo === 'guest')
+    <br/>
+    <br/>
+    <x-productos.producto-relacionados-section />
+@endif

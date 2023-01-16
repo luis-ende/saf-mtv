@@ -92,6 +92,7 @@ class ProductoRepository
                                         ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
                                         ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')
                                         ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona')
+                                        // TODO ['registro_fase', '>=', RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS]
                                         ->where(DB::raw('LOWER(productos.nombre)'), 'like', '%' . $terminoBusqueda . '%')
                                         ->orWhere(DB::raw('LOWER(cat_cabms.nombre_cabms)'), 'like', '%' . $terminoBusqueda . '%')
                                         ->orderBy('nombre')
@@ -159,5 +160,38 @@ class ProductoRepository
             $producto->clearMediaCollection('otros_documentos');
             $producto->addMedia($adjuntos['otro_documento_file'])->toMediaCollection('otros_documentos');
         }
+    }
+
+
+    public function obtieneProductosPorCategoriasSCIAN(array $categorias) 
+    {
+        // Producto::select('productos.id', 'nombre', 'cat_cabms.id_categoria_scian')->leftJoin('cat_cabms', 'cat_cabms.id', 'id_cabms')->whereExists(function($query) { $query->from('productos_categorias')->whereRaw('productos_categorias.id_producto = productos.id')->whereIn('id_categoria_scian', [620, 684]); })->get()->first()->categorias        
+        
+
+        $productos = Producto::select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
+                                      'cat_cabms.cabms', 'cat_cabms.partida',
+                                      'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio')
+                                        ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
+                                        ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona')                                        
+                                        ->where([                                            
+                                            // Descartar registros de productos que por alguna razón no se completaron
+                                            ['registro_fase', '>=', RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS]
+                                        ])
+                                        ->whereIn('cat_cabms.id_categoria_scian', 'in', $categorias)
+                                        ->orWhereExists(function($query) use($categorias) {
+                                            $query->select('id_categoria')
+                                                  ->from('producto_categorias')
+                                                  ->whereRaw('productos_categorias.id_producto = productos.id')
+                                                  ->whereIn('id_categoria_scian', $categorias);
+                                        })
+                                        ->orderBy('nombre')
+                                        ->get();
+
+        // TODO Obtener información en join!
+        $productos->each(function (&$producto) {
+            $producto['foto_info'] = $producto->getFirstMedia('fotos');
+        });
+
+        return $productos;
     }
 }
