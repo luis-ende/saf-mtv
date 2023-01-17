@@ -7,11 +7,8 @@ use App\Models\CategoriaScian;
 use App\Models\Persona;
 use App\Models\Producto;
 use App\Models\Sector;
-use App\Repositories\GrupoPrioritarioRepository;
 use App\Repositories\PerfilNegocioRepository;
 use App\Repositories\ProductoRepository;
-use App\Repositories\TipoPymeRepository;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProveedorController extends Controller
 {

@@ -63,6 +63,7 @@ class PerfilNegocioRepository
             ->where(DB::raw('LOWER(perfil_negocio.nombre_negocio)'), 'like', '%' . $terminoBusqueda . '%')
             ->orWhere(DB::raw('LOWER(perfil_negocio.descripcion_negocio)'), 'like', '%' . $terminoBusqueda . '%')
             ->orderBy('perfil_negocio.nombre_negocio')
+            ->limit(30)
             ->get();
 
         // TODO Obtener información en join

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\PerfilNegocioRepository;
 use Illuminate\Http\Request;
-use App\Repositories\ProductoRepository;
 use Illuminate\Validation\Rule;
+use App\Services\BuscadorMTVService;
+use App\Repositories\ProductoRepository;
+use App\Repositories\PerfilNegocioRepository;
 
 /**
  * Controlador para las búsquedas de productos y proveedores.
@@ -30,7 +31,8 @@ class BuscadorMTVController extends Controller
             'proveedores_search' => 'string',
             'tipo_busqueda' => [
                 'required',
-                Rule::in(['productos', 'proveedores']),
+                Rule::in([BuscadorMTVService::TIPO_BUSQUEDA_PRODUCTOS, 
+                          BuscadorMTVService::TIPO_BUSQUEDA_PROVEEDORES]),
             ],
         ]);
 
@@ -45,11 +47,11 @@ class BuscadorMTVController extends Controller
 
         $resultadosBusqueda = [];
         if ($busquedaTermino) {
-            if ($tipoBusqueda === 'productos') {
+            if ($tipoBusqueda === BuscadorMTVService::TIPO_BUSQUEDA_PRODUCTOS) {
                 $resultadosBusqueda = $productoRepo->buscaProductosPorTermino($busquedaTermino);
             }
 
-            if ($tipoBusqueda === 'proveedores') {
+            if ($tipoBusqueda === BuscadorMTVService::TIPO_BUSQUEDA_PROVEEDORES) {
                 $resultadosBusqueda = $perfNegRepo->buscaProveedoresPorTermino($busquedaTermino);
             }
         }
