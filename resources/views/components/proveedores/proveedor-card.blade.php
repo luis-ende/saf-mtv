@@ -26,31 +26,32 @@
             <div class="text-mtv-text-gray sm:text-sm xs:text-xs uppercase">
                 Constancia:
             </div>
-            <div class="flex flex-row flex-wrap my-2 text-mtv-gold mt-3 justify-between" x-data="tooltips()">
-                <a id="perfil-negocio" href="{{ $proveedorRoute }}"
+            @php($componentId = $proveedor->id)
+            <div class="flex flex-row flex-wrap my-2 text-mtv-gold mt-3 justify-between" x-data="tooltips_{{ $componentId }}()">
+                <a id="perfil-{{ $componentId }}" href="{{ $proveedorRoute }}"
                    class="mtv-link-gold self-baseline">
                     @svg('lineawesome-user-check-solid', ['class' => 'w-7 h-7'])
                 </a>
-                <a id="catalogo-pdf" href="#" class="mtv-link-gold self-baseline">
+                <a id="pdf-{{ $componentId }}" href="#" class="mtv-link-gold self-baseline">
                     @svg('icono_catalogo_PDF', ['class' => 'w-7 h-7'])
                 </a>
-                <a id="catalogo" href="{{ route('proveedor-catalogo-productos.show', [$proveedor->id_cat_productos]) }}"
+                <a id="catalogo-{{ $componentId }}" href="{{ route('proveedor-catalogo-productos.show', [$proveedor->id_cat_productos]) }}"
                    class="mtv-link-gold self-baseline">
                     @svg('icono_catalogo', ['class' => 'w-7 h-7'])
                 </a>
-            </div>
+            </div>            
             <script>
-                function tooltips() {
+                function tooltips_{{ $componentId }}() {
                     return {
-                        tooltipPerfilNegocio: new bootstrap.Tooltip(document.getElementById('perfil-negocio'), {
+                        tooltipPerfilNegocio_{{ $componentId }}: new bootstrap.Tooltip(document.getElementById('perfil-{{ $componentId }}'), {
                             customClass: 'custom-tooltip',
                             title: 'Perfil'
                         }),
-                        tooltipCatalogoPDF: new bootstrap.Tooltip(document.getElementById('catalogo-pdf'), {
+                        tooltipCatalogoPDF_{{ $componentId }}: new bootstrap.Tooltip(document.getElementById('pdf-{{ $componentId }}'), {
                             customClass: 'custom-tooltip',
                             title: 'Catálogo PDF'
                         }),
-                        tooltipCatalogo: new bootstrap.Tooltip(document.getElementById('catalogo'), {
+                        tooltipCatalogo_{{ $componentId }}: new bootstrap.Tooltip(document.getElementById('catalogo-{{ $componentId }}'), {
                             customClass: 'custom-tooltip',
                             title: 'Catálogo'
                         }),
