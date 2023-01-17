@@ -20,14 +20,14 @@
                 @endif
                 </a>
             </div>
-            @if($modo === 'busqueda')
+            @isset($producto->id_persona)
                 <div>
-                    <a href="{{ $productoRoute }}"
+                    <a href="{{ route('proveedor-perfil.show', [$producto->id_persona]) }}"
                        class="mtv-link-gold uppercase m-0">
                         {{ $producto->nombre_negocio }}
                     </a>
                 </div>
-            @endif
+            @endisset
 
             <a href="{{ $productoRoute }}"
                class="text-mtv-primary hover:text-mtv-primary no-underline font-bold m-0" >

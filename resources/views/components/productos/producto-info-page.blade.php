@@ -1,13 +1,20 @@
 @props([
     'modo' => 'proveedor', // 'proveedor', 'guest'
-    'producto' => null
+    'producto' => null,
+    'productos_relacionados' => null,
 ])
 
+@php($esEditable = false)
+@role('proveedor')
+    @php($esEditable = $modo === 'proveedor' ||
+                        isset($producto->id_persona) && auth()->user()->persona->id === $producto->id_persona)
+@endrole
+
 <div class="flex md:flex-row xs:flex-col md:space-x-5"
-     @role('proveedor')
+     @if($esEditable)
      x-data="busquedaCABMS"
      x-init="initBusquedaCABMS()"
-     @endrole
+     @endif
      >
     <div class="md:basis-4/12 xs:basis-full mb-3">
         <div class="flex flex-col space-y-3">
@@ -40,10 +47,10 @@
         </div>
     </div>
     <div class="md:basis-8/12 xs:basis-full"
-         @role('proveedor')
+         @if($esEditable)
          x-init="initProductoInfo()"
          x-data="productoInfo()"
-         @endrole
+         @endif
          >
         <p class="text-mtv-primary text-lg font-bold my-0">{{ $producto->nombre }}</p>
         @if($modo === 'guest')
@@ -144,7 +151,7 @@
             </div>
         </div>
 
-        @role('proveedor')
+        @if($esEditable)
             @php($fichaTecnica = $producto->getFirstMedia('fichas_tecnicas'))
             @php($otroDocumento = $producto->getFirstMedia('otros_documentos'))
             <!-- Modal -->
@@ -240,12 +247,14 @@
                     }
                 }
             </script>
-        @endrole
+        @endif
     </div>
 </div>
 
-@if($modo === 'guest')
-    <br/>
-    <br/>
-    <x-productos.producto-relacionados-section />
+@if($modo === 'guest' && isset($productos_relacionados))
+    <div class="mt-5">
+        <x-productos.producto-relacionados-section
+            :productos="$productos_relacionados"
+        />
+    </div>
 @endif

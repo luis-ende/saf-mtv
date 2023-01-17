@@ -111,7 +111,7 @@ class ProductoRepository
         $query = Producto::select('productos.id', 'productos.id_cat_productos', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
                                 'productos.descripcion', 'productos.marca', 'productos.modelo', 'productos.color',
                                 'productos.material', 'productos.codigo_barras',
-                                'cat_cabms.cabms', 'cat_cabms.nombre_cabms', 'cat_cabms.partida')
+                                'cat_cabms.cabms', 'cat_cabms.nombre_cabms', 'cat_cabms.partida', 'cat_cabms.id_categoria_scian')
                                 ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms');
 
         if ($conProveedor) {
@@ -122,7 +122,6 @@ class ProductoRepository
 
         $productoInfo = $query->where('productos.id', '=', $productoId)
                               ->firstOrFail();
-
 
         $categoriasScian = DB::table('productos_categorias')
                                 ->select('cat_categorias_scian.categoria_scian')
@@ -163,28 +162,27 @@ class ProductoRepository
     }
 
 
-    public function obtieneProductosPorCategoriasSCIAN(array $categorias) 
+    public function obtieneProductosPorCategoriasSCIAN(array $categorias)
     {
-        // Producto::select('productos.id', 'nombre', 'cat_cabms.id_categoria_scian')->leftJoin('cat_cabms', 'cat_cabms.id', 'id_cabms')->whereExists(function($query) { $query->from('productos_categorias')->whereRaw('productos_categorias.id_producto = productos.id')->whereIn('id_categoria_scian', [620, 684]); })->get()->first()->categorias        
-        
-
         $productos = Producto::select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
                                       'cat_cabms.cabms', 'cat_cabms.partida',
                                       'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio')
                                         ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
-                                        ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona')                                        
-                                        ->where([                                            
-                                            // Descartar registros de productos que por alguna razón no se completaron
-                                            ['registro_fase', '>=', RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS]
-                                        ])
-                                        ->whereIn('cat_cabms.id_categoria_scian', 'in', $categorias)
-                                        ->orWhereExists(function($query) use($categorias) {
-                                            $query->select('id_categoria')
-                                                  ->from('producto_categorias')
-                                                  ->whereRaw('productos_categorias.id_producto = productos.id')
-                                                  ->whereIn('id_categoria_scian', $categorias);
+                                        ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')
+                                        ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona')
+                                        // Descartar registros de productos que por alguna razón no se completaron
+                                        ->where('productos.registro_fase', '>=', RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS)
+                                        ->where(function ($query) use($categorias) {
+                                            $query->whereIn('cat_cabms.id_categoria_scian', $categorias)
+                                                  ->orWhereExists(function($query) use($categorias) {
+                                                      $query->select('id_categoria_scian')
+                                                            ->from('productos_categorias')
+                                                            ->whereRaw('productos_categorias.id_producto = productos.id')
+                                                            ->whereIn('id_categoria_scian', $categorias);
+                                                  });
                                         })
                                         ->orderBy('nombre')
+                                        ->limit(10)
                                         ->get();
 
         // TODO Obtener información en join!
@@ -193,5 +191,23 @@ class ProductoRepository
         });
 
         return $productos;
+    }
+
+    /**
+     * Obtiene todas las categorías SCIAN de un producto.
+     */
+    public function obtieneProductoCategorias(Producto $producto): array
+    {
+        $productoCategorias = DB::table('productos_categorias')
+                                ->where('id_producto', $producto->id)
+                                ->pluck('id_categoria_scian')
+                                ->toArray();
+
+        $categorias = [];
+        if (isset($producto->id_categoria_scian)) {
+            $categorias[] = $producto->id_categoria_scian;
+        }
+
+        return array_unique(array_merge($categorias, $productoCategorias));
     }
 }

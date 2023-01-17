@@ -22,8 +22,12 @@ class ProveedorController extends Controller
         $productoInfo['ficha_tecnica'] = $productoInfo->getFirstMedia('fichas_tecnicas');
         $productoInfo['otro_documento'] = $productoInfo->getFirstMedia('otros_documentos');
 
+        $categoriasScian = $productoRepo->obtieneProductoCategorias($productoInfo);
+        $productosRelacionados = $productoRepo->obtieneProductosPorCategoriasSCIAN($categoriasScian);
+
         return view('productos.views.view-guest', [
             'producto' => $productoInfo,
+            'productos_relacionados' => $productosRelacionados,
         ]);
     }
 
