@@ -95,6 +95,7 @@ class ProductoRepository
                                         // TODO ['registro_fase', '>=', RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS]
                                         ->where(DB::raw('LOWER(productos.nombre)'), 'like', '%' . $terminoBusqueda . '%')
                                         ->orWhere(DB::raw('LOWER(cat_cabms.nombre_cabms)'), 'like', '%' . $terminoBusqueda . '%')
+                                        ->orWhere(DB::raw('cat_cabms.cabms'), $terminoBusqueda)
                                         ->orderBy('nombre')
                                         ->get();
 
