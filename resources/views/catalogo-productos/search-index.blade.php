@@ -46,25 +46,36 @@
                                 <label for="productos_search" class="text-mtv-gray-2 text-base mb-2">
                                     Tu búsqueda es por productos:
                                 </label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        @svg('forkawesome-search', ['class' => 'w-5 h-5 text-mtv-gray-2'])
+                                <div class="flex md:flex-row md:space-x-3 md:space-y-0 xs:flex-col xs:space-y-3">
+                                    <div class="md:basis-10/12 xs:basis-full relative">
+                                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                            @svg('forkawesome-search', ['class' => 'w-5 h-5 text-mtv-gray-2'])
+                                        </div>
+                                        <input type="search"
+                                            id="productos_search" name="productos_search"
+                                            class="block w-full pt-3 pb-3 pl-10 text-sm text-mtv-text-gray border border-gray-300 rounded-lg bg-gray-50 focus:ring-mtv-primary focus:border-mtv-primary"
+                                            placeholder="Buscar por palabras clave..."
+                                            autofocus
+                                            x-model="terminoBusqueda"
+                                            value="{{ $term_busqueda ?? '' }}">
+                                        <input id="tipo_busqueda" name="tipo_busqueda" type="hidden" x-model="tipoBusqueda">
+                                        <button type="submit"
+                                                class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1"
+                                                x-bind:disabled="!terminoBusqueda">
+                                            Buscar
+                                        </button>
                                     </div>
-                                    <input type="search"
-                                           id="productos_search" name="productos_search"
-                                           class="block w-full pt-3 pb-3 pl-10 text-sm text-mtv-text-gray border border-gray-300 rounded-lg bg-gray-50 focus:ring-mtv-primary focus:border-mtv-primary"
-                                           placeholder="Buscar por palabras clave..."
-                                           autofocus
-                                           x-model="terminoBusqueda"
-                                           value="{{ $term_busqueda ?? '' }}">
-                                    <input id="tipo_busqueda" name="tipo_busqueda" type="hidden" x-model="tipoBusqueda">
-                                    <button type="submit"
-                                            class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1"
-                                            x-bind:disabled="!terminoBusqueda">
-                                        Buscar
-                                    </button>
-                                </div>
-                            </form>
+                                    <a href="http://rmsg.df.gob.mx/rmsg/pagina/dai/cabms/CABMSDF5.pdf" 
+                                       target="_blank"
+                                       class="md:basis-2/12 xs:basis-full mtv-link-gold flex flex-row items-center">
+                                        <span class="text-xs">Consulta el catálogo de claves CABMS</span>
+                                        @svg('tabler-report-search', ['class' => 'w-10 h-10'])
+                                    </a>
+                                </div>    
+                                <x-busqueda.productos-filtros-bar>
+                                    <button type="button" class="mtv-button-secondary-white my-0">Mis favoritos</button>
+                                </x-busqueda.productos-filtros-bar>
+                            </form>                            
                             @if($tipo_busqueda === 'productos')
                                 @isset($num_resultados)
                                     @if($num_resultados === 0 && !empty($term_busqueda))
