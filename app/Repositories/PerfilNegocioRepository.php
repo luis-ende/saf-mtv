@@ -52,7 +52,10 @@ class PerfilNegocioRepository
         }
     }
 
-    public function buscaProveedoresPorTermino(string $terminoBusqueda)
+    /**
+     * Realiza búsqueda de proveedores por término y filtros aplicados (Buscador MTV).
+     */
+    public function buscaProveedoresPorTermino(string $terminoBusqueda, array $filtros = [])
     {
         $terminoBusqueda = strtolower($terminoBusqueda);
         $proveedores = PerfilNegocio::select('perfil_negocio.id', 'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio',

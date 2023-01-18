@@ -26,22 +26,34 @@ class BuscadorMTVController extends Controller
 
         return view('catalogo-productos.search-index', compact('num_productos_registrados',
                                                                 'num_proveedores_registrados',
-                                                                           'tipo_busqueda', 'filtros_opciones'));
+                                                                'tipo_busqueda', 'filtros_opciones'));
     }
 
     public function search(Request $request, ProductoRepository $productoRepo, PerfilNegocioRepository $perfNegRepo)
     {
         $this->validate($request, [
-            'productos_search' => 'string',
-            'proveedores_search' => 'string',
+            'productos_search' => 'nullable|string',
+            'proveedores_search' => 'nullable|string',
             'tipo_busqueda' => [
                 'required',
                 Rule::in([BuscadorMTVService::TIPO_BUSQUEDA_PRODUCTOS,
                           BuscadorMTVService::TIPO_BUSQUEDA_PROVEEDORES]),
             ],
-        ]);
+        ]);        
 
+        $filtros = [];
         $tipoBusqueda = $request->input('tipo_busqueda');
+
+        if ($tipoBusqueda === BuscadorMTVService::TIPO_BUSQUEDA_PRODUCTOS) {
+            $this->validate($request, [
+                'sort_productos' => [Rule::in(['nombre', 'cabms', 'partida'])],
+                'capitulo_filtro' => 'array',
+                'partida_filtro' => 'array',
+                'sector_filtro' => 'array',
+            ]);
+
+            $filtros = $request->only('sort_productos', 'capitulo_filtro', 'partida_filtro', 'sector_filtro');
+        }
 
         $busquedaTermino = '';
         if ($tipoBusqueda === 'productos') {
@@ -51,15 +63,15 @@ class BuscadorMTVController extends Controller
         }
 
         $resultadosBusqueda = [];
-        if ($busquedaTermino) {
+        // if ($busquedaTermino) {
             if ($tipoBusqueda === BuscadorMTVService::TIPO_BUSQUEDA_PRODUCTOS) {
-                $resultadosBusqueda = $productoRepo->buscaProductosPorTermino($busquedaTermino);
+                $resultadosBusqueda = $productoRepo->buscaProductosPorTermino($busquedaTermino, $filtros);
             }
 
             if ($tipoBusqueda === BuscadorMTVService::TIPO_BUSQUEDA_PROVEEDORES) {
-                $resultadosBusqueda = $perfNegRepo->buscaProveedoresPorTermino($busquedaTermino);
+                $resultadosBusqueda = $perfNegRepo->buscaProveedoresPorTermino($busquedaTermino, $filtros);
             }
-        }
+        // }
 
         list($num_productos_registrados, $num_proveedores_registrados) =
             $this->productosProveedoresRegistrados($productoRepo, $perfNegRepo);
@@ -93,6 +105,7 @@ class BuscadorMTVController extends Controller
             'partidas' => DB::table('cat_cabms')->distinct()
                                                     ->orderBy('partida')
                                                     ->pluck('partida'),
+            'capitulos' => [1000, 2000, 3000, 4000, 5000],
         ];
     }
 }

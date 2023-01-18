@@ -30,24 +30,24 @@
             </div>
         </div>
 
-        <div class="w-full flex flex-col" x-data="{ categoriaIsOpen: false }">
+        <div class="w-full flex flex-col" x-data="{ capituloIsOpen: false }">
             <button type="button"
                 class="text-mtv-text-gray border rounded p-1"
-                @click="categoriaIsOpen=true">
-                Categoría
+                @click="capituloIsOpen=true">
+                Capítulo
                 <svg class="fill-current h-4 w-4 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
             </button>
-            <div x-show="categoriaIsOpen"
-                @click.away="categoriaIsOpen = false"
+            <div x-show="capituloIsOpen"
+                @click.away="capituloIsOpen = false"
                 class="flex flex-col border rounded p-1">
-                <div class="h-24 w-96 overflow-y-auto">
-                    <ul class="list-none list-outside p-1 text-xs">
-                        @foreach($filtros_opciones['categorias'] as $categoria)
-                            <li class="mb-2">
-                                <input type="checkbox" id="categoria-{{ $categoria->id }}" name="categoria_filtro[]" value="{{ $categoria->id }}">
-                                <label for="categoria-{{ $categoria->id }}">{{ $categoria->categoria_scian }}</label>
+                <div class="h-24 overflow-y-auto">
+                    <ul class="list-none list-outside p-1">
+                        @foreach($filtros_opciones['capitulos'] as $capitulo)
+                            <li>
+                                <input type="checkbox" id="capitulo-{{ $capitulo }}" name="capitulo_filtro[]" value="{{ $capitulo }}">
+                                <label for="capitulo-{{ $capitulo }}">{{ $capitulo }}</label>
                             </li>
                         @endforeach
                     </ul>

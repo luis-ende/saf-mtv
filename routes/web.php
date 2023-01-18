@@ -107,7 +107,7 @@ Route::get('/proveedor/producto/{producto}', [ProveedorController::class, 'showP
 Route::get('/proveedor/perfil/{persona}', [ProveedorController::class, 'showPerfilNegocio'])->name('proveedor-perfil.show');
 
 Route::get('/buscador-mtv/{tipo?}', [BuscadorMTVController::class, 'index'])->name('buscador-mtv.index');
-Route::post('/buscador-mtv/{tipo}/{keyword}', [BuscadorMTVController::class, 'search'])->name('buscador-mtv.search');
+Route::post('/buscador-mtv/{tipo}/{keyword?}', [BuscadorMTVController::class, 'search'])->name('buscador-mtv.search');
 
 Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'index'])->middleware(['auth', 'verified'])->name('centro-notificaciones');
 

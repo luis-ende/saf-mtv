@@ -83,25 +83,74 @@ class ProductoRepository
         return $productos;
     }
 
-    public function buscaProductosPorTermino(string $terminoBusqueda)
+    /**
+     * Realiza búsqueda de productos por término y filtros aplicados (Buscador MTV).
+     */
+    public function buscaProductosPorTermino(?string $terminoBusqueda, array $filtros = [])
     {
-        $terminoBusqueda = strtolower($terminoBusqueda);
-        $productos = Producto::select('productos.id', 'productos.id_cat_productos', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
+        // Se filtran siempre registros de productos que por alguna razón no se completaron
+        $condiciones = [
+            ['registro_fase', '>=', RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS],
+        ];
+
+        $terminoBusqueda = strtolower($terminoBusqueda);        
+
+        $query = Producto::select('productos.id', 'productos.id_cat_productos', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
                                       'cat_cabms.cabms', 'cat_cabms.partida',
                                       'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio')
                                         ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
                                         ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')
-                                        ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona')
-                                        // Se filtran registros de productos que por alguna razón no se completaron
-                                        ->where([
-                                            ['registro_fase', '>=', RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS],
-                                            [DB::raw('LOWER(productos.nombre)'), 'like', '%' . $terminoBusqueda . '%'],
-                                        ])
-                                        ->orWhere(DB::raw('LOWER(cat_cabms.nombre_cabms)'), 'like', '%' . $terminoBusqueda . '%')
-                                        ->orWhere(DB::raw('cat_cabms.cabms'), $terminoBusqueda)
-                                        ->orderBy('nombre')
-                                        ->limit(100)
-                                        ->get();
+                                        ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona')                                        
+                                        ->where($condiciones);
+
+        if (isset($filtros['partida_filtro'])) {
+            $partidas = $filtros['partida_filtro'];
+            $query = $query->where(function($query) use($partidas) {
+                $query->whereIn('cat_cabms.partida', $partidas);
+            });
+        }
+
+        if (isset($filtros['capitulo_filtro'])) {
+            $capitulos = array_map(function($cap) {
+                return $cap[0];
+            }, $filtros['capitulo_filtro']);
+
+            $query = $query->where(function($query) use($capitulos) {
+                $query->whereIn(DB::raw('LEFT(partida, 1)'), $capitulos);
+            });
+        }
+
+        if (isset($filtros['sector_filtro'])) {
+            $sectores = $filtros['sector_filtro'];
+            $query = $query->leftJoin('cat_categorias_scian', 'cat_categorias_scian.id', 'cat_cabms.id_categoria_scian')
+                            ->where(function ($query) use($sectores) {
+                                $query->leftJoin('cat_categorias_scian', 'cat_categorias_scian.id', 'cat_cabms.id_categoria_scian')
+                                        ->whereIn('cat_categorias_scian.id_sector', $sectores)
+                                        ->orWhereExists(function($query) use($sectores) {
+                                            $query->select('cat_categorias_scian.id_sector')
+                                                    ->from('productos_categorias')
+                                                    ->leftJoin('cat_categorias_scian', 'cat_categorias_scian.id', 'productos_categorias.id_categoria_scian')
+                                                    ->whereRaw('productos_categorias.id_producto = productos.id')
+                                                    ->whereIn('cat_categorias_scian.id_sector', $sectores);
+                                        });
+                            });            
+        }
+
+        if ($terminoBusqueda) {
+            $query = $query->where(function ($orQuery) use($terminoBusqueda) {
+                $orQuery->orWhere(DB::raw('LOWER(productos.nombre)'), 'like', '%' . $terminoBusqueda . '%')
+                        ->orWhere(DB::raw('LOWER(cat_cabms.nombre_cabms)'), 'like', '%' . $terminoBusqueda . '%')
+                       ->orWhere(DB::raw('cat_cabms.cabms'), $terminoBusqueda);
+            });
+        }                                        
+
+        if (isset($filtros['sort_productos'])) {
+            $query = $query->orderBy($filtros['sort_productos']);
+        }        
+        
+
+        $productos = $query->limit(100)
+                           ->get();
 
         // TODO Obtener información en join!
         $productos->each(function (&$producto) {

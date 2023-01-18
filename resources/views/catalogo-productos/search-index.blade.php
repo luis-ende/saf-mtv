@@ -82,7 +82,7 @@
                                         @endif
                                         @if($num_resultados > 0 && !empty($term_busqueda))
                                             <div class="p-0 mt-2 text-slate-700">
-                                                <span class="font-bold">{{ $num_resultados }}</span> productos encontrados con el término <span class="font-bold">"{{ $term_busqueda }}</span>
+                                                <span class="font-bold">{{ $num_resultados }}</span> productos encontrados con el término <span class="font-bold">"{{ $term_busqueda }}"</span>
                                             </div>
                                         @endif
                                     @endisset
@@ -142,7 +142,7 @@
                                         @endif
                                         @if($num_resultados > 0 && !empty($term_busqueda))
                                             <div class="p-0 mt-2 text-slate-700">
-                                                <span class="font-bold">{{ $num_resultados }}</span> proveedores encontrados con el término <span class="font-bold">"{{ $term_busqueda }}</span>
+                                                <span class="font-bold">{{ $num_resultados }}</span> proveedores encontrados con el término <span class="font-bold">"{{ $term_busqueda }}"</span>
                                             </div>
                                         @endif
                                     @endisset
