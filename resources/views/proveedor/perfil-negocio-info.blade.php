@@ -68,11 +68,11 @@
                                             />
                                             <input type="hidden" id="logotipo_path" name="logotipo_path" value="{{ $logotipoUrl ?? '' }}">
                                             <x-perfil-negocio.redes-sociales-links :links="$persona->perfil_negocio->enlacesRedesSociales()" />
-                                            <div class="text-center">
-                                                <button type="button" class="mtv-button-secondary">
-                                                    @svg('ri-mail-send-line', ['class' => 'w-5 h-5 inline-block'])
+                                            <div class="text-center py-4">
+                                                <a href="mailto:{{ $persona->email }}" class="mtv-button-secondary no-underline py-2 text-base">
+                                                    @svg('ri-mail-send-line', ['class' => 'w-5 h-5 inline-block mr-3'])
                                                     Enviar correo
-                                                </button>
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="md:basis-3/4 xs:basis-full mx-0 text-mtv-gray-2">

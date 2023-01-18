@@ -44,6 +44,12 @@
                     @endif
                 </div>
             </div>
+            <div class="text-center py-4">
+                <a href="mailto:{{ $producto->proveedor_email }}" class="mtv-button-secondary no-underline py-2 text-base">
+                    @svg('ri-mail-send-line', ['class' => 'w-5 h-5 inline-block mr-3'])
+                    Enviar correo
+                </a>
+            </div>
         </div>
     </div>
     <div class="md:basis-8/12 xs:basis-full"

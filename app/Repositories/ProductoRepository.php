@@ -120,8 +120,9 @@ class ProductoRepository
                                 ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms');
 
         if ($conProveedor) {
-            $query = $query->addSelect('perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio')
+            $query = $query->addSelect('perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio', 'personas.email AS proveedor_email')                           
                            ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')
+                           ->leftJoin('personas', 'personas.id', '=', 'cat_productos.id_persona')
                            ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona');
         }
 
