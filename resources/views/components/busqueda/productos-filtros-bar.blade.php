@@ -1,30 +1,33 @@
-<div class="py-3 flex flex-row space-x-2">
-    <div class="basis-10/12 flex flex-row space-x-2">
+@props(['filtros_opciones' => []])
+
+<div class="py-3 flex flex-row space-x-2 md:flex-nowrap xs:flex-wrap">
+    <div class="basis-10/12 flex flex-row space-x-2 md:flex-nowrap xs:flex-wrap">
         <div class="w-full flex flex-col" x-data="{ ordenIsOpen: false }">
             <button type="button"
                 class="text-mtv-text-gray border rounded p-1"
                 @click="ordenIsOpen=true">
-                Ordenar por            
-                <svg class="fill-current h-4 w-4 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                Ordenar por
+                <svg class="fill-current h-4 w-4 inline-block self-end" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                </svg>            
-            </button>            
+                </svg>
+            </button>
             <div x-show="ordenIsOpen"
                 @click.away="ordenIsOpen = false"
-                class="flex flex-col border rounded p-2"> 
+                class="flex flex-col border rounded p-1">
                 <div class="">
-                    <input type="radio" id="html" name="fav_language" value="HTML" checked>
-                    <label for="html">Nombre</label><br>
-                    <input type="radio" id="css" name="fav_language" value="CSS">
-                    <label for="css">CABMS</label><br>
-                    <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-                    <label for="javascript">Partida</label> 
+                    <input type="radio" id="sort_nombre" name="sort_productos" value="nombre" checked>
+                    <label for="sort_nombre">Nombre</label><br>
+                    <input type="radio" id="sort_cabms" name="sort_productos" value="cabms">
+                    <label for="sort_cabms">CABMS</label><br>
+                    <input type="radio" id="sort_partida" name="sort_productos" value="partida">
+                    <label for="sort_partida">Partida</label>
                 </div>
-                <button type="submit"
+                <button type="button"
+                    @click="$event.target.form.submit()"
                     class="mtv-button-secondary-white my-1 inline-block">
                     Buscar
                 </button>
-            </div>        
+            </div>
         </div>
 
         <div class="w-full flex flex-col" x-data="{ categoriaIsOpen: false }">
@@ -34,30 +37,27 @@
                 Categoría
                 <svg class="fill-current h-4 w-4 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                </svg>            
-            </button>            
+                </svg>
+            </button>
             <div x-show="categoriaIsOpen"
                 @click.away="categoriaIsOpen = false"
-                class="flex flex-col border rounded p-2"> 
-                <div class="h-24 overflow-y-auto">
-                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                    <label for="vehicle1">Categoría 1</label><br>
-                    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-                    <label for="vehicle2">Categoría 2</label><br>
-                    <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-                    <label for="vehicle3">Categoría 3</label>                    
-                    <input type="checkbox" id="vehicle4" name="vehicle4" value="Bike">
-                    <label for="vehicle4">Categoría 4</label><br>
-                    <input type="checkbox" id="vehicle5" name="vehicle5" value="Car">
-                    <label for="vehicle5">Categoría 5</label><br>
-                    <input type="checkbox" id="vehicle6" name="vehicle6" value="Boat">
-                    <label for="vehicle6">Categoría 6</label>                    
+                class="flex flex-col border rounded p-1">
+                <div class="h-24 w-96 overflow-y-auto">
+                    <ul class="list-none list-outside p-1 text-xs">
+                        @foreach($filtros_opciones['categorias'] as $categoria)
+                            <li class="mb-2">
+                                <input type="checkbox" id="categoria-{{ $categoria->id }}" name="categoria_filtro[]" value="{{ $categoria->id }}">
+                                <label for="categoria-{{ $categoria->id }}">{{ $categoria->categoria_scian }}</label>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
-                <button type="submit"
+                <button type="button"
+                    @click="$event.target.form.submit()"
                     class="mtv-button-secondary-white my-1 inline-block">
                     Buscar
                 </button>
-            </div>        
+            </div>
         </div>
 
         <div class="w-full flex flex-col" x-data="{ partidaIsOpen: false }">
@@ -67,26 +67,28 @@
                 Partida
                 <svg class="fill-current h-4 w-4 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                </svg>            
-            </button>            
+                </svg>
+            </button>
             <div x-show="partidaIsOpen"
                 @click.away="partidaIsOpen = false"
-                class="flex flex-col border rounded p-2"> 
-                <div class="">
-                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                    <label for="vehicle1">Partida 1</label><br>
-                    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-                    <label for="vehicle2">Partida 2</label><br>
-                    <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-                    <label for="vehicle3">Partida 3</label>
+                class="flex flex-col border rounded p-1">
+                <div class="h-24 overflow-y-auto">
+                    <ul class="list-none list-outside p-1">
+                        @foreach($filtros_opciones['partidas'] as $partida)
+                            <li>
+                                <input type="checkbox" id="partida-{{ $partida }}" name="partida_filtro[]" value="{{ $partida }}">
+                                <label for="partida-{{ $partida }}">{{ $partida }}</label>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
-                <button type="submit"
+                <button type="button"
+                    @click="$event.target.form.submit()"
                     class="mtv-button-secondary-white my-1 inline-block">
                     Buscar
                 </button>
-            </div>        
+            </div>
         </div>
-        
 
         <div class="w-full flex flex-col" x-data="{ sectorIsOpen: false }">
             <button type="button"
@@ -95,28 +97,31 @@
                 Sector
                 <svg class="fill-current h-4 w-4 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                </svg>            
-            </button>            
+                </svg>
+            </button>
             <div x-show="sectorIsOpen"
                 @click.away="sectorIsOpen = false"
-                class="flex flex-col border rounded p-2"> 
+                class="flex flex-col border rounded p-1">
                 <div class="">
-                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                    <label for="vehicle1">Sector 1</label><br>
-                    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-                    <label for="vehicle2">Sector 2</label><br>
-                    <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-                    <label for="vehicle3">Sector 3</label>
+                    <ul class="list-none list-outside p-1">
+                    @foreach($filtros_opciones['sectores'] as $sector)
+                        <li>
+                            <input type="checkbox" id="sector-{{ $sector->id }}" name="sector_filtro[]" value="{{ $sector->id }}">
+                            <label for="sector-{{ $sector->id }}">{{ $sector->sector }}</label>
+                        </li>
+                    @endforeach
+                    </ul>
                 </div>
-                <button type="submit"
+                <button type="button"
+                    @click="$event.target.form.submit()"
                     class="mtv-button-secondary-white my-1 inline-block">
                     Buscar
                 </button>
-            </div>        
+            </div>
         </div>
     </div>
 
-    <div class="basis-2/12">
+    <div class="md:basis-2/12 xs:basis-full">
         {{ $slot }}
-    </div>    
+    </div>
 </div>

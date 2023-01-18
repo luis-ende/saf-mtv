@@ -65,36 +65,39 @@
                                             Buscar
                                         </button>
                                     </div>
-                                    <a href="http://rmsg.df.gob.mx/rmsg/pagina/dai/cabms/CABMSDF5.pdf" 
+                                    <a href="http://rmsg.df.gob.mx/rmsg/pagina/dai/cabms/CABMSDF5.pdf"
                                        target="_blank"
                                        class="md:basis-2/12 xs:basis-full mtv-link-gold flex flex-row items-center">
                                         <span class="text-xs">Consulta el catálogo de claves CABMS</span>
                                         @svg('tabler-report-search', ['class' => 'w-10 h-10'])
                                     </a>
-                                </div>    
-                                <x-busqueda.productos-filtros-bar>
+                                </div>
+
+                                @if($tipo_busqueda === 'productos')
+                                    @isset($num_resultados)
+                                        @if($num_resultados === 0 && !empty($term_busqueda))
+                                            <div class="p-0 mt-2 text-slate-700">
+                                                No se encontraron productos con el término <span class="font-bold">"{{ $term_busqueda }}"</span>.
+                                            </div>
+                                        @endif
+                                        @if($num_resultados > 0 && !empty($term_busqueda))
+                                            <div class="p-0 mt-2 text-slate-700">
+                                                <span class="font-bold">{{ $num_resultados }}</span> productos encontrados con el término <span class="font-bold">"{{ $term_busqueda }}</span>
+                                            </div>
+                                        @endif
+                                    @endisset
+                                @endif
+
+                                <x-busqueda.productos-filtros-bar
+                                    :filtros_opciones="$filtros_opciones">
                                     <button type="button" class="mtv-button-secondary-white my-0">Mis favoritos</button>
                                 </x-busqueda.productos-filtros-bar>
-                            </form>                            
-                            @if($tipo_busqueda === 'productos')
-                                @isset($num_resultados)
-                                    @if($num_resultados === 0 && !empty($term_busqueda))
-                                        <div class="p-0 mt-2 text-slate-700">
-                                            No se encontraron productos con el término <span class="font-bold">"{{ $term_busqueda }}"</span>.
-                                        </div>
-                                    @endif
-                                    @if($num_resultados > 0 && !empty($term_busqueda))
-                                        <div class="p-0 mt-2 mb-5 text-slate-700">
-                                            <span class="font-bold">{{ $num_resultados }}</span> Productos encontrados con el término <span class="font-bold">"{{ $term_busqueda }}</span>
-                                        </div>
-                                    @endif
-                                @endisset
-                            @endif
+                            </form>
                         </div>
 
                         @if($tipo_busqueda === 'productos')
                             @isset($resultados)
-                                <div class="w-full">
+                                <div class="w-full mt-20">
                                     <x-productos.productos-grid
                                         modo="busqueda"
                                         :productos="$resultados" />
@@ -129,26 +132,31 @@
                                         Buscar
                                     </button>
                                 </div>
+
+                                @if($tipo_busqueda === 'proveedores')
+                                    @isset($num_resultados)
+                                        @if($num_resultados === 0 && !empty($term_busqueda))
+                                            <div class="p-0 mt-2 text-slate-700">
+                                                No se encontraron proveedores con el término <span class="font-bold">"{{ $term_busqueda }}"</span>.
+                                            </div>
+                                        @endif
+                                        @if($num_resultados > 0 && !empty($term_busqueda))
+                                            <div class="p-0 mt-2 text-slate-700">
+                                                <span class="font-bold">{{ $num_resultados }}</span> proveedores encontrados con el término <span class="font-bold">"{{ $term_busqueda }}</span>
+                                            </div>
+                                        @endif
+                                    @endisset
+                                @endif
+
+                                <x-busqueda.proveedores-filtros-bar
+                                    :filtros_opciones="$filtros_opciones">
+                                </x-busqueda.proveedores-filtros-bar>
                             </form>
-                            @if($tipo_busqueda === 'proveedores')
-                                @isset($num_resultados)
-                                    @if($num_resultados === 0 && !empty($term_busqueda))
-                                        <div class="p-0 mt-2 text-slate-700">
-                                            No se encontraron proveedores con el término <span class="font-bold">"{{ $term_busqueda }}"</span>.
-                                        </div>
-                                    @endif
-                                    @if($num_resultados > 0 && !empty($term_busqueda))
-                                        <div class="p-0 mt-2 mb-5 text-slate-700">
-                                            <span class="font-bold">{{ $num_resultados }}</span> Proveedores encontrados con el término <span class="font-bold">"{{ $term_busqueda }}</span>
-                                        </div>
-                                    @endif
-                                @endisset
-                            @endif
                         </div>
 
                         @if($tipo_busqueda === 'proveedores')
                             @isset($resultados)
-                                <div class="w-full">
+                                <div class="w-full mt-10">
                                     <x-proveedores.proveedor-grid
                                         :proveedores="$resultados" />
                                 </div>

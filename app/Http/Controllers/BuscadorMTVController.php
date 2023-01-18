@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoriaScian;
+use App\Models\Sector;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use App\Services\BuscadorMTVService;
 use App\Repositories\ProductoRepository;
@@ -19,9 +22,11 @@ class BuscadorMTVController extends Controller
             $this->productosProveedoresRegistrados($productoRepo, $perfNegRepo);
         $tipo_busqueda = $tipoBusqueda ?? 'productos';
 
+        $filtros_opciones = $this->obtieneFiltrosOpciones();
+
         return view('catalogo-productos.search-index', compact('num_productos_registrados',
                                                                 'num_proveedores_registrados',
-                                                                           'tipo_busqueda'));
+                                                                           'tipo_busqueda', 'filtros_opciones'));
     }
 
     public function search(Request $request, ProductoRepository $productoRepo, PerfilNegocioRepository $perfNegRepo)
@@ -31,7 +36,7 @@ class BuscadorMTVController extends Controller
             'proveedores_search' => 'string',
             'tipo_busqueda' => [
                 'required',
-                Rule::in([BuscadorMTVService::TIPO_BUSQUEDA_PRODUCTOS, 
+                Rule::in([BuscadorMTVService::TIPO_BUSQUEDA_PRODUCTOS,
                           BuscadorMTVService::TIPO_BUSQUEDA_PROVEEDORES]),
             ],
         ]);
@@ -59,6 +64,8 @@ class BuscadorMTVController extends Controller
         list($num_productos_registrados, $num_proveedores_registrados) =
             $this->productosProveedoresRegistrados($productoRepo, $perfNegRepo);
 
+        $filtros_opciones = $this->obtieneFiltrosOpciones();
+
         return view('catalogo-productos.search-index', [
             'term_busqueda' => $busquedaTermino,
             'num_productos_registrados' => $num_productos_registrados,
@@ -66,6 +73,7 @@ class BuscadorMTVController extends Controller
             'num_resultados' => count($resultadosBusqueda),
             'resultados' => $resultadosBusqueda,
             'tipo_busqueda' => $request->input('tipo_busqueda'),
+            'filtros_opciones' => $filtros_opciones,
         ]);
     }
 
@@ -74,6 +82,17 @@ class BuscadorMTVController extends Controller
         return [
             $productoRepo->obtieneNumeroProductosRegistrados(),
             $perfNegRepo->obtieneNumeroProveedoresRegistrados(),
+        ];
+    }
+
+    private function obtieneFiltrosOpciones(): array
+    {
+        return [
+            'sectores' => Sector::all(),
+            'categorias' => CategoriaScian::all(),
+            'partidas' => DB::table('cat_cabms')->distinct()
+                                                    ->orderBy('partida')
+                                                    ->pluck('partida'),
         ];
     }
 }

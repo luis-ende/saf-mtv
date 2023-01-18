@@ -92,11 +92,15 @@ class ProductoRepository
                                         ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
                                         ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')
                                         ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona')
-                                        // TODO ['registro_fase', '>=', RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS]
-                                        ->where(DB::raw('LOWER(productos.nombre)'), 'like', '%' . $terminoBusqueda . '%')
+                                        // Se filtran registros de productos que por alguna razón no se completaron
+                                        ->where([
+                                            ['registro_fase', '>=', RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS],
+                                            [DB::raw('LOWER(productos.nombre)'), 'like', '%' . $terminoBusqueda . '%'],
+                                        ])
                                         ->orWhere(DB::raw('LOWER(cat_cabms.nombre_cabms)'), 'like', '%' . $terminoBusqueda . '%')
                                         ->orWhere(DB::raw('cat_cabms.cabms'), $terminoBusqueda)
                                         ->orderBy('nombre')
+                                        ->limit(100)
                                         ->get();
 
         // TODO Obtener información en join!
@@ -171,7 +175,7 @@ class ProductoRepository
                                         ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
                                         ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')
                                         ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona')
-                                        // Descartar registros de productos que por alguna razón no se completaron
+                                        // Se filtran registros de productos que por alguna razón no se completaron
                                         ->where('productos.registro_fase', '>=', RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS)
                                         ->where(function ($query) use($categorias) {
                                             $query->whereIn('cat_cabms.id_categoria_scian', $categorias)
