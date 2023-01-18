@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\App;
 
+/**
+ * Modelo que corresponde a la entidad de negocio Proveedor.
+ */
 class Persona extends Model
 {
     public const TIPO_PERSONA_FISICA_ID = 'F';

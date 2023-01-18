@@ -55,19 +55,49 @@ class PerfilNegocioRepository
     /**
      * Realiza búsqueda de proveedores por término y filtros aplicados (Buscador MTV).
      */
-    public function buscaProveedoresPorTermino(string $terminoBusqueda, array $filtros = [])
+    public function buscaProveedoresPorTermino(?string $terminoBusqueda, array $filtros = [])
     {
         $terminoBusqueda = strtolower($terminoBusqueda);
-        $proveedores = PerfilNegocio::select('perfil_negocio.id', 'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio',
+        $query = PerfilNegocio::select('perfil_negocio.id', 'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio',
                                             'cat_sectores.sector', 'cat_categorias_scian.categoria_scian', 'cat_productos.id AS id_cat_productos')
             ->leftJoin('cat_sectores', 'cat_sectores.id', '=', 'perfil_negocio.id_sector')
             ->leftJoin('cat_categorias_scian', 'cat_categorias_scian.id', '=', 'perfil_negocio.id_categoria_scian')
-            ->leftJoin('cat_productos', 'cat_productos.id_persona', '=', 'perfil_negocio.id_persona')
-            ->where(DB::raw('LOWER(perfil_negocio.nombre_negocio)'), 'like', '%' . $terminoBusqueda . '%')
-            ->orWhere(DB::raw('LOWER(perfil_negocio.descripcion_negocio)'), 'like', '%' . $terminoBusqueda . '%')
-            ->orderBy('perfil_negocio.nombre_negocio')
-            ->limit(30)
-            ->get();
+            ->leftJoin('cat_productos', 'cat_productos.id_persona', '=', 'perfil_negocio.id_persona');            
+
+        if (isset($filtros['grupo_p_filtro'])) {
+            $gruposP = $filtros['grupo_p_filtro'];
+            $query = $query->where(function($query) use($gruposP) {
+                $query->whereIn('perfil_negocio.id_grupo_prioritario', $gruposP);
+            });
+        }
+
+        if (isset($filtros['categoria_filtro'])) {        
+            $categorias = $filtros['categoria_filtro'];
+            $query = $query->where(function($query) use($categorias) {
+                $query->whereIn('perfil_negocio.id_categoria_scian', $categorias);
+            });
+        }
+
+        if (isset($filtros['sector_prov_filtro'])) {
+            $sectores = $filtros['sector_prov_filtro'];
+            $query = $query->where(function($query) use($sectores) {
+                $query->whereIn('perfil_negocio.id_sector', $sectores);
+            });
+        }
+
+        if ($terminoBusqueda) {            
+            $query = $query->where(function($orQuery) use($terminoBusqueda) {
+                $orQuery->orWhere(DB::raw('LOWER(perfil_negocio.nombre_negocio)'), 'like', '%' . $terminoBusqueda . '%')
+                      ->orWhere(DB::raw('LOWER(perfil_negocio.descripcion_negocio)'), 'like', '%' . $terminoBusqueda . '%');
+            });
+        }
+
+        if (isset($filtros['sort_proveedores'])) {
+            $query = $query->orderBy($filtros['sort_proveedores']);
+        }
+
+        $proveedores = $query->limit(30)
+                             ->get();
 
         // TODO Obtener información en join
         $proveedores->each(function (&$proveedor) {

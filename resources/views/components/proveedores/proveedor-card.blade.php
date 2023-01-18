@@ -3,7 +3,7 @@
 <article class="md:mb-0 xs:mb-5">
     <div class="flex flex-col">
         <div class="flex flex-row mb-1">
-            <span class="text-mtv-gold uppercase text-xs basis-1/2 text-start ml-2">{{ $proveedor->nombre_negocio }}</span>
+            <span class="text-mtv-gold uppercase text-xs basis-full text-start ml-2">{{ $proveedor->nombre_negocio }}</span>
         </div>
         @php($proveedorRoute = route('proveedor-perfil.show', [$proveedor->id_persona]))
         <div class="border rounded border-mtv-gray p-2 flex flex-col space-y-2">

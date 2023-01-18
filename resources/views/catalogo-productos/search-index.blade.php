@@ -89,15 +89,20 @@
                                 @endif
 
                                 <x-busqueda.productos-filtros-bar
-                                    :filtros_opciones="$filtros_opciones">
-                                    <button type="button" class="mtv-button-secondary-white my-0">Mis favoritos</button>
-                                </x-busqueda.productos-filtros-bar>
-                            </form>
+                                    :filtros_opciones="$filtros_opciones" />                                
+                            </form>                            
+                        </div>
+
+                        <div class="self-end">
+                            <button type="button" class="mtv-button-secondary-white">
+                                @svg('gmdi-favorite-r', ['class' => 'w-5 h-5 inline-block mr-3'])
+                                Mis favoritos
+                            </button>
                         </div>
 
                         @if($tipo_busqueda === 'productos')
                             @isset($resultados)
-                                <div class="w-full mt-20">
+                                <div class="w-full mt-10">
                                     <x-productos.productos-grid
                                         modo="busqueda"
                                         :productos="$resultados" />
@@ -149,8 +154,7 @@
                                 @endif
 
                                 <x-busqueda.proveedores-filtros-bar
-                                    :filtros_opciones="$filtros_opciones">
-                                </x-busqueda.proveedores-filtros-bar>
+                                    :filtros_opciones="$filtros_opciones" />                                
                             </form>
                         </div>
 

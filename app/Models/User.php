@@ -10,6 +10,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * Modelo que corresponde a la entidad Usuario de MTV.
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
