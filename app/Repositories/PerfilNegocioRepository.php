@@ -13,7 +13,7 @@ class PerfilNegocioRepository
         return DB::table('personas')->count();
     }
 
-    public function obtieneDatosProveedor(int $personaId)
+    public function obtieneDatosProveedor(int $personaId): PerfilNegocio
     {
         return PerfilNegocio::select('perfil_negocio.id', 'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio',
                                      'cat_sectores.sector', 'cat_categorias_scian.categoria_scian')

@@ -104,7 +104,7 @@
             <div x-show="ordenIsOpen"
                 @click.away="ordenIsOpen = false"
                 class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg p-2">
-                <div class="h-16 w-48">
+                <div class="h-16 w-48 uppercase">
                     <input class="mr-1" type="radio" id="sort_nombre" name="sort_productos" value="nombre" checked>
                     <label for="sort_nombre">Nombre</label><br>
                     <input class="mr-1" type="radio" id="sort_cabms" name="sort_productos" value="cabms">

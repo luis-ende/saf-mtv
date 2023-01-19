@@ -38,7 +38,7 @@
                                             </span>
                                             <span class="basis-1/3">
                                                 <label>Constancia:</label>
-                                                <span class="text-mtv-text-gray">Sin registro</span>
+                                                <span class="text-mtv-text-gray">{{ $etapa_padron_prov }}</span>
                                             </span>
                                         </span>
                                     </div>

@@ -95,7 +95,7 @@
             </div>
         </div>
 
-        <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ padronEstatusIsOpen: false }">
+        <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ padronEstatusIsOpen: false }">
             <button type="button"
                     class="w-56 border rounded p-1 uppercase"
                     @click="padronEstatusIsOpen=true">
@@ -117,7 +117,7 @@
                             </li>
                         @endforeach
                         <li>
-                            <input type="checkbox" id="sector_prov_0" name="sector_prov_filtro[]" value="{{ $sector->id }}">
+                            <input class="mr-1" type="checkbox" id="sector_prov_0" name="sector_prov_filtro[]" value="{{ $sector->id }}">
                             <label for="sector_prov_0">Sin registro</label>
                         </li>
                     </ul>
@@ -141,7 +141,7 @@
             <div x-show="ordenProvIsOpen"
                 @click.away="ordenProvIsOpen = false"
                 class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-2xl p-2">
-                <div class="h-16 w-48">
+                <div class="h-16 w-48 uppercase">
                     <input class="mr-1" type="radio" id="sort_nombre" name="sort_proveedores" value="nombre_negocio" checked>
                     <label for="sort_nombre">Nombre comercial</label><br>
                     <input class="mr-1" type="radio" id="sort_sector" name="sort_proveedores" value="sector">

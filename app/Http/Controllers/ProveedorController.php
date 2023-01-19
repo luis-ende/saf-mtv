@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CatalogoProductos;
-use App\Models\CategoriaScian;
+use App\Models\Sector;
 use App\Models\Persona;
 use App\Models\Producto;
-use App\Models\Sector;
-use App\Repositories\PerfilNegocioRepository;
+use App\Models\CategoriaScian;
+use App\Models\CatalogoProductos;
 use App\Repositories\ProductoRepository;
+use App\Repositories\PerfilNegocioRepository;
+use App\Services\ConsultaPadronProveedoresService;
 
 class ProveedorController extends Controller
 {
@@ -28,26 +29,25 @@ class ProveedorController extends Controller
         ]);
     }
 
-    public function showCatalogoProductos(int $catalogoId, ProductoRepository $productoRepo, PerfilNegocioRepository $perfNegRepo)
+    public function showCatalogoProductos(int $catalogoId, 
+                                          ProductoRepository $productoRepo, 
+                                          PerfilNegocioRepository $perfNegRepo, 
+                                          ConsultaPadronProveedoresService $consultaPadron)
     {
         $catProductos = CatalogoProductos::select('id_persona')->where('id', $catalogoId)->firstOrFail();
-
-        $proveedorInfo = $perfNegRepo->obtieneDatosProveedor($catProductos->id_persona);
-
+        $proveedor = $perfNegRepo->obtieneDatosProveedor($catProductos->id_persona);
         $productos = $productoRepo->obtieneProductosPorCatalogo($catalogoId);
-
-        $productosBien = $productos->filter(function ($producto) {
+        $productos_bien = $productos->filter(function ($producto) {
             return $producto->tipo === Producto::TIPO_PRODUCTO_BIEN_ID;
         });
-        $productosServicio = $productos->filter(function ($producto) {
+        $productos_servicio = $productos->filter(function ($producto) {
             return $producto->tipo === Producto::TIPO_PRODUCTO_SERVICIO_ID;
         });
 
-        return view('proveedor.catalogo-productos', [
-            'proveedor' => $proveedorInfo,
-            'productos_bien' => $productosBien,
-            'productos_servicio' => $productosServicio,
-        ]);
+        $etapa_padron_prov = $this->obtieneTextoEtapaProveedor($proveedor->persona->rfc);
+
+        return view('proveedor.catalogo-productos', 
+                    compact('proveedor', 'productos_bien', 'productos_servicio', 'etapa_padron_prov'));
     }
 
     public function showPerfilNegocio(int $personaId)
@@ -59,8 +59,17 @@ class ProveedorController extends Controller
         $carta_presentacion = $persona->perfil_negocio->getFirstMedia('documentos');
         $catalogo_pdf = $persona->perfil_negocio->getFirstMedia('catalogos_pdf');
 
+        $etapa_padron_prov = $this->obtieneTextoEtapaProveedor($persona->rfc);
+
         return view('proveedor.perfil-negocio-info',
-            compact('persona', 'sector', 'categoria_scian',
-                             'carta_presentacion', 'catalogo_pdf'));
+            compact('persona', 'sector', 'categoria_scian', 'etapa_padron_prov',
+                    'carta_presentacion', 'catalogo_pdf'));
+    }
+
+    private function obtieneTextoEtapaProveedor($rfc) 
+    {
+        $consultaPadron = new ConsultaPadronProveedoresService();
+        $etapa_padron_prov = $consultaPadron->consultaPadronProveedores($rfc);
+        return !isset($estatus_padron_prov['error']) ? $etapa_padron_prov['etapa'] : 'No disponible';
     }
 }
