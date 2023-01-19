@@ -12,6 +12,7 @@ use App\Http\Controllers\BuscadorMTVController;
 use App\Http\Controllers\CatalogoProductosController;
 use App\Http\Controllers\ProgramacionAnualController;
 use App\Http\Controllers\CentroNotificacionesController;
+use App\Http\Controllers\EntidadURGController;
 use App\Http\Controllers\UsuarioConfiguracionController;
 
 /*
@@ -108,6 +109,13 @@ Route::get('/proveedor/perfil/{persona}', [ProveedorController::class, 'showPerf
 
 Route::get('/buscador-mtv/{tipo?}', [BuscadorMTVController::class, 'index'])->name('buscador-mtv.index');
 Route::post('/buscador-mtv/{tipo}/{keyword?}', [BuscadorMTVController::class, 'search'])->name('buscador-mtv.search');
+
+Route::middleware(['role:urg', 'auth'])->group(function() {
+    Route::controller(EntidadURGController::class)->group(function () {
+        Route::get('/urg-productos/favoritos', 'indexFavoritos')->name('urg-productos-favoritos.index');
+        Route::post('/urg-productos/favoritos/{producto}', 'updateProductoFavoritos')->name('urg-productos-favoritos.update');
+    });
+});
 
 Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'index'])->middleware(['auth', 'verified'])->name('centro-notificaciones');
 

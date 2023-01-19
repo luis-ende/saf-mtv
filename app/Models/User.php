@@ -56,4 +56,16 @@ class User extends Authenticatable
     {
         return $this->hasOne(Persona::class, 'id', 'id_persona');
     }
+
+    /**
+     * Nombre genérico de usuario.
+     */
+    public function nombreUsuario()
+    {
+        if ($this->persona) {
+            return $this->persona->nombre_o_razon_social();
+        } else {
+            return $this->rfc;
+        }
+    }
 }

@@ -35,19 +35,21 @@
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Inicio') }}
                 </x-responsive-nav-link>
+                @role('proveedor')
                 <x-responsive-nav-link :href="route('catalogo-productos')" :active="request()->routeIs('catalogo-productos')">
                     {{ __('Mi Catálogo') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('oportunidades-negocio')">
                     {{ __('Oportunidades') }}
                 </x-responsive-nav-link>
+                @endrole
             </div>
 
             <!-- Responsive Settings Options -->
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="px-4">
                     <div class="font-medium text-base text-gray-800">{{ Auth::user()->rfc }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->persona->nombre_o_razon_social() }}</div>
+                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->nombreUsuario() }}</div>
                 </div>
 
                 <div class="mt-3 space-y-1">
@@ -76,12 +78,14 @@
                             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                                 {{ __('Inicio') }}
                             </x-nav-link>
+                            @role('proveedor')
                             <x-nav-link :href="route('catalogo-productos')" :active="request()->routeIs('catalogo-productos')">
                                 {{ __('Mi Catálogo') }}
                             </x-nav-link>
                             <x-nav-link :href="route('oportunidades-negocio')" :active="request()->routeIs('oportunidades-negocio')">
                                 {{ __('Oportunidades') }}
                             </x-nav-link>
+                            @endrole
                             <div class="inline-flex items-center px-1 pt-1 text-base font-base leading-5 text-mtv-gold hover:text-mtv-primary hover:border-gray-300 focus:outline-none focus:text-mtv-primary focus:border-gray-300 transition duration-150 ease-in-out no-underline">
                                 <x-dropdown align="left" width="56">
                                     <x-slot name="trigger">

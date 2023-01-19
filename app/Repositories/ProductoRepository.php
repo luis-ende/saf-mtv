@@ -95,13 +95,15 @@ class ProductoRepository
 
         $terminoBusqueda = strtolower($terminoBusqueda);        
 
+        $productoClass = Producto::class;
         $query = Producto::select('productos.id', 'productos.id_cat_productos', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
-                                      'cat_cabms.cabms', 'cat_cabms.partida',
-                                      'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio')
-                                        ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
-                                        ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')
-                                        ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona')                                        
-                                        ->where($condiciones);
+                                  'cat_cabms.cabms', 'cat_cabms.partida',
+                                  'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio',
+                                  DB::raw("(SELECT COUNT(markable_id) FROM markable_favorites WHERE markable_id = productos.id AND markable_type = '{$productoClass}') AS num_favoritos"))
+                            ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
+                            ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')
+                            ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona')                                    
+                            ->where($condiciones);        
 
         if (isset($filtros['partida_filtro'])) {
             $partidas = $filtros['partida_filtro'];
@@ -140,14 +142,13 @@ class ProductoRepository
             $query = $query->where(function ($orQuery) use($terminoBusqueda) {
                 $orQuery->orWhere(DB::raw('LOWER(productos.nombre)'), 'like', '%' . $terminoBusqueda . '%')
                         ->orWhere(DB::raw('LOWER(cat_cabms.nombre_cabms)'), 'like', '%' . $terminoBusqueda . '%')
-                       ->orWhere(DB::raw('cat_cabms.cabms'), $terminoBusqueda);
+                        ->orWhere(DB::raw('cat_cabms.cabms'), $terminoBusqueda);
             });
         }                                        
 
         if (isset($filtros['sort_productos'])) {
             $query = $query->orderBy($filtros['sort_productos']);
-        }        
-        
+        }                    
 
         $productos = $query->limit(100)
                            ->get();
@@ -162,10 +163,12 @@ class ProductoRepository
 
     public function obtieneProductoInfo(int $productoId, bool $conProveedor = false)
     {
+        $productoClass = Producto::class;
         $query = Producto::select('productos.id', 'productos.id_cat_productos', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
                                 'productos.descripcion', 'productos.marca', 'productos.modelo', 'productos.color',
                                 'productos.material', 'productos.codigo_barras',
-                                'cat_cabms.cabms', 'cat_cabms.nombre_cabms', 'cat_cabms.partida', 'cat_cabms.id_categoria_scian')
+                                'cat_cabms.cabms', 'cat_cabms.nombre_cabms', 'cat_cabms.partida', 'cat_cabms.id_categoria_scian',
+                                DB::raw("(SELECT COUNT(markable_id) FROM markable_favorites WHERE markable_id = productos.id AND markable_type = '{$productoClass}') AS num_favoritos"))
                                 ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms');
 
         if ($conProveedor) {
@@ -219,9 +222,11 @@ class ProductoRepository
 
     public function obtieneProductosPorCategoriasSCIAN(array $categorias)
     {
+        $productoClass = Producto::class;
         $productos = Producto::select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
                                       'cat_cabms.cabms', 'cat_cabms.partida',
-                                      'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio')
+                                      'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio', 
+                                      DB::raw("(SELECT COUNT(markable_id) FROM markable_favorites WHERE markable_id = productos.id AND markable_type = '{$productoClass}') AS num_favoritos"))
                                         ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
                                         ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')
                                         ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona')

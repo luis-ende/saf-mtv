@@ -25,16 +25,18 @@
         </x-slot>
     </x-dropdown>
 
+    @role('proveedor')
     <a class="text-mtv-primary mr-7">
         @svg('codicon-bell-dot', ['class' => 'h-7 w-7 inline-block'])
     </a>
+    @endrole
 
     <x-dropdown align="right" width="48">
         <x-slot name="trigger">
             <button class="flex items-center text-sm text-mtv-primary font-bold hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
                 <div>
                     @svg('lineawesome-user-check-solid', ['class' => 'h-7 w-7 inline-block ml-1'])
-                    Hola, {{ Auth::user()->persona->nombre_o_razon_social()}}                                    
+                    Hola, {{ Auth::user()->nombreUsuario()}}                                    
                 </div>
                 <div class="ml-1">
                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -45,15 +47,22 @@
         </x-slot>
 
         <x-slot name="content">
+            @role('proveedor')
             <x-dropdown-link :href="route('perfil-negocio')">
                 {{ __('Mi perfil') }}
-            </x-dropdown-link>
+            </x-dropdown-link>                        
             <x-dropdown-link :href="route('usuario-configuracion.show')">
                 {{ __('Configuración') }}
-            </x-dropdown-link>
+            </x-dropdown-link>            
             <x-dropdown-link :href="route('centro-notificaciones')">
                 {{ __('Notificaciones') }}
             </x-dropdown-link>
+            @endrole
+            @role('urg')
+            <x-dropdown-link :href="route('urg-productos-favoritos.index')">
+                {{ __('Favoritos') }}
+            </x-dropdown-link>
+            @endrole
             <!-- Authentication -->
             <form method="POST" action="{{ route('logout') }}">
                 @csrf

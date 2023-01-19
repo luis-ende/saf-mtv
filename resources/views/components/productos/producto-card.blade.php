@@ -35,7 +35,10 @@
             </a>
 
             <div class="my-2">
-                <x-productos.producto-favoritos-input />
+                <x-productos.producto-favoritos-input 
+                    :producto_id="$producto->id"
+                    :num_favoritos="$producto->num_favoritos"
+                />
             </div>
         </div>
     </div>

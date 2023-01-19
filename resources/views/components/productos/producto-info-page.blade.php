@@ -67,7 +67,10 @@
                 </a>
             </div>
             <div class="mt-2 mb-3">
-                <x-productos.producto-favoritos-input />
+                <x-productos.producto-favoritos-input
+                    :producto_id="$producto->id"
+                    :num_favoritos="$producto->num_favoritos"
+                 />
             </div>
         @endif
         <label class="text-mtv-primary font-bold my-2">Categoría</label>
