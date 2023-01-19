@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Maize\Markable\Markable;
+use Maize\Markable\Models\Favorite;
 use App\Models\ProductoCategoria;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -14,6 +16,7 @@ class Producto extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
+    use Markable;
 
     public const TIPO_PRODUCTO_BIEN_ID = 'B';
     public const TIPO_PRODUCTO_SERVICIO_ID = 'S';
@@ -133,4 +136,11 @@ class Producto extends Model implements HasMedia
 
         return null;
     }
+
+    /**
+     * Marcas de favoritos.
+     */
+    protected static $marks = [
+        Favorite::class,
+    ];
 }
