@@ -21,7 +21,7 @@ class ConsultaPadronProveedoresService
         // ]
 
         $provEtapa = [];
-        if ($response->status()) {
+        if ($response->successful()) {
             $estatusData = $response->json();            
             if ($estatusData === 'no existe') {
                 $provEtapa['id_etapa'] = 0;

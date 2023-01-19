@@ -66,10 +66,14 @@ class ProveedorController extends Controller
                     'carta_presentacion', 'catalogo_pdf'));
     }
 
-    private function obtieneTextoEtapaProveedor($rfc) 
+    /**
+     * Realiza consulta de etapa de solicitud en la que se encuentra un rfc asociado a un proveedor en el Padrón de Proveedores.
+     */
+    private function obtieneTextoEtapaProveedor(string $rfc): string
     {
         $consultaPadron = new ConsultaPadronProveedoresService();
-        $etapa_padron_prov = $consultaPadron->consultaPadronProveedores($rfc);
-        return !isset($estatus_padron_prov['error']) ? $etapa_padron_prov['etapa'] : 'No disponible';
+        $etapa_padron_prov = $consultaPadron->consultaPadronProveedores($rfc);        
+
+        return isset($etapa_padron_prov['etapa']) ? $etapa_padron_prov['etapa'] : '';
     }
 }
