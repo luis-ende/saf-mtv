@@ -55,8 +55,11 @@ Para realizar una actualización completa del ambiente de desarrollo ejecutar de
 
 ### Paquetes utilizados
 
-- Spatie Laravel Permission - https://spatie.be/docs/laravel-permission/v5/introduction
-- Spatie Media Library - https://spatie.be/docs/laravel-medialibrary/v10/introduction
+- Íconos svg en templates Balde: Blade UI Kit - https://github.com/blade-ui-kit/blade-icons
+- Gestión de fuentes Google: Laravel Google Fonts https://github.com/spatie/laravel-google-fonts
+- Roles y permisos: Spatie Laravel Permission - https://spatie.be/docs/laravel-permission/v5/introduction
+- Imágenes y documentos adjuntos de productos y perfil de negocio: Spatie Media Library - https://spatie.be/docs/laravel-medialibrary/v10/introduction
+- Marca de favoritos de productos: https://github.com/maize-tech/laravel-markable?utm_source=pocket_reader
 
 ## MTV en Docker
 
