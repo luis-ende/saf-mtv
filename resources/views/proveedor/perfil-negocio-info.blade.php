@@ -28,13 +28,17 @@
                                             <span class="text-mtv-gray ">{{ $persona->rfc }}</span>
                                         </span>
                                         <span class="basis-full flex flex-row">
-                                            <span class="basis-1/2">
+                                            <span class="basis-1/3">
                                                 <label>Nombre:</label>
                                                 <span class="text-mtv-text-gray ">{{ $persona->nombre_o_razon_social() }}</span>
                                             </span>
-                                            <span class="basis-1/2">
+                                            <span class="basis-1/3">
                                                 <label>Persona:</label>
                                                 <span class="text-mtv-text-gray ">{{ $persona->id_tipo_persona === 'F' ? 'Física' : 'Moral' }}</span>
+                                            </span>
+                                            <span class="basis-1/3">
+                                                <label>Constancia:</label>
+                                                <span class="text-mtv-text-gray">Sin registro</span>
                                             </span>
                                         </span>
                                     </div>
@@ -65,13 +69,15 @@
                                                 :id="__('logotipo')"
                                                 :name="__('logotipo')"
                                                 :image_url="$logotipoUrl"
+                                                :readonly="true"
                                             />
                                             <input type="hidden" id="logotipo_path" name="logotipo_path" value="{{ $logotipoUrl ?? '' }}">
                                             <x-perfil-negocio.redes-sociales-links :links="$persona->perfil_negocio->enlacesRedesSociales()" />
                                             <div class="text-center py-4">
-                                                <a href="mailto:{{ $persona->email }}" class="mtv-button-secondary no-underline py-2 text-base">
+                                                <a href="mailto:{{ $persona->email }}"
+                                                   class="mtv-button-secondary no-underline py-2 md:text-sm xs:text-xs">
                                                     @svg('ri-mail-send-line', ['class' => 'w-5 h-5 inline-block mr-3'])
-                                                    Enviar correo
+                                                    Solicitar información
                                                 </a>
                                             </div>
                                         </div>
@@ -163,6 +169,10 @@
                         </h2>
                         <div id="body-perfil-negocio" class="accordion-collapse collapse" aria-labelledby="heading-perfil-negocio" data-bs-parent="#perfil-accordion">
                             <div class="accordion-body">
+                                <x-perfil-negocio.contactos-lista
+                                    :persona="$persona"
+                                    :readonly="true"
+                                />
                             </div>
                         </div>
                     </div>

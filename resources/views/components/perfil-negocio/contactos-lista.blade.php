@@ -1,9 +1,14 @@
-@props(['persona' => null])
+@props(['persona' => null, 'readonly' => false])
 
 @php($contactosLista = isset($persona) ? $persona->contactos : old('contactos_lista'))
 @php($contactosLista = !$contactosLista ? json_decode('[]') : json_decode($contactosLista))
 
-<div x-data="listaContactos()" x-init="initModalForm()">
+<div
+    x-data="listaContactos()"
+    @if(!$readonly)
+    x-init="initModalForm()"
+    @endif
+    >
     <x-field-group-card title="Matriz de escalamiento">
         <input
             type="hidden"
@@ -11,6 +16,7 @@
             name="contactos_lista"
             x-bind:value="JSON.stringify(contactos)"
         >
+        @if(!$readonly)
         <div class="w-full flex flex-col align-items-end px-1 mb-3">
             <!-- Button trigger modal -->
             <button
@@ -20,6 +26,7 @@
                 Agregar
             </button>
         </div>
+        @endif
         <div class="table-responsive">
             <table class="table table-sm">
                 <thead class="table-light">
@@ -31,7 +38,9 @@
                     <th scope="col">Extensión</th>
                     <th scope="col">Teléfono móvil</th>
                     <th scope="col">Correo electrónico</th>
+                    @if(!$readonly)
                     <th></th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -44,6 +53,7 @@
                         <td x-text="contacto.extension"></td>
                         <td x-text="contacto.telefono_movil"></td>
                         <td x-text="contacto.email"></td>
+                        @if(!$readonly)
                         <td>
                             <a href="#"
                                data-bs-toggle="modal"
@@ -58,6 +68,7 @@
                                 @svg('heroicon-o-trash', ['class' => 'h-5 w-5 inline-block'])
                             </a>
                         </td>
+                        @endif
                     </tr>
                 </template>
                 </tbody>
@@ -65,238 +76,250 @@
         </div>
     </x-field-group-card>
 
+    @if(!$readonly)
     <!-- Modal -->
-    <div class="modal fade" id="contactosModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="contactosModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-mtv-gray-light">
-                    <h5 class="modal-title" id="contactosModalLabel">Contactos</h5>
-                    <button type="button" class="btn-close" @click="contactosModalForm.hide()" aria-label="Close"></button>
-                </div>
-                <div id="contactoFormContainer" class="modal-body row">
-                    <input type="hidden" id="contacto_id" name="contacto_id">
-                    <div class="form-group col-md-12">
-                        <div class="mtv-input-wrapper">
-                            <input type="text" class="mtv-text-input" id="contacto_nombre" name="contacto_nombre" maxlength="120" data-contacto-campo-requerido="1">
-                            <label class="mtv-input-label" for="contacto_nombre">Nombre</label>
-                        </div>
-                        <label x-show="errors['contacto_nombre']" x-text="errors['contacto_nombre']" class="text-sm text-red-600 space-y-1"></label>
+        <div class="modal fade" id="contactosModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="contactosModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-mtv-gray-light">
+                        <h5 class="modal-title" id="contactosModalLabel">Contactos</h5>
+                        <button type="button" class="btn-close" @click="contactosModalForm.hide()" aria-label="Close"></button>
                     </div>
-                    <div class="form-group col-md-12">
-                        <div class="mtv-input-wrapper">
-                            <input type="text" class="mtv-text-input" id="contacto_primer_ap" name="contacto_primer_ap" maxlength="60" data-contacto-campo-requerido="1">
-                            <label class="mtv-input-label" for="contacto_primer_ap">Primer apellido</label>
+                    <div id="contactoFormContainer" class="modal-body row">
+                        <input type="hidden" id="contacto_id" name="contacto_id">
+                        <div class="form-group col-md-12">
+                            <div class="mtv-input-wrapper">
+                                <input type="text" class="mtv-text-input" id="contacto_nombre" name="contacto_nombre" maxlength="120" data-contacto-campo-requerido="1">
+                                <label class="mtv-input-label" for="contacto_nombre">Nombre</label>
+                            </div>
+                            <label x-show="errors['contacto_nombre']" x-text="errors['contacto_nombre']" class="text-sm text-red-600 space-y-1"></label>
                         </div>
-                        <label x-show="errors['contacto_primer_ap']" x-text="errors['contacto_primer_ap']" class="text-sm text-red-600 space-y-1"></label>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <div class="mtv-input-wrapper">
-                            <input type="text" class="mtv-text-input" id="contacto_segundo_ap" name="contacto_segundo_ap" maxlength="60" data-contacto-campo-requerido="1">
-                            <label class="mtv-input-label" for="contacto_segundo_ap">Segundo apellido</label>
+                        <div class="form-group col-md-12">
+                            <div class="mtv-input-wrapper">
+                                <input type="text" class="mtv-text-input" id="contacto_primer_ap" name="contacto_primer_ap" maxlength="60" data-contacto-campo-requerido="1">
+                                <label class="mtv-input-label" for="contacto_primer_ap">Primer apellido</label>
+                            </div>
+                            <label x-show="errors['contacto_primer_ap']" x-text="errors['contacto_primer_ap']" class="text-sm text-red-600 space-y-1"></label>
                         </div>
-                        <label x-show="errors['contacto_segundo_ap']" x-text="errors['contacto_segundo_ap']" class="text-sm text-red-600 space-y-1"></label>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <div class="mtv-input-wrapper">
-                            <input type="text" class="mtv-text-input" id="contacto_cargo" name="contacto_cargo" data-contacto-campo-requerido="1">
-                            <label class="mtv-input-label" for="contacto_cargo">Cargo</label>
+                        <div class="form-group col-md-12">
+                            <div class="mtv-input-wrapper">
+                                <input type="text" class="mtv-text-input" id="contacto_segundo_ap" name="contacto_segundo_ap" maxlength="60" data-contacto-campo-requerido="1">
+                                <label class="mtv-input-label" for="contacto_segundo_ap">Segundo apellido</label>
+                            </div>
+                            <label x-show="errors['contacto_segundo_ap']" x-text="errors['contacto_segundo_ap']" class="text-sm text-red-600 space-y-1"></label>
                         </div>
-                        <label x-show="errors['contacto_cargo']" x-text="errors['contacto_cargo']" class="text-sm text-red-600 space-y-1"></label>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <div class="mtv-input-wrapper">
-                            <input type="email" class="mtv-text-input" id="contacto_email" name="contacto_email" data-contacto-campo-requerido="1">
-                            <label class="mtv-input-label" for="contacto_email">Correo electrónico</label>
+                        <div class="form-group col-md-12">
+                            <div class="mtv-input-wrapper">
+                                <input type="text" class="mtv-text-input" id="contacto_cargo" name="contacto_cargo" data-contacto-campo-requerido="1">
+                                <label class="mtv-input-label" for="contacto_cargo">Cargo</label>
+                            </div>
+                            <label x-show="errors['contacto_cargo']" x-text="errors['contacto_cargo']" class="text-sm text-red-600 space-y-1"></label>
                         </div>
-                        <label x-show="errors['contacto_email']" x-text="errors['contacto_email']" class="text-sm text-red-600 space-y-1"></label>
-                    </div>
-                    <div class="form-group col-md-8">
-                        <div class="mtv-input-wrapper">
-                            <input
-                                type="text"
-                                class="mtv-text-input"
-                                id="contacto_telefono_oficina"
-                                name="contacto_telefono_oficina"
-                                maxlength="13"
-                                placeholder="_ _ - _ _ _ _ _ _ _ _"
-                                x-mask="99-99999999"
-                                data-contacto-campo-requerido="1">
-                            <label class="mtv-input-label" for="contacto_telefono_oficina">Teléfono oficina</label>
+                        <div class="form-group col-md-12">
+                            <div class="mtv-input-wrapper">
+                                <input type="email" class="mtv-text-input" id="contacto_email" name="contacto_email" data-contacto-campo-requerido="1">
+                                <label class="mtv-input-label" for="contacto_email">Correo electrónico</label>
+                            </div>
+                            <label x-show="errors['contacto_email']" x-text="errors['contacto_email']" class="text-sm text-red-600 space-y-1"></label>
                         </div>
-                        <label x-show="errors['contacto_telefono_oficina']" x-text="errors['contacto_telefono_oficina']" class="text-sm text-red-600 space-y-1"></label>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <div class="mtv-input-wrapper">
-                            <input type="text" class="mtv-text-input" id="contacto_extension" name="contacto_extension" maxlength="8">
-                            <label class="mtv-input-label" for="contacto_extension">Extensión</label>
+                        <div class="form-group col-md-8">
+                            <div class="mtv-input-wrapper">
+                                <input
+                                    type="text"
+                                    class="mtv-text-input"
+                                    id="contacto_telefono_oficina"
+                                    name="contacto_telefono_oficina"
+                                    maxlength="13"
+                                    placeholder="_ _ - _ _ _ _ _ _ _ _"
+                                    x-mask="99-99999999"
+                                    data-contacto-campo-requerido="1">
+                                <label class="mtv-input-label" for="contacto_telefono_oficina">Teléfono oficina</label>
+                            </div>
+                            <label x-show="errors['contacto_telefono_oficina']" x-text="errors['contacto_telefono_oficina']" class="text-sm text-red-600 space-y-1"></label>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="mtv-input-wrapper">
+                                <input type="text" class="mtv-text-input" id="contacto_extension" name="contacto_extension" maxlength="8">
+                                <label class="mtv-input-label" for="contacto_extension">Extensión</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <div class="mtv-input-wrapper">
+                                <input
+                                    type="text"
+                                    class="mtv-text-input"
+                                    id="contacto_telefono_movil"
+                                    name="contacto_telefono_movil"
+                                    maxlength="13"
+                                    placeholder="_ _ - _ _ _ _ _ _ _ _"
+                                    x-mask="99-99999999"
+                                    data-contacto-campo-requerido="1">
+                                <label class="mtv-input-label" for="contacto_telefono_movil">Teléfono móvil</label>
+                            </div>
+                            <label x-show="errors['contacto_telefono_movil']" x-text="errors['contacto_telefono_movil']" class="text-sm text-red-600 space-y-1"></label>
                         </div>
                     </div>
-                    <div class="form-group col-md-8">
-                        <div class="mtv-input-wrapper">
-                            <input
-                                type="text"
-                                class="mtv-text-input"
-                                id="contacto_telefono_movil"
-                                name="contacto_telefono_movil"
-                                maxlength="13"
-                                placeholder="_ _ - _ _ _ _ _ _ _ _"
-                                x-mask="99-99999999"
-                                data-contacto-campo-requerido="1">
-                            <label class="mtv-input-label" for="contacto_telefono_movil">Teléfono móvil</label>
-                        </div>
-                        <label x-show="errors['contacto_telefono_movil']" x-text="errors['contacto_telefono_movil']" class="text-sm text-red-600 space-y-1"></label>
+                    <div class="modal-footer">
+                        <button type="button" class="mtv-button-secondary" @click="guardaContacto()">Guardar</button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="mtv-button-secondary" @click="guardaContacto()">Guardar</button>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 </div>
 
-@php($personaId = Auth::user()->persona->id)
+@if(!$readonly)
+    @php($personaId = Auth::user()->persona->id)
 
-<script type="text/javascript">
-    function listaContactos() {
+    <script type="text/javascript">
+        function listaContactos() {
 
-        return {
-            contactos: {!! json_encode($contactosLista) !!},
-            contactosModalForm: new bootstrap.Modal(document.getElementById('contactosModal'), { keyboard: true }),
-            errors: {},
+            return {
+                contactos: {!! json_encode($contactosLista) !!},
+                contactosModalForm: new bootstrap.Modal(document.getElementById('contactosModal'), { keyboard: true }),
+                errors: {},
 
-            guardaContacto() {
-                let contacto = {};
-                let contactoId = document.getElementById('contacto_id').value;
-                let esNuevoContacto = contactoId == 0;
-                if (esNuevoContacto) {
-                    contacto['id'] = this.contactos.length + 1;
-                } else {
-                    contacto = this.contactos.find(item => item.id == contactoId);
-                }
-
-                contacto['nombre'] = document.getElementById('contacto_nombre').value;
-                contacto['primer_ap'] = document.getElementById('contacto_primer_ap').value;
-                contacto['segundo_ap'] = document.getElementById('contacto_segundo_ap').value;
-                contacto['cargo'] = document.getElementById('contacto_cargo').value;
-                contacto['telefono_oficina'] = document.getElementById('contacto_telefono_oficina').value;
-                contacto['extension'] = document.getElementById('contacto_extension').value;
-                contacto['telefono_movil'] = document.getElementById('contacto_telefono_movil').value;
-                contacto['email'] = document.getElementById('contacto_email').value;
-
-                if (this.validaContacto(contacto)) {
+                guardaContacto() {
+                    let contacto = {};
+                    let contactoId = document.getElementById('contacto_id').value;
+                    let esNuevoContacto = contactoId == 0;
                     if (esNuevoContacto) {
-                        this.contactos.push(contacto);
+                        contacto['id'] = this.contactos.length + 1;
+                    } else {
+                        contacto = this.contactos.find(item => item.id == contactoId);
                     }
-                    this.postContactos();
-                    this.contactosModalForm.hide();
-                }
-            },
-            editaContacto(id) {
-                document.getElementById('contactosModalLabel').innerText = 'Editar contacto';
-                let contacto = this.contactos.find(item => item.id === id);
-                if (contacto) {
-                    document.getElementById('contacto_id').value = contacto.id;
-                    document.getElementById('contacto_nombre').value = contacto.nombre;
-                    document.getElementById('contacto_primer_ap').value = contacto.primer_ap;
-                    document.getElementById('contacto_segundo_ap').value = contacto.segundo_ap;
-                    document.getElementById('contacto_cargo').value = contacto.cargo;
-                    document.getElementById('contacto_telefono_oficina').value = contacto.telefono_oficina;
-                    document.getElementById('contacto_extension').value = contacto.extension;
-                    document.getElementById('contacto_telefono_movil').value = contacto.telefono_movil;
-                    document.getElementById('contacto_email').value = contacto.email;
-                }
-                this.contactosModalForm.show();
-            },
-            eliminaContacto(id) {
-                Swal.fire({
-                    ...SwalMTVCustom,
-                    title: 'Eliminar contacto',
-                    html: '<span>¿Deseas eliminar el contacto de la matriz de escalamiento?</span>',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.contactos = this.contactos.filter(item => item.id !== id);
+
+                    contacto['nombre'] = document.getElementById('contacto_nombre').value;
+                    contacto['primer_ap'] = document.getElementById('contacto_primer_ap').value;
+                    contacto['segundo_ap'] = document.getElementById('contacto_segundo_ap').value;
+                    contacto['cargo'] = document.getElementById('contacto_cargo').value;
+                    contacto['telefono_oficina'] = document.getElementById('contacto_telefono_oficina').value;
+                    contacto['extension'] = document.getElementById('contacto_extension').value;
+                    contacto['telefono_movil'] = document.getElementById('contacto_telefono_movil').value;
+                    contacto['email'] = document.getElementById('contacto_email').value;
+
+                    if (this.validaContacto(contacto)) {
+                        if (esNuevoContacto) {
+                            this.contactos.push(contacto);
+                        }
                         this.postContactos();
+                        this.contactosModalForm.hide();
                     }
-                })
-            },
-            validaContacto(contacto) {
-                this.errors = {};
-                let invalidValues = [];
-                let inputElements = document.querySelectorAll('input[data-contacto-campo-requerido="1"]');
-                let invalidState = false;
-                inputElements.forEach(el => {
-                    if (el.value === '') {
-                        invalidValues.push(el.labels[0].innerText.replace(':', ''));
-                        this.errors[el.name] = 'Requerido';
+                },
+                editaContacto(id) {
+                    document.getElementById('contactosModalLabel').innerText = 'Editar contacto';
+                    let contacto = this.contactos.find(item => item.id === id);
+                    if (contacto) {
+                        document.getElementById('contacto_id').value = contacto.id;
+                        document.getElementById('contacto_nombre').value = contacto.nombre;
+                        document.getElementById('contacto_primer_ap').value = contacto.primer_ap;
+                        document.getElementById('contacto_segundo_ap').value = contacto.segundo_ap;
+                        document.getElementById('contacto_cargo').value = contacto.cargo;
+                        document.getElementById('contacto_telefono_oficina').value = contacto.telefono_oficina;
+                        document.getElementById('contacto_extension').value = contacto.extension;
+                        document.getElementById('contacto_telefono_movil').value = contacto.telefono_movil;
+                        document.getElementById('contacto_email').value = contacto.email;
                     }
-                });
+                    this.contactosModalForm.show();
+                },
+                eliminaContacto(id) {
+                    Swal.fire({
+                        ...SwalMTVCustom,
+                        title: 'Eliminar contacto',
+                        html: '<span>¿Deseas eliminar el contacto de la matriz de escalamiento?</span>',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.contactos = this.contactos.filter(item => item.id !== id);
+                            this.postContactos();
+                        }
+                    })
+                },
+                validaContacto(contacto) {
+                    this.errors = {};
+                    let invalidValues = [];
+                    let inputElements = document.querySelectorAll('input[data-contacto-campo-requerido="1"]');
+                    let invalidState = false;
+                    inputElements.forEach(el => {
+                        if (el.value === '') {
+                            invalidValues.push(el.labels[0].innerText.replace(':', ''));
+                            this.errors[el.name] = 'Requerido';
+                        }
+                    });
 
-                if (contacto.email) {
-                    let validRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-                    if (!contacto.email.match(validRegex)) {
-                        this.errors['contacto_email'] = 'Correo electrónico no válido';
-                        invalidState = true;
+                    if (contacto.email) {
+                        let validRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+                        if (!contacto.email.match(validRegex)) {
+                            this.errors['contacto_email'] = 'Correo electrónico no válido';
+                            invalidState = true;
+                        }
                     }
+
+                    invalidState = invalidState || invalidValues.length > 0;
+
+                    return !invalidState;
+                },
+                postContactos() {
+                    const formData = new FormData();
+                    formData.append('contactos_lista', JSON.stringify(this.contactos));
+
+                    fetch('{{ route('persona-contactos.store', ['persona' => $personaId]) }}', {
+                        method: "POST",
+                        credentials: 'same-origin',
+                        headers: {
+                            'X-CSRF-Token': '{{ csrf_token() }}',
+                        },
+                        body: formData,
+                    }).then(response => {
+                        if (!response.ok) {
+                            this.mensajeError = "Error"
+                            Swal.fire({
+                                ...SwalMTVCustom,
+                                title: this.mensajeError,
+                                html: "El contacto no pudo ser guardado.",
+                                showCancelButton: false,
+                                confirmButtonText: 'Aceptar',
+                            })
+                        }
+                    })
+                },
+                clearFormFields() {
+                    document.getElementById('contacto_id').value = 0;
+                    document.getElementById('contacto_nombre').value = '';
+                    document.getElementById('contacto_primer_ap').value = '';
+                    document.getElementById('contacto_segundo_ap').value = '';
+                    document.getElementById('contacto_cargo').value = '';
+                    document.getElementById('contacto_telefono_oficina').value = '';
+                    document.getElementById('contacto_extension').value = '';
+                    document.getElementById('contacto_telefono_movil').value = '';
+                    document.getElementById('contacto_email').value = '';
+                },
+                showFormNew() {
+                    this.clearFormFields();
+                    document.getElementById('contactosModalLabel').innerText = 'Agrega tus contactos';
+                    this.contactosModalForm.show();
+                },
+                getErrors() {
+                    return this.errors;
+                },
+                initModalForm() {
+                    document.getElementById('contactosModal').addEventListener('shown.bs.modal', function () {
+                        let formInputs = document.getElementById('contactoFormContainer');
+                        Array.from(formInputs.getElementsByTagName('input')).forEach(input => input.disabled = false);
+                    });
+                    document.getElementById('contactosModal').addEventListener('hidden.bs.modal', function () {
+                        let formInputs = document.getElementById('contactoFormContainer');
+                        Array.from(formInputs.getElementsByTagName('input')).forEach(input => input.disabled = true);
+                    })
                 }
-
-                invalidState = invalidState || invalidValues.length > 0;
-
-                return !invalidState;
-            },
-            postContactos() {
-                const formData = new FormData();
-                formData.append('contactos_lista', JSON.stringify(this.contactos));
-
-                fetch('{{ route('persona-contactos.store', ['persona' => $personaId]) }}', {
-                    method: "POST",
-                    credentials: 'same-origin',
-                    headers: {
-                        'X-CSRF-Token': '{{ csrf_token() }}',
-                    },
-                    body: formData,
-                }).then(response => {
-                    if (!response.ok) {
-                        this.mensajeError = "Error"
-                        Swal.fire({
-                            ...SwalMTVCustom,
-                            title: this.mensajeError,
-                            html: "El contacto no pudo ser guardado.",
-                            showCancelButton: false,
-                            confirmButtonText: 'Aceptar',
-                        })
-                    }
-                })
-            },
-            clearFormFields() {
-                document.getElementById('contacto_id').value = 0;
-                document.getElementById('contacto_nombre').value = '';
-                document.getElementById('contacto_primer_ap').value = '';
-                document.getElementById('contacto_segundo_ap').value = '';
-                document.getElementById('contacto_cargo').value = '';
-                document.getElementById('contacto_telefono_oficina').value = '';
-                document.getElementById('contacto_extension').value = '';
-                document.getElementById('contacto_telefono_movil').value = '';
-                document.getElementById('contacto_email').value = '';
-            },
-            showFormNew() {
-                this.clearFormFields();
-                document.getElementById('contactosModalLabel').innerText = 'Agrega tus contactos';
-                this.contactosModalForm.show();
-            },
-            getErrors() {
-                return this.errors;
-            },
-            initModalForm() {
-                document.getElementById('contactosModal').addEventListener('shown.bs.modal', function () {
-                    let formInputs = document.getElementById('contactoFormContainer');
-                    Array.from(formInputs.getElementsByTagName('input')).forEach(input => input.disabled = false);
-                });
-                document.getElementById('contactosModal').addEventListener('hidden.bs.modal', function () {
-                    let formInputs = document.getElementById('contactoFormContainer');
-                    Array.from(formInputs.getElementsByTagName('input')).forEach(input => input.disabled = true);
-                })
             }
         }
-    }
-</script>
+    </script>
+@else
+    <script type="text/javascript">
+        function listaContactos() {
+            return {
+                contactos: @json($persona->contactos),
+            }
+        }
+    </script>
+@endif
