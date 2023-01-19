@@ -1,10 +1,10 @@
 @props(['filtros_opciones' => []])
 
 <div class="py-3">
-    <div class="flex flex-row space-x-2 md:flex-nowrap xs:flex-wrap">        
-        <div class="w-full flex flex-col" x-data="{ capituloIsOpen: false }">
+    <div class="flex flex-row space-x-2 md:flex-nowrap xs:flex-wrap">
+        <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ capituloIsOpen: false }">
             <button type="button"
-                class="text-mtv-text-gray border rounded p-1 uppercase"
+                class="border rounded p-1 uppercase"
                 @click="capituloIsOpen=true">
                 Capítulo
                 <svg class="fill-current h-4 w-4 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -13,12 +13,12 @@
             </button>
             <div x-show="capituloIsOpen"
                 @click.away="capituloIsOpen = false"
-                class="flex flex-col border rounded p-1">
-                <div class="h-24 overflow-y-auto">
+                class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg">
+                <div class="h-36 w-48 overflow-y-auto">
                     <ul class="list-none list-outside p-1">
                         @foreach($filtros_opciones['capitulos'] as $capitulo)
                             <li>
-                                <input type="checkbox" id="capitulo-{{ $capitulo }}" name="capitulo_filtro[]" value="{{ $capitulo }}">
+                                <input class="mr-1" type="checkbox" id="capitulo-{{ $capitulo }}" name="capitulo_filtro[]" value="{{ $capitulo }}">
                                 <label for="capitulo-{{ $capitulo }}">{{ $capitulo }}</label>
                             </li>
                         @endforeach
@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div class="w-full flex flex-col" x-data="{ partidaIsOpen: false }">
+        <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ partidaIsOpen: false }">
             <button type="button"
                 class="text-mtv-text-gray border rounded p-1 uppercase"
                 @click="partidaIsOpen=true">
@@ -43,12 +43,12 @@
             </button>
             <div x-show="partidaIsOpen"
                 @click.away="partidaIsOpen = false"
-                class="flex flex-col border rounded p-1">
-                <div class="h-24 overflow-y-auto">
+                 class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg">
+                <div class="h-40 w-48 overflow-y-auto">
                     <ul class="list-none list-outside p-1">
                         @foreach($filtros_opciones['partidas'] as $partida)
                             <li>
-                                <input type="checkbox" id="partida-{{ $partida }}" name="partida_filtro[]" value="{{ $partida }}">
+                                <input class="mr-1" type="checkbox" id="partida-{{ $partida }}" name="partida_filtro[]" value="{{ $partida }}">
                                 <label for="partida-{{ $partida }}">{{ $partida }}</label>
                             </li>
                         @endforeach
@@ -62,9 +62,9 @@
             </div>
         </div>
 
-        <div class="w-full flex flex-col" x-data="{ sectorIsOpen: false }">
+        <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ sectorIsOpen: false }">
             <button type="button"
-                class="text-mtv-text-gray border rounded p-1 uppercase"
+                class="border rounded p-1 uppercase"
                 @click="sectorIsOpen=true">
                 Sector
                 <svg class="fill-current h-4 w-4 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -73,12 +73,12 @@
             </button>
             <div x-show="sectorIsOpen"
                 @click.away="sectorIsOpen = false"
-                class="flex flex-col border rounded p-1">
-                <div class="">
+                 class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg">
+                <div class="h-16 w-48">
                     <ul class="list-none list-outside p-1">
                     @foreach($filtros_opciones['sectores'] as $sector)
                         <li>
-                            <input type="checkbox" id="sector-{{ $sector->id }}" name="sector_filtro[]" value="{{ $sector->id }}">
+                            <input class="mr-1" type="checkbox" id="sector-{{ $sector->id }}" name="sector_filtro[]" value="{{ $sector->id }}">
                             <label for="sector-{{ $sector->id }}">{{ $sector->sector }}</label>
                         </li>
                     @endforeach
@@ -92,9 +92,9 @@
             </div>
         </div>
 
-        <div class="w-full flex flex-col" x-data="{ ordenIsOpen: false }">
+        <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ ordenIsOpen: false }">
             <button type="button"
-                class="text-mtv-text-gray border rounded p-1"
+                class="border rounded p-1"
                 @click="ordenIsOpen=true">
                 Ordenar por
                 <svg class="fill-current h-4 w-4 inline-block self-end" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -103,13 +103,13 @@
             </button>
             <div x-show="ordenIsOpen"
                 @click.away="ordenIsOpen = false"
-                class="flex flex-col border rounded p-1">
-                <div class="">
-                    <input type="radio" id="sort_nombre" name="sort_productos" value="nombre" checked>
+                class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg p-2">
+                <div class="h-16 w-48">
+                    <input class="mr-1" type="radio" id="sort_nombre" name="sort_productos" value="nombre" checked>
                     <label for="sort_nombre">Nombre</label><br>
-                    <input type="radio" id="sort_cabms" name="sort_productos" value="cabms">
+                    <input class="mr-1" type="radio" id="sort_cabms" name="sort_productos" value="cabms">
                     <label for="sort_cabms">CABMS</label><br>
-                    <input type="radio" id="sort_partida" name="sort_productos" value="partida">
+                    <input class="mr-1" type="radio" id="sort_partida" name="sort_productos" value="partida">
                     <label for="sort_partida">Partida</label>
                 </div>
                 <button type="button"
