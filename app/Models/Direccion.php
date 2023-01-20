@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Repositories\PaisesRepository;
 use App\Services\BusquedaCPService;
 
 final class Direccion
@@ -16,6 +17,7 @@ final class Direccion
     public ?string $entidad;
     public ?string $ciudad;
     public ?string $municipio;
+    public ?string $pais = '';
 
     public function __construct(?int              $idPais,
                                 ?int              $idAsentamiento,
@@ -38,5 +40,8 @@ final class Direccion
         $this->num_ext = $numExt;
         $this->num_int = $numInt;
         $this->id_pais = $idPais;
+        if ($this->id_pais) {
+            $this->pais = PaisesRepository::obtienePaisNombre($this->id_pais);
+        }
     }
 }

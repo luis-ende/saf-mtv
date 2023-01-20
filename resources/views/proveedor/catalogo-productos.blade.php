@@ -21,7 +21,7 @@
                                 Giro: {{ $proveedor->categoria_scian }}
                             </div>
                             <div class="text-mtv-text-gray sm:text-sm xs:text-xs uppercase">
-                                Ubicación: México, {{ $proveedor->persona->direccion()->ciudad }}
+                                Ubicación: {{ $proveedor->persona->direccion()->pais }}, {{ $proveedor->persona->direccion()->ciudad }}
                             </div>
                             <div class="text-mtv-text-gray sm:text-sm xs:text-xs uppercase">
                                 Constancia: {{ $etapa_padron_prov }}
