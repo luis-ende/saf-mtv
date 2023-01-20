@@ -171,8 +171,7 @@ class DatabaseSeeder extends Seeder
     }
 
     private function crearUsuarioURG()
-    {
-        // TODO Tomar password para esta cuenta del archivo .env
+    {        
         $user = User::create(['rfc' => 'URG', 'activo' => true, 'last_login' => now(), 'password' => bcrypt('urg_password')]);
         $user->assignRole('urg');
     }

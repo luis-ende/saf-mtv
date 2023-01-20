@@ -44,7 +44,9 @@ Route::get('/dashboard', function () {
 
 // TODO: Crear grupos
 
-Route::post('persona/{persona}/contactos', [PersonaController::class, 'storeContactos'])->middleware('auth')->name('persona-contactos.store');
+Route::post('persona/{persona}/contactos', [PersonaController::class, 'storeContactos'])
+        ->middleware(['role:proveedor', 'auth'])
+        ->name('persona-contactos.store');
 
 Route::get('/productos/{producto}/cabms_categorias', [ProductosController::class, 'obtieneProductoCABMSCategorias'])
     ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('productos-cabms-categorias.show');

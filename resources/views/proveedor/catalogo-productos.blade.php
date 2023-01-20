@@ -30,13 +30,15 @@
                     </x-page-header-label>
                 </div>
                 <div class="md:basis-1/2 xs:basis-8/12 text-end">
-                    @role('proveedor')
-                        <a href="{{ route('catalogo-registro-inicio') }}"
-                            class="mtv-button-secondary no-underline md:text-base xs:text-sm">
-                            @svg('polaris-major-add-product', ['class' => 'w-5 h-5 inline-block mr-3 md:inline xs:hidden'])
-                            Agregar producto
-                        </a>
-                    @endrole
+                    @if(request()->routeIs('catalogo-productos'))
+                        @role('proveedor')
+                            <a href="{{ route('catalogo-registro-inicio') }}"
+                                class="mtv-button-secondary no-underline md:text-base xs:text-sm">
+                                @svg('polaris-major-add-product', ['class' => 'w-5 h-5 inline-block mr-3 md:inline xs:hidden'])
+                                Agregar producto
+                            </a>
+                        @endrole
+                    @endif
                 </div>
             </div>
             @php($numProductosBien = count($productos_bien))
