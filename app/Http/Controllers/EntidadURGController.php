@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ProductosFavoritosExport;
 use App\Models\Producto;
 use App\Repositories\ProductoRepository;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Maize\Markable\Models\Favorite;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,5 +27,14 @@ class EntidadURGController extends Controller
         $num_favoritos = Favorite::count($producto);
 
         return compact('num_favoritos');
+    }
+
+    public function exportProductosFavoritos()
+    {
+        $user = Auth::user();
+
+        return Excel::download(new ProductosFavoritosExport($user),
+                      'mtv-productos-favoritos.xlsx',
+                    \Maatwebsite\Excel\Excel::XLSX);
     }
 }

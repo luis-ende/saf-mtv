@@ -188,6 +188,33 @@ class ProductoRepository
         return $productos;
     }
 
+    /**
+     * Obtiene productos para la descarga de favoritos en Excel de la URG.
+     * Ver app/Exports/ProductosFavoritosExport.php
+     */
+    public function obtieneProductosFavoritosDescarga(User $user): mixed
+    {
+        $productos = Producto::whereHasFavorite($user)
+                                ->select(DB::raw('ROW_NUMBER() OVER (ORDER BY productos.tipo, productos.nombre)'),
+                                    'productos.tipo', 'productos.nombre', 'productos.descripcion',
+                                    'cat_cabms.cabms', 'cat_cabms.partida', 'cat_cabms.nombre_cabms',
+                                    DB::raw("(SELECT STRING_AGG(cat_categorias_scian.categoria_scian, ',') " .
+                                                  "FROM productos_categorias LEFT JOIN cat_categorias_scian ON " .
+                                                  "cat_categorias_scian.id = productos_categorias.id_categoria_scian " .
+                                                  "WHERE productos_categorias.id_producto = productos.id) AS categoria"))
+                                ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
+                                ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')
+                                ->where([
+                                    // Descartar registros de productos que por alguna razón no se completaron
+                                    ['registro_fase', '>=', RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS]
+                                ])
+                                ->orderBy('tipo')
+                                ->orderBy('nombre')
+                                ->get();
+
+        return $productos;
+    }
+
     public function obtieneProductoInfo(int $productoId, bool $conProveedor = false)
     {
         $query = Producto::select('productos.id', 'productos.id_cat_productos', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
@@ -218,33 +245,11 @@ class ProductoRepository
         return $productoInfo;
     }
 
-    public function obtieneNumeroProductosRegistrados()
+    public function obtieneNumeroProductosRegistrados(): int
     {
         return DB::table('productos')->count();
     }
 
-    public function actualizaProducto(Producto $producto, array $productoData, ?array $categorias, array $fotosInfo, array $adjuntos): void
-    {
-        $producto->update($productoData);
-        $producto->actualizaCategoriasScian($categorias);
-        $producto->actualizaFotos($fotosInfo['producto_fotos'] ?? null, $fotosInfo['producto_fotos_eliminadas']);
-        if (isset($adjuntos['eliminar_ficha_tecnica']) &&
-            $adjuntos['eliminar_ficha_tecnica'] == true) {
-            $producto->clearMediaCollection('fichas_tecnicas');
-        }
-        if (isset($adjuntos['ficha_tecnica_file'])) {
-            $producto->clearMediaCollection('fichas_tecnicas');
-            $producto->addMedia($adjuntos['ficha_tecnica_file'])->toMediaCollection('fichas_tecnicas');
-        }
-        if (isset($adjuntos['eliminar_otro_documento']) &&
-            $adjuntos['eliminar_otro_documento'] == true) {
-            $producto->clearMediaCollection('otros_documentos');
-        }
-        if (isset($adjuntos['otro_documento_file'])) {
-            $producto->clearMediaCollection('otros_documentos');
-            $producto->addMedia($adjuntos['otro_documento_file'])->toMediaCollection('otros_documentos');
-        }
-    }
     public function obtieneProductosPorCategoriasSCIAN(array $categorias)
     {
         $productos = Producto::select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
@@ -293,6 +298,29 @@ class ProductoRepository
         }
 
         return array_unique(array_merge($categorias, $productoCategorias));
+    }
+
+    public function actualizaProducto(Producto $producto, array $productoData, ?array $categorias, array $fotosInfo, array $adjuntos): void
+    {
+        $producto->update($productoData);
+        $producto->actualizaCategoriasScian($categorias);
+        $producto->actualizaFotos($fotosInfo['producto_fotos'] ?? null, $fotosInfo['producto_fotos_eliminadas']);
+        if (isset($adjuntos['eliminar_ficha_tecnica']) &&
+            $adjuntos['eliminar_ficha_tecnica'] == true) {
+            $producto->clearMediaCollection('fichas_tecnicas');
+        }
+        if (isset($adjuntos['ficha_tecnica_file'])) {
+            $producto->clearMediaCollection('fichas_tecnicas');
+            $producto->addMedia($adjuntos['ficha_tecnica_file'])->toMediaCollection('fichas_tecnicas');
+        }
+        if (isset($adjuntos['eliminar_otro_documento']) &&
+            $adjuntos['eliminar_otro_documento'] == true) {
+            $producto->clearMediaCollection('otros_documentos');
+        }
+        if (isset($adjuntos['otro_documento_file'])) {
+            $producto->clearMediaCollection('otros_documentos');
+            $producto->addMedia($adjuntos['otro_documento_file'])->toMediaCollection('otros_documentos');
+        }
     }
 
     /**

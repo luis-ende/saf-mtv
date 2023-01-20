@@ -114,6 +114,7 @@ Route::middleware(['role:urg', 'auth'])->group(function() {
     Route::controller(EntidadURGController::class)->group(function () {
         Route::get('/urg-productos/favoritos', 'indexFavoritos')->name('urg-productos-favoritos.index');
         Route::post('/urg-productos/favoritos/{producto}', 'updateProductoFavoritos')->name('urg-productos-favoritos.update');
+        Route::get('/urg-productos/favoritos/export', 'exportProductosFavoritos')->name('urg-productos-favoritos.export');
     });
 });
 
