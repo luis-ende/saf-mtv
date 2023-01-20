@@ -14,6 +14,7 @@
         </div>
 
         <x-productos.input-producto-color-select
+            :lista_colores="$producto->obtieneListaColores()"
             :producto_colores="$producto->color"
         />
 

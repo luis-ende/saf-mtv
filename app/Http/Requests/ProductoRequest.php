@@ -65,6 +65,7 @@ class ProductoRequest extends FormRequest
         return [
             'nombre' => 'required|max:255',
             'descripcion' => 'required|max:140',
+            'color' => 'max:130',
             'marca' => 'max:255',
             'modelo' => 'max:255',
             'producto_colores.*' => 'nullable|string', // TODO: Validar longitud máxima de 140 caracteres
