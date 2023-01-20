@@ -93,12 +93,15 @@
                             </form>                            
                         </div>
 
-                        <div class="self-end">
-                            <button type="button" class="mtv-button-secondary-white">
-                                @svg('gmdi-favorite-r', ['class' => 'w-5 h-5 inline-block mr-3'])
-                                Mis favoritos
-                            </button>
-                        </div>
+                        @role('urg')
+                            <div class="self-end my-3">
+                                <a href="{{ route('urg-productos-favoritos.index') }}" 
+                                   class="mtv-button-secondary-white no-underline py-2">
+                                    @svg('gmdi-favorite-r', ['class' => 'w-5 h-5 inline-block mr-3'])
+                                    Mis favoritos
+                                </a>
+                            </div>
+                        @endrole
 
                         @if($tipo_busqueda === 'productos')
                             @isset($resultados)

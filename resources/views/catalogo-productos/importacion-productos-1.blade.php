@@ -22,7 +22,7 @@
                         1. Selecciona el archivo
                     </label>
                     <label class="text-mtv-gray text-base mb-3 self-center">
-                       Adjunta la plantilla en extensión .csv.
+                       Adjunta la plantilla en extensión .xlsx.
                     </label>
                     <x-input-upload
                         :name="__('productos_import_file')"
