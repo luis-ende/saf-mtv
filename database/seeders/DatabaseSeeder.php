@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->seedTiposVialidad();
         $this->seedPaises();
+        $this->seedGruposPrioritorios();
         $this->crearMTVRoles();
         $this->crearUsuarioURG();
     }
@@ -174,5 +175,32 @@ class DatabaseSeeder extends Seeder
     {        
         $user = User::create(['rfc' => 'URG', 'activo' => true, 'last_login' => now(), 'password' => bcrypt('urg_password')]);
         $user->assignRole('urg');
+    }
+
+    private function seedGruposPrioritorios()
+    {
+        DB::table('cat_grupos_prioritarios')->insert([
+            'grupo' => 'MIPYMES',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('cat_grupos_prioritarios')->insert([
+            'grupo' => 'Cooperativas',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('cat_grupos_prioritarios')->insert([
+            'grupo' => 'Empresas lideradas por mujeres',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('cat_grupos_prioritarios')->insert([
+            'grupo' => 'Comunidades Indígenas',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }
