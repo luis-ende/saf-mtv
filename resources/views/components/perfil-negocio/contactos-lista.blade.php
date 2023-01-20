@@ -20,7 +20,7 @@
         <div class="w-full flex flex-col align-items-end px-1 mb-3">
             <!-- Button trigger modal -->
             <button
-                class="mtv-button-secondary-white no-underline"
+                class="mtv-button-secondary-white my-4"
                 @click="event.preventDefault(); showFormNew()">
                 @svg('heroicon-m-plus-circle', ['class' => 'h-7 w-7 inline-block'])
                 Agregar

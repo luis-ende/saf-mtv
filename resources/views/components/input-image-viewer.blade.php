@@ -13,6 +13,7 @@
                            class="inset-0 w-44 h-64 p-0 m-0 outline-none opacity-0 cursor-pointer z-50"
                            type="file" accept="image/*" @change="fileChosen">
                 @else
+                    @svg('fas-building', ['x-show' => '!imageUrl', 'class' => 'h-48 w-42 bg-gray-200 text-gray-50 p-4 my-3'])
                     <img x-show="imageUrl" :src="imageUrl" alt="Logotipo negocio"
                          class="object-scale-down h-48 w-44">
                 @endif

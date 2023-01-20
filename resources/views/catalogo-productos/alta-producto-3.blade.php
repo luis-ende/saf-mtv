@@ -24,7 +24,7 @@
                     <div class="flex flex-row my-4 space-x-10 justify-center">
                         <a href="{{ route('alta-producto-2.show', [$productoId]) }}"
                             class="mtv-button-secondary-white no-underline self-center">
-                            @svg('fas-arrow-left', ['class' => 'h-7 w-7 inline-block'])
+                            @svg('fas-arrow-left', ['class' => 'h-5 w-5 inline-block mr-3'])
                             Atrás
                         </a>
                         <button type="submit" class="mtv-button-secondary self-center my-4">
