@@ -14,7 +14,10 @@
                 </div>
             </div>            
             <div class="py-6 px-12">
-                
+                <x-productos.productos-grid
+                    modo="visitante"
+                    :productos="$productos"
+                />
             </div>
         </div>
     </div>

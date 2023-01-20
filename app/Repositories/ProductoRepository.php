@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Producto;
+use App\Models\User;
 use App\Services\RegistroProductosService;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
@@ -162,6 +163,31 @@ class ProductoRepository
         return $productos;
     }
 
+    public function obtieneProductosFavoritos(User $user)
+    {
+        $productos = Producto::whereHasFavorite($user)
+                                ->select('productos.id', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
+                                            'cat_cabms.cabms', 'cat_cabms.partida',
+                                            'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio',
+                                            $this->subqueryProductoFavoritos())
+                                            ->leftJoin('cat_cabms', 'cat_cabms.id', '=', 'productos.id_cabms')
+                                            ->leftJoin('cat_productos', 'cat_productos.id', '=', 'productos.id_cat_productos')
+                                            ->leftJoin('perfil_negocio', 'perfil_negocio.id_persona', '=', 'cat_productos.id_persona')
+                                            ->where([
+                                                // Descartar registros de productos que por alguna razón no se completaron
+                                                ['registro_fase', '>=', RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS]
+                                            ])
+                                            ->orderBy('tipo')
+                                            ->orderBy('nombre')
+                                            ->get();
+
+        $productos->each(function (&$producto) {
+            $producto['foto_info'] = $producto->getFirstMedia('fotos');
+        });
+
+        return $productos;
+    }
+
     public function obtieneProductoInfo(int $productoId, bool $conProveedor = false)
     {
         $query = Producto::select('productos.id', 'productos.id_cat_productos', 'productos.tipo', 'productos.id_cabms', 'productos.nombre',
@@ -197,7 +223,8 @@ class ProductoRepository
         return DB::table('productos')->count();
     }
 
-    public function actualizaProducto(Producto $producto, array $productoData, ?array $categorias, array $fotosInfo, array $adjuntos) {
+    public function actualizaProducto(Producto $producto, array $productoData, ?array $categorias, array $fotosInfo, array $adjuntos): void
+    {
         $producto->update($productoData);
         $producto->actualizaCategoriasScian($categorias);
         $producto->actualizaFotos($fotosInfo['producto_fotos'] ?? null, $fotosInfo['producto_fotos_eliminadas']);

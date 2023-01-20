@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
+use App\Repositories\ProductoRepository;
 use Illuminate\Http\Request;
 use Maize\Markable\Models\Favorite;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class EntidadURGController extends Controller
 {
-    public function indexFavoritos(Request $request)
+    public function indexFavoritos(Request $request, ProductoRepository $productoRepo)
     {
-        return view('entidad-urg.favoritos-index');
+        $user = Auth::user();
+        $productos = $productoRepo->obtieneProductosFavoritos($user);
+
+        return view('entidad-urg.favoritos-index', compact('productos'));
     }
 
     public function updateProductoFavoritos(Request $request, Producto $producto)
