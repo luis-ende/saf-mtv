@@ -26,9 +26,9 @@ class ConsultaPadronProveedoresService
             if ($estatusData === 'no existe') {
                 $provEtapa['id_etapa'] = 0;
                 $provEtapa['etapa'] = 'SIN REGISTRO';
-            } else {
-                $provEtapa['id_etapa'] = $estatusData['id_etapa'];
-                $provEtapa['etapa'] = $estatusData['etapa'];
+            } else {                
+                $provEtapa['id_etapa'] = $estatusData[0]['id_etapa'];
+                $provEtapa['etapa'] = $estatusData[0]['etapa'];
             }
         } else {
             return [
