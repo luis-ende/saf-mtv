@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 
 class ProductoRepository
 {
+    public const BUSQUEDA_PRODUCTOS_PAGINATION_OFFSET = 30;
+
     /**
      * Obtiene producto con nombre CAMBS y lista de categorías SCIAN asociadas.
      */
@@ -89,7 +91,7 @@ class ProductoRepository
     /**
      * Realiza búsqueda de productos por término y filtros aplicados (Buscador MTV).
      */
-    public function buscaProductosPorTermino(?string $terminoBusqueda, array $filtros = [])
+    public function buscaProductosPorTermino(?string $terminoBusqueda, array $filtros = [], int $offset = 0)
     {
         // Se filtran siempre registros de productos que por alguna razón no se completaron
         $condiciones = [
@@ -116,6 +118,7 @@ class ProductoRepository
 
         if (isset($filtros['capitulo_filtro'])) {
             $capitulos = array_map(function($cap) {
+                // Obtiene primer caracter del capítulo, por ejemplo: '2000' = '2'
                 return $cap[0];
             }, $filtros['capitulo_filtro']);
 
@@ -152,10 +155,11 @@ class ProductoRepository
             $query = $query->orderBy($filtros['sort_productos']);
         }
 
-        $productos = $query->limit(100)
-                           ->get();
+        $query = $query->offset($offset)
+                       ->limit(self::BUSQUEDA_PRODUCTOS_PAGINATION_OFFSET);
 
-        // TODO Obtener información en join!
+        $productos = $query->get();
+
         $productos->each(function (&$producto) {
             $producto['foto_info'] = $producto->getFirstMedia('fotos');
         });

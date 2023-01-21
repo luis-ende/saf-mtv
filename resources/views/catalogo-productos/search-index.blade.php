@@ -73,7 +73,7 @@
                                     </a>
                                 </div>
 
-                                @if($tipo_busqueda === 'productos')
+                                {{--@if($tipo_busqueda === 'productos')
                                     @isset($num_resultados)
                                         @if($num_resultados === 0 && !empty($term_busqueda))
                                             <div class="p-0 mt-2 text-slate-700">
@@ -86,7 +86,7 @@
                                             </div>
                                         @endif
                                     @endisset
-                                @endif
+                                @endif--}}
 
                                 <x-busqueda.productos-filtros-bar
                                     :filtros_opciones="$filtros_opciones" />                                
@@ -105,7 +105,7 @@
 
                         @if($tipo_busqueda === 'productos')
                             @isset($resultados)
-                                <div class="w-full mt-10">
+                                <div class="w-full my-10">
                                     <x-productos.productos-grid
                                         modo="busqueda"
                                         :productos="$resultados" />
@@ -141,7 +141,7 @@
                                     </button>
                                 </div>
 
-                                @if($tipo_busqueda === 'proveedores')
+                                {{--@if($tipo_busqueda === 'proveedores')
                                     @isset($num_resultados)
                                         @if($num_resultados === 0 && !empty($term_busqueda))
                                             <div class="p-0 mt-2 text-slate-700">
@@ -154,7 +154,7 @@
                                             </div>
                                         @endif
                                     @endisset
-                                @endif
+                                @endif--}}
 
                                 <x-busqueda.proveedores-filtros-bar
                                     :filtros_opciones="$filtros_opciones" />                                
@@ -163,7 +163,7 @@
 
                         @if($tipo_busqueda === 'proveedores')
                             @isset($resultados)
-                                <div class="w-full mt-10">
+                                <div class="w-full my-10">
                                     <x-proveedores.proveedor-grid
                                         :proveedores="$resultados" />
                                 </div>

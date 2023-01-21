@@ -139,5 +139,40 @@ Alpine.data('busquedaCABMS', () => ({
     }
 }))
 
+Alpine.data('productoFavoritos', () => ({
+    get currentColor() {
+        let $color = this.numFavoritos > 0 ? 'text-mtv-primary' : 'text-mtv-gold';
+        if (this.esEditable) {
+            $color += this.numFavoritos > 0 ? ' hover:text-mtv-gold' : ' hover:text-mtv-primary'
+        }
+
+        return $color;
+    },
+    numFavoritos: 0,
+    esEditable: false,
+    toggleFavorito(updateRoute, token) {
+        fetch(updateRoute, {
+            method: "POST",
+            credentials: 'same-origin',
+            headers: {
+                'X-CSRF-Token': token,
+            },
+        }).then(response => response.json())
+            .then(json => {
+                this.numFavoritos = json.num_favoritos;
+            })
+    },
+    initFavoritos(numFavoritos) {
+        this.numFavoritos = numFavoritos;
+        if (this.esEditable) {
+            this.$watch('numFavoritos', value => {
+                this.$refs.controlFavoritos.className = '';
+                this.currentColor.split(' ').forEach(favClass => {
+                    this.$refs.controlFavoritos.classList.add(favClass);
+                });
+            })
+        }
+    }
+}))
 
 Alpine.start();

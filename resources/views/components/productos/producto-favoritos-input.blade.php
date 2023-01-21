@@ -1,45 +1,26 @@
 @props(['producto_id' => null, 'num_favoritos' => 0])
 
-<span x-data="productoFavoritos_{{ $producto_id }}()" 
-    x-init="numFavoritos = @json($num_favoritos)">
-    @role(['urg'])
+{{-- TIP: Buscar esta función reutilizable 'productoFavoritos()' en resources/js/app.js --}}
+@php($esEditable = false)
+@role('urg')
+    @php($esEditable = true)
+@endrole
+<span x-data="productoFavoritos"
+      x-init="esEditable = @json($esEditable); initFavoritos(@json($num_favoritos))">
+    @if($esEditable)
     <button type="button"
-       @click="toggleFavorito()"
-       x-bind:class="numFavoritos > 0 ? colorConFavoritos : colorSinFavoritos">
+       @click="toggleFavorito('{{ route('urg-productos-favoritos.update', [$producto_id]) }}', '{{ csrf_token() }}')"
+       x-ref="controlFavoritos"
+       :class="currentColor">
     @else   
-    <span x-bind:class="numFavoritos > 0 ? colorConFavoritos : colorSinFavoritos">
-    @endrole        
+    <span :class="currentColor">
+    @endif
         @svg('gmdi-favorite-border-r', ['x-show' => 'numFavoritos === 0', 'class' => 'w-5 h-5 inline-block mr-1'])
         @svg('gmdi-favorite-r', ['x-show' => 'numFavoritos > 0', 'class' => 'w-5 h-5 inline-block mr-1'])        
         <span x-text="numFavoritos"></span>
-    @role('urg')
+    @if($esEditable)
     </button>
     @else
     </span>
-    @endrole
-    
-    <script type="text/javascript">
-        function productoFavoritos_{{ $producto_id }}() {
-            return {
-                colorSinFavoritos: 'text-mtv-gold hover:fill-mtv-primary',
-                colorConFavoritos: 'text-mtv-primary hover:fill-mtv-gold',
-                numFavoritos: 0, 
-                @role('urg')
-                toggleFavorito() {                        
-                    fetch("{{ route('urg-productos-favoritos.update', [$producto_id]) }}", {
-                        method: "POST",                            
-                        credentials: 'same-origin',
-                        headers: {
-                            'X-CSRF-Token': '{{ csrf_token() }}',
-                        },                            
-                    }).then(response => response.json())
-                        .then(json => {
-                        console.log(json);
-                        this.numFavoritos = json.num_favoritos;
-                    })
-                },
-                @endrole
-            }
-        }
-    </script>    
+    @endif
 </span>

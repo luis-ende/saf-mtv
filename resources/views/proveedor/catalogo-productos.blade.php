@@ -43,7 +43,7 @@
             </div>
             @php($numProductosBien = count($productos_bien))
             @php($numProductosServicio = count($productos_servicio))
-            <div class="py-6 px-12">
+            <div class="py-6 px-12 mb-5">
                 <div x-data="{ tab: 'bienes' }">
                     <nav class="font-bold text-lg text-mtv-gold flex flex-row mb-5">
                         <a class="no-underline border-b-4 basis-1/2 text-center"
