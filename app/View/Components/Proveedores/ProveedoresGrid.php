@@ -1,11 +1,11 @@
 <?php
 
-namespace App\View\Components\Productos;
+namespace App\View\Components\Proveedores;
 
-use App\Repositories\ProductoRepository;
+use App\Repositories\PerfilNegocioRepository;
 use Illuminate\View\Component;
 
-class ProductosGrid extends Component
+class ProveedoresGrid extends Component
 {
     public int $pagination_offset;
     public array $filtros;
@@ -18,7 +18,7 @@ class ProductosGrid extends Component
      */
     public function __construct()
     {
-        $this->pagination_offset = ProductoRepository::BUSQUEDA_PRODUCTOS_PAGINATION_OFFSET;
+        $this->pagination_offset = PerfilNegocioRepository::BUSQUEDA_PROVEEDORES_PAGINATION_OFFSET;
         $this->filtros = request()->except('_token');
         $this->buscador_items_route = route('buscador-mtv.items-cards');
     }
@@ -30,6 +30,6 @@ class ProductosGrid extends Component
      */
     public function render()
     {
-        return view('components.productos.productos-grid');
+        return view('components.proveedores.proveedores-grid');
     }
 }

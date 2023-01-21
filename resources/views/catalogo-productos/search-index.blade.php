@@ -145,7 +145,7 @@
                                             No se encontraron proveedores.
                                         </div>
                                     @else
-                                        <x-proveedores.proveedor-grid
+                                        <x-proveedores.proveedores-grid
                                                 :proveedores="$resultados" />
                                     @endif
                                 @endif

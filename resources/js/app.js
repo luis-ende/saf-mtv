@@ -175,4 +175,42 @@ Alpine.data('productoFavoritos', () => ({
     }
 }))
 
+Alpine.data('infiniteScrolling', () => ({
+    get maxResultados() {
+        return this.numResults < this.paginationOffset;
+    },
+    buscadorItemsRoute: null,
+    paginationOffset: 0,
+    nextOffset: 0,
+    htmlData: null,
+    numResults: 0,
+    filtros: [],
+    async retrieveData() {
+        // Remueve elementos con valor nulo
+        const filtrosValidos = Object.fromEntries(Object.entries(this.filtros).filter(([_, v]) => v != null));
+        const filtrosParams = new URLSearchParams(filtrosValidos);
+        filtrosParams.append('offset', this.nextOffset);
+
+        this.htmlData = await (await fetch(this.buscadorItemsRoute + '?' + filtrosParams, {
+            method: 'GET',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })).text();
+
+        let parser = new DOMParser();
+        let parseDocument = parser.parseFromString(this.htmlData, 'text/html');
+        this.numResults = parseDocument.getElementsByTagName('article').length;
+        this.nextOffset += this.paginationOffset;
+    },
+    initInfiniteScrolling(paginationOffset, numRecords, filtros, buscadorItemsRoute) {
+        this.paginationOffset = paginationOffset;
+        this.nextOffset = paginationOffset;
+        this.numResults = numRecords;
+        this.filtros = filtros;
+        this.buscadorItemsRoute = buscadorItemsRoute;
+        this.$watch('htmlData', value => {
+            this.$refs.resultsGrid.innerHTML += this.htmlData
+        })
+    },
+}))
+
 Alpine.start();

@@ -3,11 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\PerfilNegocio;
-use App\Models\Persona;
 use Illuminate\Support\Facades\DB;
 
 class PerfilNegocioRepository
 {
+    public const BUSQUEDA_PROVEEDORES_PAGINATION_OFFSET = 30;
+
     public function obtieneNumeroProveedoresRegistrados()
     {
         return DB::table('personas')->count();
@@ -55,7 +56,7 @@ class PerfilNegocioRepository
     /**
      * Realiza búsqueda de proveedores por término y filtros aplicados (Buscador MTV).
      */
-    public function buscaProveedoresPorTermino(?string $terminoBusqueda, array $filtros = [])
+    public function buscaProveedoresPorTermino(?string $terminoBusqueda, array $filtros = [], int $offset = 0)
     {
         $terminoBusqueda = strtolower($terminoBusqueda);
         $query = PerfilNegocio::select('perfil_negocio.id', 'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio',
@@ -96,10 +97,11 @@ class PerfilNegocioRepository
             $query = $query->orderBy($filtros['sort_proveedores']);
         }
 
-        $proveedores = $query->limit(30)
-                             ->get();
+        $query = $query->offset($offset)
+                       ->limit(self::BUSQUEDA_PROVEEDORES_PAGINATION_OFFSET);
 
-        // TODO Obtener información en join
+        $proveedores = $query->get();
+
         $proveedores->each(function (&$proveedor) {
             $proveedor['logo_info'] = $proveedor->getFirstMedia('logotipos');
         });

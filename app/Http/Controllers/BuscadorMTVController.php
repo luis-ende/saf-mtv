@@ -88,20 +88,25 @@ class BuscadorMTVController extends Controller
 
         $tipoBusqueda = $request->input('tipo_busqueda');
         $modo = 'busqueda';
-        $productos = $resultadosBusqueda;
+
         if (request()->ajax()) {
             if ($tipoBusqueda === BuscadorMTVService::TIPO_BUSQUEDA_PRODUCTOS) {
+                $productos = $resultadosBusqueda;
+
                 return View::make('components.productos.productos-cards',
                     compact('modo','productos'))->render();
             }
-        }
 
-        if ($tipoBusqueda === BuscadorMTVService::TIPO_BUSQUEDA_PRODUCTOS) {
-            return view('components.productos.productos-cards', compact('modo','productos'));
+            if ($tipoBusqueda === BuscadorMTVService::TIPO_BUSQUEDA_PROVEEDORES) {
+                $proveedores = $resultadosBusqueda;
+
+                return View::make('components.proveedores.proveedores-cards',
+                    compact('modo','proveedores'))->render();
+            }
         }
 
         return [
-            'error' => 'Tipo de búsqueda no reconocida.',
+            'error' => 'Tipo de busqueda no reconocida.',
         ];
     }
 
