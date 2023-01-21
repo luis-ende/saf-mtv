@@ -73,21 +73,6 @@
                                     </a>
                                 </div>
 
-                                {{--@if($tipo_busqueda === 'productos')
-                                    @isset($num_resultados)
-                                        @if($num_resultados === 0 && !empty($term_busqueda))
-                                            <div class="p-0 mt-2 text-slate-700">
-                                                No se encontraron productos con el término <span class="font-bold">"{{ $term_busqueda }}"</span>.
-                                            </div>
-                                        @endif
-                                        @if($num_resultados > 0 && !empty($term_busqueda))
-                                            <div class="p-0 mt-2 text-slate-700">
-                                                <span class="font-bold">{{ $num_resultados }}</span> productos encontrados con el término <span class="font-bold">"{{ $term_busqueda }}"</span>
-                                            </div>
-                                        @endif
-                                    @endisset
-                                @endif--}}
-
                                 <x-busqueda.productos-filtros-bar
                                     :filtros_opciones="$filtros_opciones" />                                
                             </form>                            
@@ -104,13 +89,19 @@
                         @endrole
 
                         @if($tipo_busqueda === 'productos')
-                            @isset($resultados)
-                                <div class="w-full my-10">
-                                    <x-productos.productos-grid
-                                        modo="busqueda"
-                                        :productos="$resultados" />
-                                </div>
-                            @endisset
+                            <div class="w-full my-10">
+                                @if(!empty($resultados))
+                                    @if($resultados->isEmpty())
+                                        <div class="text-center text-lg text-mtv-text-gray-light">
+                                            No se encontraron productos.
+                                        </div>
+                                    @else
+                                        <x-productos.productos-grid
+                                                modo="busqueda"
+                                                :productos="$resultados" />
+                                    @endif
+                                @endif
+                            </div>
                         @endif
                     </div>
                     <div class="flex flex-col" x-show="tab === 'proveedores'">
@@ -141,33 +132,24 @@
                                     </button>
                                 </div>
 
-                                {{--@if($tipo_busqueda === 'proveedores')
-                                    @isset($num_resultados)
-                                        @if($num_resultados === 0 && !empty($term_busqueda))
-                                            <div class="p-0 mt-2 text-slate-700">
-                                                No se encontraron proveedores con el término <span class="font-bold">"{{ $term_busqueda }}"</span>.
-                                            </div>
-                                        @endif
-                                        @if($num_resultados > 0 && !empty($term_busqueda))
-                                            <div class="p-0 mt-2 text-slate-700">
-                                                <span class="font-bold">{{ $num_resultados }}</span> proveedores encontrados con el término <span class="font-bold">"{{ $term_busqueda }}"</span>
-                                            </div>
-                                        @endif
-                                    @endisset
-                                @endif--}}
-
                                 <x-busqueda.proveedores-filtros-bar
                                     :filtros_opciones="$filtros_opciones" />                                
                             </form>
                         </div>
 
                         @if($tipo_busqueda === 'proveedores')
-                            @isset($resultados)
-                                <div class="w-full my-10">
-                                    <x-proveedores.proveedor-grid
-                                        :proveedores="$resultados" />
-                                </div>
-                            @endisset
+                            <div class="w-full my-10">
+                                @if(!empty($resultados))
+                                    @if($resultados->isEmpty())
+                                        <div class="text-center text-lg text-mtv-text-gray-light">
+                                            No se encontraron proveedores.
+                                        </div>
+                                    @else
+                                        <x-proveedores.proveedor-grid
+                                                :proveedores="$resultados" />
+                                    @endif
+                                @endif
+                            </div>
                         @endif
                     </div>
                 </div>
