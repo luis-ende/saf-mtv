@@ -19,11 +19,11 @@
                         @foreach($filtros_opciones['grupos_prioritarios'] as $grupo)
                             <li class="mb-2">
                                 <input type="checkbox"
-                                       id="grupo_p-{{ $grupo['id'] }}"
+                                       id="grupo_p-{{ $grupo->id }}"
                                        name="grupo_p_filtro[]"
-                                       value="{{ $grupo['id'] }}"
+                                       value="{{ $grupo->id }}"
                                        class="mr-1">
-                                <label for="grupo_p-{{ $grupo['id'] }}">{{ $grupo['grupo'] }}</label>
+                                <label for="grupo_p-{{ $grupo->id }}">{{ $grupo->grupo }}</label>
                             </li>
                         @endforeach
                     </ul>

@@ -89,7 +89,11 @@
                                                 </span>
                                                 <span class="col-start-2 col-end-3 flex flex-col">
                                                     <label>Tipo</label>
-                                                    <span class="text-mtv-text-gray uppercase">{{ $persona->perfil_negocio->tipoPyme() }}</span>
+                                                    <span class="text-mtv-text-gray uppercase">
+                                                        @if($persona->perfil_negocio->id_grupo_prioritario === 1)
+                                                        {{ $persona->perfil_negocio->tipoPyme() }}
+                                                        @endif
+                                                    </span>
                                                 </span>
                                                 <span class="col-start-3 col-end-4 flex flex-col">
                                                     <label>Sector</label>

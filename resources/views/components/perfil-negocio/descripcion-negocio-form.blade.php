@@ -43,8 +43,8 @@
                         <option value="0">-- Ninguno --</option>
                         @foreach ((array) $grupos_prioritarios as $grupo)
                             <option
-                                value={{ $grupo['id'] }}
-                            >{{ $grupo['grupo'] }}</option>
+                                value={{ $grupo->id }}
+                            >{{ $grupo->grupo }}</option>
                         @endforeach
                     </select>
                     <label class="mtv-input-label" for="id_grupo_prioritario">¿Perteneces a algún sector prioritario?</label>
