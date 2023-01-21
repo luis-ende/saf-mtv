@@ -4,10 +4,10 @@
     <div class="flex flex-row space-x-2">
         <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ grupoPrioritarioIsOpen: false }">
             <button type="button"
-                class="w-56 border rounded p-1 uppercase"
+                class="w-56 border rounded p-1 uppercase flex flex-row justify-center"
                 @click="grupoPrioritarioIsOpen=true">
                 Sector prioritario
-                <svg class="fill-current h-4 w-4 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <svg class="fill-current h-4 w-4 inline-block self-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
             </button>
@@ -38,10 +38,10 @@
 
         <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ categoriaIsOpen: false }">
             <button type="button"
-                class="border rounded p-1 uppercase"
+                class="border rounded p-1 uppercase flex flex-row justify-center"
                 @click="categoriaIsOpen=true">
                 Categoría
-                <svg class="fill-current h-4 w-4 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <svg class="fill-current h-4 w-4 inline-block self-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
             </button>
@@ -68,10 +68,10 @@
 
         <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ sectorIsOpen: false }">
             <button type="button"
-                    class="border rounded p-1 uppercase"
+                    class="border rounded p-1 uppercase flex flex-row justify-center"
                     @click="sectorIsOpen=true">
                 Sector
-                <svg class="fill-current h-4 w-4 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <svg class="fill-current h-4 w-4 inline-block self-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
             </button>
@@ -97,10 +97,10 @@
 
         <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ padronEstatusIsOpen: false }">
             <button type="button"
-                    class="w-56 border rounded p-1 uppercase"
+                    class="w-56 border rounded p-1 uppercase flex flex-row justify-center"
                     @click="padronEstatusIsOpen=true">
                 Padrón de Proveedores
-                <svg class="fill-current h-4 w-4 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <svg class="fill-current h-4 w-4 inline-block self-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
             </button>
@@ -131,10 +131,10 @@
 
         <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ ordenProvIsOpen: false }">
             <button type="button"
-                class="border rounded p-1"
+                class="border rounded p-1 flex flex-row justify-center"
                 @click="ordenProvIsOpen=true">
                 Ordenar por
-                <svg class="fill-current h-4 w-4 inline-block self-end" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <svg class="fill-current h-4 w-4 inline-block self-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
             </button>
