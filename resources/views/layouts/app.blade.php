@@ -33,7 +33,7 @@
             </main>
 
             <!-- Page Footer -->
-            <x-site-footer />
+            <!-- <x-site-footer /> -->
         </div>
 
         @yield('scripts')

@@ -84,7 +84,7 @@
                </div>
                <p class="message-one">Quiero ser proveedor</p>
                <p class="message-second">Quiero conocer cómo venderle a la CDMX</p>
-               <button>Requisitos y documentos</button>
+               <button onclick="window.location='{{ route('flujograma.show') }}'">Requisitos y documentos</button>
             </div>
             <div class="card-menu-bottom">
                <div class="circle">
