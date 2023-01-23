@@ -20,6 +20,11 @@ class AuthenticatedSessionController extends Controller
         return view('auth.login');
     }
 
+    public function createURGLogin()
+    {
+        return view('auth.urg-login');
+    }    
+
     /**
      * Handle an incoming authentication request.
      *
