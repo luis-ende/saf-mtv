@@ -20,8 +20,13 @@
     </div>
 
 @if($modo === 'busqueda')
-    <button x-show="!maxResultados" class="mtv-button-gray uppercase w-full my-5" type="button"
-            @click="retrieveData();"
-    >Ver más resultados</button>
+    <div class="my-4 text-center">
+        <button type="button"
+                x-show="!maxResultados && !isLoading" 
+                class="text-mtv-gray font-bold bg-white border rounded uppercase py-2 w-full" 
+                @click="retrieveData();"
+        >Ver más resultados</button>
+        <span x-show="isLoading" class="spinner-border text-mtv-text-gray" role="status" aria-hidden="true"></span>        
+    </div>    
 </div>
 @endif

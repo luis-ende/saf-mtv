@@ -185,21 +185,25 @@ Alpine.data('infiniteScrolling', () => ({
     htmlData: null,
     numResults: 0,
     filtros: [],
+    isLoading: false,
     async retrieveData() {
         // Remueve elementos con valor nulo
         const filtrosValidos = Object.fromEntries(Object.entries(this.filtros).filter(([_, v]) => v != null));
         const filtrosParams = new URLSearchParams(filtrosValidos);
         filtrosParams.append('offset', this.nextOffset);
 
+        this.isLoading = true;
         this.htmlData = await (await fetch(this.buscadorItemsRoute + '?' + filtrosParams, {
             method: 'GET',
             headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        })).text();
-
+        })).text();                
+        
         let parser = new DOMParser();
         let parseDocument = parser.parseFromString(this.htmlData, 'text/html');
         this.numResults = parseDocument.getElementsByTagName('article').length;
         this.nextOffset += this.paginationOffset;
+
+        this.isLoading = false;
     },
     initInfiniteScrolling(paginationOffset, numRecords, filtros, buscadorItemsRoute) {
         this.paginationOffset = paginationOffset;
