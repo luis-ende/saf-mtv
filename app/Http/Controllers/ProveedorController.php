@@ -9,6 +9,7 @@ use App\Models\CategoriaScian;
 use App\Models\CatalogoProductos;
 use App\Repositories\ProductoRepository;
 use App\Repositories\PerfilNegocioRepository;
+use App\Services\RedesSocialesEnlacesService;
 use App\Services\ConsultaPadronProveedoresService;
 
 class ProveedorController extends Controller
@@ -47,10 +48,12 @@ class ProveedorController extends Controller
             return $producto->tipo === Producto::TIPO_PRODUCTO_SERVICIO_ID;
         });
 
-        $etapa_padron_prov = $this->obtieneTextoEtapaProveedor($proveedor->persona->rfc);
+        $etapa_padron_prov = $this->obtieneTextoEtapaProveedor($proveedor->persona->rfc);        
+        
+        $compartir_enlaces = RedesSocialesEnlacesService::generaEnlaces(url()->current(), 'Catálogo Mi Tiendita Virtual');    
 
         return view('proveedor.catalogo-productos', 
-                    compact('proveedor', 'productos_bien', 'productos_servicio', 'etapa_padron_prov'));
+                    compact('proveedor', 'productos_bien', 'productos_servicio', 'etapa_padron_prov', 'compartir_enlaces'));
     }
 
     public function showPerfilNegocio(int $personaId)

@@ -60,6 +60,7 @@ Para realizar una actualización completa del ambiente de desarrollo ejecutar de
 - Roles y permisos: Spatie Laravel Permission - https://spatie.be/docs/laravel-permission/v5/introduction
 - Imágenes y documentos adjuntos de productos y perfil de negocio: Spatie Media Library - https://spatie.be/docs/laravel-medialibrary/v10/introduction
 - Marca de favoritos de productos: https://github.com/maize-tech/laravel-markable?utm_source=pocket_reader
+- Enlaces de redes sociales (en este proyecto se usan solamente las funciones para generar los enlaces, no los botones en el front-end): https://github.com/jorenvh/laravel-share
 
 ## MTV en Docker
 

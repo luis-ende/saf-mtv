@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Repositories\ProductoRepository;
 use Illuminate\Support\Facades\Validator;
 use App\Services\RegistroProductosService;
+use App\Services\RedesSocialesEnlacesService;
 use Illuminate\Validation\ValidationException;
 
 class CatalogoProductosController extends Controller
@@ -33,9 +34,12 @@ class CatalogoProductosController extends Controller
             return $producto->tipo === Producto::TIPO_PRODUCTO_SERVICIO_ID;
         });        
 
+        $compartir_enlaces = RedesSocialesEnlacesService::generaEnlaces(url()->current(), 'Catálogo Mi Tiendita Virtual');    
+
         return view('proveedor.catalogo-productos', [
             'productos_bien' => $productosBien,
             'productos_servicio' => $productosServicio,
+            'compartir_enlaces' => $compartir_enlaces,
         ]);
     }
 

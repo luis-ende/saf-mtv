@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "blade-ui-kit/blade-icons": "^1.4",
         "guzzlehttp/guzzle": "^7.2",
+        "jorenvanhocht/laravel-share": "^4.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",

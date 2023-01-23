@@ -1,4 +1,7 @@
 <x-app-layout>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/share.js') }}"></script>
+
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden min-h-screen">
             <div class="px-6 bg-white border-b border-gray-200 flex flex-row items-baseline">
@@ -29,15 +32,25 @@
                         @endisset
                     </x-page-header-label>
                 </div>
-                <div class="md:basis-1/2 xs:basis-8/12 text-end">
-                    @if(request()->routeIs('catalogo-productos'))
+                <div class="md:basis-1/2 xs:basis-8/12 flex flex-row space-x-4 justify-end">
+                    @if(request()->routeIs('catalogo-productos'))                    
                         @role('proveedor')
+                            <x-catalogo-productos.social-links 
+                                :links="$compartir_enlaces"
+                                button-style="mtv-button-secondary-white"
+                            />
+
                             <a href="{{ route('catalogo-registro-inicio') }}"
-                                class="mtv-button-secondary no-underline md:text-base xs:text-sm">
+                                class="mtv-button-secondary no-underline md:text-base xs:text-sm my-4">
                                 @svg('polaris-major-add-product', ['class' => 'w-5 h-5 inline-block mr-3 md:inline xs:hidden'])
                                 Agregar producto
                             </a>
                         @endrole
+                    @else
+                        <x-catalogo-productos.social-links
+                            :links="$compartir_enlaces"
+                            button_style="mtv-button-secondary"
+                         />
                     @endif
                 </div>
             </div>
