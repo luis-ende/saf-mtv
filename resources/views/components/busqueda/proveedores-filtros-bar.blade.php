@@ -107,7 +107,7 @@
             </button>
             <div x-show="sectorIsOpen"
                  @click.away="sectorIsOpen = false"
-                 class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg">
+                 class="absolute z-50 mt-9 flex flex-col border rounded p-2 bg-white origin-top-left left-0 shadow-lg">
                 <div class="h-16 w-48">
                     <ul class="list-none list-outside p-0">
                         @foreach($filtros_opciones['sectores'] as $sector)
