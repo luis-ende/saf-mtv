@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\RegistroMTV;
 use App\Models\PerfilNegocio;
 use Illuminate\Support\Facades\DB;
 
@@ -58,6 +59,11 @@ class PerfilNegocioRepository
      */
     public function buscaProveedoresPorTermino(?string $terminoBusqueda, array $filtros = [], int $offset = 0)
     {
+        // Se filtran siempre registros incompletos de proveedores
+        $condiciones = [
+            ['registro_fase', '>=', RegistroMTV::FASE_REGISTRO_COMPLETO],
+        ];
+
         $terminoBusqueda = strtolower($terminoBusqueda);
         $query = PerfilNegocio::select('perfil_negocio.id', 'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio',
                                        'cat_sectores.sector', 'cat_categorias_scian.categoria_scian', 'cat_productos.id AS id_cat_productos',
@@ -66,7 +72,8 @@ class PerfilNegocioRepository
             ->leftJoin('cat_asentamientos', 'cat_asentamientos.id', '=', 'personas.id_asentamiento')
             ->leftJoin('cat_sectores', 'cat_sectores.id', '=', 'perfil_negocio.id_sector')
             ->leftJoin('cat_categorias_scian', 'cat_categorias_scian.id', '=', 'perfil_negocio.id_categoria_scian')
-            ->leftJoin('cat_productos', 'cat_productos.id_persona', '=', 'perfil_negocio.id_persona');            
+            ->leftJoin('cat_productos', 'cat_productos.id_persona', '=', 'perfil_negocio.id_persona')
+            ->where($condiciones);
 
         if (isset($filtros['grupo_p_filtro'])) {
             $gruposP = $filtros['grupo_p_filtro'];
