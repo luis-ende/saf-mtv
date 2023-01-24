@@ -14,11 +14,11 @@
             <div x-show="capituloIsOpen"
                 @click.away="capituloIsOpen = false"
                 class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg">
-                <div class="h-36 w-48 overflow-y-auto">
+                <div class="h-32 w-48 overflow-y-auto">
                     <ul class="list-none list-outside p-1">
                         @foreach($filtros_opciones['capitulos'] as $capitulo)
                             <li>
-                                <input class="mr-1" type="checkbox" id="capitulo-{{ $capitulo }}" name="capitulo_filtro[]" value="{{ $capitulo }}">
+                                <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="capitulo-{{ $capitulo }}" name="capitulo_filtro[]" value="{{ $capitulo }}">
                                 <label for="capitulo-{{ $capitulo }}">{{ $capitulo }}</label>
                             </li>
                         @endforeach
@@ -48,7 +48,7 @@
                     <ul class="list-none list-outside p-1">
                         @foreach($filtros_opciones['partidas'] as $partida)
                             <li>
-                                <input class="mr-1" type="checkbox" id="partida-{{ $partida }}" name="partida_filtro[]" value="{{ $partida }}">
+                                <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="partida-{{ $partida }}" name="partida_filtro[]" value="{{ $partida }}">
                                 <label for="partida-{{ $partida }}">{{ $partida }}</label>
                             </li>
                         @endforeach
@@ -78,7 +78,7 @@
                     <ul class="list-none list-outside p-1">
                     @foreach($filtros_opciones['sectores'] as $sector)
                         <li>
-                            <input class="mr-1" type="checkbox" id="sector-{{ $sector->id }}" name="sector_filtro[]" value="{{ $sector->id }}">
+                            <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="sector-{{ $sector->id }}" name="sector_filtro[]" value="{{ $sector->id }}">
                             <label for="sector-{{ $sector->id }}">{{ $sector->sector }}</label>
                         </li>
                     @endforeach
@@ -105,11 +105,11 @@
                 @click.away="ordenIsOpen = false"
                 class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg p-2">
                 <div class="h-16 w-48 uppercase">
-                    <input class="mr-1" type="radio" id="sort_nombre" name="sort_productos" value="nombre" checked>
+                    <input class="mr-1 focus:ring-mtv-secondary" type="radio" id="sort_nombre" name="sort_productos" value="nombre" checked>
                     <label for="sort_nombre">Nombre</label><br>
-                    <input class="mr-1" type="radio" id="sort_cabms" name="sort_productos" value="cabms">
+                    <input class="mr-1 focus:ring-mtv-secondary" type="radio" id="sort_cabms" name="sort_productos" value="cabms">
                     <label for="sort_cabms">CABMS</label><br>
-                    <input class="mr-1" type="radio" id="sort_partida" name="sort_productos" value="partida">
+                    <input class="mr-1 focus:ring-mtv-secondary" type="radio" id="sort_partida" name="sort_productos" value="partida">
                     <label for="sort_partida">Partida</label>
                 </div>
                 <button type="button"

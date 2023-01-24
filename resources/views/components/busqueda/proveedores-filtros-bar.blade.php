@@ -13,7 +13,7 @@
             </button>
             <div x-show="grupoPrioritarioIsOpen"
                 @click.away="grupoPrioritarioIsOpen = false"
-                 class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg p-2">
+                 class="absolute z-50 mt-9 flex flex-col border rounded p-2 bg-white origin-top-left left-0 shadow-lg">
                 <div class="h-28 w-56 overflow-y-auto">
                     <ul class="list-none list-outside p-1 text-xs">
                         @foreach($filtros_opciones['grupos_prioritarios'] as $grupo)
@@ -22,7 +22,7 @@
                                        id="grupo_p-{{ $grupo->id }}"
                                        name="grupo_p_filtro[]"
                                        value="{{ $grupo->id }}"
-                                       class="mr-1">
+                                       class="mr-1 border rounded focus:ring-mtv-secondary">
                                 <label for="grupo_p-{{ $grupo->id }}">{{ $grupo->grupo }}</label>
                             </li>
                         @endforeach
@@ -47,12 +47,12 @@
             </button>
             <div x-show="categoriaIsOpen"
                 @click.away="categoriaIsOpen = false"
-                class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg p-2">
+                class="absolute z-50 mt-9 flex flex-col border rounded p-2 bg-white origin-top-left left-0 shadow-lg">
                 <div class="h-48 md:w-96 xs:w-48 overflow-y-auto">
                     <ul class="list-none list-outside p-1 text-xs">
                         @foreach($filtros_opciones['categorias'] as $categoria)
                             <li class="mb-2">
-                                <input class="mr-1" type="checkbox" id="categoria-{{ $categoria->id }}" name="categoria_filtro[]" value="{{ $categoria->id }}">
+                                <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="categoria-{{ $categoria->id }}" name="categoria_filtro[]" value="{{ $categoria->id }}">
                                 <label for="categoria-{{ $categoria->id }}">{{ $categoria->categoria_scian }}</label>
                             </li>
                         @endforeach
@@ -77,12 +77,12 @@
             </button>
             <div x-show="sectorIsOpen"
                  @click.away="sectorIsOpen = false"
-                 class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg p-2">
+                 class="absolute z-50 mt-9 flex flex-col border rounded p-2 bg-white origin-top-left left-0 shadow-lg">
                 <div class="h-16 w-48">
                     <ul class="list-none list-outside p-0">
                         @foreach($filtros_opciones['sectores'] as $sector)
                             <li>
-                                <input class="mr-1" type="checkbox" id="sector_prov_{{ $sector->id }}" name="sector_prov_filtro[]" value="{{ $sector->id }}">
+                                <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="sector_prov_{{ $sector->id }}" name="sector_prov_filtro[]" value="{{ $sector->id }}">
                                 <label for="sector_prov_{{ $sector->id }}">{{ $sector->sector }}</label>
                             </li>
                         @endforeach
@@ -106,18 +106,18 @@
             </button>
             <div x-show="padronEstatusIsOpen"
                  @click.away="padronEstatusIsOpen = false"
-                 class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg p-2">
+                 class="absolute z-50 mt-9 flex flex-col border rounded p-2 bg-white origin-top-left left-0 shadow-lg">
                 <div class="h-16 w-48">
                     <ul class="list-none list-outside p-0">
                         @foreach($filtros_opciones['padron_prov_estatus'] as $key => $estatus)
                             @php($estatusLabel = $key === 4 ? 'En revisión' : ($key === 7 ? 'Constancia vigente' : $estatus))
                             <li>
-                                <input class="mr-1" type="checkbox" id="prov_estatus_{{ $key }}" name="padron_prov_estatus[]" value="{{ $key }}">
+                                <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="prov_estatus_{{ $key }}" name="padron_prov_estatus[]" value="{{ $key }}">
                                 <label for="prov_estatus_{{ $key }}">{{ $estatusLabel }}</label>
                             </li>
                         @endforeach
                         <li>
-                            <input class="mr-1" type="checkbox" id="sector_prov_0" name="sector_prov_filtro[]" value="{{ $sector->id }}">
+                            <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="sector_prov_0" name="sector_prov_filtro[]" value="{{ $sector->id }}">
                             <label for="sector_prov_0">Sin registro</label>
                         </li>
                     </ul>
@@ -140,13 +140,13 @@
             </button>
             <div x-show="ordenProvIsOpen"
                 @click.away="ordenProvIsOpen = false"
-                class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-2xl p-2">
+                class="absolute z-50 mt-9 flex flex-col border rounded p-2 bg-white origin-top-left left-0 shadow-2xl">
                 <div class="h-16 w-48 uppercase">
-                    <input class="mr-1" type="radio" id="sort_nombre" name="sort_proveedores" value="nombre_negocio" checked>
+                    <input class="mr-1 border rounded focus:ring-mtv-secondary" type="radio" id="sort_nombre" name="sort_proveedores" value="nombre_negocio" checked>
                     <label for="sort_nombre">Nombre comercial</label><br>
-                    <input class="mr-1" type="radio" id="sort_sector" name="sort_proveedores" value="sector">
+                    <input class="mr-1 border rounded focus:ring-mtv-secondary" type="radio" id="sort_sector" name="sort_proveedores" value="sector">
                     <label for="sort_sector">Sector</label><br>
-                    <input class="mr-1" type="radio" id="sort_giro" name="sort_proveedores" value="categoria_scian">
+                    <input class="mr-1 border rounded focus:ring-mtv-secondary" type="radio" id="sort_giro" name="sort_proveedores" value="categoria_scian">
                     <label for="sort_giro">Giro</label>
                 </div>
                 <button type="button"
