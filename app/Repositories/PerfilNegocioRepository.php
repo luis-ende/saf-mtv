@@ -60,7 +60,10 @@ class PerfilNegocioRepository
     {
         $terminoBusqueda = strtolower($terminoBusqueda);
         $query = PerfilNegocio::select('perfil_negocio.id', 'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio',
-                                            'cat_sectores.sector', 'cat_categorias_scian.categoria_scian', 'cat_productos.id AS id_cat_productos')
+                                       'cat_sectores.sector', 'cat_categorias_scian.categoria_scian', 'cat_productos.id AS id_cat_productos',
+                                       'cat_asentamientos.id_municipio', 'cat_asentamientos.municipio')
+            ->leftJoin('personas', 'personas.id', '=', 'perfil_negocio.id_persona')
+            ->leftJoin('cat_asentamientos', 'cat_asentamientos.id', '=', 'personas.id_asentamiento')
             ->leftJoin('cat_sectores', 'cat_sectores.id', '=', 'perfil_negocio.id_sector')
             ->leftJoin('cat_categorias_scian', 'cat_categorias_scian.id', '=', 'perfil_negocio.id_categoria_scian')
             ->leftJoin('cat_productos', 'cat_productos.id_persona', '=', 'perfil_negocio.id_persona');            
@@ -72,10 +75,17 @@ class PerfilNegocioRepository
             });
         }
 
-        if (isset($filtros['categoria_filtro'])) {        
-            $categorias = $filtros['categoria_filtro'];
-            $query = $query->where(function($query) use($categorias) {
-                $query->whereIn('perfil_negocio.id_categoria_scian', $categorias);
+        // if (isset($filtros['categoria_filtro'])) {        
+        //     $categorias = $filtros['categoria_filtro'];
+        //     $query = $query->where(function($query) use($categorias) {
+        //         $query->whereIn('perfil_negocio.id_categoria_scian', $categorias);
+        //     });
+        // }
+
+        if (isset($filtros['alcaldia_filtro'])) {
+            $alcaldias = $filtros['alcaldia_filtro'];
+            $query = $query->where(function($query) use($alcaldias) {
+                $query->whereIn('cat_asentamientos.id_municipio', $alcaldias);
             });
         }
 

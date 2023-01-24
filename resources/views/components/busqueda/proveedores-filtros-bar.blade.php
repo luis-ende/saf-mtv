@@ -13,7 +13,7 @@
             </button>
             <div x-show="grupoPrioritarioIsOpen"
                 @click.away="grupoPrioritarioIsOpen = false"
-                 class="absolute z-50 mt-9 flex flex-col border rounded p-2 bg-white origin-top-left left-0 shadow-lg">
+                 class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg">
                 <div class="h-28 w-56 overflow-y-auto">
                     <ul class="list-none list-outside p-1 text-xs">
                         @foreach($filtros_opciones['grupos_prioritarios'] as $grupo)
@@ -36,7 +36,7 @@
             </div>
         </div>
 
-        <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ categoriaIsOpen: false }">
+        {{-- <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ categoriaIsOpen: false }">
             <button type="button"
                 class="border rounded p-1 uppercase flex flex-row justify-center"
                 @click="categoriaIsOpen=true">
@@ -47,13 +47,43 @@
             </button>
             <div x-show="categoriaIsOpen"
                 @click.away="categoriaIsOpen = false"
-                class="absolute z-50 mt-9 flex flex-col border rounded p-2 bg-white origin-top-left left-0 shadow-lg">
+                class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg">
                 <div class="h-48 md:w-96 xs:w-48 overflow-y-auto">
                     <ul class="list-none list-outside p-1 text-xs">
                         @foreach($filtros_opciones['categorias'] as $categoria)
                             <li class="mb-2">
                                 <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="categoria-{{ $categoria->id }}" name="categoria_filtro[]" value="{{ $categoria->id }}">
                                 <label for="categoria-{{ $categoria->id }}">{{ $categoria->categoria_scian }}</label>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+                <button type="button"
+                    @click="$event.target.form.submit()"
+                    class="mtv-button-secondary w-20 my-1 inline-block self-end">
+                    Buscar
+                </button>
+            </div>
+        </div> --}}
+
+        <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ alcaldiaIsOpen: false }">
+            <button type="button"
+                class="border rounded p-1 uppercase flex flex-row justify-center"
+                @click="alcaldiaIsOpen=true">
+                Alcaldia
+                <svg class="fill-current h-4 w-4 inline-block self-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>
+            <div x-show="alcaldiaIsOpen"
+                @click.away="alcaldiaIsOpen = false"
+                class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg">
+                <div class="h-48 md:w-96 xs:w-48 overflow-y-auto">
+                    <ul class="list-none list-outside p-1 text-xs">
+                        @foreach($filtros_opciones['alcaldias'] as $alcaldia)
+                            <li class="mb-2">
+                                <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="alcaldia-{{ $alcaldia->id }}" name="alcaldia_filtro[]" value="{{ $alcaldia->id }}">
+                                <label for="alcaldia-{{ $alcaldia->id }}">{{ $alcaldia->alcaldia }}</label>
                             </li>
                         @endforeach
                     </ul>
@@ -77,7 +107,7 @@
             </button>
             <div x-show="sectorIsOpen"
                  @click.away="sectorIsOpen = false"
-                 class="absolute z-50 mt-9 flex flex-col border rounded p-2 bg-white origin-top-left left-0 shadow-lg">
+                 class="absolute z-50 mt-9 flex flex-col border rounded p-1 bg-white origin-top-left left-0 shadow-lg">
                 <div class="h-16 w-48">
                     <ul class="list-none list-outside p-0">
                         @foreach($filtros_opciones['sectores'] as $sector)

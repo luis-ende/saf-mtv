@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Capitulo;
 use App\Models\CategoriaScian;
 use App\Models\Sector;
+use App\Repositories\CatAsentamientosRepository;
 use App\Repositories\GrupoPrioritarioRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -66,7 +67,8 @@ class BuscadorMTVController extends Controller
     {
         return [
             'sectores' => Sector::all(),
-            'categorias' => CategoriaScian::all(),
+            //'categorias' => CategoriaScian::all(),
+            'alcaldias' => CatAsentamientosRepository::obtieneAcaldias(),
             'partidas' => DB::table('cat_cabms')->distinct()
                                                 ->orderBy('partida')
                                                 ->pluck('partida'),
@@ -141,17 +143,21 @@ class BuscadorMTVController extends Controller
             $filtros = $request->only('sort_productos', 'capitulo_filtro', 'partida_filtro', 'sector_filtro');
         } elseif($tipoBusqueda === BuscadorMTVService::TIPO_BUSQUEDA_PROVEEDORES) {
             $this->convierteFiltro($request, 'sector_prov_filtro');
-            $this->convierteFiltro($request, 'categoria_filtro');
+            $this->convierteFiltro($request, 'alcaldia_filtro');
+            // $this->convierteFiltro($request, 'categoria_filtro');
             $this->convierteFiltro($request, 'grupo_p_filtro');
 
             $this->validate($request, [
+                // 'sort_proveedores' => [Rule::in(['nombre_negocio', 'sector', 'categoria_scian'])],
                 'sort_proveedores' => [Rule::in(['nombre_negocio', 'sector', 'categoria_scian'])],
                 'sector_prov_filtro' => 'array',
-                'categoria_filtro' => 'array',
+                'alcaldia_filtro' => 'array',
+                // 'categoria_filtro' => 'array',
                 'grupo_p_filtro' => 'array',
             ]);
 
-            $filtros = $request->only('sort_proveedores', 'sector_prov_filtro', 'categoria_filtro', 'grupo_p_filtro');
+            // $filtros = $request->only('sort_proveedores', 'sector_prov_filtro', 'categoria_filtro', 'grupo_p_filtro');
+            $filtros = $request->only('sort_proveedores', 'sector_prov_filtro', 'alcaldia_filtro', 'grupo_p_filtro');
         }
 
         $busquedaTermino = '';
