@@ -341,7 +341,7 @@ class CatalogoProductosController extends Controller
                 'producto_fotos_eliminadas' => 'nullable|string',
             ]);
         } catch (ValidationException $e) {
-            // TODO: Verificar si devulve errores en el formato correcto
+            // TODO: Verificar si devuelve errores en el formato correcto
             return [$e->validator];
         }
 

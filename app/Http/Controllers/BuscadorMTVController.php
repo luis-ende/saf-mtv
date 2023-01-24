@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Capitulo;
-use App\Models\CategoriaScian;
+//use App\Models\CategoriaScian;
 use App\Models\Sector;
 use App\Repositories\CatAsentamientosRepository;
 use App\Repositories\GrupoPrioritarioRepository;

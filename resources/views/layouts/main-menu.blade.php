@@ -1,4 +1,5 @@
-<div class="hidden sm:flex sm:items-center sm:ml-6">                    
+<div class="hidden sm:flex sm:items-center sm:ml-6">                        
+    @role('proveedor')
     <x-dropdown align="right" width="48">
         <x-slot name="trigger">
             <button class="mr-7 flex items-center text-sm font-medium text-mtv-primary hover:text-mtv-primary hover:border-gray-300 focus:outline-none focus:text-mtv-primary focus:border-gray-300 transition duration-150 ease-in-out">
@@ -24,19 +25,17 @@
             </x-dropdown-link>
         </x-slot>
     </x-dropdown>
-
-    @role('proveedor')
     <a class="text-mtv-primary mr-7">
         @svg('codicon-bell-dot', ['class' => 'h-7 w-7 inline-block'])
     </a>
     @endrole
 
-    <x-dropdown align="right" width="48">
+    <x-dropdown align="right" width="36">
         <x-slot name="trigger">
-            <button class="flex items-center text-sm text-mtv-primary font-bold hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+            <button class="flex items-center text-sm text-mtv-primary font-bold hover:text-mtv-gold hover:border-gray-300 focus:outline-none focus:text-mtv-gold focus:border-gray-300 transition duration-150 ease-in-out">
                 <div>
                     @svg('lineawesome-user-check-solid', ['class' => 'h-7 w-7 inline-block ml-1'])
-                    Hola, {{ Auth::user()->nombreUsuario()}}                                    
+                    Hola, {{ Auth::user()->nombreUsuario()}}
                 </div>
                 <div class="ml-1">
                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -48,10 +47,20 @@
 
         <x-slot name="content">
             @role('proveedor')
-            <x-dropdown-link :href="route('perfil-negocio')">
+            <x-dropdown-link 
+                :href="route('perfil-negocio')"
+                :active="request()->routeIs('perfil-negocio')">
                 {{ __('Mi perfil') }}
             </x-dropdown-link>                        
-            <x-dropdown-link :href="route('usuario-configuracion.show')">
+            <x-dropdown-link 
+                :href="route('catalogo-productos')" 
+                :active="request()->routeIs('catalogo-productos')">
+                {{ __('Mi catálogo') }}
+            </x-dropdown-link>
+            <div class="border-b"></div>
+            <x-dropdown-link 
+                :href="route('usuario-configuracion.show')"
+                :active="request()->routeIs('usuario-configuracion.show')">
                 {{ __('Configuración') }}
             </x-dropdown-link>            
             <x-dropdown-link :href="route('centro-notificaciones')">
@@ -59,10 +68,13 @@
             </x-dropdown-link>
             @endrole
             @role('urg')
-            <x-dropdown-link :href="route('urg-productos-favoritos.index')">
+            <x-dropdown-link 
+                :href="route('urg-productos-favoritos.index')" 
+                :active="request()->routeIs('urg-productos-favoritos.index')">
                 {{ __('Favoritos') }}
             </x-dropdown-link>
             @endrole
+            <div class="border-b"></div>
             <!-- Authentication -->
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
