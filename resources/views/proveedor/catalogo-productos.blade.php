@@ -8,7 +8,7 @@
                 <div class="basis-1/2">
                     <x-page-header-label title="Catálogo">
                         @isset($proveedor)
-                            <div class="uppercase">
+                            <div class="uppercase mt-2">
                                 <a href="{{ route('proveedor-perfil.show', $proveedor->persona->id) }}"
                                    class="mtv-link-gold md:text-lg sm:text-sm xs:text-xs">
                                     {{ $proveedor->nombre_negocio }}
@@ -18,16 +18,16 @@
                                 {{ $proveedor->persona->nombre_o_razon_social() }}
                             </div>
                             <div class="text-mtv-text-gray sm:text-sm xs:text-xs uppercase">
-                                Sector: {{ $proveedor->sector }}
+                                <span class="text-mtv-text-gray-light">Sector: </span>{{ $proveedor->sector }}
                             </div>
                             <div class="text-mtv-text-gray sm:text-sm xs:text-xs uppercase">
-                                Giro: {{ $proveedor->categoria_scian }}
+                                <span class="text-mtv-text-gray-light">Giro: </span>{{ $proveedor->categoria_scian }}
                             </div>
                             <div class="text-mtv-text-gray sm:text-sm xs:text-xs uppercase">
-                                Ubicación: {{ $proveedor->persona->direccion()->pais }}, {{ $proveedor->persona->direccion()->ciudad }}
+                                <span class="text-mtv-text-gray-light">Ubicación: </span> {{ $proveedor->persona->direccion()->pais }}, {{ $proveedor->persona->direccion()->ciudad }}
                             </div>
                             <div class="text-mtv-text-gray sm:text-sm xs:text-xs uppercase">
-                                Constancia: {{ $etapa_padron_prov }}
+                                <span class="text-mtv-text-gray-light">Constancia: </span>{{ $etapa_padron_prov }}
                             </div>
                         @endisset
                     </x-page-header-label>

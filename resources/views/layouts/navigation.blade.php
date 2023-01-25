@@ -14,7 +14,7 @@
 
                 <!-- Settings Dropdown -->
                 @auth
-                    @include('layouts/main-menu')
+                    @include('layouts/user-menu')
                 @endauth
 
                 <!-- Hamburger -->
@@ -30,88 +30,12 @@
         </div>
 
         <!-- Responsive Navigation Menu -->
-        <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                    {{ __('Inicio') }}
-                </x-responsive-nav-link>
-                @role('proveedor')
-                <x-responsive-nav-link :href="route('catalogo-productos')" :active="request()->routeIs('catalogo-productos')">
-                    {{ __('Mi Catálogo') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('oportunidades-negocio')">
-                    {{ __('Oportunidades') }}
-                </x-responsive-nav-link>
-                @endrole
-            </div>
-
-            <!-- Responsive Settings Options -->
-            <div class="pt-4 pb-1 border-t border-gray-200">
-                <div class="px-4">
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->rfc }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->nombreUsuario() }}</div>
-                </div>
-
-                <div class="mt-3 space-y-1">
-                    <!-- Authentication -->
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-
-                        <x-responsive-nav-link :href="route('logout')"
-                                onclick="event.preventDefault();
-                                            this.closest('form').submit();">
-                            {{ __('Cerrar sesión') }}
-                        </x-responsive-nav-link>
-                    </form>
-                </div>
-            </div>
-        </div>
+        @if($show_main_menu)
+            @include('layouts/main-menu-responsive')
+        @endif
     </nav>
 
     @if($show_main_menu)
-        <nav x-data="{ open: false }" class="bg-white border-b-4 border-mtv-gold-light text-mtv-gold-light">
-            <!-- Menú principal -->
-            <div class="px-3">
-                <div class="flex justify-between h-16">
-                    <div class="flex">
-                        <div class="hidden space-x-8 sm:-my-px sm:flex">
-                            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                                {{ __('Inicio') }}
-                            </x-nav-link>
-                            @role('proveedor')
-                            <x-nav-link :href="route('catalogo-productos')" :active="request()->routeIs('catalogo-productos')">
-                                {{ __('Mi Catálogo') }}
-                            </x-nav-link>
-                            <x-nav-link :href="route('oportunidades-negocio')" :active="request()->routeIs('oportunidades-negocio')">
-                                {{ __('Oportunidades') }}
-                            </x-nav-link>
-                            @endrole
-                            <div class="inline-flex items-center px-1 pt-1 text-base font-base leading-5 text-mtv-gold hover:text-mtv-primary hover:border-gray-300 focus:outline-none focus:text-mtv-primary focus:border-gray-300 transition duration-150 ease-in-out no-underline">
-                                <x-dropdown align="left" width="56">
-                                    <x-slot name="trigger">
-                                        <button class="flex items-center transition duration-150 ease-in-out">
-                                            Catálogo
-                                            <div class="ml-1">
-                                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                </svg>
-                                            </div>
-                                        </button>
-                                    </x-slot>
-                                    <x-slot name="content">
-                                        <x-dropdown-link href="{{ route('buscador-mtv.index', ['tipo' => 'productos']) }}">
-                                            {{ __('Catálogo de productos') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link href="{{ route('buscador-mtv.index', ['tipo' => 'proveedores']) }}">
-                                            {{ __('Directorio de proveedores') }}
-                                        </x-dropdown-link>
-                                    </x-slot>
-                                </x-dropdown>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        @include('layouts/main-menu')
     @endif
 </div>

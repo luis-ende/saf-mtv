@@ -29,10 +29,10 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             {{-- <x-responsive-nav-link :href="{{ route('login') }}">
-                {{ __('Ingresa') }}
+                Ingresa
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="{{ route('wizard.registro-mtv.create') }}">
-                {{ __('Regístrate') }}
+                Regístrate
             </x-responsive-nav-link> --}}
         </div>
     </div>
