@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use RoachPHP\Roach;
 
+use App\Models\Capitulo;
 use App\Spiders\ConvocatoriasOportunidadesSpider;
 
 /**
@@ -11,6 +12,52 @@ use App\Spiders\ConvocatoriasOportunidadesSpider;
  */
 class OportunidadRepository
 {
+    public function obtieneRubros() 
+    {
+        return Capitulo::CABMS_CAPITULOS;
+    }
+
+    public function obtieneTiposContratacion() 
+    {
+        return [
+            1 => 'Bien',
+            2 => 'Servicio',
+        ];
+    }
+
+    public function obtieneMetodosContratacion() 
+    {
+        return [
+            1 => 'Adjudicación directa',
+            2 => 'Invitación restringida',
+            3 => 'Licitación pública',
+        ];
+    }
+
+    public function obtieneEtapasProcedimiento()
+    {
+        return [
+            1 => 'Programado',
+            2 => 'Prebases',
+            3 => 'Licitación en proceso',
+            4 => 'Pre-cotizar',
+        ];
+    }
+
+    public function obtieneEstatusContratacion()
+    {
+        return [
+            1 => 'En proceso',
+            2 => 'Cerrado',            
+        ];
+    }
+
+    public function obtieneInstitucionesCompradoras()
+    {
+        return [            
+        ];
+    }
+
     /**
      * Extraer concursos de https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas
      */
