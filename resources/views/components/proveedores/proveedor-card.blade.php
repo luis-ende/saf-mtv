@@ -1,6 +1,6 @@
 @props(['proveedor' => null])
 
-<article class="md:mb-0 xs:mb-5">
+<article class="md:mb-0 xs:mb-5 md:hover:shadow-lg">
     <div class="flex flex-col">
         <div class="flex flex-row mb-1">
             <span class="text-mtv-gold uppercase text-xs basis-full text-start ml-2">{{ $proveedor->nombre_negocio }}</span>
