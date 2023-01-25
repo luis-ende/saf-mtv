@@ -15,7 +15,7 @@
                     @endauth
                     @role('proveedor')
                         <x-nav-link :href="route('catalogo-productos')" :active="request()->routeIs('catalogo-productos')">
-                            Mi Catálogo
+                            Mi tiendita virtual
                         </x-nav-link>
                         <x-nav-link href="#">
                             Calendario de compras

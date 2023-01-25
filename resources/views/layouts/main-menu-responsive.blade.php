@@ -5,7 +5,7 @@
         </x-responsive-nav-link>
         @role('proveedor')
             <x-responsive-nav-link :href="route('catalogo-productos')" :active="request()->routeIs('catalogo-productos')">
-                Mi Catálogo
+                Tienditas virtuales
             </x-responsive-nav-link>
             <x-responsive-nav-link href="#">
                 Calendario de compras
@@ -54,7 +54,7 @@
                 <x-responsive-nav-link :href="route('logout')"
                                        onclick="event.preventDefault();
                                             this.closest('form').submit();">
-                    {{ __('Cerrar sesión') }}
+                    Cerrar sesión
                 </x-responsive-nav-link>
             </form>
         </div>
