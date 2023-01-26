@@ -13,4 +13,26 @@ class CatAsentamientosRepository
                                              ->orderBy('municipio')
                                              ->get();
     }    
+
+    public function buscaCPAsentamiento(string $cp): array
+    {        
+        $asentamientos = DB::table('cat_asentamientos')
+                            ->select('id', 'asentamiento as colonia', 'municipio as alcaldia', 'entidad')
+                            ->where('cp', $cp)
+                            ->get()
+                            ->toArray();        
+
+        return $asentamientos;
+    }
+
+    public function buscaAsentamientoInfo(int $idAsentamiento)
+    {        
+        $asentamiento = DB::table('cat_asentamientos')
+                            ->select('cp', 'entidad', 'ciudad', 'municipio')
+                            ->where('id', $idAsentamiento)
+                            ->get()
+                            ->firstOrFail();
+
+        return $asentamiento;        
+    }
 }

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Repositories\PaisesRepository;
-use App\Services\BusquedaCPService;
+use App\Repositories\CatAsentamientosRepository;
 
 final class Direccion
 {
@@ -25,11 +25,11 @@ final class Direccion
                                 ?string           $vialidad,
                                 ?string           $numExt,
                                 ?string           $numInt,
-                                BusquedaCPService $busquedaCPService)
+                                CatAsentamientosRepository $catAsentamientosRepo)
     {
         $this ->id_asentamiento = $idAsentamiento;
         if ($idAsentamiento) {
-            $asentamiento = $busquedaCPService->buscaAsentamientoInfo($idAsentamiento);
+            $asentamiento = $catAsentamientosRepo->buscaAsentamientoInfo($idAsentamiento);
             $this->cp = $asentamiento->cp;
             $this->entidad = $asentamiento->entidad;
             $this->ciudad = $asentamiento->ciudad;

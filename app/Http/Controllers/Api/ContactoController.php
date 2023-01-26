@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Services\BusquedaCPService;
 use App\Services\BusquedaCURPService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
+use App\Repositories\CatAsentamientosRepository;
 
 class ContactoController extends Controller
 {
@@ -19,9 +18,9 @@ class ContactoController extends Controller
     /**
      * Consulta asentamientos por código postal.
      */
-    public function consultaInfoDomicilio(string $cp, BusquedaCPService $busquedaCPService): JsonResponse
+    public function consultaInfoDomicilio(string $cp, CatAsentamientosRepository $catAsentamientosRepo): JsonResponse
     {
-        $asentamientos = $busquedaCPService->buscaCPAsentamiento($cp);
+        $asentamientos = $catAsentamientosRepo->buscaCPAsentamiento($cp);
 
         return response()->json($asentamientos);
     }

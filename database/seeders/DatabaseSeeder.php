@@ -17,12 +17,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->seedCatAsentamientos();
         $this->seedTiposVialidad();
         $this->seedPaises();
         $this->seedGruposPrioritorios();
         $this->seedUnidadesCompradoras();
         $this->crearMTVRoles();
         $this->crearUsuarioURG();
+    }
+
+    private function seedCatAsentamientos()
+    {
+        $path = base_path('database/data/cat_asentamientos.sql');
+        $sql = file_get_contents($path);
+
+        DB::unprepared($sql);
     }
 
     private function seedTiposVialidad()
