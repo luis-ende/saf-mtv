@@ -21,35 +21,68 @@ class OportunidadRepository
     public function obtieneTiposContratacion() 
     {
         return [
-            1 => 'Bien',
-            2 => 'Servicio',
+            [
+                'id' => 1,
+                'tipo' => 'Bien',
+            ],
+            [
+                'id' => 2,
+                'tipo' => 'Servicio',
+            ]            
         ];
     }
 
     public function obtieneMetodosContratacion() 
     {
         return [
-            1 => 'Adjudicación directa',
-            2 => 'Invitación restringida',
-            3 => 'Licitación pública',
+            [
+                'id' => 1,
+                'metodo' => 'Adjudicación directa',
+            ],
+            [
+                'id' => 2,
+                'metodo' => 'Invitación restringida',
+            ],
+            [
+                'id' => 3,
+                'metodo' => 'Licitación pública',
+            ],
         ];
     }
 
     public function obtieneEtapasProcedimiento()
     {
         return [
-            1 => 'Programado',
-            2 => 'Prebases',
-            3 => 'Licitación en proceso',
-            4 => 'Pre-cotizar',
+            [
+                'id' => 1,
+                'etapa' => 'Programado',
+            ],
+            [
+                'id' => 2,
+                'etapa' => 'Prebases',
+            ],
+            [
+                'id' => 3,
+                'etapa' => 'Licitación en proceso',
+            ],
+            [
+                'id' => 4,
+                'etapa' => 'Pre-cotizar',
+            ],            
         ];
     }
 
     public function obtieneEstatusContratacion()
     {
         return [
-            1 => 'En proceso',
-            2 => 'Cerrado',            
+            [
+                'id' => 1,
+                'estatus' => 'En proceso',
+            ],
+            [
+                'id' => 2,
+                'estatus' => 'Cerrado',
+            ],
         ];
     }
 

@@ -18,8 +18,8 @@
              x-init="initUnidadesCompradoras()">
             <input type="text" placeholder="Buscar"
                    @keyup="search($event.target.value)"
-                   class="mt-1 ml-4 w-10/12 bg-gray-50 border border-gray-300 text-mtv-text-gray text-sm rounded focus:ring-mtv-secondary focus:border-mtv-secondary">
-            <div class="h-64 w-11/12 overflow-y-scroll">
+                   class="mt-1 ml-4 w-80 bg-gray-50 border border-gray-300 text-mtv-text-gray text-sm rounded focus:ring-mtv-secondary focus:border-mtv-secondary">
+            <div class="h-64 w-10/12 overflow-y-scroll">
                 <ul class="pl-4 list-none list-outside flex flex-col space-y-2 text-sm">
                     <li class="flex flex-row flex-nowrap items-center">
                         <input class="mr-2 border focus:ring-mtv-secondary" type="checkbox" id="unidad-c-0" name="unidad_compradora_filtro[]" value="0">
@@ -47,10 +47,8 @@
                         search(value) {
                             if (value.length > 1) {
                                 const options = {
-                                    isCaseSensitive: false,
-                                    shouldSort: false,
-                                    keys: ['unidad'],
-                                    threshold: 0.6,
+                                    {{-- Buscar sólo en la propiedad del nombre de la unidad --}}
+                                    keys: ['unidad'],                                    
                                 }
                                 const fuse = new Fuse(this.unidades, options);
                                 this.unidadesFiltradas = fuse.search(value).map(elem => elem.item);
@@ -65,6 +63,15 @@
     </x-oportunidades.buscador-filtro-seccion>
 
     <x-oportunidades.buscador-filtro-seccion titulo="Tipo de contratación" key="3">
+        {{-- <ul class="list-none list-outside pb-4 flex flex-col space-y-2">
+            @foreach($filtros_opciones['tipos_contratacion'] as $tipoContr)
+                <li>
+                    <input class="mr-2 border focus:ring-mtv-secondary" type="checkbox" id="tipo-contr-{{ $capitulo }}" name="tipo_contr_filtro[]" value="{{ $capitulo }}">
+                    <label for="tipo-contr-{{ $tipoContr->id }}">{{ $tipoContr->tipo }}</label>
+                </li>
+            @endforeach
+        </ul> --}}
+
         <ul class="list-none list-outside pb-4 flex flex-col space-y-2">
             <li>
                 <input class="mr-2 border focus:ring-mtv-secondary" type="checkbox" id="tipo-contr-bien" name="tipo_contr_filtro[]" value="bien">

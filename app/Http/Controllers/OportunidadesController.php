@@ -16,6 +16,10 @@ class OportunidadesController extends Controller
 
         $filtros_opciones['capitulos'] = $oportunidadesRepo->obtieneRubros();
         $filtros_opciones['unidades_compradoras'] = $oportunidadesRepo->obtieneInstitucionesCompradoras();
+        $filtros_opciones['tipos_contratacion'] = $oportunidadesRepo->obtieneTiposContratacion();
+        $filtros_opciones['metodos_contratacion'] = $oportunidadesRepo->obtieneMetodosContratacion();
+        $filtros_opciones['etapas_procedimiento'] = $oportunidadesRepo->obtieneEtapasProcedimiento();
+        $filtros_opciones['estatus_contratacion'] = $oportunidadesRepo->obtieneEstatusContratacion();
 
         return view('oportunidades.show', compact('filtros_opciones'));
     }
