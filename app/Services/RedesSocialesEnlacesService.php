@@ -7,10 +7,11 @@ class RedesSocialesEnlacesService
     public static function generaEnlaces(string $url, string $titulo): array 
     {
         // Paquete usado para generar enlaces: https://github.com/jorenvh/laravel-share
-
+                
         $socialShareLinks = \Share::page($url, $titulo)
                                     ->facebook()
                                     ->twitter()
+                                    ->whatsapp()
                                     ->getRawLinks();        
 
         return $socialShareLinks;
