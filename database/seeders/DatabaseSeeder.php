@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->seedTiposVialidad();
         $this->seedPaises();
         $this->seedGruposPrioritorios();
+        $this->seedUnidadesCompradoras();
         $this->crearMTVRoles();
         $this->crearUsuarioURG();
     }
@@ -202,5 +203,13 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+    }
+
+    private function seedUnidadesCompradoras()
+    {
+        $path = base_path('database/data/cat_unidades_compradoras.sql');
+        $sql = file_get_contents($path);
+
+        DB::unprepared($sql);
     }
 }
