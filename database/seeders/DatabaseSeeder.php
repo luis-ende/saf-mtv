@@ -169,13 +169,17 @@ class DatabaseSeeder extends Seeder
     private function crearMTVRoles()
     {
         Role::create(['name' => 'proveedor']);
-        Role::create(['name' => 'urg']);
+        Role::create(['name' => 'urg']);        
+        Role::create(['name' => 'admin']);        
     }
 
     private function crearUsuarioURG()
     {        
         $user = User::create(['rfc' => 'URG', 'activo' => true, 'last_login' => now(), 'password' => bcrypt('urg_password')]);
         $user->assignRole('urg');
+
+        $user = User::create(['rfc' => 'URG_ADMIN', 'activo' => true, 'last_login' => now(), 'password' => bcrypt('urg_password')]);
+        $user->assignRole('admin');
     }
 
     private function seedGruposPrioritorios()

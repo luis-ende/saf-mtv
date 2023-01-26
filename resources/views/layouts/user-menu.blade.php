@@ -47,32 +47,39 @@
 
         <x-slot name="content">
             @role('proveedor')
-            <x-dropdown-link 
-                :href="route('perfil-negocio')"
-                :active="request()->routeIs('perfil-negocio')">
-                {{ __('Mi perfil') }}
-            </x-dropdown-link>                        
-            <x-dropdown-link 
-                :href="route('catalogo-productos')" 
-                :active="request()->routeIs('catalogo-productos')">
-                {{ __('Mi catálogo') }}
-            </x-dropdown-link>
-            <div class="border-b"></div>
-            <x-dropdown-link 
-                :href="route('usuario-configuracion.show')"
-                :active="request()->routeIs('usuario-configuracion.show')">
-                {{ __('Configuración') }}
-            </x-dropdown-link>            
-            <x-dropdown-link :href="route('centro-notificaciones')">
-                {{ __('Notificaciones') }}
-            </x-dropdown-link>
+                <x-dropdown-link 
+                    :href="route('perfil-negocio')"
+                    :active="request()->routeIs('perfil-negocio')">
+                    Mi perfil
+                </x-dropdown-link>                        
+                <x-dropdown-link 
+                    :href="route('catalogo-productos')" 
+                    :active="request()->routeIs('catalogo-productos')">
+                    Mi catálogo
+                </x-dropdown-link>
+                <div class="border-b"></div>
+                <x-dropdown-link 
+                    :href="route('usuario-configuracion.show')"
+                    :active="request()->routeIs('usuario-configuracion.show')">
+                    Configuración
+                </x-dropdown-link>            
+                <x-dropdown-link :href="route('centro-notificaciones')">
+                    Notificaciones
+                </x-dropdown-link>
             @endrole
             @role('urg')
-            <x-dropdown-link 
-                :href="route('urg-productos-favoritos.index')" 
-                :active="request()->routeIs('urg-productos-favoritos.index')">
-                {{ __('Favoritos') }}
-            </x-dropdown-link>
+                <x-dropdown-link 
+                    :href="route('urg-productos-favoritos.index')" 
+                    :active="request()->routeIs('urg-productos-favoritos.index')">
+                    Favoritos
+                </x-dropdown-link>
+            @endrole
+            @role('admin')
+                <x-dropdown-link 
+                    :href="route('mtv-admin.usuarios')" 
+                    :active="request()->routeIs('mtv-admin.usuarios')">
+                    Usuarios y permisos
+                </x-dropdown-link>
             @endrole
             <div class="border-b"></div>
             <!-- Authentication -->
@@ -82,7 +89,7 @@
                 <x-dropdown-link :href="route('logout')"
                         onclick="event.preventDefault();
                                     this.closest('form').submit();">
-                    {{ __('Cerrar sesión') }}
+                    Cerrar sesión
                 </x-dropdown-link>
             </form>
         </x-slot>
