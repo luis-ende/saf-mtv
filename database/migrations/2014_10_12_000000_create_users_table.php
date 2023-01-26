@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('activo')->default(true);
             $table->timestamp('last_login');
             $table->foreignId('id_persona')->nullable()->constrained('personas');
+            $table->foreignId('id_urg')->nullable()->constrained('urg_usuarios');
             $table->rememberToken();
             $table->timestamps();
         });

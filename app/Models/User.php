@@ -50,12 +50,21 @@ class User extends Authenticatable
     ];
 
     /**
-     * Obtener catálogo de productos asociado al perfil.
+     * Obtener persona asociada al perfil.
      */
     public function persona(): HasOne
     {
         return $this->hasOne(Persona::class, 'id', 'id_persona');
     }
+
+    /**
+     * Obtener usuario URG asociado al perfil.
+     */
+    public function urg(): HasOne
+    {
+        return $this->hasOne(UsuarioURG::class, 'id', 'id_urg');
+    }
+
 
     /**
      * Nombre genérico de usuario.
@@ -64,6 +73,8 @@ class User extends Authenticatable
     {
         if ($this->persona) {
             return $this->persona->nombre_o_razon_social();
+        } elseif ($this->urg) {
+            return $this->urg->nombre;
         } else {
             return $this->rfc;
         }

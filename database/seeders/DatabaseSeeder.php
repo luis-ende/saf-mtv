@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\UsuarioURG;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -175,11 +176,23 @@ class DatabaseSeeder extends Seeder
 
     private function crearUsuarioURG()
     {        
-        $user = User::create(['rfc' => 'URG', 'activo' => true, 'last_login' => now(), 'password' => bcrypt('urg_password')]);
+        $usuarioURG = UsuarioURG::create(['nombre' => 'URG Prueba']);
+        $user = User::create([
+            'rfc' => 'URG', // Nombre de usuario
+            'activo' => true, 
+            'id_urg' => $usuarioURG->id,
+            'last_login' => now(), 
+            'password' => bcrypt('urg_password')]);
         $user->assignRole('urg');
 
-        $user = User::create(['rfc' => 'URG_ADMIN', 'activo' => true, 'last_login' => now(), 'password' => bcrypt('urg_password')]);
-        $user->assignRole('admin');
+        $usuarioURG = UsuarioURG::create(['nombre' => 'URG Admin Prueba']);
+        $user = User::create([
+            'rfc' => 'URG-ADMIN', // Nombre de usuario
+            'activo' => true, 
+            'id_urg' => $usuarioURG->id,
+            'last_login' => now(), 
+            'password' => bcrypt('urg_password')]);
+        $user->assignRole('urg', 'admin');
     }
 
     private function seedGruposPrioritorios()
