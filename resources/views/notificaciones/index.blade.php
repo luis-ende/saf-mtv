@@ -15,14 +15,14 @@
                         Tus notificaciones
                     </div>
                     <div class="mb-5">
-                        <x-notificaciones-table />
+                        <x-notificaciones.notificaciones-table />
                     </div>
                     <div class="text-xl text-slate-900 font-bold">
                         @svg('uiw-like-o', ['class' => 'h-5 w-5 inline-block mr-1'])
                         De tu interés
                     </div>
                     <div>
-                        <x-notificaciones-table
+                        <x-notificaciones.notificaciones-table
                             :icon_like="false"
                         />
                     </div>
