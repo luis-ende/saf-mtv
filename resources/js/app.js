@@ -25,6 +25,9 @@ window.SwalMTVCustom = {
 import choices from 'choices.js';
 window.Choices = choices;
 
+import fuse from 'fuse.js';
+window.Fuse = fuse;
+
 import Alpine from 'alpinejs';
 import mask from '@alpinejs/mask'
 

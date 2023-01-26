@@ -21,6 +21,7 @@
     "dependencies": {
         "@alpinejs/mask": "^3.10.5",
         "choices.js": "^10.2.0",
+        "fuse.js": "^6.6.2",
         "sweetalert2": "^11.6.5"
     }
 }

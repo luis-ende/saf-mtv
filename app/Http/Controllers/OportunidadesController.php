@@ -15,6 +15,7 @@ class OportunidadesController extends Controller
         // $estadisticas = $oportunidadesRepository->obtenerConvocatoriasEstadisticas($convocatorias);
 
         $filtros_opciones['capitulos'] = $oportunidadesRepo->obtieneRubros();
+        $filtros_opciones['unidades_compradoras'] = $oportunidadesRepo->obtieneInstitucionesCompradoras();
 
         return view('oportunidades.show', compact('filtros_opciones'));
     }

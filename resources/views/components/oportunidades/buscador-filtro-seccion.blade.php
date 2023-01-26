@@ -1,4 +1,4 @@
-@props(['titulo' => ''])
+@props(['titulo' => '', 'key' => '1'])
 
 <li class="relative border-b border-gray-200" x-data="{ selected: null }">
     <button type="button" class="w-full px-8 py-3 text-left" @click="selected !== 1 ? selected = 1 : selected = null">
@@ -12,7 +12,7 @@
     </button>
 
     <div class="relative overflow-hidden transition-all max-h-0 duration-200" 
-         style="" x-ref="container1" x-bind:style="selected == 1 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">        
+         style="" x-ref="container_{{ $key }}" x-bind:style="selected === 1 ? 'max-height: ' + $refs.container_{{ $key }}.scrollHeight + 'px' : ''">
         {{ $slot }}        
     </div>
 </li>

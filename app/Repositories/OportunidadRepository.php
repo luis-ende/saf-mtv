@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\DB;
 use RoachPHP\Roach;
 
 use App\Models\Capitulo;
@@ -54,8 +55,7 @@ class OportunidadRepository
 
     public function obtieneInstitucionesCompradoras()
     {
-        return [            
-        ];
+        return DB::table('cat_unidades_compradoras')->select('id', 'unidad')->get();
     }
 
     /**
