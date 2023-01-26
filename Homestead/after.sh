@@ -32,8 +32,6 @@ sudo systemctl restart postgresql
 export PGPASSWORD='secret'
 psql -d saf_mtv -h homestead -U homestead -e -c "CREATE USER saf_mtv_dbuser WITH PASSWORD 'saf-mtv';"
 psql -d saf_mtv -h homestead -U homestead -e -c "GRANT ALL PRIVILEGES ON DATABASE saf_mtv to saf_mtv_dbuser;"
-# Cargar catálogo de asentamientos de prueba para modo desarrollo
-psql -d saf_mtv -h homestead -U homestead -e -f /var/www/saf-mtv/Homestead/pgsql/cat_asentamientos.sql
 
 psql CREATE EXTENSION pg_trgm;
 
