@@ -57,7 +57,7 @@
                         x-bind:action="'/buscador-oportunidades-mtv/' + $data.tipoBusqueda + '/' + $data.terminoBusqueda">
                     @csrf
 
-                    <label for="productos_search" class="text-mtv-secondary text-base mb-2">
+                    <label for="productos_search" class="text-mtv-secondary text-sm mb-2">
                         Búsqueda por nombre de productos/servicios:
                     </label>
                     <div class="flex md:flex-row md:space-x-3 md:space-y-0 xs:flex-col xs:space-y-3">
@@ -66,12 +66,12 @@
                                 @svg('forkawesome-search', ['class' => 'w-5 h-5 text-mtv-gray-2'])
                             </div>
                             <input type="search"
-                                id="productos_search" name="productos_search"
-                                class="block w-full pt-3 pb-3 pl-10 text-sm text-mtv-text-gray border border-gray-300 rounded-lg bg-gray-50 focus:ring-mtv-primary focus:border-mtv-primary"
-                                placeholder="Buscar por palabras clave..."
-                                autofocus
-                                x-model="terminoBusqueda"
-                                value="{{ $term_busqueda ?? '' }}">
+                                   id="productos_search" name="productos_search"
+                                   class="block w-full pt-3 pb-3 pl-10 text-sm text-mtv-text-gray border border-gray-300 rounded-lg bg-gray-50 focus:ring-mtv-primary focus:border-mtv-primary"
+                                   placeholder="Buscar por palabras clave..."
+                                   autofocus
+                                   x-model="terminoBusqueda"
+                                   value="{{ $term_busqueda ?? '' }}">
                             <input id="tipo_busqueda" name="tipo_busqueda" type="hidden" x-model="tipoBusqueda">
                             <button type="submit"
                                     class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1"

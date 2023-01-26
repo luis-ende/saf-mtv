@@ -1,13 +1,21 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden min-h-screen" x-data="{ terminoBusqueda: '', tipoBusqueda: '{{ $tipo_busqueda }}' }">
-            <div class="py-6 px-12 bg-white border-b border-gray-200 flex flex-col">
+        <div class="bg-white overflow-hidden min-h-screen" 
+             x-data="{ 
+                terminoBusqueda: '', 
+                tipoBusqueda: '{{ $tipo_busqueda }}' }">
+            <div class="py-6 px-12 bg-white flex flex-col">
                 <div class="self-center">
-                    <label class="text-mtv-gray-2 text-xl"
-                           x-text="tipoBusqueda === 'productos' ? 'Catálogo de productos' : 'Catálogo de proveedores'">
+                    <label class="text-mtv-gray-2 text-xl">
+                        Tienditas virtuales
                     </label>
-                    <div class="text-mtv-primary font-bold text-3xl">
-                        Buscador de productos y proveedores de Mi Tiendita Virtual
+                    <div class="text-mtv-primary font-bold text-3xl"
+                         x-show="tipoBusqueda === 'productos'">
+                         Catálogo de productos
+                    </div>
+                    <div class="text-mtv-primary font-bold text-3xl"
+                         x-show="tipoBusqueda === 'proveedores'">
+                         Directorio de proveedores
                     </div>
                 </div>
                 <div class="self-center">
@@ -20,62 +28,69 @@
                         <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
                     </div>
                 </div>
-            </div>
+                <div class="mt-3 text-lg text-mtv-text-gray text-center">
+                    <span x-show="tipoBusqueda === 'productos'" class="font-bold text-xl text-mtv-secondary my-4 inline-block">
+                        Encuentra productos y servicios registrados en Mi Tiendita Virtual
+                    </span>
+                    <span x-show="tipoBusqueda === 'proveedores'" class="font-bold text-xl text-mtv-secondary my-4 inline-block">
+                        Encuentra proveedores registrados en Mi Tiendita Virtual
+                    </span>
+                    <span x-show="tipoBusqueda === 'productos'" class="w-3/4 inline-block">
+                        Para agregar a “Favoritos”, <a href="{{ route('urg-login') }}" class="underline font-bold mtv-link-gold">Inicia sesión</a>. Aplica sólo para Instituciones compradoras.
+                    </span>                    
+                    <span x-show="tipoBusqueda === 'proveedores'" class="w-3/4 inline-block">
+                        Utiliza los filtros para focalizar tu búsqueda.
+                    </span>                    
+                </div>
+            </div>            
             <div class="py-6 px-12">
-                <div x-data="{ tab: 'productos' }" x-modelable="tab" x-model="tipoBusqueda">
-                    <nav class="font-bold text-lg text-mtv-gold flex flex-row mb-3">
-                        <a class="no-underline border-b-4 basis-1/2 text-center"
-                           :class="tab === 'productos' ? 'text-mtv-secondary border-mtv-secondary hover:text-mtv-secondary' : 'text-mtv-gold border-mtv-gold-light hover:text-mtv-gold'"
-                           x-on:click.prevent="tab = 'productos'"
-                           href="#">
-                            Más de {{ $num_productos_registrados }} productos registrados
-                        </a>
-                        <a class="no-underline border-b-4 basis-1/2 text-center"
-                           :class="tab === 'proveedores' ? 'text-mtv-secondary border-mtv-secondary hover:text-mtv-secondary' : 'text-mtv-gold border-mtv-gold-light hover:text-mtv-gold'"
-                            x-on:click.prevent="tab = 'proveedores'"
-                            href="#">
-                            Más de {{ $num_proveedores_registrados }} proveedores registrados
-                        </a>
+                <div x-data="{ 
+                        tab: 'productos', 
+                        tabActive: 'text-white bg-mtv-secondary hover:text-mtv-secondary', 
+                        tabInactive: 'text-white bg-mtv-gold-light hover:text-white' }" 
+                     x-modelable="tab" 
+                     x-model="tipoBusqueda">
+                    <nav class="font-bold text-lg text-mtv-gold flex md:flex-row xs:flex-col md:space-x-7 md:space-y-0 xs:space-y-4 xs:space-x-0 px-7 mx-auto mb-14 w-3/4">
+                        <button class="no-underline rounded-3xl basis-1/2 text-center py-2 px-5"
+                           :class="tab === 'productos' ? tabActive : tabInactive"
+                           x-on:click.prevent="tab = 'productos'">
+                            {{ $num_productos_registrados }} producto{{ $num_productos_registrados > 1 ? 's' : '' }} registrados
+                        </button>
+                        <button class="no-underline rounded-3xl basis-1/2 text-center py-2 px-5"
+                           :class="tab === 'proveedores' ?  tabActive : tabInactive"
+                            x-on:click.prevent="tab = 'proveedores'">
+                            {{ $num_proveedores_registrados }} proveedore{{ $num_proveedores_registrados > 1 ? 's' : '' }} registrados
+                        </button>
                     </nav>
                     <div class="flex flex-col" x-show="tab === 'productos'">
                         <div class="w-3/4 self-center">
-                            <form method="POST"
-                                  x-bind:action="'/buscador-mtv/' + $data.tipoBusqueda + '/' + $data.terminoBusqueda">
-                                @csrf
-
-                                <label for="productos_search" class="text-mtv-gray-2 text-base mb-2">
-                                    Tu búsqueda es por productos:
-                                </label>
-                                <div class="flex md:flex-row md:space-x-3 md:space-y-0 xs:flex-col xs:space-y-3">
-                                    <div class="md:basis-10/12 xs:basis-full relative">
-                                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                            @svg('forkawesome-search', ['class' => 'w-5 h-5 text-mtv-gray-2'])
-                                        </div>
-                                        <input type="search"
-                                            id="productos_search" name="productos_search"
-                                            class="block w-full pt-3 pb-3 pl-10 text-sm text-mtv-text-gray border border-gray-300 rounded-lg bg-gray-50 focus:ring-mtv-primary focus:border-mtv-primary"
-                                            placeholder="Buscar por palabras clave..."
-                                            autofocus
-                                            x-model="terminoBusqueda"
-                                            value="{{ $term_busqueda ?? '' }}">
-                                        <input id="tipo_busqueda" name="tipo_busqueda" type="hidden" x-model="tipoBusqueda">
-                                        <button type="submit"
-                                                class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1"
-                                                x-bind:disabled="!terminoBusqueda">
-                                            Buscar
-                                        </button>
+                            <x-busqueda.search-input
+                                label="Búsqueda por nombre de productos/servicios o CABMS:"
+                                id="productos_search"
+                                name="productos_search">           
+                                
+                                <x-slot name="button_bar">
+                                    <div class="flex flex-row space-x-5 pl-3">
+                                        <a href="#"
+                                        target="_blank"
+                                        class="mtv-link-gold text-sm flex flex-row items-center">
+                                            Catálogo de Rubros
+                                            @svg('tabler-report-search', ['class' => 'w-8 h-8 font-bold'])
+                                        </a>
+                                        <a href="#"
+                                        target="_blank"
+                                        class="mtv-link-gold text-sm flex flex-row items-center">
+                                            Catálogo de Bienes/Servicios
+                                            @svg('tabler-report-search', ['class' => 'w-8 h-8 font-bold'])
+                                        </a>
                                     </div>
-                                    <a href="http://rmsg.df.gob.mx/rmsg/pagina/dai/cabms/CABMSDF5.pdf"
-                                       target="_blank"
-                                       class="md:basis-2/12 xs:basis-full mtv-link-gold flex flex-row items-center">
-                                        <span class="text-xs">Consulta el catálogo de claves CABMS</span>
-                                        @svg('tabler-report-search', ['class' => 'w-10 h-10'])
-                                    </a>
-                                </div>
+                                </x-slot>
 
-                                <x-busqueda.productos-filtros-bar
-                                    :filtros_opciones="$filtros_opciones" />                                
-                            </form>                            
+                                <x-slot name="busqueda_filtros">
+                                    <x-busqueda.productos-filtros-bar
+                                        :filtros_opciones="$filtros_opciones" />
+                                </x-slot>
+                            </x-busqueda.search-input>                            
                         </div>
 
                         @role('urg')
@@ -97,8 +112,8 @@
                                         </div>
                                     @else
                                         <x-productos.productos-grid
-                                                modo="busqueda"
-                                                :productos="$resultados" />
+                                            modo="busqueda"
+                                            :productos="$resultados" />
                                     @endif
                                 @endif
                             </div>
@@ -106,35 +121,16 @@
                     </div>
                     <div class="flex flex-col" x-show="tab === 'proveedores'">
                         <div class="w-3/4 self-center">
-                            <form method="POST"
-                                  x-bind:action="'/buscador-mtv/' + $data.tipoBusqueda + '/' + $data.terminoBusqueda">
-                                @csrf
+                            <x-busqueda.search-input
+                                label="Búsqueda por nombre de proveedor:"
+                                id="proveedores_search"
+                                name="proveedores_search">
 
-                                <label for="productos_search" class="text-mtv-gray-2 text-base mb-2">
-                                    Tu búsqueda es por proveedores:
-                                </label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        @svg('forkawesome-search', ['class' => 'w-5 h-5 text-mtv-gray-2'])
-                                    </div>
-                                    <input type="search"
-                                           id="proveedores_search" name="proveedores_search"
-                                           class="block w-full pt-3 pb-3 pl-10 text-sm text-mtv-text-gray border border-gray-300 rounded-lg bg-gray-50 focus:ring-mtv-primary focus:border-mtv-primary"
-                                           placeholder="Buscar por palabras clave..."
-                                           autofocus
-                                           x-model="terminoBusqueda"
-                                           value="{{ $term_busqueda ?? '' }}">
-                                    <input id="tipo_busqueda" name="tipo_busqueda" type="hidden" x-model="tipoBusqueda">
-                                    <button type="submit"
-                                            class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1"
-                                            x-bind:disabled="!terminoBusqueda">
-                                        Buscar
-                                    </button>
-                                </div>
-
-                                <x-busqueda.proveedores-filtros-bar
-                                    :filtros_opciones="$filtros_opciones" />                                
-                            </form>
+                                <x-slot name="busqueda_filtros">
+                                    <x-busqueda.proveedores-filtros-bar
+                                        :filtros_opciones="$filtros_opciones" />
+                                </x-slot>
+                            </x-busqueda.search-input>                            
                         </div>
 
                         @if($tipo_busqueda === 'proveedores')
@@ -146,12 +142,33 @@
                                         </div>
                                     @else
                                         <x-proveedores.proveedores-grid
-                                                :proveedores="$resultados" />
+                                            :proveedores="$resultados" />
                                     @endif
                                 @endif
                             </div>
                         @endif
                     </div>
+
+                    {{-- @if($tipo_busqueda === 'proveedores') --}}
+                            {{-- <div class="w-full my-10">
+                                @if(!empty($resultados))
+                                    @if($resultados->isEmpty())
+                                        <div class="text-center text-lg text-mtv-text-gray-light">
+                                            No se encontraron proveedores.
+                                        </div>
+                                    @else
+                                        @if($tipo_busqueda === 'productos')
+                                            <x-productos.productos-grid
+                                                modo="busqueda"
+                                                :productos="$resultados" />
+                                        @elseif($tipo_busqueda === 'proveedores')
+                                            <x-proveedores.proveedores-grid
+                                                :proveedores="$resultados" />
+                                        @endif
+                                    @endif
+                                @endif
+                            </div> --}}
+                        {{-- @endif --}}
                 </div>
             </div>
         </div>
