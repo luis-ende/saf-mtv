@@ -31,28 +31,32 @@
                     Si ya estás registrado en Padrón de Proveedores, ahí te llegarán las notificaciones, sólo activa las alertas aquí.
                 </span>
             </div>
-            <div class="w-full flex flex-row space-x-16 my-5 self-center">
-                <div class="basis-1/4 text-mtv-gray flex flex-column items-center py-2">
+            <div class="w-10/12 flex flex-row space-x-16 my-4 self-center">
+                <div class="basis-1/5 text-mtv-gray flex flex-column items-center py-2">
                     <span class="font-bold text-5xl">92</span> 
                     <span class="text-lg">Instituciones compradoras</span>
                 </div>
-                <div class="basis-1/4 bg-mtv-gold-light text-white flex flex-column items-center rounded-3xl py-2 px-4">
+                <div class="basis-1/5 bg-mtv-gold-light text-white flex flex-column items-center rounded-3xl py-2 px-2">
                     <span class="font-bold text-5xl">100</span> 
-                    <span class="text-lg">Programadas</span>
+                    <span class="text-lg">Compras programadas</span>
                 </div>
-                <div class="basis-1/4 bg-mtv-gold-light text-white flex flex-column items-center rounded-3xl py-2 px-4">
+                <div class="basis-1/5 bg-mtv-gold-light text-white flex flex-column items-center rounded-3xl py-2 px-2">
                     <span class="font-bold text-5xl">10</span> 
                     <span class="text-lg">Prebases</span>
                 </div>
-                <div class="basis-1/4 bg-mtv-gold-light text-white flex flex-column items-center rounded-3xl py-2 px-4">
+                <div class="basis-1/5 bg-mtv-gold-light text-white flex flex-column items-center rounded-3xl py-2 px-2">
                     <span class="font-bold text-5xl">2</span> 
                     <span class="text-lg">Licitaciones en proceso</span>
+                </div>
+                <div class="basis-1/5 bg-mtv-gold-light text-white flex flex-column items-center rounded-3xl py-2 px-2">
+                    <span class="font-bold text-5xl">0</span> 
+                    <span class="text-lg">Precotizaciones</span>
                 </div>
             </div>                
         </div>
 
         <div class="my-3 flex flex-col">
-            <div class="w-3/4 self-center my-5">
+            <div class="w-2/4 self-center my-4">
                 <form method="POST"
                         x-bind:action="'/buscador-oportunidades-mtv/' + $data.tipoBusqueda + '/' + $data.terminoBusqueda">
                     @csrf
@@ -79,12 +83,9 @@
                                 Buscar
                             </button>
                         </div>
-                        <a href="http://rmsg.df.gob.mx/rmsg/pagina/dai/cabms/CABMSDF5.pdf"
-                            target="_blank"
-                            class="md:basis-2/12 xs:basis-full mtv-link-gold flex flex-row items-center">
-                            <span class="text-xs">Consulta el catálogo de claves CABMS</span>
-                            @svg('tabler-report-search', ['class' => 'w-10 h-10'])
-                        </a>
+
+                        <x-busqueda.enlaces-catalogos-pdf />
+
                     </div>
                 </form>
             </div>
@@ -94,12 +95,15 @@
                         :filtros_opciones="$filtros_opciones"
                      />
                 </div>
-                <div class="basis-3/4 bg-yellow-100 flex flex-col">
-                    <a href="#" class="mtv-button-gold my-3 self-center">
+                <div class="basis-3/4 flex flex-col">
+                    <a href="#" class="mtv-button-gold my-4 self-center">
                         @svg('go-download-16', ['class' => 'w-5 h-5 mr-1 inline-block'])
                         Descargar procedimientos filtrados
                     </a>
-                    <div class="bg-red-100">
+                    <div>
+                        <x-oportunidades.oportunidades-grid 
+                            :oportunidades="$oportunidades" 
+                        />
                         {{-- @isset($num_resultados) --}}
                             {{-- <x-oportunidades.oportunidades-listado :categorias="$categorias"/> --}}
                         {{-- @else

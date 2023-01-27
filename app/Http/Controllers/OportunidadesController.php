@@ -9,10 +9,12 @@ class OportunidadesController extends Controller
 {
     public function index(Request $request, OportunidadRepository $oportunidadesRepo)
     {
-        // $oportunidadesRepository = new OportunidadRepository();
-        // $convocatorias = $oportunidadesRepository->extraerConvocatorias();
+        //$oportunidadesRepository = new OportunidadRepository();
+        //$oportunidades = $oportunidadesRepository->extraerConvocatorias();
         // $categorias = $oportunidadesRepository->agruparConvocatoriasPorCategoria($convocatorias);
         // $estadisticas = $oportunidadesRepository->obtenerConvocatoriasEstadisticas($convocatorias);
+
+        $oportunidades = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
         $filtros_opciones['capitulos'] = $oportunidadesRepo->obtieneRubros();
         $filtros_opciones['unidades_compradoras'] = $oportunidadesRepo->obtieneInstitucionesCompradoras();
@@ -21,7 +23,7 @@ class OportunidadesController extends Controller
         $filtros_opciones['etapas_procedimiento'] = $oportunidadesRepo->obtieneEtapasProcedimiento();
         $filtros_opciones['estatus_contratacion'] = $oportunidadesRepo->obtieneEstatusContratacion();
 
-        return view('oportunidades.show', compact('filtros_opciones'));
+        return view('oportunidades.show', compact('filtros_opciones', 'oportunidades'));
     }
 
     public function search(Request $request) 
