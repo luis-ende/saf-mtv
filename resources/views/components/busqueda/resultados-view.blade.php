@@ -1,8 +1,10 @@
+@props(['resultados' => null, 'tipo_busqueda' => null])
+
 <div class="w-full my-10">
     @if(!empty($resultados))
         @if($resultados->isEmpty())
             <div class="text-center text-lg text-mtv-text-gray-light">
-                No se encontraron proveedores.
+                No se encontraron {{ $tipo_busqueda  }}.
             </div>
         @else
             @if($tipo_busqueda === 'productos')

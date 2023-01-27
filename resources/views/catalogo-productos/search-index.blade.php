@@ -51,17 +51,23 @@
                      x-modelable="tab" 
                      x-model="tipoBusqueda">
                     <nav class="font-bold text-lg text-mtv-gold flex md:flex-row xs:flex-col md:space-x-7 md:space-y-0 xs:space-y-4 xs:space-x-0 px-7 mx-auto mb-14 w-3/4">
+                        @php($plural = $num_productos_registrados > 1)
                         <button class="no-underline rounded-3xl basis-1/2 text-center py-2 px-5"
                            :class="tab === 'productos' ? tabActive : tabInactive"
-                           x-on:click.prevent="tab = 'productos'">
-                            {{ $num_productos_registrados }} producto{{ $num_productos_registrados > 1 ? 's' : '' }} registrados
+                           x-on:click.prevent="tab = 'productos'">                           
+                           <span x-data="animatedCounter(@js($num_productos_registrados), 200)" 
+                                 x-init="updatecounter" 
+                                 x-text="Math.round(current)"></span> producto{{ $plural ? 's' : '' }} registrado{{ $plural ? 's' : '' }}
                         </button>
                         <button class="no-underline rounded-3xl basis-1/2 text-center py-2 px-5"
                            :class="tab === 'proveedores' ?  tabActive : tabInactive"
                             x-on:click.prevent="tab = 'proveedores'">
-                            {{ $num_proveedores_registrados }} proveedore{{ $num_proveedores_registrados > 1 ? 's' : '' }} registrados
+                            <span x-data="animatedCounter(@js($num_proveedores_registrados), 200)" 
+                            x-init="updatecounter" 
+                            x-text="Math.round(current)"></span> proveedor{{ $plural ? 'es' : '' }} registrado{{ $plural ? 's' : '' }}
                         </button>
                     </nav>
+                    
                     <div class="flex flex-col" x-show="tab === 'productos'">
                         <div class="w-3/4 self-center">
                             <x-busqueda.search-input
@@ -103,22 +109,13 @@
                             </div>
                         @endrole
 
-                        @if($tipo_busqueda === 'productos')
-                            <div class="w-full my-10">
-                                @if(!empty($resultados))
-                                    @if($resultados->isEmpty())
-                                        <div class="text-center text-lg text-mtv-text-gray-light">
-                                            No se encontraron productos.
-                                        </div>
-                                    @else
-                                        <x-productos.productos-grid
-                                            modo="busqueda"
-                                            :productos="$resultados" />
-                                    @endif
-                                @endif
-                            </div>
-                        @endif
+                        @isset($resultados)
+                            <x-busqueda.resultados-view 
+                                :tipo_busqueda="$tipo_busqueda"
+                                :resultados="$resultados" />
+                        @endisset
                     </div>
+
                     <div class="flex flex-col" x-show="tab === 'proveedores'">
                         <div class="w-3/4 self-center">
                             <x-busqueda.search-input
@@ -133,42 +130,12 @@
                             </x-busqueda.search-input>                            
                         </div>
 
-                        @if($tipo_busqueda === 'proveedores')
-                            <div class="w-full my-10">
-                                @if(!empty($resultados))
-                                    @if($resultados->isEmpty())
-                                        <div class="text-center text-lg text-mtv-text-gray-light">
-                                            No se encontraron proveedores.
-                                        </div>
-                                    @else
-                                        <x-proveedores.proveedores-grid
-                                            :proveedores="$resultados" />
-                                    @endif
-                                @endif
-                            </div>
-                        @endif
+                        @isset($resultados)
+                            <x-busqueda.resultados-view 
+                                :tipo_busqueda="$tipo_busqueda"
+                                :resultados="$resultados" />
+                        @endisset                        
                     </div>
-
-                    {{-- @if($tipo_busqueda === 'proveedores') --}}
-                            {{-- <div class="w-full my-10">
-                                @if(!empty($resultados))
-                                    @if($resultados->isEmpty())
-                                        <div class="text-center text-lg text-mtv-text-gray-light">
-                                            No se encontraron proveedores.
-                                        </div>
-                                    @else
-                                        @if($tipo_busqueda === 'productos')
-                                            <x-productos.productos-grid
-                                                modo="busqueda"
-                                                :productos="$resultados" />
-                                        @elseif($tipo_busqueda === 'proveedores')
-                                            <x-proveedores.proveedores-grid
-                                                :proveedores="$resultados" />
-                                        @endif
-                                    @endif
-                                @endif
-                            </div> --}}
-                        {{-- @endif --}}
                 </div>
             </div>
         </div>
