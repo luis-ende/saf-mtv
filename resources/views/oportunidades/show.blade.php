@@ -31,13 +31,13 @@
                     Si ya estás registrado en Padrón de Proveedores, ahí te llegarán las notificaciones, sólo activa las alertas aquí.
                 </span>
             </div>
-            <div class="w-10/12 flex flex-row space-x-16 my-4 self-center">
+            <div class="w-10/12 flex md:flex-row xs:flex-col md:space-x-16 md:space-y-0 xs:space-x-0 xs:space-y-3 my-4 self-center">
                 <div class="basis-1/5 text-mtv-gray flex flex-column items-center py-2">
-                    <span class="font-bold text-5xl">92</span> 
+                    <span class="font-bold text-5xl">92</span>
                     <span class="text-lg">Instituciones compradoras</span>
                 </div>
                 <div class="basis-1/5 bg-mtv-gold-light text-white flex flex-column items-center rounded-3xl py-2 px-2">
-                    <span class="font-bold text-5xl">100</span> 
+                    <span class="font-bold text-5xl">100</span>
                     <span class="text-lg">Compras programadas</span>
                 </div>
                 <div class="basis-1/5 bg-mtv-gold-light text-white flex flex-column items-center rounded-3xl py-2 px-2">
@@ -78,7 +78,7 @@
                                    value="{{ $term_busqueda ?? '' }}">
                             <input id="tipo_busqueda" name="tipo_busqueda" type="hidden" x-model="tipoBusqueda">
                             <button type="submit"
-                                    class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1"
+                                    class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1 hidden"
                                     x-bind:disabled="!terminoBusqueda">
                                 Buscar
                             </button>
@@ -89,13 +89,13 @@
                     </div>
                 </form>
             </div>
-            <div class="flex flex-row">
-                <div class="basis-1/4 bg-slate-400 mr-7">
+            <div class="flex md:flex-row xs:flex-col m-4">
+                <div class="basis-full md:basis-1/4 md:mr-7">
                     <x-oportunidades.buscador-filtros-sidebar
                         :filtros_opciones="$filtros_opciones"
                      />
                 </div>
-                <div class="basis-3/4 flex flex-col">
+                <div class="basis-full md:basis-3/4 flex flex-col">
                     <a href="#" class="mtv-button-gold my-4 self-center">
                         @svg('go-download-16', ['class' => 'w-5 h-5 mr-1 inline-block'])
                         Descargar procedimientos filtrados

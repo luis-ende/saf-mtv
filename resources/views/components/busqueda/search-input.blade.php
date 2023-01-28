@@ -21,7 +21,7 @@
                     value="{{ $term_busqueda ?? '' }}">
             <input id="tipo_busqueda" name="tipo_busqueda" type="hidden" x-model="tipoBusqueda">
             <button type="submit"
-                    class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1 md:block xs:hidden"
+                    class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1 hidden"
                     x-bind:disabled="!terminoBusqueda">
                 Buscar
             </button>

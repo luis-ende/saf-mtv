@@ -1,7 +1,7 @@
-@props(['titulo' => '', 'key' => '1'])
+@props(['titulo' => '', 'key' => '1', 'last' => false])
 
-<li class="relative border-b border-gray-200" x-data="{ selected: null }">
-    <button type="button" class="w-full px-8 py-3 text-left" @click="selected !== 1 ? selected = 1 : selected = null">
+<li class="relative border-t border-gray-200 {{ $last ? 'border-b' : '' }}" x-data="{ selected: null }">
+    <button type="button" class="w-full py-3 text-left" @click="selected !== 1 ? selected = 1 : selected = null">
         <div class="flex items-center justify-between">
             <span class="uppercase font-bold text-base">
                 {{ $titulo }}
