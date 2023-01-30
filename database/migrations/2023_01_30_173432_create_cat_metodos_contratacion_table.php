@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('oportunidades_negocio_seguidores', function (Blueprint $table) {
+        Schema::create('cat_metodos_contratacion', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_oportunidad')->constrained('oportunidades_negocio');
-            $table->foreignId('id_persona')->constrained('personas');
+            $table->string('metodo', 25);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('oportunidades_negocio_seguidores');
+        Schema::dropIfExists('cat_metodos_contratacion');
     }
 };

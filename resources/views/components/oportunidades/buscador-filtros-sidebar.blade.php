@@ -5,8 +5,12 @@
         <ul class="list-none list-outside pl-0 pb-4 flex flex-col space-y-2 ml-1">
             @foreach($filtros_opciones['capitulos'] as $capitulo)
                 <li>
-                    <input class="mr-2 border focus:ring-mtv-secondary" type="checkbox" id="capitulo-{{ $capitulo }}" name="capitulo_filtro[]" value="{{ $capitulo }}">
-                    <label for="capitulo-{{ $capitulo }}">{{ $capitulo }}</label>
+                    <input class="mr-2 border focus:ring-mtv-secondary" 
+                           type="checkbox" id="capitulo-{{ $capitulo->id }}" 
+                           name="capitulo_filtro[]" value="{{ $capitulo->id }}">
+                    <label for="capitulo-{{ $capitulo->id }}">
+                        {{ $capitulo->numero }} - {{ $capitulo->nombre }}
+                    </label>
                 </li>
             @endforeach
         </ul>
@@ -31,7 +35,7 @@
                                    type="checkbox" :id="$id('unidad-c', unidad.id)"
                                    name="unidad_compradora_filtro[]"
                                    x-bind:value="unidad.id">
-                            <label :for="$id('unidad-c', unidad.id)" x-html="highlightKeyword(unidad.unidad, searchKeyword)"></label>
+                            <label :for="$id('unidad-c', unidad.id)" x-html="highlightKeyword(unidad.nombre, searchKeyword)"></label>
                         </li>
                     </template>
                 </ul>
@@ -56,7 +60,7 @@
                             if (value.length > 1) {
                                 const options = {
                                     {{-- Buscar sólo en la propiedad del nombre de la unidad --}}
-                                    keys: ['unidad'],
+                                    keys: ['nombre'],
                                     includeScore: true,
                                 }
                                 const fuse = new Fuse(this.unidades, options);
@@ -100,37 +104,55 @@
     </x-oportunidades.buscador-filtro-seccion>
 
     <x-oportunidades.buscador-filtro-seccion titulo="Tipo de contratación" key="3">
-        {{-- <ul class="list-none list-outside pb-4 flex flex-col space-y-2">
+        <ul class="list-none list-outside pl-0 pb-4 flex flex-col space-y-2 ml-1">
             @foreach($filtros_opciones['tipos_contratacion'] as $tipoContr)
                 <li>
-                    <input class="mr-2 border focus:ring-mtv-secondary" type="checkbox" id="tipo-contr-{{ $capitulo }}" name="tipo_contr_filtro[]" value="{{ $capitulo }}">
+                    <input class="mr-2 border focus:ring-mtv-secondary" 
+                           type="checkbox" id="tipo-contr-{{ $tipoContr->id }}" 
+                           name="tipo_contr_filtro[]" value="{{ $tipoContr->id }}">
                     <label for="tipo-contr-{{ $tipoContr->id }}">{{ $tipoContr->tipo }}</label>
                 </li>
             @endforeach
-        </ul> --}}
-
-        <ul class="list-none list-outside pl-0 pb-4 flex flex-col space-y-2 ml-1">
-            <li>
-                <input class="mr-2 border focus:ring-mtv-secondary" type="checkbox" id="tipo-contr-bien" name="tipo_contr_filtro[]" value="bien">
-                <label for="tipo-contr-bien">Bien</label>
-            </li>
-            <li>
-                <input class="mr-2 border focus:ring-mtv-secondary" type="checkbox" id="capitulo-servicio" name="tipo_contr_filtro[]" value="servicio">
-                <label for="tipo-contr-servicio">Servicio</label>
-            </li>
-        </ul>
+        </ul>        
     </x-oportunidades.buscador-filtro-seccion>
 
     <x-oportunidades.buscador-filtro-seccion titulo="Método de contratación" key="4">
-        Item 4
+        <ul class="list-none list-outside pl-0 pb-4 flex flex-col space-y-2 ml-1">
+            @foreach($filtros_opciones['metodos_contratacion'] as $metodoContr)
+                <li>
+                    <input class="mr-2 border focus:ring-mtv-secondary" 
+                           type="checkbox" id="metodo-contr-{{ $metodoContr->id }}" 
+                           name="metodo_contr_filtro[]" value="{{ $metodoContr->id }}">
+                    <label for="metodo-contr-{{ $metodoContr->id }}">{{ $metodoContr->metodo }}</label>
+                </li>
+            @endforeach
+        </ul>        
     </x-oportunidades.buscador-filtro-seccion>
 
     <x-oportunidades.buscador-filtro-seccion titulo="Etapa del procedimiento" key="5">
-        Item 5
+        <ul class="list-none list-outside pl-0 pb-4 flex flex-col space-y-2 ml-1">
+            @foreach($filtros_opciones['etapas_procedimiento'] as $etapaProc)
+                <li>
+                    <input class="mr-2 border focus:ring-mtv-secondary" 
+                           type="checkbox" id="metodo-contr-{{ $etapaProc->id }}" 
+                           name="etapas_proc_filtro[]" value="{{ $etapaProc->id }}">
+                    <label for="etapas-proc-{{ $etapaProc->id }}">{{ $etapaProc->etapa }}</label>
+                </li>
+            @endforeach
+        </ul>
     </x-oportunidades.buscador-filtro-seccion>
 
     <x-oportunidades.buscador-filtro-seccion titulo="Estatus contratación" key="6">
-        Item 6
+        <ul class="list-none list-outside pl-0 pb-4 flex flex-col space-y-2 ml-1">
+            @foreach($filtros_opciones['estatus_contratacion'] as $estatusContr)
+                <li>
+                    <input class="mr-2 border focus:ring-mtv-secondary" 
+                           type="checkbox" id="estatus-contr-{{ $estatusContr->id }}" 
+                           name="estatus_proc_filtro[]" value="{{ $estatusContr->id }}">
+                    <label for="estatus-proc-{{ $estatusContr->id }}">{{ $estatusContr->estatus }}</label>
+                </li>
+            @endforeach
+        </ul>        
     </x-oportunidades.buscador-filtro-seccion>
 
     <x-oportunidades.buscador-filtro-seccion titulo="Fecha de inicio" key="7" last="true">

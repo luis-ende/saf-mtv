@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cat_unidades_compradoras', function (Blueprint $table) {
+        Schema::create('cat_capitulos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 160);
+            $table->string('numero', 4);
+            $table->string('nombre', 60);
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cat_unidades_compradoras');
+        Schema::dropIfExists('cat_capitulos');
     }
 };

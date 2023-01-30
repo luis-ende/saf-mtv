@@ -2,11 +2,13 @@
 
 namespace App\Repositories;
 
-use Illuminate\Support\Facades\DB;
 use RoachPHP\Roach;
 
-use App\Models\Capitulo;
+use App\Models\OportunidadNegocio;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Query\Expression;
 use App\Spiders\ConvocatoriasOportunidadesSpider;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Clase para extraer convocatorias de la página de concurso digital o de alguna otra fuente de datos establecida.
@@ -15,80 +17,78 @@ class OportunidadRepository
 {
     public function obtieneRubros() 
     {
-        return Capitulo::CABMS_CAPITULOS;
+        return DB::table('cat_capitulos')->select('id', 'numero', 'nombre')->get();
     }
 
     public function obtieneTiposContratacion() 
     {
-        return [
-            [
-                'id' => 1,
-                'tipo' => 'Bien',
-            ],
-            [
-                'id' => 2,
-                'tipo' => 'Servicio',
-            ]            
-        ];
+        return DB::table('cat_tipos_contratacion')->select('id', 'tipo')->get();
     }
 
     public function obtieneMetodosContratacion() 
     {
-        return [
-            [
-                'id' => 1,
-                'metodo' => 'Adjudicación directa',
-            ],
-            [
-                'id' => 2,
-                'metodo' => 'Invitación restringida',
-            ],
-            [
-                'id' => 3,
-                'metodo' => 'Licitación pública',
-            ],
-        ];
+        return DB::table('cat_metodos_contratacion')->select('id', 'metodo')->get();
     }
 
     public function obtieneEtapasProcedimiento()
     {
-        return [
-            [
-                'id' => 1,
-                'etapa' => 'Programado',
-            ],
-            [
-                'id' => 2,
-                'etapa' => 'Prebases',
-            ],
-            [
-                'id' => 3,
-                'etapa' => 'Licitación en proceso',
-            ],
-            [
-                'id' => 4,
-                'etapa' => 'Pre-cotizar',
-            ],            
-        ];
+        return DB::table('cat_etapas_procedimiento')->select('id', 'etapa')->get();
     }
 
     public function obtieneEstatusContratacion()
     {
-        return [
-            [
-                'id' => 1,
-                'estatus' => 'En proceso',
-            ],
-            [
-                'id' => 2,
-                'estatus' => 'Cerrado',
-            ],
-        ];
+        return DB::table('cat_estatus_contratacion')->select('id', 'estatus')->get();
     }
 
     public function obtieneInstitucionesCompradoras()
     {
-        return DB::table('cat_unidades_compradoras')->select('id', 'unidad')->get();
+        return DB::table('cat_unidades_compradoras')->select('id', 'nombre')->get();
+    }
+
+    public function buscarOportunidadesNegocio() 
+    {
+        $query = OportunidadNegocio::from('oportunidades_negocio AS opn')
+                                        ->select('opn.id', 'opn.nombre_procedimiento', 'opn.fecha_publicacion', 
+                                                 'opn.fecha_presentacion_propuestas', 'uc.nombre AS unidad_compradora', 
+                                                 'ec.estatus AS estatus_contratacion', 'tc.tipo as tipo_contratacion', 
+                                                 'mc.metodo AS metodo_contratacion', 'etp.etapa as etapa_procedimiento')
+                                        ->leftJoin('cat_unidades_compradoras AS uc', 'uc.id', 'opn.id_unidad_compradora')
+                                        ->leftJoin('cat_estatus_contratacion AS ec', 'ec.id', 'opn.id_estatus_contratacion')
+                                        ->leftJoin('cat_tipos_contratacion AS tc', 'tc.id', 'opn.id_tipo_contratacion')
+                                        ->leftJoin('cat_metodos_contratacion AS mc', 'mc.id', 'opn.id_metodo_contratacion')
+                                        ->leftJoin('cat_etapas_procedimiento AS etp', 'etp.id', 'opn.id_etapa_procedimiento');
+        
+
+        return $query->get();
+    }
+
+    /**
+     * Calcula las estadísticas de un conjunto de oportunidades.
+     * Usado en el buscador de oportunidades.
+     */
+    public function obtieneEstadisticas(Collection $oportunidades): array 
+    {        
+        $etapas = DB::table('cat_etapas_procedimiento')->select('id', 'etapa')->get();        
+        $estadisticas = $etapas->map(function($row) {
+            return [ 
+                'etapa' => $row->etapa,
+                'conteo' => 0,
+            ];
+        }); 
+
+        $estadisticas = [];        
+        foreach($etapas as $row) {
+            $estadisticas[$row->id] = [
+                'etapa' => $row->etapa,
+                'conteo' => $oportunidades->reduce(function($carry, $op) use($row) {
+                    if ($op->id_etapa_procedimiento === $row->id) {
+                        return $carry + 1;
+                    }                
+                }),
+            ];
+        }
+                
+        return $estadisticas;
     }
 
     /**
@@ -150,4 +150,12 @@ class OportunidadRepository
             'licitaciones_publicas' => $numLicitacionesPublicas,
         ];
     }
+
+    /**
+     * Optiene expresión de subquery para obtener el número de favoritos de productos.
+     */
+    // private function subqueryCountLicitaciones(): Expression
+    // {        
+    //     return DB::raw("(SELECT COUNT(opn.etapa_procedimiento) FROM markable_favorites WHERE markable_id = productos.id AND markable_type = '{$productoClass}') AS num_favoritos");
+    // }
 }

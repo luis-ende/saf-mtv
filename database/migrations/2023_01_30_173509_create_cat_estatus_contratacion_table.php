@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cat_unidades_compradoras', function (Blueprint $table) {
+        Schema::create('cat_estatus_contratacion', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 160);
+            $table->string('estatus', 20);
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cat_unidades_compradoras');
+        Schema::dropIfExists('cat_estatus_contratacion');
     }
 };
