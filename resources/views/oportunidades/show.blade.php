@@ -31,28 +31,18 @@
                     Si ya estás registrado en Padrón de Proveedores, ahí te llegarán las notificaciones, sólo activa las alertas aquí.
                 </span>
             </div>
-            {{ var_dump($estadisticas) }}
+
             <div class="w-10/12 flex md:flex-row xs:flex-col md:space-x-16 md:space-y-0 xs:space-x-0 xs:space-y-3 my-4 self-center">
                 <div class="basis-1/5 text-mtv-gray flex flex-column items-center py-2">
-                    <span class="font-bold text-5xl">92</span>
+                    <span class="font-bold text-5xl">{{ $estadisticas['conteo_dependencias'] }}</span>
                     <span class="text-lg">Instituciones compradoras</span>
                 </div>
-                <div class="basis-1/5 bg-mtv-gold-light text-white flex flex-column items-center rounded-3xl py-2 px-2">
-                    {{-- <span class="font-bold text-5xl">{{ $estadisticas['compras_programadas'] }}</span> --}}
-                    <span class="text-lg">Compras programadas</span>
-                </div>
-                <div class="basis-1/5 bg-mtv-gold-light text-white flex flex-column items-center rounded-3xl py-2 px-2">
-                    {{-- <span class="font-bold text-5xl">{{ $estadisticas['prebases'] }}</span>  --}}
-                    <span class="text-lg">Prebases</span>
-                </div>
-                <div class="basis-1/5 bg-mtv-gold-light text-white flex flex-column items-center rounded-3xl py-2 px-2">
-                    {{-- <span class="font-bold text-5xl">{{ $estadisticas['licitaciones_en_proceso'] }}</span>  --}}
-                    <span class="text-lg">Licitaciones en proceso</span>
-                </div>
-                <div class="basis-1/5 bg-mtv-gold-light text-white flex flex-column items-center rounded-3xl py-2 px-2">
-                    {{-- <span class="font-bold text-5xl">{{ $estadisticas['precotizaciones'] }}</span>  --}}
-                    <span class="text-lg">Precotizaciones</span>
-                </div>
+                @foreach($estadisticas['conteo_etapas'] as $etapa)
+                    <div class="basis-1/5 bg-mtv-gold-light text-white flex flex-column items-center rounded-3xl py-2 px-2">
+                        <span class="font-bold text-5xl">{{ $etapa['conteo'] }}</span>
+                        <span class="text-lg">{{ $etapa['nombre_etapa']  }}</span>
+                    </div>
+                @endforeach
             </div>                
         </div>
 
@@ -102,12 +92,10 @@
                         Descargar procedimientos filtrados
                     </a>
                     <div>
-                        <x-oportunidades.oportunidades-grid 
-                            :oportunidades="$oportunidades" 
-                        />
-                        {{-- @isset($num_resultados) --}}
-                            {{-- <x-oportunidades.oportunidades-listado :categorias="$categorias"/> --}}
-                        {{-- @else
+                         @if(count($oportunidades) > 1)
+                            <x-oportunidades.oportunidades-grid
+                                    :oportunidades="$oportunidades" />
+                         @else
                             <div class="flex flex-col space-y-4 items-center my-10">
                                 <span class="text-primary text-2xl font-bold">
                                     No se encontraron resultados
@@ -122,7 +110,7 @@
                                     Visita el “<a href="#" class="mtv-link-gold font-bold  underline">Calendario de compras</a>” y consultar la programación para este año.
                                 </span>
                             </div>
-                        @endisset --}}
+                        @endif
                     </div>
                 </div>
             </div>

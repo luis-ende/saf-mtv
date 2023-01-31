@@ -327,6 +327,11 @@ class ProductoRepository
         }
     }
 
+    public static function obtieneCapitulos()
+    {
+        return DB::table('cat_capitulos')->pluck('numero');
+    }
+
     /**
      * Optiene expresión de subquery para obtener el número de favoritos de productos.
      */

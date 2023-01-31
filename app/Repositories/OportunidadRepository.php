@@ -6,7 +6,6 @@ use RoachPHP\Roach;
 
 use App\Models\OportunidadNegocio;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Query\Expression;
 use App\Spiders\ConvocatoriasOportunidadesSpider;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -32,7 +31,9 @@ class OportunidadRepository
 
     public function obtieneEtapasProcedimiento()
     {
-        return DB::table('cat_etapas_procedimiento')->select('id', 'etapa')->get();
+        return DB::table('cat_etapas_procedimiento')->select('id', 'etapa')
+                                                          ->orderBy('secuencia')
+                                                          ->get();
     }
 
     public function obtieneEstatusContratacion()
@@ -49,8 +50,9 @@ class OportunidadRepository
     {
         $query = OportunidadNegocio::from('oportunidades_negocio AS opn')
                                         ->select('opn.id', 'opn.nombre_procedimiento', 'opn.fecha_publicacion', 
-                                                 'opn.fecha_presentacion_propuestas', 'uc.nombre AS unidad_compradora', 
-                                                 'ec.estatus AS estatus_contratacion', 'tc.tipo as tipo_contratacion', 
+                                                 'opn.fecha_presentacion_propuestas', 'opn.id_etapa_procedimiento',
+                                                 'opn.id_unidad_compradora', 'uc.nombre AS unidad_compradora',
+                                                 'ec.estatus AS estatus_contratacion', 'tc.tipo as tipo_contratacion',
                                                  'mc.metodo AS metodo_contratacion', 'etp.etapa as etapa_procedimiento',
                                                  'etp.secuencia as etapa_secuencia')
                                         ->leftJoin('cat_unidades_compradoras AS uc', 'uc.id', 'opn.id_unidad_compradora')
@@ -68,35 +70,38 @@ class OportunidadRepository
 
     /**
      * Calcula las estadísticas de un conjunto de oportunidades.
-     * Usado en el buscador de oportunidades.
+     * Usado en el header del buscador de oportunidades.
      */
     public function obtieneEstadisticas(Collection $oportunidades): array 
     {        
-        $etapas = DB::table('cat_etapas_procedimiento')->select('id', 'etapa')->get();        
-        $estadisticas = $etapas->map(function($row) {
-            return [ 
-                'etapa' => $row->etapa,
-                'conteo' => 0,
-            ];
-        }); 
-
-        $estadisticas = [];        
+        $etapas = DB::table('cat_etapas_procedimiento')->select('id', 'etapa')
+                                                             ->orderBy('secuencia')
+                                                             ->get();
+        $estadisticas = [
+            'conteo_etapas' => [],
+        ];
         foreach($etapas as $row) {
-            $estadisticas[$row->id] = [
-                'etapa' => $row->etapa,
-                'conteo' => $oportunidades->reduce(function($carry, $op) use($row) {
-                    if ($op->id_etapa_procedimiento === $row->id) {
+            $etapaId = $row->id;
+            $estadisticas['conteo_etapas'][$etapaId] = [
+                'nombre_etapa' => $row->etapa,
+                'conteo' => $oportunidades->reduce(function($carry, $op) use($etapaId) {
+                    if ($op->id_etapa_procedimiento === $etapaId) {
                         return $carry + 1;
-                    }                
-                }),
+                    }
+
+                    return $carry;
+                }, 0),
             ];
         }
+
+        $unidadesCompradoras = $oportunidades->unique('id_unidad_compradora');
+        $estadisticas['conteo_dependencias'] = $unidadesCompradoras->values()->count();
                 
         return $estadisticas;
     }
 
     /**
-     * Extraer concursos de https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas
+     * Extraer concursos de https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas via Webscrapping.
      */
     public function extraerConvocatorias(?string $filtro = null): array
     {
@@ -154,12 +159,4 @@ class OportunidadRepository
             'licitaciones_publicas' => $numLicitacionesPublicas,
         ];
     }
-
-    /**
-     * Optiene expresión de subquery para obtener el número de favoritos de productos.
-     */
-    // private function subqueryCountLicitaciones(): Expression
-    // {        
-    //     return DB::raw("(SELECT COUNT(opn.etapa_procedimiento) FROM markable_favorites WHERE markable_id = productos.id AND markable_type = '{$productoClass}') AS num_favoritos");
-    // }
 }
