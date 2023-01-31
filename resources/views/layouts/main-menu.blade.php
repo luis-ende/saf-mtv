@@ -16,16 +16,16 @@
                     @role('proveedor')
                         <x-nav-link :href="route('catalogo-productos')" :active="request()->routeIs('catalogo-productos')">
                             Mi tiendita virtual
+                        </x-nav-link>                        
+                    @else                        
+                        <x-nav-link :href="'#'">
+                            ¿Qué es Mi Tiendita Virtual?
                         </x-nav-link>
                         <x-nav-link href="#">
                             Calendario de compras
                         </x-nav-link>
                         <x-nav-link :href="route('oportunidades-negocio')" :active="request()->routeIs('oportunidades-negocio')">
                             Buscador de Oportunidades
-                        </x-nav-link>
-                    @else
-                        <x-nav-link :href="'#'">
-                            ¿Qué es Mi Tiendita Virtual?
                         </x-nav-link>
                         <x-nav-link :href="'#'">
                             Preguntas frecuentes

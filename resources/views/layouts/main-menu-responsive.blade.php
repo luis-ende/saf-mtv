@@ -5,15 +5,15 @@
         </x-responsive-nav-link>
         @role('proveedor')
             <x-responsive-nav-link :href="route('catalogo-productos')" :active="request()->routeIs('catalogo-productos')">
-                Tienditas virtuales
-            </x-responsive-nav-link>
+                Mi tiendita virtual
+            </x-responsive-nav-link>            
+        @else
             <x-responsive-nav-link href="#">
                 Calendario de compras
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('oportunidades-negocio')" :active="request()->routeIs('oportunidades-negocio')">
                 Buscador de Oportunidades
             </x-responsive-nav-link>
-        @else
             <x-responsive-nav-link href="'#'">
                 ¿Qué es Mi Tiendita Virtual?
             </x-responsive-nav-link>
