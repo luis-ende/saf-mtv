@@ -60,6 +60,8 @@ Para realizar una actualización completa del ambiente de desarrollo ejecutar de
 - Roles y permisos: Spatie Laravel Permission - https://spatie.be/docs/laravel-permission/v5/introduction
 - Imágenes y documentos adjuntos de productos y perfil de negocio: Spatie Media Library - https://spatie.be/docs/laravel-medialibrary/v10/introduction
 - Marca de favoritos de productos: https://github.com/maize-tech/laravel-markable?utm_source=pocket_reader
+  - Los favoritos de productos se encuentran en la tabla `markable_favorites`
+  - Las alertas de oportunidades de negocio se encuentran en la tabla `markable_bookmarks`
 - Enlaces de redes sociales (en este proyecto se usan solamente las funciones para generar los enlaces, no los botones en el front-end): https://github.com/jorenvh/laravel-share
 
 ## MTV en Docker
@@ -81,7 +83,6 @@ Para realizar una actualización completa del ambiente de desarrollo ejecutar de
     - En línea de comando con psql, revisar si la extensión ya se encuentra activada usar: `\dx`
     - Para activar la extensión: `CREATE EXTENSION pg_trgm;`
     - Más información sobre la extensión y su uso: https://www.postgresql.org/docs/current/pgtrgm.html
-
 
 ### Integraciones de MTV con otros sistemas:
 
