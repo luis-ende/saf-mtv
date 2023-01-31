@@ -7,6 +7,7 @@ use App\Models\Capitulo;
 use App\Models\Sector;
 use App\Repositories\CatAsentamientosRepository;
 use App\Repositories\GrupoPrioritarioRepository;
+use App\Repositories\OportunidadRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -72,7 +73,7 @@ class BuscadorMTVController extends Controller
             'partidas' => DB::table('cat_cabms')->distinct()
                                                 ->orderBy('partida')
                                                 ->pluck('partida'),
-            'capitulos' => Capitulo::CABMS_CAPITULOS,
+            'capitulos' => ProductoRepository::obtieneCapitulos(),
             'grupos_prioritarios' => GrupoPrioritarioRepository::obtieneGruposPrioritarios(),            
             'padron_prov_estatus' => array_filter(PadronProveedoresService::ETAPAS_PADRON_PROVEEDORES, function($v, $k) {
                 return $k === 4 || $k === 7;
