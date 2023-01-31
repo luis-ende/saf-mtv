@@ -17,20 +17,19 @@
                         <x-nav-link :href="route('catalogo-productos')" :active="request()->routeIs('catalogo-productos')">
                             Mi tiendita virtual
                         </x-nav-link>                        
-                    @else                        
-                        <x-nav-link :href="'#'">
-                            ¿Qué es Mi Tiendita Virtual?
-                        </x-nav-link>
-                        <x-nav-link href="#">
-                            Calendario de compras
-                        </x-nav-link>
-                        <x-nav-link :href="route('oportunidades-negocio')" :active="request()->routeIs('oportunidades-negocio')">
-                            Oportunidades de negocio
-                        </x-nav-link>
-                        <x-nav-link :href="'#'">
-                            Preguntas frecuentes
-                        </x-nav-link>
-                    @endrole
+                    @endrole                        
+                    <x-nav-link :href="'#'">
+                        ¿Qué es Mi Tiendita Virtual?
+                    </x-nav-link>
+                    <x-nav-link href="#">
+                        Calendario de compras
+                    </x-nav-link>
+                    <x-nav-link :href="route('oportunidades-negocio')" :active="request()->routeIs('oportunidades-negocio')">
+                        Oportunidades de negocio
+                    </x-nav-link>
+                    <x-nav-link :href="'#'">
+                        Preguntas frecuentes
+                    </x-nav-link>                    
                     <x-nav-link :href="'#'">
                         Directorio CDMX
                     </x-nav-link>

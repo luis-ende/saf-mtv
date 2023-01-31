@@ -7,20 +7,19 @@
             <x-responsive-nav-link :href="route('catalogo-productos')" :active="request()->routeIs('catalogo-productos')">
                 Mi tiendita virtual
             </x-responsive-nav-link>            
-        @else
-            <x-responsive-nav-link href="'#'">
-                ¿Qué es Mi Tiendita Virtual?
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="#">
-                Calendario de compras
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('oportunidades-negocio')" :active="request()->routeIs('oportunidades-negocio')">
-                Oportunidades de negocio
-            </x-responsive-nav-link>            
-            <x-responsive-nav-link href="'#'">
-                Preguntas frecuentes
-            </x-responsive-nav-link>
         @endrole
+        <x-responsive-nav-link href="'#'">
+            ¿Qué es Mi Tiendita Virtual?
+        </x-responsive-nav-link>
+        <x-responsive-nav-link href="#">
+            Calendario de compras
+        </x-responsive-nav-link>
+        <x-responsive-nav-link :href="route('oportunidades-negocio')" :active="request()->routeIs('oportunidades-negocio')">
+            Oportunidades de negocio
+        </x-responsive-nav-link>            
+        <x-responsive-nav-link href="'#'">
+            Preguntas frecuentes
+        </x-responsive-nav-link>        
         <x-responsive-nav-link href="#">
             Directorio CDMX
         </x-responsive-nav-link>
@@ -28,7 +27,7 @@
             Padrón de Proveedores
         </x-responsive-nav-link>
         <x-responsive-nav-link :href="route('buscador-mtv.index')">
-            Catálogo
+            Tienditas virtuales
         </x-responsive-nav-link>
         <div class="pl-5">
             <x-responsive-nav-link

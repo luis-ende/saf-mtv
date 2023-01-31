@@ -35,10 +35,6 @@ Route::get('/info-venderle-a-cdmx', function() {
     return view('info.show');
 })->name('flujograma.show');
 
-Route::get('/oportunidades-de-negocio', [OportunidadesController::class, 'index'])->name('oportunidades-negocio');
-
-Route::post('/oportunidades-de-negocio', [OportunidadesController::class, 'search'])->name('oportunidades-negocio.search');
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified', 'registro_mtv.status'])->name('dashboard');
@@ -126,6 +122,14 @@ Route::middleware(['role:admin', 'auth'])->group(function() {
     Route::controller(AdminMTVController::class)->group(function () {
         Route::get('/admin/usuarios', 'indexRolesPermisos')->name('mtv-admin.usuarios');        
     });
+});
+
+
+Route::controller(OportunidadesController::class)->group(function() {
+    Route::get('/oportunidades-de-negocio', 'index')->name('oportunidades-negocio');
+    Route::post('/oportunidades-de-negocio', 'search')->name('oportunidades-negocio.search');
+    Route::post('/oportunidades-de-negocio/alertas/{oportunidad_negocio}', 
+                'updateAlerta')->middleware(['role:proveedor', 'auth'])->name('oportunidades-negocio-alertas.update');
 });
 
 Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'index'])->middleware(['auth', 'verified'])->name('centro-notificaciones');

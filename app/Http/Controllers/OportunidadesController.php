@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\OportunidadNegocio;
+use Maize\Markable\Models\Bookmark;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\OportunidadRepository;
 
 class OportunidadesController extends Controller
@@ -22,7 +25,20 @@ class OportunidadesController extends Controller
         $estadisticas = $oportunidadesRepo->obtieneEstadisticas($oportunidades);
         $filtros_opciones = $this->obtieneFiltrosOpciones($oportunidadesRepo);
 
+        $this->validate($request, [
+            'oportunidades_search' => '',
+        ]);
+
         return view('oportunidades.show', compact('filtros_opciones', 'oportunidades', 'estadisticas'));
+    }
+
+    public function updateAlerta(Request $request, OportunidadNegocio $oportunidadNegocio) 
+    {
+        $user = Auth::user();
+        Bookmark::toggle($oportunidadNegocio, $user);
+        $alerta_estatus = Bookmark::has($oportunidadNegocio, $user);
+
+        return compact('alerta_estatus');
     }
 
     private function obtieneFiltrosOpciones(OportunidadRepository $oportunidadesRepo): array

@@ -239,4 +239,32 @@ Alpine.data('animatedCounter', (targer, time = 200, start = 0) => ({
     }      
 }))
 
+Alpine.data('oportunidadNegocioAlertas', () => ({
+    alertaActiva: false,
+    toggleAlerta(route) {
+        fetch(route, {
+            method: "POST",
+            credentials: 'same-origin',
+            headers: {
+                'X-CSRF-Token': '{{ csrf_token() }}',
+            },
+        }).then(response => response.json())
+        .then(json => {
+            this.alertaActiva = json.alerta_estatus;
+        })
+    },
+    showMessage() {
+        const props = SwalMTVCustom;
+        props.customClass['title'] = 'swal2-mtv-title'
+        Swal.fire({
+            ...SwalMTVCustom,
+            title: 'Activar alerta',
+            html: "Para activar las alertas debes estar registrado o haber ingresado a Mi Tiendita Virtual." +
+                    '<p class="swal-mtv-html-container-action">¿Quieres activar la alerta?</p>',
+            confirmButtonText: 'Ingresar',
+            cancelButtonText: 'Regístrate',
+        });
+    }
+}))
+
 Alpine.start();

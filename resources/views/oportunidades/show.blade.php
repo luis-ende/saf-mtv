@@ -46,14 +46,14 @@
             </div>                
         </div>
 
-        <div class="my-3 flex flex-col">
+        <div class="my-3 flex flex-col" x-data="{ terminoBusqueda: '', }">
             <div class="w-2/4 self-center my-4">
                 <form method="POST"
-                        x-bind:action="'/buscador-oportunidades-mtv/' + $data.tipoBusqueda + '/' + $data.terminoBusqueda">
+                      x-bind:action="'/buscador-oportunidades-mtv/' + $data.terminoBusqueda">
                     @csrf
 
                     <label for="productos_search" class="text-mtv-secondary text-sm mb-2">
-                        Búsqueda por nombre de productos/servicios:
+                        Búsqueda por palabra clave:
                     </label>
                     <div class="flex md:flex-row md:space-x-3 md:space-y-0 xs:flex-col xs:space-y-3">
                         <div class="md:basis-10/12 xs:basis-full relative">
@@ -61,13 +61,12 @@
                                 @svg('forkawesome-search', ['class' => 'w-5 h-5 text-mtv-gray-2'])
                             </div>
                             <input type="search"
-                                   id="productos_search" name="productos_search"
+                                   id="oportunidades_search" name="oportunidades_search"
                                    class="block w-full pt-3 pb-3 pl-10 text-sm text-mtv-text-gray border border-gray-300 rounded-lg bg-gray-50 focus:ring-mtv-primary focus:border-mtv-primary"
                                    placeholder="Buscar por palabras clave..."
                                    autofocus
                                    x-model="terminoBusqueda"
-                                   value="{{ $term_busqueda ?? '' }}">
-                            <input id="tipo_busqueda" name="tipo_busqueda" type="hidden" x-model="tipoBusqueda">
+                                   value="{{ $term_busqueda ?? '' }}">                            
                             <button type="submit"
                                     class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1 hidden"
                                     x-bind:disabled="!terminoBusqueda">
@@ -89,7 +88,7 @@
                 <div class="basis-full md:basis-3/4 flex flex-col">
                     <a href="#" class="mtv-button-gold my-4 self-center">
                         @svg('go-download-16', ['class' => 'w-5 h-5 mr-1 inline-block'])
-                        Descargar procedimientos filtrados
+                        Descargar procedimientos
                     </a>
                     <div>
                          @if(count($oportunidades) > 1)

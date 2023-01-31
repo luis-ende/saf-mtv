@@ -7,15 +7,23 @@
         </span>
     </div>
     <div class="flex flex-col">
-        @php($texto = Str::of('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. printing and typesetting industry.')->limit(162, '...'))
+        @php($procedimientoCerrado = strtolower($oportunidad->estatus_contratacion) === 'cerrado')        
         <div class="h-28 bg-gray-100 border-l border-r block px-3 py-3">
-            <span class="text-mtv-primary md:text-base sm:text-sm md:font-semibold">
+            <span @class([
+                'text-mtv-primary' => !$procedimientoCerrado,
+                'text-mtv-gray-2' => $procedimientoCerrado, 
+                'md:text-base sm:text-sm md:font-semibold'])>
                 {{ Str::of($oportunidad->nombre_procedimiento)->limit(142, '...') }}
             </span>
         </div>
         <div class="border-l border-r bg-white p-3 block text-mtv-text-gray">
-            Procedimiento:
-            <p class="text-mtv-secondary font-bold text-xl">{{ $oportunidad->estatus_contratacion }}</p>
+            Estatus:            
+            <p @class([
+                'text-mtv-secondary' => !$procedimientoCerrado, 
+                'text-mtv-gray-2' => $procedimientoCerrado, 
+                'font-bold text-xl'])>
+                {{ $oportunidad->estatus_contratacion }}
+            </p>
             <p class="my-0">Publicación: <strong>{{ Carbon\Carbon::parse($oportunidad->fecha_publicacion)->translatedFormat('d F Y') }}</strong></p>
             @empty($oportunidad->fecha_presentacion_propuestas)
                 <br>
@@ -34,10 +42,16 @@
             </div>
         </div>
         <div class="bg-white p-3 border border-l border-r border-b rounded-bl-lg rounded-br-lg flex flex-col justify-center items-center">
-            <button class="my-0 mtv-button-secondary" type="button">
-                @svg('codicon-bell-dot', ['class' => 'w-5 h-5 inline-block mr-2'])
-                Activar alerta
-            </button>
-        </div>        
+            @if(!$procedimientoCerrado)
+                <x-oportunidades.oportunidad-alerta-button 
+                    :oportunidad="$oportunidad"
+                />
+            @else
+                <div class="my-0 text-white font-bold bg-mtv-gray-light border border-slate-200 rounded-lg px-3 py-2">
+                    @svg('codicon-bell-dot', ['class' => 'w-5 h-5 inline-block mr-2'])
+                    Activar alerta
+                </div>
+            @endif
+        </div>                
     </div>
 </article>

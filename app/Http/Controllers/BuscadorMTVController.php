@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Capitulo;
-//use App\Models\CategoriaScian;
 use App\Models\Sector;
 use App\Repositories\CatAsentamientosRepository;
 use App\Repositories\GrupoPrioritarioRepository;
-use App\Repositories\OportunidadRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
