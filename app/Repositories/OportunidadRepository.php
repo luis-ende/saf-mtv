@@ -51,13 +51,17 @@ class OportunidadRepository
                                         ->select('opn.id', 'opn.nombre_procedimiento', 'opn.fecha_publicacion', 
                                                  'opn.fecha_presentacion_propuestas', 'uc.nombre AS unidad_compradora', 
                                                  'ec.estatus AS estatus_contratacion', 'tc.tipo as tipo_contratacion', 
-                                                 'mc.metodo AS metodo_contratacion', 'etp.etapa as etapa_procedimiento')
+                                                 'mc.metodo AS metodo_contratacion', 'etp.etapa as etapa_procedimiento',
+                                                 'etp.secuencia as etapa_secuencia')
                                         ->leftJoin('cat_unidades_compradoras AS uc', 'uc.id', 'opn.id_unidad_compradora')
                                         ->leftJoin('cat_estatus_contratacion AS ec', 'ec.id', 'opn.id_estatus_contratacion')
                                         ->leftJoin('cat_tipos_contratacion AS tc', 'tc.id', 'opn.id_tipo_contratacion')
                                         ->leftJoin('cat_metodos_contratacion AS mc', 'mc.id', 'opn.id_metodo_contratacion')
                                         ->leftJoin('cat_etapas_procedimiento AS etp', 'etp.id', 'opn.id_etapa_procedimiento');
-        
+
+        // Aplicar ordenamientos
+        $query->orderByDesc('opn.fecha_publicacion');
+        $query->orderBy('etp.secuencia');
 
         return $query->get();
     }

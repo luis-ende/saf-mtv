@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('cat_etapas_procedimiento', function (Blueprint $table) {
             $table->id();
             $table->string('etapa', 25);
+            $table->unsignedSmallInteger('secuencia')->default(1);
             $table->timestamps();
         });
     }

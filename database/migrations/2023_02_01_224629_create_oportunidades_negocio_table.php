@@ -15,15 +15,17 @@ return new class extends Migration
     {
         Schema::create('oportunidades_negocio', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_unidad_compradora')->constraint('cat_unidades_compradoras');
+            $table->foreignId('id_unidad_compradora')->constrained('cat_unidades_compradoras');
             $table->text('nombre_procedimiento');
             $table->date('fecha_publicacion');
             $table->date('fecha_presentacion_propuestas')->nullable();
-            $table->foreignId('id_tipo_contratacion')->constraint('cat_tipos_contratacion');
-            $table->foreignId('id_metodo_contratacion')->constraint('cat_metodos_contratacion');
-            $table->foreignId('id_etapa_procedimiento')->constraint('cat_etapas_procedimiento');
-            $table->foreignId('id_estatus_contratacion')->constraint('cat_estatus_contratacion');
+            $table->foreignId('id_tipo_contratacion')->constrained('cat_tipos_contratacion');
+            $table->foreignId('id_metodo_contratacion')->constrained('cat_metodos_contratacion');
+            $table->foreignId('id_etapa_procedimiento')->constrained('cat_etapas_procedimiento');
+            $table->foreignId('id_estatus_contratacion')->constrained('cat_estatus_contratacion');
             $table->timestamps();
+
+            $table->index('fecha_publicacion');
         });
     }
 
