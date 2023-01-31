@@ -25,7 +25,7 @@
                             Calendario de compras
                         </x-nav-link>
                         <x-nav-link :href="route('oportunidades-negocio')" :active="request()->routeIs('oportunidades-negocio')">
-                            Buscador de Oportunidades
+                            Oportunidades de negocio
                         </x-nav-link>
                         <x-nav-link :href="'#'">
                             Preguntas frecuentes
