@@ -23,8 +23,8 @@ class OportunidadesNegocioSeeder extends Seeder
 
         // var_dump($oportunidades[0]);
 
-        $tipoContratacionBien = DB::table('cat_tipos_contratacion')->where('tipo', 'Adquisición de bienes')->value('id');
-        $tipoContratacionServicio = DB::table('cat_tipos_contratacion')->where('tipo', 'Prestación de servicios')->value('id');
+        $tipoContratacionBien = DB::table('cat_tipos_contratacion')->where('tipo', 'Adquisición de Bienes')->value('id');
+        $tipoContratacionServicio = DB::table('cat_tipos_contratacion')->where('tipo', 'Prestación de Servicios')->value('id');
         $tipoMetodoContratacionLP = DB::table('cat_metodos_contratacion')->where('metodo', 'Licitación pública')->value('id');
         $tipoMetodoContratacionIR = DB::table('cat_metodos_contratacion')->where('metodo', 'Invitación restringida')->value('id');
         $etapaLicEnProc = DB::table('cat_etapas_procedimiento')->where('etapa', 'Licitación en proceso')->value('id');
