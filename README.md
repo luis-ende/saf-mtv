@@ -81,3 +81,20 @@ Para realizar una actualización completa del ambiente de desarrollo ejecutar de
     - En línea de comando con psql, revisar si la extensión ya se encuentra activada usar: `\dx`
     - Para activar la extensión: `CREATE EXTENSION pg_trgm;`
     - Más información sobre la extensión y su uso: https://www.postgresql.org/docs/current/pgtrgm.html
+
+
+### Integraciones de MTV con otros sistemas:
+
+- [OK] Consulta de estatus de RFC en **Padrón de Proveedores**. Utilizado desde MTV para verificar si un RFC a utilizar ya existe en Padrón de Proveedores
+
+- [Pendiente] Consulta de datos de Perfil de Negocio y Contacto de un proveedor en **Padrón de Proveedores**. Consulta de datos de proveedor registrado en Padrón de Proveedores para crear y sincronizar la cuenta del proveedor durante el login en MTV
+
+- [Pendiente] Consulta de estatus de contratación de un grupo de RFCs en **Padrón de Proveedores**. Consulta mediante API que recibe varios RFC de proveedores y devuelve los estatus de contratación de cada uno (ya sea que existan o no)
+
+- [Pendiente] API Endpoint en MTV para crear y actualizar cuentas de URGs mediante información del portal de **Acceso Único**. De tal manera que los usuarios de URGs autorizados puedan tener acceso a MTV
+
+- Integraciones para el Buscador de Oportunidades de Negocio: 
+  - [Pendiente] Consulta de convocatorias abiertas desde el portal de **Concurso Digital** [https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas](https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas) y [https://brandmestudio-test.com/contrataciones-abiertas](https://brandmestudio-test.com/contrataciones-abiertas)
+  - [Pendiente] Consulta de datos de compras programadas desde el portal de **Requisiciones** [https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login](https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login)
+  - [Pendiente] Consulta de datos de convocatorias desde el portal de **Prebases** [https://prebasestianguisdigital.cdmx.gob.mx/](https://prebasestianguisdigital.cdmx.gob.mx/)
+  - [Pendiente] Consulta de datos de precotizaciones desde el portal de **Precotizaciones** [https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login](https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login) y PAAAPS (Programa Anual de Adquisiciones, Arrendamientos y Prestación de Servicios)
