@@ -15,13 +15,13 @@ class CatTiposContratacionSeeder extends Seeder
     public function run()
     {
         DB::table('cat_tipos_contratacion')->insert([            
-            'tipo' => 'Adquisición de bienes',
+            'tipo' => 'Adquisición de Bienes',
             'created_at' => now(),
             'updated_at' => now(),
         ]);        
 
         DB::table('cat_tipos_contratacion')->insert([            
-            'tipo' => 'Prestación de servicios',
+            'tipo' => 'Prestación de Servicios',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
