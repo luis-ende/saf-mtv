@@ -17,31 +17,22 @@ class DatabaseSeeder extends Seeder
     */
     public function run()
     {
-        $this->seedCatAsentamientos();
-        //$this->call(TiposVialidadSeeder::class);
-        //$this->seedTiposVialidad();
-        //$this->seedPaises();
-        //$this->seedGruposPrioritorios();
-        //$this->call(GruposPrioristarioSeeder::class);
-        $this->seedUnidadesCompradoras();
+        // Seeders Perfil de Negocio
+        $this->call(CatAsentamientosSeeder::class);
+        $this->call(TiposVialidadSeeder::class);
+        $this->call(CatPaisesSeeder::class);
+        $this->call(GruposPrioritariosSeeder::class);
+        
+        // Seeders Oportunidad de Negocio
+        $this->call(CatUnidadesCompradorasSeeder::class);
+        $this->call(CatTiposContratacionSeeder::class);
+        $this->call(CatMetodosContratacionSeeder::class);
+        $this->call(CatEtapasProcedimientoSeeder::class);
+        $this->call(CatEstatusContratacionSeeder::class);
+
+        // Roles y usuarios de prueba locales
         $this->crearMTVRoles();
         $this->crearUsuarioURG();
-    }
-
-    private function seedCatAsentamientos()
-    {
-        $path = base_path('database/data/cat_asentamientos.sql');
-        $sql = file_get_contents($path);
-
-        DB::unprepared($sql);
-    }
-
-    private function seedPaises()
-    {
-        $path = base_path('database/data/cat_paises.sql');
-        $sql = file_get_contents($path);
-
-        DB::unprepared($sql);
     }
 
     private function crearMTVRoles()
@@ -70,13 +61,5 @@ class DatabaseSeeder extends Seeder
             'last_login' => now(), 
             'password' => bcrypt('urg_password')]);
         $user->assignRole('urg', 'admin');
-    }
-
-    private function seedUnidadesCompradoras()
-    {
-        $path = base_path('database/data/cat_unidades_compradoras.sql');
-        $sql = file_get_contents($path);
-
-        DB::unprepared($sql);
-    }
+    }    
 }
