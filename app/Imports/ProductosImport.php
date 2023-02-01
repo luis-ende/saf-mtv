@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Producto;
+use App\Models\ProductoColor;
 use App\Http\Requests\ProductoRequest;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -33,7 +34,8 @@ class ProductosImport implements ToModel, WithHeadingRow, WithValidation
             'descripcion' => $row['descripcion'],
             'marca' => $row['marca'],
             'modelo' => $row['modelo'],
-            'color' => $row['color'],
+            // Se asume que los colores vienen en español, de acuerdo con la plantilla de carga masiva
+            'color' => ProductoColor::traduceColoresCodigos($row['color']),
             'material' => $row['material'],
             'codigo_barras' => $row['codigo_barras'],
             'foto_url_1' => $row['foto_url_1'],

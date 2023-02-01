@@ -5,6 +5,8 @@ namespace App\Models;
 class ProductoColor 
 {
     // Lista de códigos de colores con etiqueta seleccionables, depurada por el equipo MTV.
+    // La lista vigente de colores en español corresponde a la lista de la plantilla de carga masiva de productos.
+    // Ver plantilla en: /storage/app/public/plantillas/productos_carga_masiva.xlsx
     public const PRODUCTO_CSS_COLOR_NAMES = [
         // "AliceBlue",
         // "AntiqueWhite",
@@ -155,4 +157,25 @@ class ProductoColor
         'Yellow' => 'Amarillo',
         // "YellowGreen",
     ];
+
+    /**
+     * Recibe una cadena con colores en idioma español y los traduce a códigos de color.
+     */
+    public static function traduceColoresCodigos(string $colores): string
+    {        
+        if (!empty($colores)) {
+            $coloresCodigos = explode(',', $colores);
+            array_walk($coloresCodigos, function(&$item) {
+                $item = trim($item);
+                $item = array_search($item, self::PRODUCTO_CSS_COLOR_NAMES);
+            });
+
+            // Remover elementos no encontrados (vacíos)
+            array_filter($coloresCodigos);
+            
+            return implode(',', $coloresCodigos);
+        }
+
+        return '';
+    }
 }
