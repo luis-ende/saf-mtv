@@ -14,25 +14,25 @@ class GruposPrioritariosSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('cat_grupos_prioritarios')->firstOrCreate([
+        DB::table('cat_grupos_prioritarios')->insert([
             'grupo' => 'MIPYMES',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
-        DB::table('cat_grupos_prioritarios')->firstOrCreate([
+        DB::table('cat_grupos_prioritarios')->insert([
             'grupo' => 'Cooperativas',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
-        DB::table('cat_grupos_prioritarios')->firstOrCreate([
+        DB::table('cat_grupos_prioritarios')->insert([
             'grupo' => 'Empresas lideradas por mujeres',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
-        DB::table('cat_grupos_prioritarios')->firstOrCreate([
+        DB::table('cat_grupos_prioritarios')->insert([
             'grupo' => 'Comunidades Indígenas',
             'created_at' => now(),
             'updated_at' => now(),
