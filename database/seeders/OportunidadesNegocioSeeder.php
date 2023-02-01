@@ -35,10 +35,13 @@ class OportunidadesNegocioSeeder extends Seeder
 
         OportunidadNegocio::truncate();
         foreach($oportunidades as $oportunidad) {
+            $fechaPublicacion = $oportunidad['fecha_publicacion'] ? Carbon::createFromFormat('Y-m-d', substr($oportunidad['fecha_publicacion'], 0, 10)) : now();
+            $fechaPresentacionP = $oportunidad['fecha_publicacion'] ? Carbon::createFromFormat('Y-m-d', substr($oportunidad['fecha_presentacion_propuestas'], 0, 10)) : now();
+
             OportunidadNegocio::insert([
                 'nombre_procedimiento' => $oportunidad['nombre_procedimiento'],
-                'fecha_publicacion' => Carbon::createFromFormat('Y-m-d', substr($oportunidad['fecha_publicacion'], 0, 10)),
-                'fecha_presentacion_propuestas' => Carbon::createFromFormat('Y-m-d', substr($oportunidad['fecha_presentacion_propuestas'], 0, 10)),
+                'fecha_publicacion' => $fechaPublicacion,
+                'fecha_presentacion_propuestas' => $fechaPresentacionP,
                 'id_unidad_compradora' => DB::table('cat_unidades_compradoras')->where('nombre', $oportunidad['entidad_convocante'])->value('id'),
                 'id_tipo_contratacion' => $oportunidad['tipo_contratacion'] === 'Adquisición de Bienes' ? $tipoContratacionBien : $tipoContratacionServicio,
                 'id_metodo_contratacion' => $oportunidad['metodo_contratacion'] === 'LP - Licitación Pública' ?  $tipoMetodoContratacionLP : $tipoMetodoContratacionIR,
