@@ -2,7 +2,7 @@
 
 <div class="py-3">
     <div class="flex flex-row space-x-2">
-        <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ sectorIsOpen: false }">
+        <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ sectorIsOpen: false }" x-cloak>
             <button type="button"
                     class="border rounded p-1 uppercase flex flex-row justify-center"
                     @click="sectorIsOpen=true">
@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ grupoPrioritarioIsOpen: false }">
+        <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ grupoPrioritarioIsOpen: false }" x-cloak>
             <button type="button"
                 class="w-56 border rounded p-1 uppercase flex flex-row justify-center"
                 @click="grupoPrioritarioIsOpen=true">
@@ -95,7 +95,7 @@
             </div>
         </div> --}}
 
-        <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ alcaldiaIsOpen: false }">
+        <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ alcaldiaIsOpen: false }" x-cloak>
             <button type="button"
                 class="border rounded p-1 uppercase flex flex-row justify-center"
                 @click="alcaldiaIsOpen=true">
@@ -125,7 +125,7 @@
             </div>
         </div>        
 
-        <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ padronEstatusIsOpen: false }">
+        <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ padronEstatusIsOpen: false }" x-cloak>
             <button type="button"
                     class="w-56 border rounded p-1 uppercase flex flex-row justify-center"
                     @click="padronEstatusIsOpen=true">
@@ -159,7 +159,7 @@
             </div>
         </div>
 
-        <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ ordenProvIsOpen: false }">
+        <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ ordenProvIsOpen: false }" x-cloak>
             <button type="button"
                 class="border rounded p-1 flex flex-row justify-center"
                 @click="ordenProvIsOpen=true">

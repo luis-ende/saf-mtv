@@ -10,6 +10,10 @@
         <title>Mi Tiendita Virtual CDMX</title>
         <link rel="shortcut icon" href="{{ asset('images/tianguis.png') }}">
 
+        <style>
+            [x-cloak] { display: none !important; }
+        </style>
+
         @googlefonts
 
         <!-- Scripts -->

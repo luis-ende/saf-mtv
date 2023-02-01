@@ -2,7 +2,7 @@
 
 <div class="py-3">
     <div class="flex flex-row space-x-2 md:flex-nowrap xs:flex-wrap">
-        <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ sectorIsOpen: false }">
+        <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ sectorIsOpen: false }" x-cloak>
             <button type="button"
                 class="border rounded p-1 uppercase flex flex-row justify-center"
                 @click="sectorIsOpen=true">
@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ capituloIsOpen: false }">
+        <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ capituloIsOpen: false }" x-cloak>
             <button type="button"
                 class="border rounded p-1 uppercase flex flex-row justify-center"
                 @click="capituloIsOpen=true">
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ partidaIsOpen: false }">
+        <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ partidaIsOpen: false }" x-cloak>
             <button type="button"
                 class="text-mtv-text-gray border rounded p-1 uppercase flex flex-row justify-center"
                 @click="partidaIsOpen=true">
@@ -92,7 +92,7 @@
             </div>
         </div>        
 
-        <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ ordenIsOpen: false }">
+        <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ ordenIsOpen: false }" x-cloak>
             <button type="button"
                 class="border rounded p-1 flex flex-row justify-center"
                 @click="ordenIsOpen=true">
