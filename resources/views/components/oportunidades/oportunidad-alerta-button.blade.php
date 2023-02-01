@@ -1,7 +1,7 @@
 @props(['oportunidad' => null, 'procedimiento_cerrado'])
 
 <button type="button" 
-        :class="alertaActiva ? 'my-0 mtv-button-secondary' : 'my-0 mtv-button-gold-light'"
+        :class="alertaActiva ? 'my-0 mtv-button-gold-light' : 'my-0 mtv-button-secondary'"
         x-data="oportunidadNegocioAlertas"         
         @guest
         @click="showMessage()"
