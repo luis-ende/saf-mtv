@@ -67,7 +67,7 @@ class PerfilNegocioRepository
         $terminoBusqueda = strtolower($terminoBusqueda);
         $query = PerfilNegocio::select('perfil_negocio.id', 'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio',
                                        'cat_sectores.sector', 'cat_categorias_scian.categoria_scian', 'cat_productos.id AS id_cat_productos',
-                                       'cat_asentamientos.id_municipio', 'cat_asentamientos.municipio')
+                                       'cat_asentamientos.id_municipio', 'cat_asentamientos.municipio')            
             ->leftJoin('personas', 'personas.id', '=', 'perfil_negocio.id_persona')
             ->leftJoin('cat_asentamientos', 'cat_asentamientos.id', '=', 'personas.id_asentamiento')
             ->leftJoin('cat_sectores', 'cat_sectores.id', '=', 'perfil_negocio.id_sector')

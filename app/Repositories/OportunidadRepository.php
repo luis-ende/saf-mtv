@@ -46,7 +46,7 @@ class OportunidadRepository
         return DB::table('cat_unidades_compradoras')->select('id', 'nombre')->get();
     }
 
-    public function buscarOportunidadesNegocio() 
+    public function buscarOportunidadesNegocio(?int $userId) 
     {
         $query = OportunidadNegocio::from('oportunidades_negocio AS opn')
                                         ->select('opn.id', 'opn.nombre_procedimiento', 'opn.fecha_publicacion', 
@@ -60,12 +60,24 @@ class OportunidadRepository
                                         ->leftJoin('cat_tipos_contratacion AS tc', 'tc.id', 'opn.id_tipo_contratacion')
                                         ->leftJoin('cat_metodos_contratacion AS mc', 'mc.id', 'opn.id_metodo_contratacion')
                                         ->leftJoin('cat_etapas_procedimiento AS etp', 'etp.id', 'opn.id_etapa_procedimiento');
+        
+        if ($userId) {
+            $opnClass = OportunidadNegocio::class;
+            $query = $query->addSelect(DB::raw("EXISTS((SELECT 1 FROM markable_bookmarks AS mb " . 
+                                               "WHERE mb.markable_id = opn.id " .
+                                               "AND mb.markable_type = '{$opnClass}' " . 
+                                               "AND mb.user_id = {$userId})) AS alerta_estatus"));
+        } else {
+            $query = $query->addSelect(DB::raw('false AS alerta_estatus'));
+        }
 
         // Aplicar ordenamientos
         $query->orderByDesc('opn.fecha_publicacion');
         $query->orderBy('etp.secuencia');
 
-        return $query->get();
+        $oportunidades = $query->get();
+
+        return $oportunidades;
     }
 
     /**

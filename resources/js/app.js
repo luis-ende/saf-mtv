@@ -241,12 +241,12 @@ Alpine.data('animatedCounter', (targer, time = 200, start = 0) => ({
 
 Alpine.data('oportunidadNegocioAlertas', () => ({
     alertaActiva: false,
-    toggleAlerta(route) {
+    toggleAlerta(route, token) {
         fetch(route, {
             method: "POST",
             credentials: 'same-origin',
             headers: {
-                'X-CSRF-Token': '{{ csrf_token() }}',
+                'X-CSRF-Token': token,
             },
         }).then(response => response.json())
         .then(json => {

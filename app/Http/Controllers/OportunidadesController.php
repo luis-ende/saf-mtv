@@ -12,7 +12,7 @@ class OportunidadesController extends Controller
 {
     public function index(Request $request, OportunidadRepository $oportunidadesRepo)
     {
-        $oportunidades = $oportunidadesRepo->buscarOportunidadesNegocio();
+        $oportunidades = $oportunidadesRepo->buscarOportunidadesNegocio(auth()->user()?->id);
         $estadisticas = $oportunidadesRepo->obtieneEstadisticas($oportunidades);
         $filtros_opciones = $this->obtieneFiltrosOpciones($oportunidadesRepo);
 
@@ -21,7 +21,7 @@ class OportunidadesController extends Controller
 
     public function search(Request $request, OportunidadRepository $oportunidadesRepo)
     {
-        $oportunidades = $oportunidadesRepo->buscarOportunidadesNegocio();
+        $oportunidades = $oportunidadesRepo->buscarOportunidadesNegocio(auth()->user()?->id);
         $estadisticas = $oportunidadesRepo->obtieneEstadisticas($oportunidades);
         $filtros_opciones = $this->obtieneFiltrosOpciones($oportunidadesRepo);
 
