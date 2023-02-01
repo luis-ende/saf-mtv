@@ -22,4 +22,5 @@ docker compose exec app npm install
 docker compose exec app npm run build
 docker compose exec app php artisan migrate
 docker compose exec app php artisan db:seed
+docker compose exec app php artisan google-fonts:fetch
 docker compose exec postgres psql -U saf_mtv_dbuser -W -d saf_mtv -c "CREATE EXTENSION pg_trgm"

@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GruposPrioritariosSeeder::class);
         
         // Seeders Oportunidad de Negocio
+        $this->call(CatCapitulosSeeder::class);
         $this->call(CatUnidadesCompradorasSeeder::class);
         $this->call(CatTiposContratacionSeeder::class);
         $this->call(CatMetodosContratacionSeeder::class);
