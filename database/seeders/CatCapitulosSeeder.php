@@ -37,7 +37,7 @@ class CatCapitulosSeeder extends Seeder
 
         DB::table('cat_capitulos')->insert([
             'numero' => '4000',
-            'nombre' => 'Transferencias, asignaciones, subsidios',
+            'nombre' => 'Transferencias, asignaciones, subsidios y otras ayudas',
             'created_at' => now(),
             'updated_at' => now(),
         ]);        
