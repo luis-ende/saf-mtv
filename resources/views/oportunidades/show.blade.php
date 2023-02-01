@@ -45,11 +45,11 @@
                 @endforeach
             </div>                
         </div>
-
-        <div class="my-3 flex flex-col" x-data="{ terminoBusqueda: '', }">
+        
+        <div class="my-3 flex flex-col" x-data="{ terminoBusqueda: @js($busqueda_termino ?? ''), }">
             <div class="w-2/4 self-center my-4">
                 <form method="POST"
-                      x-bind:action="'/buscador-oportunidades-mtv/' + $data.terminoBusqueda">
+                      x-bind:action="'/oportunidades-de-negocio/' + $data.terminoBusqueda">
                     @csrf
 
                     <label for="productos_search" class="text-mtv-secondary text-sm mb-2">
@@ -65,11 +65,9 @@
                                    class="block w-full pt-3 pb-3 pl-10 text-sm text-mtv-text-gray border border-gray-300 rounded-lg bg-gray-50 focus:ring-mtv-primary focus:border-mtv-primary"
                                    placeholder="Buscar por palabras clave..."
                                    autofocus
-                                   x-model="terminoBusqueda"
-                                   value="{{ $term_busqueda ?? '' }}">                            
+                                   x-model="terminoBusqueda">
                             <button type="submit"
-                                    class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1 hidden"
-                                    x-bind:disabled="!terminoBusqueda">
+                                    class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1 hidden">
                                 Buscar
                             </button>
                         </div>
@@ -91,7 +89,7 @@
                         Descargar procedimientos
                     </a>
                     <div>
-                         @if(count($oportunidades) > 1)
+                         @if(count($oportunidades) >= 1)
                             <x-oportunidades.oportunidades-grid
                                     :oportunidades="$oportunidades" />
                          @else

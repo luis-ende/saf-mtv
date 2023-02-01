@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class OportunidadRepository
 {
+    public const BUSQUEDA_OPORTUNIDADES_PAGINATION_OFFSET = 30;
+
     public function obtieneRubros() 
     {
         return DB::table('cat_capitulos')->select('id', 'numero', 'nombre')->get();
@@ -46,7 +48,7 @@ class OportunidadRepository
         return DB::table('cat_unidades_compradoras')->select('id', 'nombre')->get();
     }
 
-    public function buscarOportunidadesNegocio(?int $userId) 
+    public function buscarOportunidadesNegocio(?string $terminoBusqueda = null, ?int $userId, array $filtros = [], int $offset = 0) 
     {
         $query = OportunidadNegocio::from('oportunidades_negocio AS opn')
                                         ->select('opn.id', 'opn.nombre_procedimiento', 'opn.fecha_publicacion', 
@@ -71,10 +73,80 @@ class OportunidadRepository
             $query = $query->addSelect(DB::raw('false AS alerta_estatus'));
         }
 
+        if (isset($filtros['unidad_compradora_filtro'])) {
+            $unidadesCompr = $filtros['unidad_compradora_filtro'];
+
+            $query = $query->where(function($query) use($unidadesCompr) {
+                $query->whereIn(DB::raw('opn.id_unidad_compradora'), $unidadesCompr);
+            });
+        }
+
+        if (isset($filtros['tipo_contr_filtro'])) {
+            $tiposContr = $filtros['tipo_contr_filtro'];
+
+            $query = $query->where(function($query) use($tiposContr) {
+                $query->whereIn(DB::raw('opn.id_tipo_contratacion'), $tiposContr);
+            });
+        }
+
+        if (isset($filtros['metodo_contr_filtro'])) {
+            $metodosContr = $filtros['metodo_contr_filtro'];
+
+            $query = $query->where(function($query) use($metodosContr) {
+                $query->whereIn(DB::raw('opn.id_metodo_contratacion'), $metodosContr);
+            });
+        }        
+
+        if (isset($filtros['etapa_proc_filtro'])) {
+            $etapasProc = $filtros['etapa_proc_filtro'];
+
+            $query = $query->where(function($query) use($etapasProc) {
+                $query->whereIn(DB::raw('opn.id_etapa_procedimiento'), $etapasProc);
+            });
+        }        
+
+        if (isset($filtros['estatus_contr_filtro'])) {
+            $estatusContr = $filtros['estatus_contr_filtro'];
+
+            $query = $query->where(function($query) use($estatusContr) {
+                $query->whereIn(DB::raw('opn.id_estatus_contratacion'), $estatusContr);
+            });
+        }        
+
+        if ($terminoBusqueda) {
+            $query = $query->where(function ($orQuery) use($terminoBusqueda) {
+                $orQuery->orWhere(DB::raw('LOWER(opn.nombre_procedimiento)'), 
+                                          'like', 
+                                          '%' . strtolower($terminoBusqueda) . '%');
+            });
+        }
+        
+        // TODO Sólo debe haber un trimestre seleccionado
+        // TODO Si existe un trimestre seleccionado los filtros de fecha inicio y fecha fin no se toman en cuenta y visceversa
+
+
+        if (isset($filtros['fecha_inicio_filtro'])) {
+            $fechaInicio = $filtros['fecha_inicio_filtro'];
+            $query = $query->where(function ($orQuery) use($fechaInicio) {
+                $orQuery->orWhere('opn.fecha_publicacion', '>=', $fechaInicio);
+            });
+        }      
+        
+        if (isset($filtros['fecha_final_filtro'])) {
+            $fechaFin = $filtros['fecha_final_filtro'];
+            $query = $query->where(function ($orQuery) use($fechaFin) {
+                $orQuery->orWhere('opn.fecha_publicacion', '<=', $fechaFin);
+            });                
+        }
+
         // Aplicar ordenamientos
         $query->orderByDesc('opn.fecha_publicacion');
         $query->orderBy('etp.secuencia');
 
+        // Paginación
+        $query = $query->offset($offset)
+                       ->limit(self::BUSQUEDA_OPORTUNIDADES_PAGINATION_OFFSET);        
+                    
         $oportunidades = $query->get();
 
         return $oportunidades;
@@ -170,5 +242,9 @@ class OportunidadRepository
             'adjudicaciones_directas' => $numAdjDirectas,
             'licitaciones_publicas' => $numLicitacionesPublicas,
         ];
+    }
+
+    private function validaTrimestres(array $filtros)  {
+
     }
 }
