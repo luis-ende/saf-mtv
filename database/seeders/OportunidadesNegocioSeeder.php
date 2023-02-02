@@ -6,7 +6,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Database\Seeder;
 use App\Models\OportunidadNegocio;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\OportunidadRepository;
+use App\Repositories\OportunidadNegocioRepository;
 
 class OportunidadesNegocioSeeder extends Seeder
 {
@@ -18,7 +18,7 @@ class OportunidadesNegocioSeeder extends Seeder
      */
     public function run()
     {
-        $oportunidadesRepository = new OportunidadRepository();
+        $oportunidadesRepository = new OportunidadNegocioRepository();
         $oportunidades = $oportunidadesRepository->extraerConvocatorias();
 
         // var_dump($oportunidades[0]);

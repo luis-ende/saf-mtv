@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use _PHPStan_582a9cb8b\Nette\Neon\Exception;
+use Carbon\Carbon;
 use RoachPHP\Roach;
 
 use App\Models\OportunidadNegocio;
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
 /**
  * Clase para extraer convocatorias de la página de concurso digital o de alguna otra fuente de datos establecida.
  */
-class OportunidadRepository
+class OportunidadNegocioRepository
 {
     public const BUSQUEDA_OPORTUNIDADES_PAGINATION_OFFSET = 30;
 
@@ -120,20 +122,19 @@ class OportunidadRepository
                                           '%' . strtolower($terminoBusqueda) . '%');
             });
         }
-        
-        // TODO Sólo debe haber un trimestre seleccionado
-        // TODO Si existe un trimestre seleccionado los filtros de fecha inicio y fecha fin no se toman en cuenta y visceversa
 
+        // Si existe un trimestre seleccionado los filtros de fecha inicio y fecha fin corresponden al inicio y fin del trimestre
+        $filtros_fechas = $this->obtieneFiltroRangoFechas($filtros);
 
-        if (isset($filtros['fecha_inicio_filtro'])) {
-            $fechaInicio = $filtros['fecha_inicio_filtro'];
+        if (isset($filtros_fechas['fecha_inicio'])) {
+            $fechaInicio = $filtros_fechas['fecha_inicio'];
             $query = $query->where(function ($orQuery) use($fechaInicio) {
                 $orQuery->orWhere('opn.fecha_publicacion', '>=', $fechaInicio);
             });
         }      
         
-        if (isset($filtros['fecha_final_filtro'])) {
-            $fechaFin = $filtros['fecha_final_filtro'];
+        if (isset($filtros_fechas['fecha_final'])) {
+            $fechaFin = $filtros_fechas['fecha_final'];
             $query = $query->where(function ($orQuery) use($fechaFin) {
                 $orQuery->orWhere('opn.fecha_publicacion', '<=', $fechaFin);
             });                
@@ -244,7 +245,61 @@ class OportunidadRepository
         ];
     }
 
-    private function validaTrimestres(array $filtros)  {
+    /**
+     * Devuelve el rango de fechas a utilizar para el filtro.
+     * Si existe un trimestre seleccionado, el rango de fechas corresponde al inicio y fin del trimestre.
+     * Si no existe un trimestre seleccionado, se toman los filtros de Fecha inicial y Fecha final.
+     */
+    private function obtieneFiltroRangoFechas(array $filtros): array
+    {
+        $rangoFechas = [];
+        $trimestre = 0;
+        for($t = 1; $t <= 4; $t++) {
+            if (array_key_exists("fecha_trimestre${t}_filtro", $filtros)
+                && $filtros["fecha_trimestre${t}_filtro"]) {
+                $trimestre = $t;
+            }
+        }
 
+        if ($trimestre !== 0) {
+            $rangoFechas = $this->calculaRangoFechasTrimestre($trimestre);
+        } else {
+            if (isset($filtros['fecha_inicio_filtro'])) {
+                $fechaInicio = $filtros['fecha_inicio_filtro'];
+                $rangoFechas['fecha_inicio'] = $fechaInicio;
+            }
+
+            if (isset($filtros['fecha_final_filtro'])) {
+                $fechaFin = $filtros['fecha_final_filtro'];
+                $rangoFechas['fecha_final'] = $fechaFin;
+            }
+        }
+
+        return $rangoFechas;
+    }
+
+    /**
+     * Calcula el rango de fechas de un trimestre del año en curso.
+     */
+    public static function calculaRangoFechasTrimestre(int $trimestre): array
+    {
+        $inicioAnio = Carbon::now()->startOfYear();
+        $incrementoMesesInicio = 0;
+        $incrementoMesesFin = 3;
+        for($t = 1; $t <= $trimestre; $t++) {
+            $fechaInicio = $t === 1 ? $inicioAnio->copy() : $inicioAnio->copy()->addMonths($incrementoMesesInicio)->startOfDay();
+            $fechaFinal = $inicioAnio->copy()->addMonths($incrementoMesesFin)->subDays(1)->endOfDay();
+            if ($t === $trimestre) {
+                return [
+                    'fecha_inicio' => $fechaInicio->format('Y-m-d'),
+                    'fecha_final' => $fechaFinal->format('Y-m-d'),
+                ];
+            } else {
+                $incrementoMesesInicio += 3;
+                $incrementoMesesFin += 3;
+            }
+        }
+
+        return [];
     }
 }

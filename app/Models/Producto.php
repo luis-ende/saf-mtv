@@ -139,7 +139,7 @@ class Producto extends Model implements HasMedia
      */
     public function obtieneColoresValue(array $colores): ?string
     {
-        if ($colores && count($colores) > 0) {
+        if (!empty($colores)) {
             return implode(',', $colores);
         }
 

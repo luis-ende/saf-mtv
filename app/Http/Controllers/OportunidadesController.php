@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\OportunidadNegocio;
 use Maize\Markable\Models\Bookmark;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\OportunidadRepository;
+use App\Repositories\OportunidadNegocioRepository;
 
 class OportunidadesController extends Controller
 {
-    public function index(Request $request, OportunidadRepository $oportunidadesRepo)
+    public function index(Request $request, OportunidadNegocioRepository $oportunidadesRepo)
     {
         $userId = auth()->user()?->id;
         $oportunidades = $oportunidadesRepo->buscarOportunidadesNegocio(null, $userId);
@@ -20,7 +20,7 @@ class OportunidadesController extends Controller
         return view('oportunidades.show', compact('filtros_opciones', 'oportunidades', 'estadisticas'));
     }
 
-    public function search(Request $request, OportunidadRepository $oportunidadesRepo)
+    public function search(Request $request, OportunidadNegocioRepository $oportunidadesRepo)
     {
         $this->validate($request, [
             'oportunidades_search' => 'nullable|string',
@@ -63,7 +63,7 @@ class OportunidadesController extends Controller
         return compact('alerta_estatus');
     }
 
-    private function obtieneFiltrosOpciones(OportunidadRepository $oportunidadesRepo): array
+    private function obtieneFiltrosOpciones(OportunidadNegocioRepository $oportunidadesRepo): array
     {
         $filtros_opciones['capitulos'] = $oportunidadesRepo->obtieneRubros();
         $filtros_opciones['unidades_compradoras'] = $oportunidadesRepo->obtieneInstitucionesCompradoras();

@@ -23,7 +23,7 @@ class ProductoRequest extends FormRequest
     public function rules()
     {
         return array_merge(
-            self::rulesProductoCABMS(),
+            self::rulesProductoCABMSCategorias(),
             self::rulesProductoDescripcion(),
             self::rulesProductoFotos(),
             self::rulesProductoAdjuntos()
