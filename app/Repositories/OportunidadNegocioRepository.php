@@ -3,14 +3,10 @@
 namespace App\Repositories;
 
 use Carbon\Carbon;
-use RoachPHP\Roach;
-
 use App\Models\OportunidadNegocio;
 use Illuminate\Support\Facades\DB;
 use App\Services\CalculadoraFechasService;
-use _PHPStan_582a9cb8b\Nette\Neon\Exception;
 use Illuminate\Database\Eloquent\Collection;
-use App\Spiders\ConvocatoriasOportunidadesSpider;
 
 /**
  * Clase para extraer convocatorias de la página de concurso digital o de alguna otra fuente de datos establecida.
@@ -184,67 +180,7 @@ class OportunidadNegocioRepository
         $estadisticas['conteo_dependencias'] = $unidadesCompradoras->values()->count();
                 
         return $estadisticas;
-    }
-
-    /**
-     * Extraer concursos de https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas via Webscrapping.
-     */
-    public function extraerConvocatorias(?string $filtro = null): array
-    {
-        Roach::startSpider(ConvocatoriasOportunidadesSpider::class);
-        $convocatorias = Roach::collectSpider(ConvocatoriasOportunidadesSpider::class);
-        $convocatorias = $convocatorias[0]->all();
-
-        if ($filtro && $filtro !== '') {
-            $convocatorias = array_filter($convocatorias, function($c) use($filtro) {
-                return str_contains(strtolower($c['nombre_procedimiento']), strtolower($filtro));
-            });
-        }
-
-        return $convocatorias;
-    }
-
-    /**
-     * Obtiene convocatorias agrupadas por Entidad convocante.
-     */
-    public function agruparConvocatoriasPorCategoria(array $convocatorias): array
-    {
-        $categorias = [];        
-        foreach($convocatorias as $convocatoria) {
-            $categorias[$convocatoria['entidad_convocante']][] = $convocatoria;            
-        }
-
-        return $categorias;        
-    }
-
-    /**
-     * Obtiene número de convocatorias por método de contratación.
-     */
-    public function obtenerConvocatoriasEstadisticas(array $convocatorias) 
-    {
-        $numInvRestringidas = 0;
-        $numAdjDirectas = 0;
-        $numLicitacionesPublicas = 0;
-        foreach($convocatorias as $convocatoria) {
-            $categorias[$convocatoria['entidad_convocante']][] = $convocatoria;
-            if ($convocatoria['metodo_contratacion'] === 'Invitación restringida') {
-                $numInvRestringidas++;
-            }
-            if ($convocatoria['metodo_contratacion'] === 'Adjudicación directa') {
-                $numAdjDirectas++;
-            }
-            if ($convocatoria['metodo_contratacion'] === 'LP - Licitación Pública') {
-                $numLicitacionesPublicas++;
-            }
-        }
-
-        return [
-            'procedimientos_proximos' => count($convocatorias),
-            'invitaciones_restringidas' => $numInvRestringidas,
-            'adjudicaciones_directas' => $numAdjDirectas,
-            'licitaciones_publicas' => $numLicitacionesPublicas,
-        ];
-    }
+    }    
 
     /**
      * Devuelve el rango de fechas a utilizar para el filtro.
@@ -255,10 +191,14 @@ class OportunidadNegocioRepository
     {
         $rangoFechas = [];
         $trimestre = 0;
+
+        // Buscar trimestre seleccionado si existe
         for($t = 1; $t <= 4; $t++) {
             if (array_key_exists("fecha_trimestre{$t}_filtro", $filtros)
                 && $filtros["fecha_trimestre{$t}_filtro"]) {
                 $trimestre = $t;
+
+                break;
             }
         }
 

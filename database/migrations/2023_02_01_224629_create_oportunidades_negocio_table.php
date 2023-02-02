@@ -26,6 +26,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index('fecha_publicacion');
+            $table->index('nombre_procedimiento');
         });
     }
 
