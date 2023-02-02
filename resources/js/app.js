@@ -253,16 +253,22 @@ Alpine.data('oportunidadNegocioAlertas', () => ({
             this.alertaActiva = json.alerta_estatus;
         })
     },
-    showMessage() {
+    showMessage(rutaLogin, rutaRegistro) {
         const props = SwalMTVCustom;
         props.customClass['title'] = 'swal2-mtv-title'
         Swal.fire({
             ...SwalMTVCustom,
             title: 'Activar alerta',
             html: "Para activar las alertas debes estar registrado o haber ingresado a Mi Tiendita Virtual." +
-                    '<p class="swal-mtv-html-container-action">¿Quieres activar la alerta?</p>',
+                  '<p class="swal-mtv-html-container-action">¿Quieres activar la alerta?</p>',
             confirmButtonText: 'Ingresar',
             cancelButtonText: 'Regístrate',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = rutaLogin;
+            } else {                
+                window.location.href = rutaRegistro;
+            }            
         });
     }
 }))

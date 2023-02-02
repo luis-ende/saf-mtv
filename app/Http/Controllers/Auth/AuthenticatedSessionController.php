@@ -37,6 +37,15 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        if ($request->has('url')) {
+            if ($request->get('url') === 'oportunidades_negocio') {
+                $queryString = count(request()->query()) > 0 ? '?' . http_build_query(request()->query()) : '';
+                $opnRoute = route('oportunidades-negocio') . $queryString;
+                
+                return redirect()->intended($opnRoute);
+            }            
+        }
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
