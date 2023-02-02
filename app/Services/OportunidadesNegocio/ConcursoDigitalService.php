@@ -22,7 +22,7 @@ class ConcursoDigitalService
      */
     public function importaOportunidadesNegocio() 
     {        
-        $oportunidades = $this->extraerConvocatorias();
+        $concursos = $this->extraerConvocatorias();
     
         $tipoContratacionBien = DB::table('cat_tipos_contratacion')->where('tipo', 'Adquisición de Bienes')->value('id');
         $tipoContratacionServicio = DB::table('cat_tipos_contratacion')->where('tipo', 'Prestación de Servicios')->value('id');
@@ -32,26 +32,27 @@ class ConcursoDigitalService
         $estatusContrVigente = DB::table('cat_estatus_contratacion')->where('estatus', 'En proceso')->value('id');
         $estatusContrCerrado = DB::table('cat_estatus_contratacion')->where('estatus', 'Cerrado')->value('id');
         
-        foreach($oportunidades as $oportunidad) {
-            $fechaPublicacion = $oportunidad['fecha_publicacion'] ? 
-                                    Carbon::createFromFormat('Y-m-d', substr($oportunidad['fecha_publicacion'], 0, 10)) : 
+        foreach($concursos as $concurso) {
+            $fechaPublicacion = $concurso['fecha_publicacion'] ? 
+                                    Carbon::createFromFormat('Y-m-d', substr($concurso['fecha_publicacion'], 0, 10)) : 
                                     Carbon::now();
-            $fechaPresentacionP = $oportunidad['fecha_presentacion_propuestas'] ? 
-                                    Carbon::createFromFormat('Y-m-d', substr($oportunidad['fecha_presentacion_propuestas'], 0, 10)) : 
+            $fechaPresentacionP = $concurso['fecha_presentacion_propuestas'] ? 
+                                    Carbon::createFromFormat('Y-m-d', substr($concurso['fecha_presentacion_propuestas'], 0, 10)) : 
                                     Carbon::now();            
     
             // TODO Abrir transacción
             OportunidadNegocio::updateOrInsert([
-                    'nombre_procedimiento' => $oportunidad['nombre_procedimiento'],
+                    'nombre_procedimiento' => $concurso['nombre_procedimiento'],
                     'fecha_publicacion' => $fechaPublicacion,
                 ],
                 [
                     'fecha_presentacion_propuestas' => $fechaPresentacionP,
-                    'id_unidad_compradora' => DB::table('cat_unidades_compradoras')->where('nombre', $oportunidad['entidad_convocante'])->value('id'),
-                    'id_tipo_contratacion' => $oportunidad['tipo_contratacion'] === 'Adquisición de Bienes' ? $tipoContratacionBien : $tipoContratacionServicio,
-                    'id_metodo_contratacion' => $oportunidad['metodo_contratacion'] === 'LP - Licitación Pública' ?  $tipoMetodoContratacionLP : $tipoMetodoContratacionIR,
+                    'id_unidad_compradora' => DB::table('cat_unidades_compradoras')->where('nombre', $concurso['entidad_convocante'])->value('id'),
+                    'id_tipo_contratacion' => $concurso['tipo_contratacion'] === 'Adquisición de Bienes' ? $tipoContratacionBien : $tipoContratacionServicio,
+                    'id_metodo_contratacion' => $concurso['metodo_contratacion'] === 'LP - Licitación Pública' ?  $tipoMetodoContratacionLP : $tipoMetodoContratacionIR,
                     'id_etapa_procedimiento' => $etapaLicEnProc,
                     'id_estatus_contratacion' => $estatusContrVigente,
+                    'fuente_url' => $concurso['fuente_url'],
             ]);
             
             // Actualizar estatus de oportunidades de negocio con fecha de presentación de propuestas haya transcurrido.

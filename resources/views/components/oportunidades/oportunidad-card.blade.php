@@ -38,7 +38,15 @@
             <hr>
             <p class="my-0"><strong>Más información:</strong></p>
             <div class="my-2 flex flex-col flex-nowrap justify-center items-center">
-                <a href="#" class="my-0 mtv-button-gold">{{ $oportunidad->etapa_procedimiento }}</a>
+                @if($oportunidad->fuente_url)
+                    <a href="{{ $oportunidad->fuente_url }}" class="my-0 mtv-button-gold" target="_blank">
+                        {{ $oportunidad->etapa_procedimiento }}
+                    </a>
+                @else                
+                    <div class="font-bold text-white bg-mtv-gold rounded-lg py-2 px-3 my-0">
+                        {{ $oportunidad->etapa_procedimiento }}
+                    </div>
+                @endif                
             </div>
         </div>
         <div class="bg-white p-3 border border-l border-r border-b rounded-bl-lg rounded-br-lg flex flex-col justify-center items-center">
