@@ -2,14 +2,15 @@
 
 namespace App\Repositories;
 
-use _PHPStan_582a9cb8b\Nette\Neon\Exception;
 use Carbon\Carbon;
 use RoachPHP\Roach;
 
 use App\Models\OportunidadNegocio;
 use Illuminate\Support\Facades\DB;
-use App\Spiders\ConvocatoriasOportunidadesSpider;
+use App\Services\CalculadoraFechasService;
+use _PHPStan_582a9cb8b\Nette\Neon\Exception;
 use Illuminate\Database\Eloquent\Collection;
+use App\Spiders\ConvocatoriasOportunidadesSpider;
 
 /**
  * Clase para extraer convocatorias de la página de concurso digital o de alguna otra fuente de datos establecida.
@@ -255,14 +256,15 @@ class OportunidadNegocioRepository
         $rangoFechas = [];
         $trimestre = 0;
         for($t = 1; $t <= 4; $t++) {
-            if (array_key_exists("fecha_trimestre${t}_filtro", $filtros)
-                && $filtros["fecha_trimestre${t}_filtro"]) {
+            if (array_key_exists("fecha_trimestre{$t}_filtro", $filtros)
+                && $filtros["fecha_trimestre{$t}_filtro"]) {
                 $trimestre = $t;
             }
         }
 
         if ($trimestre !== 0) {
-            $rangoFechas = $this->calculaRangoFechasTrimestre($trimestre);
+            $anio = (int)Carbon::now()->format('Y'); // Trimestres del año en curso
+            $rangoFechas = CalculadoraFechasService::calculaRangoFechasTrimestre($trimestre, $anio);
         } else {
             if (isset($filtros['fecha_inicio_filtro'])) {
                 $fechaInicio = $filtros['fecha_inicio_filtro'];
@@ -276,30 +278,5 @@ class OportunidadNegocioRepository
         }
 
         return $rangoFechas;
-    }
-
-    /**
-     * Calcula el rango de fechas de un trimestre del año en curso.
-     */
-    public static function calculaRangoFechasTrimestre(int $trimestre): array
-    {
-        $inicioAnio = Carbon::now()->startOfYear();
-        $incrementoMesesInicio = 0;
-        $incrementoMesesFin = 3;
-        for($t = 1; $t <= $trimestre; $t++) {
-            $fechaInicio = $t === 1 ? $inicioAnio->copy() : $inicioAnio->copy()->addMonths($incrementoMesesInicio)->startOfDay();
-            $fechaFinal = $inicioAnio->copy()->addMonths($incrementoMesesFin)->subDays(1)->endOfDay();
-            if ($t === $trimestre) {
-                return [
-                    'fecha_inicio' => $fechaInicio->format('Y-m-d'),
-                    'fecha_final' => $fechaFinal->format('Y-m-d'),
-                ];
-            } else {
-                $incrementoMesesInicio += 3;
-                $incrementoMesesFin += 3;
-            }
-        }
-
-        return [];
-    }
+    }    
 }
