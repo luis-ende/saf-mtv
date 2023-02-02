@@ -103,8 +103,8 @@
                <button>Calendario de compras</button>
             </div>
             <div class="card-menu-bottom">
-               <div class="circle">
-               @svg('serch', ['class' => 'h-20 w-20 '])
+               <div class="circle" style="background-color:cyan">
+               @svg('search-icon', ['class' => 'h-20 w-20 '])
                </div>
                <p class="message-one">Ya soy proveedor</p>
                <p class="message-second">Estoy registrado en padrón de proveedores</p>

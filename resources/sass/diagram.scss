@@ -1,13 +1,41 @@
 @import "variables";
 
+.cls-1 {
+    fill: #f9f5ed;
+    stroke: #f9f5ed;
+    stroke-miterlimit: 10;
+    stroke-width: 0.9px;
+}
+.cls-2 {
+    fill: #fff;
+    stroke-miterlimit: 10;
+}
+.cls-3 {
+    fill-rule: evenodd;
+    fill: #f0e2c8;
+}
+
+.cls-4 {
+    fill: #bc955c;
+}
+
+.cls-5 {
+    fill-rule: evenodd;
+    fill: #fff;
+}
+.cls-6 {
+    fill-rule: evenodd;
+    fill: #f9f5ed;
+}
+
 .information-container {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: justify;
     flex-direction: column;
-    margin-left: 30%;
-    margin-right: 30%;
+    margin-left: 25%;
+    margin-right: 25%;
     margin-bottom: 2%;
     margin-top: 5%;
 }
@@ -19,14 +47,14 @@
 }
 
 .information-container-subtitle {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: $secondary;
     text-align: center;
 }
 
 .information-container-message {
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: 500;
     color: #6f7271;
 }
@@ -35,6 +63,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 3%;
+    margin-top: 3%;
 }
 
 .back-home a {
@@ -49,29 +79,126 @@
     color: $gold;
 }
 
-#cares {
-    position: relative;
-    font-size: 16px;
-}
-.dock-wrapper {
-    width: 100%;
-    margin-top: -5%;
-}
-#cares-dock {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    height: auto;
-    margin: auto;
-    position: relative;
-}
-.cares-dock-item {
-    position: static;
-    z-index: 0;
-    margin-bottom: 80%px;
+.icon-message {
+    color: #6f7271;
+    font-size: 1rem;
+    font-weight: 500;
 }
 
+.buttons-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 10%;
+    margin-right: 10%;
+    font-weight: 300;
+    font-size: 1.2rem;
+}
+
+.point {
+    display: none;
+    opacity: 0;
+}
+
+.point-df {
+    display: none;
+    opacity: 0;
+}
+
+.img-svg {
+    margin: 0 auto;
+    margin-bottom: 80px;
+    width: 80px;
+    height: 80px;
+}
+
+.button-container {
+    color: $gold;
+
+    & button:hover,
+    button:focus {
+        font-weight: 700;
+        color: $secondary;
+        .img-svg {
+            height: auto;
+            max-height: 100px;
+            width: 100px;
+            margin-bottom: 10px;
+            transform: scale(1);
+        }
+        .point {
+            width: 16px;
+            display: block;
+            margin: 0 auto;
+            opacity: 1;
+            transition: all 0.25s;
+            color: $secondary;
+            padding-top: -1rem;
+            padding-bottom: 3rem;
+        }
+
+        .point-df {
+            width: 16px;
+            display: block;
+            margin: 0 auto;
+            opacity: 1;
+            transition: all 0.25s;
+            color: $secondary;
+            padding-top: 1.6rem;
+            padding-bottom: 3rem;
+        }
+
+        .cls-1 {
+            fill: #e9efed;
+            stroke: #e9efed;
+            stroke-miterlimit: 10;
+            stroke-width: 0.9px;
+        }
+        .cls-2 {
+            fill: #fff;
+            stroke-miterlimit: 10;
+        }
+        .cls-3 {
+            fill-rule: evenodd;
+            fill: #e9efed;
+        }
+
+        .cls-4 {
+            fill: $dark-secondary;
+        }
+
+        .cls-6 {
+            fill: #e9efed;
+        }
+
+        .fil3 {
+            fill: #e9efed;
+        }
+        .fil2 {
+            fill: #fff;
+        }
+        .fil1,
+        .fil4,
+        .fil5 {
+            fill: $dark-secondary;
+            fill-rule: nonzero;
+        }
+        .fil1 {
+            fill: #fff;
+        }
+        .fil6 {
+            fill: #e9efed;
+            stroke: #e9efed;
+        }
+    }
+}
+.cares-line {
+    width: 100%;
+    height: 2px;
+    background-color: #bebebf;
+    position: absolute;
+    top: 609px;
+    z-index: -2;
+}
 .icon-content {
     margin-right: 10%;
     margin-top: 3%;
@@ -85,21 +212,14 @@
     margin-top: -180px;
 }
 
-.icons-content svg {
-    color: $secondary;
-}
 .line-divider {
-    border-left: $gold 2px solid;
-    border-style: dotted;
+    border-left: $ocre 4px dotted;
+
     width: 2px;
-    height: 220px;
+    height: 245px;
 }
 .item {
     display: flex;
-}
-
-.item svg {
-    color: $secondary !important;
 }
 
 .item-icon {
@@ -113,22 +233,6 @@
     text-align: center;
     margin-top: 10%;
 }
-.item-icon:hover,
-.item-icon:active {
-    font-weight: bold;
-    color: $secondary;
-}
-.item-icon svg {
-    height: auto;
-    max-height: 100px;
-    width: 100px;
-    margin-bottom: 10px;
-    transition: all 0.25s;
-    color: $secondary !important;
-}
-.item-icon svg.circle {
-    display: none;
-}
 
 .content-card-items {
     display: flex;
@@ -139,16 +243,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 75%;
-    visibility: hidden;
-    opacity: 1;
-    transition: visibility 10s, opacity 30s linear;
-    margin-left: -30%;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: 5%;
 }
 
 .card-items {
     padding: 0.5rem 1rem 0.5rem 1rem;
-    box-shadow: 0.5px 20px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0.2px 2px 12px rgba(0, 0, 0, 0.5);
     border-radius: 6px;
     text-align: left;
     margin-bottom: 10%;
@@ -205,8 +307,7 @@
         width: 100%;
         height: 1.5px;
         background-color: #bebebf;
-        position: absolute;
-        top: 240px;
+        margin-top: 5%;
     }
     .cares-dock-item {
         margin-bottom: 0;
@@ -216,44 +317,15 @@
         margin-bottom: 20px;
         font-weight: 100;
     }
-    .item-icon:hover svg,
-    .item-icon:active svg {
-        width: 125px;
-        height: 125px;
-        color: #e5c025;
-    }
-    .item-icon svg {
-        height: 100px;
-        margin-bottom: 20px;
-        color: #bebebf;
-        max-height: unset;
-    }
-    .item-icon svg.circle {
-        display: inline;
-        height: 12px;
-        width: 12px;
-        opacity: 0;
-        transition: all 0.25s;
-        color: #e5c025;
-    }
-    .item-icon:hover svg.circle,
-    .item-icon:active svg.circle {
-        opacity: 1;
-    }
+
     .item-content {
-        position: absolute;
+        display: none;
         top: 340px;
         left: calc(50% - 250px);
         text-align: center;
         width: 100%;
-        visibility: hidden;
-        opacity: 0;
-        transition: visibility 0s, opacity 0.5s linear;
-    }
-    .item-icon:hover + .item-content,
-    .item-icon:active + .item-content {
-        visibility: visible;
-        opacity: 1;
+        max-width: 1300px;
+        margin-left: 5%;
     }
 }
 
@@ -309,10 +381,17 @@ td.default {
     left: -2px;
 }
 .tick {
-    color: #235b4e !important;
+    color: #235b4e;
+    & svg {
+        margin-left: 40%;
+    }
 }
 .tick-gold {
     color: #bc955c;
+}
+
+.tick-gold svg {
+    margin-left: 40%;
 }
 .text-gray {
     color: #98989a;
@@ -342,7 +421,7 @@ td.default {
     color: #6f7271;
 }
 .admin-title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: $secondary;
 }
@@ -364,7 +443,8 @@ td.default {
 
     & li {
         list-style: inside;
-        color: #98989a;
+        color: #6f7271;
+        text-indent: -25px;
     }
 }
 
