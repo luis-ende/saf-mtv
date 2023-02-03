@@ -46,13 +46,13 @@
             </div>                
         </div>
         
-        <div class="my-3 flex flex-col" x-data="{ terminoBusqueda: @js($busqueda_termino ?? ''), }">
+        <div class="my-3 flex flex-col" x-data="{ terminoBusqueda: @js(request()->get('tb') ?? '') }">
             <div class="w-2/4 self-center my-4">
                 <form method="POST"
-                      x-bind:action="'/oportunidades-de-negocio/' + $data.terminoBusqueda">
+                      x-bind:action="'/oportunidades-de-negocio' + ($data.terminoBusqueda !== '' ? '?tb=' + $data.terminoBusqueda : '')">
                     @csrf
 
-                    <label for="productos_search" class="text-mtv-secondary text-sm mb-2">
+                    <label for="oportunidades_search" class="text-mtv-secondary text-sm mb-2">
                         Búsqueda por palabra clave:
                     </label>
                     <div class="flex md:flex-row md:space-x-3 md:space-y-0 xs:flex-col xs:space-y-3">

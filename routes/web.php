@@ -126,8 +126,8 @@ Route::middleware(['role:admin', 'auth'])->group(function() {
 
 
 Route::controller(OportunidadesController::class)->group(function() {
-    Route::get('/oportunidades-de-negocio', 'index')->name('oportunidades-negocio');
-    Route::post('/oportunidades-de-negocio/{keyword?}', 'search')->name('oportunidades-negocio.search');
+    Route::get('/oportunidades-de-negocio', 'search')->name('oportunidades-negocio.search');
+    Route::post('/oportunidades-de-negocio', 'search')->name('oportunidades-negocio.search');
     Route::post('/oportunidades-de-negocio/alertas/{oportunidad_negocio}', 
                 'updateAlerta')->middleware(['role:proveedor', 'auth'])->name('oportunidades-negocio-alertas.update');
 });

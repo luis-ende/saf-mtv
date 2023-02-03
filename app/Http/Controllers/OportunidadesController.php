@@ -10,20 +10,12 @@ use App\Repositories\OportunidadNegocioRepository;
 
 class OportunidadesController extends Controller
 {
-    public function index(Request $request, OportunidadNegocioRepository $oportunidadesRepo)
-    {
-        $userId = auth()->user()?->id;
-        $oportunidades = $oportunidadesRepo->buscarOportunidadesNegocio(null, $userId);
-        $estadisticas = $oportunidadesRepo->obtieneEstadisticas($oportunidades);
-        $filtros_opciones = $this->obtieneFiltrosOpciones($oportunidadesRepo);
-
-        return view('oportunidades.show', compact('filtros_opciones', 'oportunidades', 'estadisticas'));
-    }
-
     public function search(Request $request, OportunidadNegocioRepository $oportunidadesRepo)
     {
+        $this->convierteQueryParams($request);
+
         $this->validate($request, [
-            'oportunidades_search' => 'nullable|string',
+            'tb' => 'nullable|string',
             'capitulo_filtro' => 'array',
             'unidad_compradora_filtro' => 'array',
             'tipo_contr_filtro' => 'array',
@@ -32,10 +24,10 @@ class OportunidadesController extends Controller
             'estatus_contr_filtro' => 'array',            
             'fecha_inicio_filtro' => 'nullable|date',
             'fecha_final_filtro' => 'nullable|date',
-            'fecha_trimestre1_filtro' => 'boolean',
-            'fecha_trimestre2_filtro' => 'boolean',
-            'fecha_trimestre3_filtro' => 'boolean',
-            'fecha_trimestre4_filtro' => 'boolean',
+            'fecha_trimestre1_filtro' => 'nullable|boolean',
+            'fecha_trimestre2_filtro' => 'nullable|boolean',
+            'fecha_trimestre3_filtro' => 'nullable|boolean',
+            'fecha_trimestre4_filtro' => 'nullable|boolean',
         ]);        
 
         $filtros = $request->only('capitulo_filtro', 'unidad_compradora_filtro', 'tipo_contr_filtro', 
@@ -44,7 +36,7 @@ class OportunidadesController extends Controller
                                   'fecha_trimestre1_filtro', 'fecha_trimestre2_filtro',
                                   'fecha_trimestre3_filtro', 'fecha_trimestre4_filtro');        
 
-        $busqueda_termino = $request->input('oportunidades_search');
+        $busqueda_termino = $request->input('tb');
         $userId = auth()->user()?->id;
 
         $oportunidades = $oportunidadesRepo->buscarOportunidadesNegocio($busqueda_termino, $userId, $filtros);        
@@ -73,5 +65,54 @@ class OportunidadesController extends Controller
         $filtros_opciones['estatus_contratacion'] = $oportunidadesRepo->obtieneEstatusContratacion();
 
         return $filtros_opciones;
+    }
+
+    private function convierteQueryParams(Request $request): void
+    {
+        if ($request->has('ca')) {
+            $this->convierteFiltro($request, 'ca', 'capitulo_filtro');
+        }
+        if ($request->has('uc')) {
+            $this->convierteFiltro($request, 'uc', 'unidad_compradora_filtro');
+        }
+        if ($request->has('tc')) {
+            $this->convierteFiltro($request, 'tc', 'tipo_contr_filtro');
+        }
+        if ($request->has('mc')) {
+            $this->convierteFiltro($request, 'mc', 'metodo_contr_filtro');
+        }
+        if ($request->has('ep')) {
+            $this->convierteFiltro($request, 'ep', 'etapa_proc_filtro');
+        }
+        if ($request->has('ec')) {
+            $this->convierteFiltro($request, 'ec', 'estatus_contr_filtro');
+        }
+        if ($request->has('tr')) {
+            $request->merge([
+                "fecha_trimestre{$request->get('tr')}_filtro" => true,
+            ]);
+        }
+        if ($request->has('fi')) {
+            $request->merge([
+                'fecha_inicio_filtro' => $request->get('fecha_inicio_filtro'),
+            ]);
+        }
+        if ($request->has('ff')) {
+            $request->merge([
+                'fecha_final_filtro' => $request->get('fecha_final_filtro'),
+            ]);
+        }
+    }
+
+    /**
+     * Convierte un parámetro filtro a array si es de tipo string.
+     */
+    private function convierteFiltro(Request $request, string $key, string $newKey): void
+    {
+        if ($request->has($key) && !is_array($request->input($key))) {
+            $request->merge([
+                $newKey => explode(',', $request->input($key))
+            ]);
+        }
     }
 }

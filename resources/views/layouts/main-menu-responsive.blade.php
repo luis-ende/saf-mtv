@@ -14,7 +14,7 @@
         <x-responsive-nav-link href="#">
             Calendario de compras
         </x-responsive-nav-link>
-        <x-responsive-nav-link :href="route('oportunidades-negocio')" :active="request()->routeIs('oportunidades-negocio')">
+        <x-responsive-nav-link :href="route('oportunidades-negocio.search')" :active="request()->routeIs('oportunidades-negocio.search')">
             Oportunidades de negocio
         </x-responsive-nav-link>            
         <x-responsive-nav-link href="'#'">

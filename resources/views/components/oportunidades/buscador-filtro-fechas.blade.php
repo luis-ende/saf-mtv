@@ -1,4 +1,10 @@
-<div x-data="filtrosFechas()">
+@props(['filtro_fi' => null, 'filtro_ff' => null, 'filtro_trimestre' => null])
+
+<div x-data="filtrosFechas()"
+     @if($filtro_trimestre)
+     x-init="setTrimestre(@js($filtro_trimestre))"
+     @endif
+    >
     <div class="grid grid-cols-2 grid-rows-2 gap-y-3 gap-x-3 mb-3">
         <button type="button"
                 :class="getTrimestreEstilo(1)"
@@ -33,6 +39,7 @@
                    name="fecha_inicio_filtro"
                    class="w-full mtv-text-input"
                    x-ref="fechaInicio"
+                   value="{{ $filtro_fi }}"
                    @change="deseleccionaTrimestres()">
         </div>
         <div class="basis-1/2">
@@ -42,6 +49,7 @@
                    name="fecha_final_filtro"
                    class="w-full mtv-text-input"
                    x-ref="fechaFinal"
+                   value="{{ $filtro_ff }}"
                    @change="deseleccionaTrimestres()">
         </div>
     </div>

@@ -41,8 +41,8 @@ class AuthenticatedSessionController extends Controller
             if ($request->get('url') === 'oportunidades_negocio') {
                 $queryParams = request()->query();
                 unset($queryParams['url']);
-                $queryString = count(request()->query()) > 0 ? '?' . http_build_query($queryParams) : '';
-                $opnRoute = route('oportunidades-negocio') . $queryString;
+                $queryString = count($queryParams) > 0 ? '?' . http_build_query($queryParams) : '';
+                $opnRoute = route('oportunidades-negocio.search') . $queryString;
 
                 return redirect()->intended($opnRoute);
             }            

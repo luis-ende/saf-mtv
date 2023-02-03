@@ -1,4 +1,4 @@
-@props(['unidades_compradoras' => []])
+@props(['unidades_compradoras' => [], 'seleccion' => []])
 
 <div class="mb-4 flex flex-col space-y-3"
     x-data="unidadesCompradoras()"
@@ -17,6 +17,7 @@
                     <input class="mr-2 border focus:ring-mtv-secondary"
                         type="checkbox" :id="$id('unidad-c', unidad.id)"
                         name="unidad_compradora_filtro[]"
+                        :checked="unidad.checked === 1"
                         x-bind:value="unidad.id">
                     <label :for="$id('unidad-c', unidad.id)" x-html="highlightKeyword(unidad.nombre, searchKeyword)"></label>
                 </li>
@@ -27,6 +28,7 @@
         function unidadesCompradoras() {
             return {
                 unidades: [],
+                unidadesSeleccionadas: @js($seleccion),
                 unidadBusqueda: '',
                 searchKeyword: '',
                 initUnidadesCompradoras() {
@@ -35,6 +37,7 @@
                         return {
                             ...u,
                             visible: true,
+                            checked: this.unidadesSeleccionadas.includes(u.id.toString()) ? 1 : 0,
                         }
                     });
                 },
