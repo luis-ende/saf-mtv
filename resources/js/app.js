@@ -13,7 +13,8 @@ window.SwalMTVCustom = {
         'confirmButton': 'swal2-mtv-confirm-button',
         'cancelButton': 'swal2-mtv-cancel-button',
         'htmlContainer': 'swal2-mtv-html-container',
-        'icon': 'swal2-mtv-icon'
+        'icon': 'swal2-mtv-icon',
+        'closeButton': 'swal2-close',
     },
     showConfirmButton: true,
     showCancelButton: true,
@@ -255,7 +256,7 @@ Alpine.data('oportunidadNegocioAlertas', () => ({
     },
     showMessage(rutaLogin, rutaRegistro) {
         const props = SwalMTVCustom;
-        props.customClass['title'] = 'swal2-mtv-title'
+        props.customClass['title'] = 'swal2-mtv-title';        
         Swal.fire({
             ...SwalMTVCustom,
             title: 'Activar alerta',
@@ -263,10 +264,11 @@ Alpine.data('oportunidadNegocioAlertas', () => ({
                   '<p class="swal-mtv-html-container-action">¿Quieres activar la alerta?</p>',
             confirmButtonText: 'Ingresar',
             cancelButtonText: 'Regístrate',
-        }).then((result) => {
+            showCloseButton: true,
+        }).then((result) => {                        
             if (result.isConfirmed) {
                 window.location.href = rutaLogin;
-            } else {                
+            } else if (!(result.dismiss === 'close' || result.dismiss === 'esc')) {
                 window.location.href = rutaRegistro;
             }            
         });
