@@ -82,4 +82,18 @@
     hover:bg-white hover:text-mtv-primary hover:no-underline
     active:text-mtv-primary;
   }
+
+  /* Clases de la vista del buscador Oportunidades de Negocio */
+
+  .mtv-button-filtro-ep-inactive {
+    @apply basis-1/5 bg-mtv-gold-light text-white flex flex-col items-center rounded-3xl py-2 px-2;
+  }
+
+  .mtv-button-filtro-ep-active {
+    @apply basis-1/5 bg-mtv-secondary text-white flex flex-col items-center rounded-3xl py-2 px-2;
+  }
+
+
+  /* Clases de la vista del buscador Oportunidades de Negocio */
+
 }

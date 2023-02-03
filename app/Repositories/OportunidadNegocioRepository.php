@@ -165,6 +165,7 @@ class OportunidadNegocioRepository
         foreach($etapas as $row) {
             $etapaId = $row->id;
             $estadisticas['conteo_etapas'][$etapaId] = [
+                'id' => $etapaId,
                 'nombre_etapa' => $row->etapa,
                 'conteo' => $oportunidades->reduce(function($carry, $op) use($etapaId) {
                     if ($op->id_etapa_procedimiento === $etapaId) {
