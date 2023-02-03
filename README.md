@@ -1,4 +1,4 @@
-# SAF - MTV
+# Proyecto Mi Tiendita Virtual
 
 ## Requerimientos
 
@@ -28,7 +28,7 @@
 - Ejecutar `vagrant up`
 - El sitio local debe estar disponible al abrir la url `saf-mtv.test` en el navegador
 
-- En modo de desarrollo ejecutar `npm run dev` para ver reflejados inmediatamente los cambios en archivos css y js
+- En modo de desarrollo ejecutar `npm run dev` para ver reflejados inmediatamente los cambios en archivos css y js (en la máquina host, no dentro de la máquina virtual)
 
 - En Windows, crear symlink en `public` para la carpeta de imagenes de logotipos temporales, por ejemplo (en una ventana de comando): `mklink /D storage ..\..\storage`
 
@@ -47,7 +47,7 @@ Para realizar una actualización completa del ambiente de desarrollo ejecutar de
 
 - Para generar los assets desde la carpeta raíz del proyecto ejecutar: `npm run build`
   - Eventualmente puede ser necesario ejecutar primero `npm install`
-- `npm run dev` permite escuchar los cambios realizados en el código para refrescar el navegador sin tener que compilar los assets cada vez
+- `npm run dev` permite ver los cambios realizados en el código en el navegador sin tener que compilar los assets cada vez
 
 ### SVGs
 
@@ -55,11 +55,12 @@ Para realizar una actualización completa del ambiente de desarrollo ejecutar de
 
 ### Paquetes utilizados
 
-- Íconos svg en templates Balde: Blade UI Kit - https://github.com/blade-ui-kit/blade-icons
-- Gestión de fuentes Google: Laravel Google Fonts https://github.com/spatie/laravel-google-fonts
-- Roles y permisos: Spatie Laravel Permission - https://spatie.be/docs/laravel-permission/v5/introduction
-- Imágenes y documentos adjuntos de productos y perfil de negocio: Spatie Media Library - https://spatie.be/docs/laravel-medialibrary/v10/introduction
-- Marca de favoritos de productos: https://github.com/maize-tech/laravel-markable?utm_source=pocket_reader
+- Íconos svg en templates Balde: Blade UI Kit - [https://github.com/blade-ui-kit/blade-icons](https://github.com/blade-ui-kit/blade-icons)
+- Gestión de fuentes Google: Laravel Google Fonts - [https://github.com/spatie/laravel-google-fonts](https://github.com/spatie/laravel-google-fonts)
+- Roles y permisos: Spatie Laravel Permission - [https://spatie.be/docs/laravel-permission/v5/introduction](https://spatie.be/docs/laravel-permission/v5/introduction)
+- Imágenes y documentos adjuntos de productos y perfil de negocio: Spatie Media Library - [https://spatie.be/docs/laravel-medialibrary/v10/introduction](https://spatie.be/docs/laravel-medialibrary/v10/introduction)
+- Importación y exportación de datos en formato Excel: Laravel Excel (by Spartner) - [https://laravel-excel.com/](https://laravel-excel.com/)
+- Marca de favoritos de productos: [https://github.com/maize-tech/laravel-markable](https://github.com/maize-tech/laravel-markable)
   - Los favoritos de productos se encuentran en la tabla `markable_favorites`
   - Las alertas de oportunidades de negocio se encuentran en la tabla `markable_bookmarks`
 - Enlaces de redes sociales (en este proyecto se usan solamente las funciones para generar los enlaces, no los botones en el front-end): https://github.com/jorenvh/laravel-share
