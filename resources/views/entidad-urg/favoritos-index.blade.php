@@ -7,7 +7,7 @@
                 </div>
                 <div class="md:basis-1/2 xs:basis-8/12 text-end">
                     <a href="{{ route('urg-productos-favoritos.export') }}"
-                        class="mtv-button-secondary no-underline md:text-base xs:text-sm">
+                        class="mtv-button-secondary no-underline md:text-base xs:text-sm" download>
                         @svg('go-download-16', ['class' => 'w-5 h-5 inline-block mr-1 md:inline xs:hidden'])
                         Descargar favoritos
                     </a>                

@@ -181,7 +181,16 @@ class OportunidadNegocioRepository
         $estadisticas['conteo_dependencias'] = $unidadesCompradoras->values()->count();
                 
         return $estadisticas;
-    }    
+    } 
+    
+    /**
+     * Obtiene oportunidades para la descarga en Excel en la vista de búsqueda de oportunidades de negocio.
+     * Ver app/Exports/OportunidadesExport.php
+     */
+    public function obtieneOportunidadesDescarga(): array
+    {
+        return [];
+    }
 
     /**
      * Devuelve el rango de fechas a utilizar para el filtro.

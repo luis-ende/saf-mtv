@@ -100,18 +100,25 @@
 
                     </div>
                 </form>
-            </div>
-            <div id="seccion-principal" class="flex md:flex-row xs:flex-col m-4">
+            </div>            
+            <div id="seccion-principal" class="flex md:flex-row xs:flex-col m-4" 
+                {{-- TIP: Buscar inicialización de esta función reutilizable 'oportunidadesFiltrosURLParams()' en resources/js/app.js --}}
+                 x-data="oportunidadesFiltrosURLParams">
                 <div class="basis-full md:basis-1/4 md:mr-7">
                     <x-oportunidades.buscador-filtros-sidebar
                         :filtros_opciones="$filtros_opciones"
                      />
                 </div>
-                <div class="basis-full md:basis-3/4 flex flex-col">
-                    <a href="#" class="mtv-button-gold my-4 self-center">
-                        @svg('go-download-16', ['class' => 'w-5 h-5 mr-1 inline-block'])
-                        Descargar procedimientos
-                    </a>
+                <div class="basis-full md:basis-3/4 flex flex-col" x-data="{ rutaDescarga: '' }">
+                    @if(count($oportunidades) >= 1)
+                        <a :href="rutaDescarga"
+                        @click="rutaDescarga = '{{ route('oportunidades-negocio.export') }}' + '?' + queryFiltros(); console.log(rutaDescarga)"
+                        class="mtv-button-gold my-4 self-center" 
+                        download>
+                            @svg('go-download-16', ['class' => 'w-5 h-5 mr-1 inline-block'])
+                            Descargar procedimientos
+                        </a>
+                    @endif
                     <div>
                          @if(count($oportunidades) >= 1)
                             <x-oportunidades.oportunidades-grid

@@ -275,4 +275,48 @@ Alpine.data('oportunidadNegocioAlertas', () => ({
     }
 }))
 
+Alpine.data('oportunidadesFiltrosURLParams', () => ({
+    queryFiltros() {
+        const query = new URLSearchParams();
+        const termBusqueda = document.getElementById('oportunidades_search').value;
+        if (termBusqueda) {
+            query.append('tb', termBusqueda);
+        }
+        this.collectFilter('capitulo_filtro[]', query, 'ca');
+        this.collectFilter('unidad_compradora_filtro[]', query, 'uc');
+        this.collectFilter('tipo_contr_filtro[]', query, 'tc');
+        this.collectFilter('metodo_contr_filtro[]', query, 'mc');
+        this.collectFilter('etapa_proc_filtro[]', query, 'ep');
+        this.collectFilter('estatus_contr_filtro[]', query, 'ec');
+        const fInicio = document.getElementById('fecha_inicio_filtro').value;
+        if (fInicio) {
+            query.append('fi', fInicio);
+        }
+        const fFinal = document.getElementById('fecha_final_filtro').value;
+        if (fFinal) {
+            query.append('ff', fFinal);
+        }
+        for(let i = 1; i <= 4; i++) {
+            if (document.getElementById(`fecha_trimestre${i}_filtro`).value === '1') {
+                query.append('tr', i.toString());
+                break;
+            }
+        }
+
+        return query.toString();
+    },
+    collectFilter(inputName, query, name) {
+        const inputs = document.getElementsByName(inputName);
+        const inputs_checked = [];
+        inputs.forEach(i => { 
+            if (i.checked) {
+                inputs_checked.push(i.value)
+            }                    
+        });                
+        if (inputs_checked.length > 0) {
+            query.append(name, inputs_checked.join(','));
+        }
+    },    
+}))
+
 Alpine.start();

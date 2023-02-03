@@ -5,12 +5,46 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\OportunidadNegocio;
 use Maize\Markable\Models\Bookmark;
+use App\Exports\OportunidadesExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\OportunidadNegocioRepository;
 
 class OportunidadesController extends Controller
 {
     public function search(Request $request, OportunidadNegocioRepository $oportunidadesRepo)
+    {
+        $oportunidades = $this->searchHandleRequest($request, $oportunidadesRepo);
+        $estadisticas = $oportunidadesRepo->obtieneEstadisticas($oportunidades);
+        $filtros_opciones = $this->obtieneFiltrosOpciones($oportunidadesRepo);
+        $busqueda_termino = $request->input('tb');
+
+        return view('oportunidades.show', compact('filtros_opciones', 'oportunidades', 'estadisticas', 'busqueda_termino'));
+    }
+
+    public function updateAlerta(Request $request, OportunidadNegocio $oportunidadNegocio) 
+    {
+        $user = Auth::user();
+        Bookmark::toggle($oportunidadNegocio, $user);
+        $alerta_estatus = Bookmark::has($oportunidadNegocio, $user);
+
+        return compact('alerta_estatus');
+    }
+
+    /**
+     * Exporta las oportunidades de negocio en la vista del buscador de oportunidades de negocio.
+     * Aplica los filtros activos.
+     */
+    public function exportOportunidadesNegocio(Request $request, OportunidadNegocioRepository $oportunidadesRepo) 
+    {
+        $oportunidades = $this->searchHandleRequest($request, $oportunidadesRepo);
+
+        return Excel::download(new OportunidadesExport($oportunidades),
+                      'mtv-oportunidades-negocio.xlsx',
+                    \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+    private function searchHandleRequest(Request $request, OportunidadNegocioRepository $oportunidadesRepo) 
     {
         $this->convierteQueryParams($request);
 
@@ -39,20 +73,9 @@ class OportunidadesController extends Controller
         $busqueda_termino = $request->input('tb');
         $userId = auth()->user()?->id;
 
-        $oportunidades = $oportunidadesRepo->buscarOportunidadesNegocio($busqueda_termino, $userId, $filtros);        
-        $estadisticas = $oportunidadesRepo->obtieneEstadisticas($oportunidades);
-        $filtros_opciones = $this->obtieneFiltrosOpciones($oportunidadesRepo);        
+        $oportunidades = $oportunidadesRepo->buscarOportunidadesNegocio($busqueda_termino, $userId, $filtros);   
 
-        return view('oportunidades.show', compact('filtros_opciones', 'oportunidades', 'estadisticas', 'busqueda_termino'));
-    }
-
-    public function updateAlerta(Request $request, OportunidadNegocio $oportunidadNegocio) 
-    {
-        $user = Auth::user();
-        Bookmark::toggle($oportunidadNegocio, $user);
-        $alerta_estatus = Bookmark::has($oportunidadNegocio, $user);
-
-        return compact('alerta_estatus');
+        return $oportunidades;
     }
 
     private function obtieneFiltrosOpciones(OportunidadNegocioRepository $oportunidadesRepo): array
