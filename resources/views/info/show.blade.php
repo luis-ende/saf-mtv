@@ -3,8 +3,7 @@
         <p class="information-container-title">Aprende cómo venderle a la CDMX</p>
         <p class="information-container-subtitle">Si te has preguntado cómo venderle al Gobierno, qué requisitos y documentos debes reunir,
         continúa leyendo.</p>
-        <p class="information-container-message">El Gobierno de la Ciudad de México adquiere a través de cada una de sus <a href="#" class="text-[#BC955C] hover:text-[#8B1232]">Unidades Responsables de Gasto
-        (URG)</a>, una amplia variedad de bienes y servicios año con año, lo cual brinda la oportunidad a personas
+        <p class="information-container-message">El Gobierno de la Ciudad de México adquiere a través de cada una de sus <a href="#" class="text-[#BC955C] hover:text-[#8B1232]">Instituciones compradoras</a>, una amplia variedad de bienes y servicios año con año, lo cual brinda la oportunidad a personas
         físicas y morales de convertirse en proveedores del Gobierno. Venderle a la CDMX representa grandes
         beneficios para tu negocio, por eso en MI TIENDITA VIRTUAL buscamos apoyarte para incrementar tu cartera
         de clientes a nivel gobierno y te damos las herramientas para iniciar esta meta.</p>
@@ -73,11 +72,11 @@
                                 </div>
                                 <div class="card-items">
                                     <p class="title">Promueve tus productos</p>
-                                    <p class="message">Al registrarte podrás crear tu catálogo digital y así las Unidades Compradoras
+                                    <p class="message">Al registrarte podrás <strong>crear tu tiendita virtual</strong> y así las Instituciones Compradoras
                                     podrán conocer tus productos y contactarte. Además, puedes compartir tu
                                     catálogo con tus clientes y prospectos.</p>
                                     <div class="d-flex align-items-center">
-                                        <a href="#" class="mr-3">Crea tu catálogo</a>
+                                        <a href="#" class="mr-3">Crea tu tiendita virtual</a>
                                         <svg class="w-5 h-16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#bc955c" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
                                         </svg>
@@ -116,11 +115,11 @@
                         </div>
                     </div>
                     <div class="card-items">
-                        <p class="title">Activa las notificaciones de procedimientos</p>
+                        <p class="title">Activa alertas de procedimientos</p>
                         <p class="message">Para recibir notificaciones de procedimientos relacionados a los bienes o
                         servicios que ofrece tu negocio, regístrate en “Mi Tiendita Virtual”.</p>
                         <div class="d-flex align-items-center">
-                            <a href="#" class="mr-3">Activar notificaciones</a>
+                            <a href="#" class="mr-3">Activar alertas</a>
                             <svg class="w-5 h-16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#bc955c" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
                             </svg>
@@ -268,8 +267,8 @@
                                     <div class="card-items">
                                         <p class="title">Cotiza tu Bien o Servicio</p>
                                         <p class="message">Al tener tu constancia de Padrón de Proveedores vigente y dependiendo el tipo
-                                        de procedimiento, puedes cotizar el bien o servicio que la URG desee adquirir.
-                                        Cotiza por medio del sistema de requisiciones del Gobierno de la CDMX.</p>
+                                        de procedimiento, puedes cotizar el bien o servicio que la Istitución compradora desee adquirir.
+                                        <strong>Cotiza por medio del sistema de requisiciones del Gobierno de la CDMX.</strong></p>
                                         <div class="d-flex align-items-center">
                                             <a href="#" class="mr-3">Ir al sistema de Requisiciones</a>
                                             <svg class="w-5 h-16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#bc955c" aria-hidden="true">
@@ -280,9 +279,9 @@
                                     <div class="card-items">
                                         <p class="title">Conoce las bases del procedimiento</p>
                                         <p class="message">En caso de resultar participante, con base en las características del
-                                        procedimiento estipuladas por la URG, sigue el proceso correspondiente.</p>
+                                        procedimiento estipuladas por la Institución compradora, sigue el proceso correspondiente.</p>
                                         <div class="d-flex align-items-center">
-                                            <a href="#" class="mr-3">Documentación a presentar</a>
+                                            <a href="#" class="mr-3">Directorio de Instituciones compradoras</a>
                                             <svg class="w-5 h-16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#bc955c" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
                                             </svg>
@@ -309,27 +308,23 @@
                                         <li class="bullets">Alta de cuenta de cheques</li>
                                     </ul>
                                     <div class="line-dot-divider"></div>
-                                    <p class="admin-subtitle">Documentación requerida por la URG</p>
+                                    <p class="admin-subtitle">Documentación requerida por la Institución compradora</p>
                                     <ul>
                                         <li class="bullets">Manifiestos relacionados</li>
-                                        <li class="bullets">Otros (consultar con la URG solicitante)</li>
+                                        <li class="bullets">Otros (consultar con la Institución compradora solicitante)</li>
                                     </ul>
                                     <div class="d-flex align-items-center">
-                                    <a href="#" class="mr-3">Regístrate aquí</a>
+                                    <a href="#" class="mr-3">Directorio CDMX</a>
                                     <svg class="w-5 h-16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#bc955c" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
                                     </svg>
                                     </div>
                                     <div class="line-dot-divider"></div>
-                                    <p class="bullets"><strong>NOTA:</strong>Los trámites relacionados a la emisión de la
-                                    Constancia de Registro en el Padrón de Proveedores
-                                    de la Administración Pública de la Ciudad de México
-                                    y el Alta de cuenta de cheques en una institución
-                                    bancaria son documentos obligatorios, estos
-                                    pueden llegar a ser trámites tardados por lo que se
-                                    sugiere iniciar el trámite de forma oportuna, para
-                                    contar con estos cuando desee participar en un
-                                    procedimiento.</p>
+                                    <p class="bullets"><strong>NOTA:</strong>La Constancia de Registro en el Padrón de
+                                    Proveedores y el Alta de cuenta de cheques en una
+                                    institución bancaria son documentos obligatorios.
+                                    Inicia el trámite de forma oportuna para contar con
+                                    estos cuando desee participar en un procedimiento.</p>
                                 </div>
                                 <div class="documents-card h-80">
                                     <p class="admin-title">TÉCNICA</p>
@@ -337,7 +332,7 @@
                                     <p class="admin-subtitle">Documentación técnica</p>
                                     <ul>
                                         <li>Especificaciones técnicas del bien o servicio</li>
-                                        <li>Manifiestos relacionados requeridos por la URG</li>
+                                        <li>Manifiestos relacionados requeridos por la Institución compradora</li>
                                         <li>Otros</li>
                                     </ul>
                                 </div>
@@ -349,7 +344,7 @@
                                         <li>Propuesta económica (cotización)</li>
                                     </ul>
                                     <div class="line-dot-divider"></div>
-                                    <p class="admin-subtitle">Documentación por parte de la URG</p>
+                                    <p class="admin-subtitle">Documentación por parte de la Institución compradora</p>
                                     <ul>
                                         <li>Manifiestos relacionados que requiera</li>
                                         <li>Otros</li>
@@ -357,7 +352,7 @@
                                     <div class="line-dot-divider"></div>
                                     <p class="bullets"><strong>NOTA:</strong>La documentación y características
                                     requeridos para participar en algún procedimiento
-                                    serán establecidas por las URG con base en los
+                                    serán establecidas por las Istituciones compradoras con base en los
                                     procesos que esta estipule.</p>
                                 </div>
                             </div>
@@ -371,13 +366,12 @@ const buttonOportunities = document.getElementById("button-oportunities");
 const buttonProcess = document.getElementById("button-process");
 const buttonDocumentation = document.getElementById("button-documentation");
 
+
+
 const buttonsChange = (id) => {
     let buttonName = document.getElementById(id)
-    if(buttonName.style.display === 'none') {
-        buttonName.style.display = 'block';
-    } else {
-        buttonName.style.display = 'none'
-    }
+    if(buttonName)
+   buttonName.style.display = 'block';
 }
 
 buttonRegister.addEventListener("click", () => buttonsChange('register'));

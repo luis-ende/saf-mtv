@@ -115,6 +115,7 @@
     color: $gold;
 
     & button:hover,
+    button:active,
     button:focus {
         font-weight: 700;
         color: $secondary;
