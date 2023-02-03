@@ -42,7 +42,7 @@ class AuthenticatedSessionController extends Controller
                 $queryParams = request()->query();
                 unset($queryParams['url']);
                 $queryString = count($queryParams) > 0 ? '?' . http_build_query($queryParams) : '';
-                $opnRoute = route('oportunidades-negocio.search') . $queryString;
+                $opnRoute = route('oportunidades-negocio.search') . $queryString . '#seccion-principal';
 
                 return redirect()->intended($opnRoute);
             }            

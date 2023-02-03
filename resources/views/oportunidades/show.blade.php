@@ -77,7 +77,7 @@
                     </div>
                 </form>
             </div>
-            <div class="flex md:flex-row xs:flex-col m-4">
+            <div id="seccion-principal" class="flex md:flex-row xs:flex-col m-4">
                 <div class="basis-full md:basis-1/4 md:mr-7">
                     <x-oportunidades.buscador-filtros-sidebar
                         :filtros_opciones="$filtros_opciones"

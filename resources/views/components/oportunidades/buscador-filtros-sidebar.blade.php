@@ -120,7 +120,7 @@
                         queryParams = '?' + queryParams;
                     }
 
-                    return this.oportunidadesBusquedaRuta + queryParams;
+                    return this.oportunidadesBusquedaRuta + queryParams + '#seccion-principal';
                 }
 
                 return this.oportunidadesBusquedaRuta;
