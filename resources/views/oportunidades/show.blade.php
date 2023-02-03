@@ -1,6 +1,6 @@
 <x-app-layout>        
     <div class="bg-white overflow-hidden min-h-screen">
-        <div class="py-6 px-12 bg-white border-b border-gray-200 flex flex-col">
+        <div class="py-6 md:px-12 xs:px-6 bg-white border-b border-gray-200 flex flex-col">
             <div class="self-center">
                 <label class="text-mtv-gray-2 text-xl">
                     Buscador de
@@ -32,9 +32,9 @@
                 </span>
             </div>
 
-            <div class="w-10/12 flex md:flex-row xs:flex-col md:space-x-16 md:space-y-0 xs:space-x-0 xs:space-y-3 my-4 self-center" 
+            <div class="w-10/12 md:flex md:flex-row md:space-x-16 md:space-y-0 xs:grid xs:grid-cols-2 xs:grid-rows-2 xs:gap-x-5 xs:gap-y-2 my-4 self-center" 
                  x-data=etapasFiltros()>
-                <div class="basis-1/5 text-mtv-gray flex flex-column items-center py-2">
+                <div class="md:basis-1/5 text-mtv-gray flex flex-column items-center py-2 md:inline-flex xs:hidden">
                     <span class="font-bold text-5xl">{{ $estadisticas['conteo_dependencias'] }}</span>
                     <span class="text-lg">Instituciones compradoras</span>
                 </div>
@@ -86,8 +86,7 @@
                             </div>
                             <input type="search"
                                    id="oportunidades_search" name="oportunidades_search"
-                                   class="block w-full pt-3 pb-3 pl-10 text-sm text-mtv-text-gray border border-gray-300 rounded-lg bg-gray-50 focus:ring-mtv-primary focus:border-mtv-primary"
-                                   placeholder="Buscar por palabras clave..."
+                                   class="block w-full pt-3 pb-3 pl-10 text-sm text-mtv-text-gray border border-gray-300 rounded-lg bg-gray-50 focus:ring-mtv-primary focus:border-mtv-primary"                                   
                                    autofocus
                                    x-model="terminoBusqueda">
                             <button type="submit"
@@ -104,15 +103,18 @@
             <div id="seccion-principal" class="flex md:flex-row xs:flex-col m-4" 
                 {{-- TIP: Buscar inicialización de esta función reutilizable 'oportunidadesFiltrosURLParams()' en resources/js/app.js --}}
                  x-data="oportunidadesFiltrosURLParams">
-                <div class="basis-full md:basis-1/4 md:mr-7">
+                <div class="basis-full md:basis-1/4 md:mr-7 md:inline-flex xs:hidden">
                     <x-oportunidades.buscador-filtros-sidebar
                         :filtros_opciones="$filtros_opciones"
                      />
                 </div>
+                                
+                <button type="button" class="md:hidden xs:block mtv-button-secondary mx-auto w-1/2 text-center">Filtros</button>
+
                 <div class="basis-full md:basis-3/4 flex flex-col" x-data="{ rutaDescarga: '' }">
                     @if(count($oportunidades) >= 1)
                         <a :href="rutaDescarga"
-                        @click="rutaDescarga = '{{ route('oportunidades-negocio.export') }}' + '?' + queryFiltros(); console.log(rutaDescarga)"
+                        @click="rutaDescarga = '{{ route('oportunidades-negocio.export') }}' + '?' + queryFiltros()"
                         class="mtv-button-gold my-4 self-center" 
                         download>
                             @svg('go-download-16', ['class' => 'w-5 h-5 mr-1 inline-block'])
