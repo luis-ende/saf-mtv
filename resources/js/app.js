@@ -13,7 +13,8 @@ window.SwalMTVCustom = {
         'confirmButton': 'swal2-mtv-confirm-button',
         'cancelButton': 'swal2-mtv-cancel-button',
         'htmlContainer': 'swal2-mtv-html-container',
-        'icon': 'swal2-mtv-icon'
+        'icon': 'swal2-mtv-icon',
+        'closeButton': 'swal2-close',
     },
     showConfirmButton: true,
     showCancelButton: true,
@@ -24,6 +25,9 @@ window.SwalMTVCustom = {
 
 import choices from 'choices.js';
 window.Choices = choices;
+
+import fuse from 'fuse.js';
+window.Fuse = fuse;
 
 import Alpine from 'alpinejs';
 import mask from '@alpinejs/mask'
@@ -139,5 +143,195 @@ Alpine.data('busquedaCABMS', () => ({
     }
 }))
 
+Alpine.data('productoFavoritos', () => ({
+    get currentColor() {
+        let $color = this.numFavoritos > 0 ? 'text-mtv-primary' : 'text-mtv-gold';
+        if (this.esEditable) {
+            $color += this.numFavoritos > 0 ? ' hover:text-mtv-gold' : ' hover:text-mtv-primary'
+        }
+
+        return $color;
+    },
+    numFavoritos: 0,
+    esEditable: false,
+    toggleFavorito(updateRoute, token) {
+        fetch(updateRoute, {
+            method: "POST",
+            credentials: 'same-origin',
+            headers: {
+                'X-CSRF-Token': token,
+            },
+        }).then(response => response.json())
+            .then(json => {
+                this.numFavoritos = json.num_favoritos;
+            })
+    },
+    initFavoritos(numFavoritos) {
+        this.numFavoritos = numFavoritos;
+        if (this.esEditable) {
+            this.$watch('numFavoritos', value => {
+                this.$refs.controlFavoritos.className = '';
+                this.currentColor.split(' ').forEach(favClass => {
+                    this.$refs.controlFavoritos.classList.add(favClass);
+                });
+            })
+        }
+    }
+}))
+
+Alpine.data('infiniteScrolling', () => ({
+    get maxResultados() {
+        return this.numResults < this.paginationOffset;
+    },
+    buscadorItemsRoute: null,
+    paginationOffset: 0,
+    nextOffset: 0,
+    htmlData: null,
+    numResults: 0,
+    filtros: [],
+    isLoading: false,
+    async retrieveData() {
+        // Remueve elementos con valor nulo
+        const filtrosValidos = Object.fromEntries(Object.entries(this.filtros).filter(([_, v]) => v != null));
+        const filtrosParams = new URLSearchParams(filtrosValidos);
+        filtrosParams.append('offset', this.nextOffset);
+
+        this.isLoading = true;
+        this.htmlData = await (await fetch(this.buscadorItemsRoute + '?' + filtrosParams, {
+            method: 'GET',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })).text();                
+        
+        let parser = new DOMParser();
+        let parseDocument = parser.parseFromString(this.htmlData, 'text/html');
+        this.numResults = parseDocument.getElementsByTagName('article').length;
+        this.nextOffset += this.paginationOffset;
+
+        this.isLoading = false;
+    },
+    initInfiniteScrolling(paginationOffset, numRecords, filtros, buscadorItemsRoute) {
+        this.paginationOffset = paginationOffset;
+        this.nextOffset = paginationOffset;
+        this.numResults = numRecords;
+        this.filtros = filtros;
+        this.buscadorItemsRoute = buscadorItemsRoute;
+        this.$watch('htmlData', value => {
+            this.$refs.resultsGrid.innerHTML += this.htmlData
+        })
+    },
+}))
+
+Alpine.data('animatedCounter', (targer, time = 200, start = 0) => ({    
+    current: 0,
+    target: targer,
+    time: time,
+    start: start,
+    updatecounter: function() {
+        start = this.start;
+        const increment = (this.target - start) / this.time;
+        const handle = setInterval(() => {
+        if (this.current < this.target)
+            this.current += increment
+        else {
+            clearInterval(handle);
+            this.current = this.target
+        }
+        }, 1);
+    }      
+}))
+
+Alpine.data('oportunidadNegocioAlertas', () => ({
+    alertaActiva: false,
+    toggleAlerta(route, token) {
+        fetch(route, {
+            method: "POST",
+            credentials: 'same-origin',
+            headers: {
+                'X-CSRF-Token': token,
+            },
+        }).then(response => response.json())
+        .then(json => {
+            this.alertaActiva = json.alerta_estatus;
+        })
+    },
+    showMessage(rutaLogin, rutaRegistro) {
+        const props = SwalMTVCustom;
+        props.customClass['title'] = 'swal2-mtv-title';        
+        Swal.fire({
+            ...SwalMTVCustom,
+            title: 'Activar alerta',
+            html: "Para activar las alertas debes estar registrado o haber ingresado a Mi Tiendita Virtual." +
+                  '<p class="swal-mtv-html-container-action">¿Quieres activar la alerta?</p>',
+            confirmButtonText: 'Ingresar',
+            cancelButtonText: 'Regístrate',
+            showCloseButton: true,
+        }).then((result) => {                        
+            if (result.isConfirmed) {
+                window.location.href = rutaLogin;
+            } else if (!(result.dismiss === 'close' || result.dismiss === 'esc')) {
+                window.location.href = rutaRegistro;
+            }            
+        });
+    }
+}))
+
+Alpine.data('oportunidadesFiltrosURLParams', () => ({
+    searchParams() {
+        const query = new URLSearchParams();
+        const termBusqueda = document.getElementById('oportunidades_search').value;
+        if (termBusqueda) {
+            query.append('tb', termBusqueda);
+        }
+        this.collectFilter('capitulo_filtro[]', query, 'ca');
+        this.collectFilter('unidad_compradora_filtro[]', query, 'uc');
+        this.collectFilter('tipo_contr_filtro[]', query, 'tc');
+        this.collectFilter('metodo_contr_filtro[]', query, 'mc');
+        this.collectFilter('etapa_proc_filtro[]', query, 'ep');
+        this.collectFilter('estatus_contr_filtro[]', query, 'ec');
+        const fInicio = document.getElementById('fecha_inicio_filtro').value;
+        if (fInicio) {
+            query.append('fi', fInicio);
+        }
+        const fFinal = document.getElementById('fecha_final_filtro').value;
+        if (fFinal) {
+            query.append('ff', fFinal);
+        }
+        for(let i = 1; i <= 4; i++) {
+            if (document.getElementById(`fecha_trimestre${i}_filtro`).value === '1') {
+                query.append('tr', i.toString());
+                break;
+            }
+        }
+
+        return query;
+    },
+    queryFiltros() {
+        const query = this.searchParams();
+
+        return query.toString();
+    },
+    collectFilter(inputName, query, name) {
+        const inputs = document.getElementsByName(inputName);
+        const inputs_checked = [];
+        inputs.forEach(i => { 
+            if (i.checked) {
+                inputs_checked.push(i.value)
+            }                    
+        });                
+        if (inputs_checked.length > 0) {
+            query.append(name, inputs_checked.join(','));
+        }
+    },
+    countFiltros() {
+        const query = this.searchParams();
+        const filtros = query.keys();
+        let counter = 0;
+        for (const element of filtros) {
+            counter++;
+        }
+
+        return counter;
+    },
+}))
 
 Alpine.start();

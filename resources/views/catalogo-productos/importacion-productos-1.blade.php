@@ -1,6 +1,6 @@
 <x-app-layout :show_main_menu="false">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
-        <div class="bg-white overflow-hidden shadow-sm h-screen">
+        <div class="bg-white overflow-hidden shadow-sm min-h-screen">
             @include('catalogo-productos.registro-header',
                        ['titulo' => 'Carga masiva de productos',
                         'titulo_icono' => 'tabler-table-import',
@@ -22,7 +22,7 @@
                         1. Selecciona el archivo
                     </label>
                     <label class="text-mtv-gray text-base mb-3 self-center">
-                       Adjunta la plantilla en extensión .csv.
+                       Adjunta la plantilla en extensión .xlsx.
                     </label>
                     <x-input-upload
                         :name="__('productos_import_file')"
@@ -30,7 +30,7 @@
                     />
                     <div class="flex flex-row my-4 space-x-10 justify-center">
                         <a href="{{ route('catalogo-registro-inicio') }}" class="mtv-button-secondary-white no-underline self-center">
-                            @svg('fas-arrow-left', ['class' => 'h-7 w-7 inline-block'])
+                            @svg('fas-arrow-left', ['class' => 'h-5 w-5 inline-block mr-3'])
                             Atrás
                         </a>
                         <button type="submit"

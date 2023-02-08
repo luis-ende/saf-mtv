@@ -9,9 +9,10 @@
         <div class="login-page-rigth">
                 <h1>Bienvenido a Mi Tiendita Virtual</h1>
                 <h2>Has llegado al espacio donde podrás crear tu catálogo de productos y dar seguimiento a las convocatorias del Gobierno de la Ciudad de México</h2>
-
+            
+            @php($queryParams = count(request()->query()) > 0 ? '?' . http_build_query(request()->query()) : '')
             <div class="form-register">
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('login') . $queryParams }}">
                 @csrf
 
                 <!-- RFC -->

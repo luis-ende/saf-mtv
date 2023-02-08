@@ -20,6 +20,11 @@ class AuthenticatedSessionController extends Controller
         return view('auth.login');
     }
 
+    public function createURGLogin()
+    {
+        return view('auth.urg-login');
+    }    
+
     /**
      * Handle an incoming authentication request.
      *
@@ -31,6 +36,17 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        if ($request->has('url')) {
+            if ($request->get('url') === 'oportunidades_negocio') {
+                $queryParams = request()->query();
+                unset($queryParams['url']);
+                $queryString = count($queryParams) > 0 ? '?' . http_build_query($queryParams) : '';
+                $opnRoute = route('oportunidades-negocio.search') . $queryString . '#seccion-principal';
+
+                return redirect()->intended($opnRoute);
+            }            
+        }
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

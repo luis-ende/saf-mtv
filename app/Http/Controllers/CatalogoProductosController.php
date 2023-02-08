@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Repositories\ProductoRepository;
 use Illuminate\Support\Facades\Validator;
 use App\Services\RegistroProductosService;
+use App\Services\RedesSocialesEnlacesService;
 use Illuminate\Validation\ValidationException;
 
 class CatalogoProductosController extends Controller
@@ -31,13 +32,14 @@ class CatalogoProductosController extends Controller
         });
         $productosServicio = $productos->filter(function ($producto) {
             return $producto->tipo === Producto::TIPO_PRODUCTO_SERVICIO_ID;
-        });
+        });        
 
-        // TODO Agregar información de proveedor solamente si el rol del usuario es URG
+        $compartir_enlaces = RedesSocialesEnlacesService::generaEnlaces(url()->current(), 'Catálogo Mi Tiendita Virtual');    
 
-        return view('catalogo-productos', [
+        return view('proveedor.catalogo-productos', [
             'productos_bien' => $productosBien,
             'productos_servicio' => $productosServicio,
+            'compartir_enlaces' => $compartir_enlaces,
         ]);
     }
 
@@ -339,7 +341,7 @@ class CatalogoProductosController extends Controller
                 'producto_fotos_eliminadas' => 'nullable|string',
             ]);
         } catch (ValidationException $e) {
-            // TODO: Verificar si devulve errores en el formato correcto
+            // TODO: Verificar si devuelve errores en el formato correcto
             return [$e->validator];
         }
 

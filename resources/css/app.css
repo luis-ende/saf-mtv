@@ -32,17 +32,31 @@
   }
 
   .mtv-button-secondary {
-    @apply font-bold text-white bg-mtv-secondary rounded-lg py-2 px-5 my-4
+    @apply font-bold text-white bg-mtv-secondary rounded-lg py-2 px-5 my-4 no-underline
     focus:outline-none focus:ring-2 focus:ring-mtv-gold-light
     hover:bg-mtv-gold-light hover:text-white active:bg-mtv-gold-light
     active:text-white active:ring-2 active:ring-mtv-secondary;
   }
 
   .mtv-button-secondary-white {
-    @apply font-bold border-mtv-gray-light border-2 rounded-lg bg-white text-mtv-secondary py-1 px-5 my-4
+    @apply font-bold border-mtv-gray-light border rounded-lg bg-white text-mtv-secondary py-2 px-5 no-underline
     focus:outline-none focus:ring-2 focus:ring-mtv-gray-light
     hover:bg-mtv-gold-light hover:text-white active:bg-mtv-gold-light
     active:text-mtv-secondary active:ring-2 active:border-mtv-gray-light;
+  }
+
+  .mtv-button-gold {
+    @apply font-bold text-white bg-mtv-gold rounded-lg py-2 px-5 my-4 no-underline
+    focus:outline-none focus:ring-2 focus:ring-mtv-gold-light
+    hover:bg-mtv-gold-light hover:text-white active:bg-mtv-gold-light
+    active:text-white active:ring-2 active:ring-mtv-secondary;
+  }
+
+  .mtv-button-gold-light {
+    @apply font-bold text-white bg-mtv-gold-light rounded-lg py-2 px-5 my-4 no-underline
+    focus:outline-none focus:ring-2 focus:ring-mtv-gold-light
+    hover:bg-mtv-gold-light hover:text-white active:bg-mtv-gold-light
+    active:text-white active:ring-2 active:ring-mtv-secondary;
   }
 
   .mtv-link-secondary {
@@ -53,7 +67,7 @@
 
   .mtv-link-gold {
       @apply text-mtv-gold bg-white no-underline
-      hover:bg-white hover:text-mtv-primary hover:underline
+      hover:bg-white hover:text-mtv-primary hover:no-underline
       active:text-mtv-primary;
   }
 
@@ -61,5 +75,25 @@
     @apply text-mtv-gold bg-white no-underline font-bold
     hover:bg-white hover:text-mtv-primary hover:no-underline
     active:text-mtv-primary;
-}
+  }
+
+  .mtv-link-breadcrumbs-gray {
+    @apply text-mtv-gray bg-white no-underline text-sm
+    hover:bg-white hover:text-mtv-primary hover:no-underline
+    active:text-mtv-primary;
+  }
+
+  /* Clases de la vista del buscador Oportunidades de Negocio */
+
+  .mtv-button-filtro-ep-inactive {
+    @apply md:basis-1/5 bg-mtv-gold-light text-white flex flex-col items-center rounded-2xl py-2 px-2;
+  }
+
+  .mtv-button-filtro-ep-active {
+    @apply md:basis-1/5 bg-mtv-secondary text-white flex flex-col items-center rounded-2xl py-2 px-2;
+  }
+
+
+  /* Clases de la vista del buscador Oportunidades de Negocio */
+
 }

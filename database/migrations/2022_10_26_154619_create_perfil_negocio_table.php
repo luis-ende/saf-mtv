@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('perfil_negocio', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_persona')->constrained('personas');
-            $table->unsignedInteger('id_grupo_prioritario');
+            $table->foreignId('id_grupo_prioritario')->constrained('cat_grupos_prioritarios');
             $table->unsignedInteger('id_tipo_pyme')->nullable();
             $table->unsignedInteger('id_sector');
             $table->unsignedInteger('id_categoria_scian');

@@ -31,7 +31,7 @@ class VerificacionRFCService
 
     public function verificaRFCExisteEnPadronProveedores(string $rfc): array
     {
-        $response = Http::get( config('app.api_url_busqueda_rfc_padron_proveedores') . $rfc);
+        $response = Http::get( env('API_URL_BUSQUEDA_RFC_PADRON_PROVEEDORES') . $rfc);
 
         $responseData = [
             'rfc' => $rfc,

@@ -10,6 +10,10 @@
         <title>Mi Tiendita Virtual CDMX</title>
         <link rel="shortcut icon" href="{{ asset('images/tianguis.png') }}">
 
+        <style>
+            [x-cloak] { display: none !important; }
+        </style>
+
         @googlefonts
 
         <!-- Scripts -->
@@ -17,11 +21,13 @@
     </head>
     <body class="font-sans antialiased">
         <header class="bg-white">
-            @if (Auth::user())
+            @auth
                 @include('layouts.navigation', ['show_main_menu' => $show_main_menu])
-            @else
+            @endauth
+
+            @guest
                 @include('layouts.navigation-guest')
-            @endif
+            @endguest
         </header>
 
         <div class="bg-gray-100">

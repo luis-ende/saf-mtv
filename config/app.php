@@ -212,7 +212,4 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
-
-    'api_url_busqueda_rfc_padron_proveedores' => env('API_URL_BUSQUEDA_RFC_PADRON_PROVEEDORES'),
-    'api_url_consulta_curp' => env('API_URL_BUSQUEDA_CURP'),
 ];

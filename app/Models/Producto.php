@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Maize\Markable\Markable;
+use App\Models\ProductoColor;
 use App\Models\ProductoCategoria;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
+use Maize\Markable\Models\Favorite;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -14,6 +17,7 @@ class Producto extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
+    use Markable;
 
     public const TIPO_PRODUCTO_BIEN_ID = 'B';
     public const TIPO_PRODUCTO_SERVICIO_ID = 'S';
@@ -123,14 +127,29 @@ class Producto extends Model implements HasMedia
     }
 
     /**
-     * Convierte un arreglo de códigos de colores en un valor para el campo color (string).
+     * Obtiene la lista de colores posibles para el campo 'color' de producto.
+     */
+    public function obtieneListaColores(): array
+    {
+        return ProductoColor::PRODUCTO_CSS_COLOR_NAMES;
+    }
+
+    /**
+     * Convierte un arreglo de códigos de colores del valor del campo 'color' (string).
      */
     public function obtieneColoresValue(array $colores): ?string
     {
-        if ($colores && count($colores) > 0) {
+        if (!empty($colores)) {
             return implode(',', $colores);
         }
 
         return null;
-    }
+    }    
+
+    /**
+     * Marcas de favoritos.
+     */
+    protected static $marks = [
+        Favorite::class,
+    ];
 }

@@ -27,9 +27,9 @@ class BusquedaCURPService
         $response = null;
         try {
             if (env('TEST_MODE') === true) {
-                $response = Http::get(config('app.api_url_consulta_curp') . $curp);
+                $response = Http::get(env('API_URL_BUSQUEDA_CURP') . $curp);
             } else {
-                $response = Http::post(config('app.api_url_consulta_curp'), [
+                $response = Http::post(env('API_URL_BUSQUEDA_CURP'), [
                     'security' => [
                         'tokenId' => env('API_BUSQUEDA_CURP_TOKEN')
                     ],

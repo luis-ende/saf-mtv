@@ -19,11 +19,13 @@ class VerificaRegistroStatus
     public function handle(Request $request, Closure $next)
     {
         $authUser = Auth::user();
-        if ($authUser && $authUser->persona->registro_fase === RegistroMTV::REGISTRO_FASE_IDENTIFICACION) {
-            return redirect()->route('registro-perfil-negocio.show');
-        } elseif ($authUser && $authUser->persona->registro_fase === RegistroMTV::REGISTRO_FASE_TU_NEGOCIO) {
-            return redirect()->route('registro-contactos.show');
-        }
+        if ($authUser && $authUser->persona) {
+            if ($authUser->persona->registro_fase === RegistroMTV::REGISTRO_FASE_IDENTIFICACION) {
+                return redirect()->route('registro-perfil-negocio.show');
+            } elseif ($authUser->persona->registro_fase === RegistroMTV::REGISTRO_FASE_TU_NEGOCIO) {
+                return redirect()->route('registro-contactos.show');
+            }
+        }        
 
         return $next($request);
     }

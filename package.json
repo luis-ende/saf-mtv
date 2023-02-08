@@ -20,7 +20,9 @@
     },
     "dependencies": {
         "@alpinejs/mask": "^3.10.5",
+        "@tailwindcss/line-clamp": "^0.4.2",
         "choices.js": "^10.2.0",
+        "fuse.js": "^6.6.2",
         "sweetalert2": "^11.6.5"
     }
 }

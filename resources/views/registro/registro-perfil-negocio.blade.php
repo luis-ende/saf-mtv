@@ -5,7 +5,7 @@
                        ['titulo' => 'Tu negocio',
                         'subtitulo' => 'Datos y perfil de tu negocio. Estos datos los requerimos para conocer mejor tu negocio y dirigir comunicados de tu interés.'])
             <div class="px-6">
-                <x-perfil-negocio-form
+                <x-perfil-negocio.perfil-negocio-form
                     :persona="$persona"
                     :cat_paises="$cat_paises"
                     :tipos_vialidad="$tipos_vialidad"

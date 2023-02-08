@@ -1,31 +1,10 @@
 <x-app-layout>    
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 min-h-fit">
-        <div class="bg-white overflow-hidden h-[42rem]">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white overflow-hidden min-h-screen">
             <div class="p-6 bg-white border-b border-gray-200">
-                ¡Bienvenido(a) <strong>{{ Auth::user()->persona->nombre_o_razon_social() }}</strong>!
+                ¡Bienvenido(a) <strong>{{ Auth::user()->nombreUsuario() }}</strong>!
             </div>
-            <div class="p-6">
-                <div class="card p-0 mb-5">
-                    <div class="card-header">
-                        <label class="text-[#691C32] font-bold">Oportunidades de negocio para ti</label>
-                    </div>
-                    <div class="card-body row g-3">
-                    </div>
-                </div>
-                <div class="card p-0 mb-5">
-                    <div class="card-header">
-                        <label class="text-[#691C32] font-bold">Me interesa</label>
-                    </div>
-                    <div class="card-body row g-3">
-                    </div>
-                </div>
-                <div class="card p-0 mb-5">
-                    <div class="card-header">
-                        <label class="text-[#691C32] font-bold">Otros avisos</label>
-                    </div>
-                    <div class="card-body row g-3">
-                    </div>
-                </div>
+            <div class="p-6">                
             </div>
         </div>
     </div>    

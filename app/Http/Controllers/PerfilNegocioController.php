@@ -22,14 +22,13 @@ class PerfilNegocioController extends Controller
     {
         $persona = Auth::user()->persona;
 
-        return view('perfil-negocio', [
+        return view('proveedor.perfil-negocio', [
             'persona' => $persona,
             'cat_paises' => PaisesRepository::obtienePaises(),
             'tipos_vialidad' => VialidadRepository::obtieneTiposVialidad(),
             'grupos_prioritarios' => GrupoPrioritarioRepository::obtieneGruposPrioritarios(),
             'tipos_pyme' => TipoPymeRepository::obtieneTiposPyme(),
             'sectores' => $catCCABMSRepository->obtieneSectores(),
-            'categorias_scian' => [], // TODO: Implementar cuando esté listo el catálogo
         ]);
     }
 

@@ -63,6 +63,12 @@
     transform: var(--bs-accordion-btn-icon-transform);
 }
 
+// Bootstrap Tooltips
+
+.custom-tooltip {
+    --bs-tooltip-bg: var(--bs-secondary);
+}
+
 // Workaround for Bootstrap Accordion's issue
 .collapse.show {
     visibility: visible;
@@ -137,6 +143,11 @@
 
 .swal2-mtv-html-container-reg-completo {
     margin-top: 0.2em;
+}
+
+.swal2-close {
+    height: 1em !important;
+    width: 1em !important;
 }
 
 // Estilos de choices.js

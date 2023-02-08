@@ -1,6 +1,6 @@
 <x-registro-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
-        <div class="bg-white overflow-hidden shadow-sm">
+        <div class="bg-white overflow-hidden shadow-sm min-h-screen">
             @include('registro.registro-header',
                        ['titulo' => 'Registro a Mi Tiendita Virtual',
                         'subtitulo' => 'Crea una cuenta para realizar tu catálogo de productos y recibir notificaciones personalizadas.'])

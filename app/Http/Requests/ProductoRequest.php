@@ -23,7 +23,7 @@ class ProductoRequest extends FormRequest
     public function rules()
     {
         return array_merge(
-            self::rulesProductoCABMS(),
+            self::rulesProductoCABMSCategorias(),
             self::rulesProductoDescripcion(),
             self::rulesProductoFotos(),
             self::rulesProductoAdjuntos()
@@ -65,6 +65,7 @@ class ProductoRequest extends FormRequest
         return [
             'nombre' => 'required|max:255',
             'descripcion' => 'required|max:140',
+            'color' => 'max:130',
             'marca' => 'max:255',
             'modelo' => 'max:255',
             'producto_colores.*' => 'nullable|string', // TODO: Validar longitud máxima de 140 caracteres
@@ -97,6 +98,8 @@ class ProductoRequest extends FormRequest
                 'mimes:pdf'
             ],
             'otro_documento_file' => 'max:3000|mimes:pdf',
+            'eliminar_ficha_tecnica' => 'boolean',
+            'eliminar_otro_documento' => 'boolean',
         ];
     }
 }

@@ -32,6 +32,8 @@ return new class extends Migration
             $table->unsignedSmallInteger('registro_fase')->default(1);
             $table->boolean('es_importado')->default(0);
             $table->timestamps();
+
+            $table->index('nombre');
         });
     }
 

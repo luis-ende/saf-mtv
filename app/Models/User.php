@@ -10,6 +10,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * Modelo que corresponde a la entidad Usuario de MTV.
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
@@ -47,10 +50,33 @@ class User extends Authenticatable
     ];
 
     /**
-     * Obtener catálogo de productos asociado al perfil.
+     * Obtener persona asociada al perfil.
      */
     public function persona(): HasOne
     {
         return $this->hasOne(Persona::class, 'id', 'id_persona');
+    }
+
+    /**
+     * Obtener usuario URG asociado al perfil.
+     */
+    public function urg(): HasOne
+    {
+        return $this->hasOne(UsuarioURG::class, 'id', 'id_urg');
+    }
+
+
+    /**
+     * Nombre genérico de usuario.
+     */
+    public function nombreUsuario()
+    {
+        if ($this->persona) {
+            return $this->persona->nombre_o_razon_social();
+        } elseif ($this->urg) {
+            return $this->urg->nombre;
+        } else {
+            return $this->rfc;
+        }
     }
 }
