@@ -74,10 +74,12 @@ class OportunidadNegocioRepository
 
         if (isset($filtros['unidad_compradora_filtro'])) {
             $unidadesCompr = $filtros['unidad_compradora_filtro'];
-
-            $query = $query->where(function($query) use($unidadesCompr) {
-                $query->whereIn(DB::raw('opn.id_unidad_compradora'), $unidadesCompr);
-            });
+            // Unidad compradora = 0 equivale a la opción de filtro "Todos"
+            if (!in_array("0", $unidadesCompr, true)) {
+                $query = $query->where(function($query) use($unidadesCompr) {
+                    $query->whereIn(DB::raw('opn.id_unidad_compradora'), $unidadesCompr);
+                });
+            }
         }
 
         if (isset($filtros['tipo_contr_filtro'])) {

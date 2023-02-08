@@ -9,7 +9,10 @@
     <div class="h-64 w-96 overflow-y-scroll">
         <ul class="pl-0 mt-1 ml-1 list-none list-outside flex flex-col space-y-2 text-sm" x-id="['unidad-c']">
             <li class="flex flex-row flex-nowrap items-center">
-                <input class="mr-2 border focus:ring-mtv-secondary" type="checkbox" id="unidad-c-0" name="unidad_compradora_filtro[]" value="0">
+                <input class="mr-2 border focus:ring-mtv-secondary"
+                       type="checkbox" id="unidad-c-0"
+                       name="unidad_compradora_filtro[]" value="0"
+                       @change="if ($event.target.checked) { uncheckAll(); $event.target.checked = true }">
                 <label class="font-bold" for="unidad-c-0">Todos</label>
             </li>
             <template x-for="(unidad, index) in unidades" :key="index">
@@ -18,7 +21,8 @@
                         type="checkbox" :id="$id('unidad-c', unidad.id)"
                         name="unidad_compradora_filtro[]"
                         :checked="unidad.checked === 1"
-                        x-bind:value="unidad.id">
+                        x-bind:value="unidad.id"
+                        @change="if ($event.target.checked) { document.getElementById('unidad-c-0').checked = false }">
                     <label :for="$id('unidad-c', unidad.id)" x-html="highlightKeyword(unidad.nombre, searchKeyword)"></label>
                 </li>
             </template>
@@ -83,6 +87,9 @@
 
                     return text;
                 },
+                uncheckAll() {
+                    document.getElementsByName('unidad_compradora_filtro[]').forEach(input => input.checked = false)
+                }
             }
         }
     </script>
