@@ -276,7 +276,7 @@ Alpine.data('oportunidadNegocioAlertas', () => ({
 }))
 
 Alpine.data('oportunidadesFiltrosURLParams', () => ({
-    queryFiltros() {
+    searchParams() {
         const query = new URLSearchParams();
         const termBusqueda = document.getElementById('oportunidades_search').value;
         if (termBusqueda) {
@@ -303,6 +303,11 @@ Alpine.data('oportunidadesFiltrosURLParams', () => ({
             }
         }
 
+        return query;
+    },
+    queryFiltros() {
+        const query = this.searchParams();
+
         return query.toString();
     },
     collectFilter(inputName, query, name) {
@@ -316,7 +321,17 @@ Alpine.data('oportunidadesFiltrosURLParams', () => ({
         if (inputs_checked.length > 0) {
             query.append(name, inputs_checked.join(','));
         }
-    },    
+    },
+    countFiltros() {
+        const query = this.searchParams();
+        const filtros = query.keys();
+        let counter = 0;
+        for (const element of filtros) {
+            counter++;
+        }
+
+        return counter;
+    },
 }))
 
 Alpine.start();

@@ -12,8 +12,8 @@
             <span @class([
                 'text-mtv-primary' => !$procedimientoCerrado,
                 'text-mtv-gray-2' => $procedimientoCerrado, 
-                'md:text-base sm:text-sm md:font-semibold'])>
-                {{ Str::of($oportunidad->nombre_procedimiento)->limit(142, '...') }}
+                'md:text-base sm:text-sm md:font-semibold line-clamp-3'])>
+                {{ Str::of($oportunidad->nombre_procedimiento)->limit(162, '...') }}
             </span>
         </div>
         <div class="border-l border-r bg-white p-3 block text-mtv-text-gray">
@@ -30,12 +30,14 @@
             @else
                 <p class="my-0">Presentación de propuestas: <strong>{{ Carbon\Carbon::parse($oportunidad->fecha_presentacion_propuestas)->translatedFormat('d F Y') }}</strong></p>                
             @endif                        
-            <hr>
-            <p class="my-0">Grandes rubros de gastos: <strong>-</strong></p>
-            <p>Rubro de gasto: <strong>-</strong></p>
-            <p class="my-0">Tipo de contratación: <strong>{{ $oportunidad->tipo_contratacion }}</strong></p>
-            <p>Método de contratación: <strong>{{ $oportunidad->metodo_contratacion }}</strong></p>
-            <hr>
+            {{--<hr>--}}
+            <div class="border-t border-b mt-3 mb-3">
+                <p class="my-0 mt-3">Grandes rubros de gastos: <strong>-</strong></p>
+                <p>Rubro de gasto: <strong>-</strong></p>
+                <p class="my-0">Tipo de contratación: <strong>{{ $oportunidad->tipo_contratacion }}</strong></p>
+                <p>Método de contratación: <strong>{{ $oportunidad->metodo_contratacion }}</strong></p>
+            </div>
+            {{--<hr>--}}
             <p class="my-0"><strong>Más información:</strong></p>
             <div class="my-2 flex flex-col flex-nowrap justify-center items-center">
                 @if($oportunidad->fuente_url)

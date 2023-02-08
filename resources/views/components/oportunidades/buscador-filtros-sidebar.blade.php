@@ -100,11 +100,10 @@
         </x-oportunidades.buscador-filtro-seccion>
     </ul>
 
-    <div class="flex flex-row space-x-3 items-center justify-center">        
+    <div :class="{'fixed bottom-0 left-0 bg-white w-full border-t-2': filtrosModalOpen}"
+         class="flex flex-row space-x-3 items-center justify-center">
         <button type="submit" class="font-normal mtv-button-secondary-white" @click="limpiaFiltros()">Borrar filtros</button>
-        <button type="submit" class="mtv-button-secondary">
-            Aplicar filtros
-        </button>
+        <button type="submit" class="mtv-button-secondary">Aplicar filtros</button>
     </div>
 </form>
 
