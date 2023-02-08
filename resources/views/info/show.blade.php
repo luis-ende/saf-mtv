@@ -240,7 +240,7 @@
 
 <!-- Sección Documentación para participar en el proceso  -->
 
-        <div class="item-content" id="documentation">
+                    <div class="item-content" id="documentation">
                         <div>
                             <div class="d-flex justify-content-center align-items-center">
                                 <div class="icons-content">
@@ -258,6 +258,7 @@
                                     <div class="line-divider"></div>
                                     <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor"><defs></defs><path d="M25.707,17.293l-5-5A1,1,0,0,0,20,12H14a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H24a2,2,0,0,0,2-2V18A1,1,0,0,0,25.707,17.293ZM23.5857,18H20V14.4141ZM14,28V14h4v4a2,2,0,0,0,2,2h4v8Z"></path><path d="M8,27H4a2.0023,2.0023,0,0,1-2-2V5A2.0023,2.0023,0,0,1,4,3h7.5857A1.9865,1.9865,0,0,1,13,3.5859L16.4143,7H28a2.0023,2.0023,0,0,1,2,2v8H28V9H15.5857l-4-4H4V25H8Z"></path><rect id="_Transparent_Rectangle_" data-name="<Transparent Rectangle>" class="cls-1" width="32" height="32" style="fill: none"></rect></svg>
                                 </div>
+
                                 <div class="content-card-items">
                                     <div class="card-items">
                                         <p class="title">Cotiza tu Bien o Servicio</p>
@@ -286,89 +287,109 @@
                             </div>
                             <p class="title-doc-request">Documentación requerida para participar en un procedimientos </p>
                             <div class="d-flex justify-content-evenly content-crd">
-
-                            <div class="documents-card">
-                                <div class="accordion-item">
+                                <div class="documents-card">
+                                    <div class="accordion-item">
                                         <h2 class="accordion-header admin-title" id="flush-headingOne">
                                             <button class="accordion-button collapsed hover:text-[#BC955C]" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                             ADMINISTRATIVA Y LEGAL
-                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4a8 8 0 100 16 8 8 0 000-16zM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12zm10-4a1 1 0 011 1v2h2a1 1 0 110 2h-2v2a1 1 0 11-2 0v-2H9a1 1 0 110-2h2V9a1 1 0 011-1z"></path></svg>
+                                            <svg class="w-6 h-6" fill="currentColor" style="margin-left:10px" viewBox="0 0 24 24"><path d="M12 4a8 8 0 100 16 8 8 0 000-16zM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12zm10-4a1 1 0 011 1v2h2a1 1 0 110 2h-2v2a1 1 0 11-2 0v-2H9a1 1 0 110-2h2V9a1 1 0 011-1z"></path></svg>
                                             </button>
                                         </h2>
                                         <div class="doc-divider"></div>
-                                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                        <div class="accordion-body border-0">
-                                        <p class="admin-subtitle">Documentación de identidad del proveedor:</p>
-                                    <ul>
-                                        <li class="bullets">Acta nacimiento / constitutiva</li>
-                                        <li class="bullets">Identificación oficial Contribuyente /Representante</li>
-                                    </ul>
-                                    <div class="line-dot-divider"></div>
-                                    <p class="admin-subtitle">Documentación fiscal</p>
-                                    <ul>
-                                        <li class="bullets">Comprobante de domicilio</li>
-                                        <li class="bullets">Constancia de identificación fiscal</li>
-                                        <li class="bullets">Constancia en el padrón de proveedores</li>
-                                        <li class="bullets">Alta de cuenta de cheques</li>
-                                    </ul>
-                                    <div class="line-dot-divider"></div>
-                                    <p class="admin-subtitle">Documentación requerida por la Institución compradora</p>
-                                    <ul>
-                                        <li class="bullets">Manifiestos relacionados</li>
-                                        <li class="bullets">Otros (consultar con la Institución compradora solicitante)</li>
-                                    </ul>
-                                    <div class="d-flex align-items-center">
-                                    <a href="#" class="mr-3">Directorio CDMX</a>
-                                    <svg class="w-5 h-16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#bc955c" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
-                                    </svg>
+                                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body border-0">
+                                                <p class="admin-subtitle">Documentación de identidad del proveedor:</p>
+                                                <ul>
+                                                    <li class="bullets">Acta nacimiento / constitutiva</li>
+                                                    <li class="bullets">Identificación oficial Contribuyente /Representante</li>
+                                                </ul>
+                                                <div class="line-dot-divider"></div>
+                                                <p class="admin-subtitle">Documentación fiscal</p>
+                                                <ul>
+                                                    <li class="bullets">Comprobante de domicilio</li>
+                                                    <li class="bullets">Constancia de identificación fiscal</li>
+                                                    <li class="bullets">Constancia en el padrón de proveedores</li>
+                                                    <li class="bullets">Alta de cuenta de cheques</li>
+                                                </ul>
+                                                <div class="line-dot-divider"></div>
+                                                <p class="admin-subtitle">Documentación requerida por la Institución compradora</p>
+                                                <ul>
+                                                    <li class="bullets">Manifiestos relacionados</li>
+                                                    <li class="bullets">Otros (consultar con la Institución compradora solicitante)</li>
+                                                </ul>
+                                                <div class="d-flex align-items-center">
+                                                    <a href="#" class="mr-3">Directorio CDMX</a>
+                                                        <svg class="w-5 h-16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#bc955c" aria-hidden="true">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
+                                                        </svg>
+                                                </div>
+                                                <div class="line-dot-divider"></div>
+                                                <p class="bullets"><strong>NOTA:</strong>La Constancia de Registro en el Padrón de
+                                                Proveedores y el Alta de cuenta de cheques en una
+                                                institución bancaria son documentos obligatorios.
+                                                Inicia el trámite de forma oportuna para contar con
+                                                estos cuando desee participar en un procedimiento.</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="line-dot-divider"></div>
-                                    <p class="bullets"><strong>NOTA:</strong>La Constancia de Registro en el Padrón de
-                                    Proveedores y el Alta de cuenta de cheques en una
-                                    institución bancaria son documentos obligatorios.
-                                    Inicia el trámite de forma oportuna para contar con
-                                    estos cuando desee participar en un procedimiento.</p>
+                                </div>
+
+                                <div class="documents-card">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header admin-title" id="flush-headingTwo">
+                                            <button class="accordion-button collapsed hover:text-[#BC955C]" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                            TÉCNICA
+                                            <svg class="w-6 h-6" fill="currentColor" style="margin-left:55%" viewBox="0 0 24 24"><path d="M12 4a8 8 0 100 16 8 8 0 000-16zM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12zm10-4a1 1 0 011 1v2h2a1 1 0 110 2h-2v2a1 1 0 11-2 0v-2H9a1 1 0 110-2h2V9a1 1 0 011-1z"></path></svg>
+                                            </button>
+                                        </h2>
+                                        <div class="doc-divider"></div>
+                                        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body border-0">
+                                                <p class="admin-subtitle">Documentación técnica</p>
+                                                <ul>
+                                                    <li>Especificaciones técnicas del bien o servicio</li>
+                                                    <li>Manifiestos relacionados requeridos por la Institución compradora</li>
+                                                    <li>Otros</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="documents-card">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header admin-title" id="flush-headingThree">
+                                            <button class="accordion-button collapsed hover:text-[#BC955C]" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                            ECONÓMICA
+                                            <svg class="w-6 h-6" fill="currentColor" style="margin-left:45%" viewBox="0 0 24 24"><path d="M12 4a8 8 0 100 16 8 8 0 000-16zM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12zm10-4a1 1 0 011 1v2h2a1 1 0 110 2h-2v2a1 1 0 11-2 0v-2H9a1 1 0 110-2h2V9a1 1 0 011-1z"></path></svg>
+                                            </button>
+                                        </h2>
+                                        <div class="doc-divider"></div>
+                                        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body border-0">
+                                                <p class="admin-subtitle">Documentación por parte del proveedor</p>
+                                                <ul>
+                                                    <li>Propuesta económica (cotización)</li>
+                                                </ul>
+                                                <div class="line-dot-divider"></div>
+                                                <p class="admin-subtitle">Documentación por parte de la Institución compradora</p>
+                                                <ul>
+                                                    <li>Manifiestos relacionados que requiera</li>
+                                                    <li>Otros</li>
+                                                </ul>
+                                                <div class="line-dot-divider"></div>
+                                                <p class="bullets"><strong>NOTA:</strong>La documentación y características
+                                                requeridos para participar en algún procedimiento
+                                                serán establecidas por las Istituciones compradoras con base en los
+                                                procesos que esta estipule.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                              
-                                <div class="documents-card h-80">
-                                    <p class="admin-title">TÉCNICA</p>
-                                    <div class="doc-divider"></div>
-                                    <p class="admin-subtitle">Documentación técnica</p>
-                                    <ul>
-                                        <li>Especificaciones técnicas del bien o servicio</li>
-                                        <li>Manifiestos relacionados requeridos por la Institución compradora</li>
-                                        <li>Otros</li>
-                                    </ul>
-                                </div>
-                                <div class="documents-card h-100">
-                                    <p class="admin-title">ECONÓMICA</p>
-                                    <div class="doc-divider"></div>
-                                    <p class="admin-subtitle">Documentación por parte del proveedor</p>
-                                    <ul>
-                                        <li>Propuesta económica (cotización)</li>
-                                    </ul>
-                                    <div class="line-dot-divider"></div>
-                                    <p class="admin-subtitle">Documentación por parte de la Institución compradora</p>
-                                    <ul>
-                                        <li>Manifiestos relacionados que requiera</li>
-                                        <li>Otros</li>
-                                    </ul>
-                                    <div class="line-dot-divider"></div>
-                                    <p class="bullets"><strong>NOTA:</strong>La documentación y características
-                                    requeridos para participar en algún procedimiento
-                                    serán establecidas por las Istituciones compradoras con base en los
-                                    procesos que esta estipule.</p>
-                                </div>
-                            </div>
                         </div>
                     </div>
-
-
- <!-- mobile -->
+<!-- mobile -->
 
 <div class="acordion-mobile">
     <div class="accordion-item">
@@ -492,29 +513,29 @@
             </div>
             <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
-                <div class="d-flex justify-content-center align-items-center">
-                                <div class="icons-content">
-                                    <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 
-                                    0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 
-                                    000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 
-                                    00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>  
-                                </div>
-                                <div class="content-card-items">
-                                    <div class="card-items">
-                                        <p class="title">Regístrate en Padrón de Proveedores</p>
-                                        <p class="message">Si encontraste alguna oportunidad de negocio y algún procedimiento es de tu
-                                    interés, tramita tu <a href="#" class="text-[#BC955C] hover:text-[#8B1232]">Constancia de Registro en el Padrón de Proveedores</a> de la
-                                    Administración Pública de la Ciudad de México.</p>
-                                        <div class="d-flex align-items-center">
-                                            <a href="#" class="mr-3">Tramita tu constancia</a>
-                                            <svg class="w-5 h-16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#bc955c" aria-hidden="true">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="icons-content">
+                                <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 
+                                0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 
+                                000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 
+                                00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>  
+                            </div>
+                            <div class="content-card-items">
+                                <div class="card-items">
+                                    <p class="title">Regístrate en Padrón de Proveedores</p>
+                                    <p class="message">Si encontraste alguna oportunidad de negocio y algún procedimiento es de tu
+                                interés, tramita tu <a href="#" class="text-[#BC955C] hover:text-[#8B1232]">Constancia de Registro en el Padrón de Proveedores</a> de la
+                                Administración Pública de la Ciudad de México.</p>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#" class="mr-3">Tramita tu constancia</a>
+                                        <svg class="w-5 h-16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#bc955c" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
-                                            </svg>
-                                        </div>
+                                        </svg>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -530,17 +551,160 @@
             </div>
             <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
+                <div class="item-content-mobile">
+                        <div>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="icons-content">
+                                    <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+                                        <path d="M8 11C8 11.5523 7.55228 12 7 12C6.44772 12 6 11.5523 6 11C6 10.4477 6.44772 10 7 10C7.55228 10 8 10.4477 8 11ZM8 14C8 14.5523 7.55228 15 
+                                        7 15C6.44772 15 6 14.5523 6 14C6 13.4477 6.44772 13 7 13C7.55228 13 8 13.4477 8 14ZM13 12C13.5523 12 14 11.5523 14 11C14 10.4477 13.5523 10 13 10C12.4477 
+                                        10 12 10.4477 12 11C12 11.5523 12.4477 12 13 12ZM14 14C14 14.5523 13.5523 15 13 15C12.4477 15 12 14.5523 12 14C12 13.4477 12.4477 13 13 13C13.5523 13 14 
+                                        13.4477 14 14ZM10 12C10.5523 12 11 11.5523 11 11C11 10.4477 10.5523 10 10 10C9.44772 10 9 10.4477 9 11C9 11.5523 9.44772 12 10 12ZM11 14C11 14.5523 10.5523 
+                                        15 10 15C9.44772 15 9 14.5523 9 14C9 13.4477 9.44772 13 10 13C10.5523 13 11 13.4477 11 14ZM7.5 4C6.67157 4 6 4.67157 6 5.5V6.5C6 7.32843 6.67157 8 7.5 
+                                        8H12.5C13.3284 8 14 7.32843 14 6.5V5.5C14 4.67157 13.3284 4 12.5 4H7.5ZM7 5.5C7 5.22386 7.22386 5 7.5 5H12.5C12.7761 5 13 5.22386 13 5.5V6.5C13 6.77614 12.7761 
+                                        7 12.5 7H7.5C7.22386 7 7 6.77614 7 6.5V5.5ZM16 15.5C16 16.8807 14.8807 18 13.5 18H6.5C5.11929 18 4 16.8807 4 15.5V4.5C4 3.11929 5.11929 2 6.5 2H13.5C14.8807 2 
+                                        16 3.11929 16 4.5V15.5ZM15 4.5C15 3.67157 14.3284 3 13.5 3H6.5C5.67157 3 5 3.67157 5 4.5V15.5C5 16.3284 5.67157 17 6.5 17H13.5C14.3284 17 15 16.3284 15 15.5V4.5Z" 
+                                        fill="currentColor"></path>
+                                    </svg>
+                                    <div class="line-divider"></div>
+                                    <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor"><defs></defs><path d="M25.707,17.293l-5-5A1,1,0,0,0,20,12H14a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H24a2,2,0,0,0,2-2V18A1,1,0,0,0,25.707,17.293ZM23.5857,18H20V14.4141ZM14,28V14h4v4a2,2,0,0,0,2,2h4v8Z"></path><path d="M8,27H4a2.0023,2.0023,0,0,1-2-2V5A2.0023,2.0023,0,0,1,4,3h7.5857A1.9865,1.9865,0,0,1,13,3.5859L16.4143,7H28a2.0023,2.0023,0,0,1,2,2v8H28V9H15.5857l-4-4H4V25H8Z"></path><rect id="_Transparent_Rectangle_" data-name="<Transparent Rectangle>" class="cls-1" width="32" height="32" style="fill: none"></rect></svg>
+                                </div>
 
+                                <div class="content-card-items">
+                                    <div class="card-items">
+                                        <p class="title">Cotiza tu Bien o Servicio</p>
+                                        <p class="message">Al tener tu constancia de Padrón de Proveedores vigente y dependiendo el tipo
+                                        de procedimiento, puedes cotizar el bien o servicio que la Istitución compradora desee adquirir.
+                                        <strong>Cotiza por medio del sistema de requisiciones del Gobierno de la CDMX.</strong></p>
+                                        <div class="d-flex align-items-center">
+                                            <a href="#" class="mr-3">Ir al sistema de Requisiciones</a>
+                                            <svg class="w-5 h-16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#bc955c" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="card-items">
+                                        <p class="title">Conoce las bases del procedimiento</p>
+                                        <p class="message">En caso de resultar participante, con base en las características del
+                                        procedimiento estipuladas por la Institución compradora, sigue el proceso correspondiente.</p>
+                                        <div class="d-flex align-items-center">
+                                            <a href="#" class="mr-3">Directorio de Instituciones compradoras</a>
+                                            <svg class="w-5 h-16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#bc955c" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="title-doc-request">Documentación requerida para participar en un procedimientos </p>
+                            <div class="d-flex justify-content-evenly content-crd">
+                                <div class="documents-card">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header admin-title" id="flush-headingOne">
+                                            <button class="accordion-button collapsed hover:text-[#BC955C]" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                            ADMINISTRATIVA Y LEGAL
+                                            <svg class="w-6 h-6" style="margin-left:10%" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4a8 8 0 100 16 8 8 0 000-16zM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12zm10-4a1 1 0 011 1v2h2a1 1 0 110 2h-2v2a1 1 0 11-2 0v-2H9a1 1 0 110-2h2V9a1 1 0 011-1z"></path></svg>
+                                            </button>
+                                        </h2>
+                                        <div class="doc-divider"></div>
+                                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body border-0">
+                                                <p class="admin-subtitle">Documentación de identidad del proveedor:</p>
+                                                <ul>
+                                                    <li class="bullets">Acta nacimiento / constitutiva</li>
+                                                    <li class="bullets">Identificación oficial Contribuyente /Representante</li>
+                                                </ul>
+                                                <div class="line-dot-divider"></div>
+                                                <p class="admin-subtitle">Documentación fiscal</p>
+                                                <ul>
+                                                    <li class="bullets">Comprobante de domicilio</li>
+                                                    <li class="bullets">Constancia de identificación fiscal</li>
+                                                    <li class="bullets">Constancia en el padrón de proveedores</li>
+                                                    <li class="bullets">Alta de cuenta de cheques</li>
+                                                </ul>
+                                                <div class="line-dot-divider"></div>
+                                                <p class="admin-subtitle">Documentación requerida por la Institución compradora</p>
+                                                <ul>
+                                                    <li class="bullets">Manifiestos relacionados</li>
+                                                    <li class="bullets">Otros (consultar con la Institución compradora solicitante)</li>
+                                                </ul>
+                                                <div class="d-flex align-items-center">
+                                                    <a href="#" class="mr-3">Directorio CDMX</a>
+                                                        <svg class="w-5 h-16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#bc955c" aria-hidden="true">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
+                                                        </svg>
+                                                </div>
+                                                <div class="line-dot-divider"></div>
+                                                <p class="bullets"><strong>NOTA:</strong>La Constancia de Registro en el Padrón de
+                                                Proveedores y el Alta de cuenta de cheques en una
+                                                institución bancaria son documentos obligatorios.
+                                                Inicia el trámite de forma oportuna para contar con
+                                                estos cuando desee participar en un procedimiento.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="documents-card">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header admin-title" id="flush-headingTwo">
+                                            <button class="accordion-button collapsed hover:text-[#BC955C]" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                            TÉCNICA
+                                            <svg class="w-6 h-6" fill="currentColor" style="margin-left:60%" viewBox="0 0 24 24"><path d="M12 4a8 8 0 100 16 8 8 0 000-16zM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12zm10-4a1 1 0 011 1v2h2a1 1 0 110 2h-2v2a1 1 0 11-2 0v-2H9a1 1 0 110-2h2V9a1 1 0 011-1z"></path></svg>
+                                            </button>
+                                        </h2>
+                                        <div class="doc-divider"></div>
+                                        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body border-0">
+                                                <p class="admin-subtitle">Documentación técnica</p>
+                                                <ul>
+                                                    <li>Especificaciones técnicas del bien o servicio</li>
+                                                    <li>Manifiestos relacionados requeridos por la Institución compradora</li>
+                                                    <li>Otros</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="documents-card">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header admin-title" id="flush-headingThree">
+                                            <button class="accordion-button collapsed hover:text-[#BC955C]" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                            ECONÓMICA
+                                            <svg class="w-6 h-6" fill="currentColor" style="margin-left:50%" viewBox="0 0 24 24"><path d="M12 4a8 8 0 100 16 8 8 0 000-16zM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12zm10-4a1 1 0 011 1v2h2a1 1 0 110 2h-2v2a1 1 0 11-2 0v-2H9a1 1 0 110-2h2V9a1 1 0 011-1z"></path></svg>
+                                            </button>
+                                        </h2>
+                                        <div class="doc-divider"></div>
+                                        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body border-0">
+                                                <p class="admin-subtitle">Documentación por parte del proveedor</p>
+                                                <ul>
+                                                    <li>Propuesta económica (cotización)</li>
+                                                </ul>
+                                                <div class="line-dot-divider"></div>
+                                                <p class="admin-subtitle">Documentación por parte de la Institución compradora</p>
+                                                <ul>
+                                                    <li>Manifiestos relacionados que requiera</li>
+                                                    <li>Otros</li>
+                                                </ul>
+                                                <div class="line-dot-divider"></div>
+                                                <p class="bullets"><strong>NOTA:</strong>La documentación y características
+                                                requeridos para participar en algún procedimiento
+                                                serán establecidas por las Istituciones compradoras con base en los
+                                                procesos que esta estipule.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
 </x-guest-layout>
 
 <script type="text/javascript">
@@ -549,12 +713,13 @@ const buttonOportunities = document.getElementById("button-oportunities");
 const buttonProcess = document.getElementById("button-process");
 const buttonDocumentation = document.getElementById("button-documentation");
 
-
-
 const buttonsChange = (id) => {
     let buttonName = document.getElementById(id)
-    if(buttonName)
-   buttonName.style.display = 'block';
+    if(buttonName.style.display === 'none'){
+        buttonName.style.display = 'block';
+    }else {
+        buttonName.style.display = 'none'
+    }
 }
 
 buttonRegister.addEventListener("click", () => buttonsChange('register'));
