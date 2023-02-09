@@ -48,6 +48,7 @@
                     </button>
                 @endforeach
 
+                @push('scripts')
                 <script type="text/javascript">
                     function etapasFiltros() {
                         return {
@@ -67,6 +68,7 @@
                         }
                     }
                 </script>
+                @endpush
             </div>                
         </div>
         

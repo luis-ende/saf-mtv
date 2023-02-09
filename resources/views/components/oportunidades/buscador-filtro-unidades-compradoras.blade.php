@@ -28,6 +28,7 @@
             </template>
         </ul>
     </div>
+    @push('scripts')
     <script type="text/javascript">
         function unidadesCompradoras() {
             return {
@@ -93,4 +94,5 @@
             }
         }
     </script>
+    @endpush
 </div>

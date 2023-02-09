@@ -31,17 +31,18 @@
         </header>
 
         <div class="bg-gray-100">
-        <div class="min-h-screen">
-            <!-- Page Content -->
-            <main>
-                @include('layouts.alert-notification')
-                {{ $slot }}
-            </main>
+            <div class="min-h-screen">
+                <!-- Page Content -->
+                <main>
+                    @include('layouts.alert-notification')
+                    {{ $slot }}
+                </main>
 
-            <!-- Page Footer -->
-            <x-site-footer />
+                <!-- Page Footer -->
+                <x-site-footer />
+            </div>
         </div>
 
-        @yield('scripts')
+        @stack('scripts')
     </body>
 </html>
