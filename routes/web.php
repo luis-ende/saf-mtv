@@ -100,6 +100,8 @@ Route::middleware(['role:proveedor', 'auth', 'verified', 'registro_mtv.status'])
     Route::post('/productos/edit/{producto}', [ProductosController::class, 'update'])->name('productos.update');
     Route::delete('/productos/delete/{producto}', [ProductosController::class, 'destroy'])->name('productos.destroy');
     Route::get('/productos/{producto}/fotos', [ProductosController::class, 'showFotos'])->name('productos-fotos.show');
+    
+    Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'index'])->name('centro-notificaciones');
 });
 
 Route::get('/proveedor/catalogo-productos/{catalogo}', [ProveedorController::class, 'showCatalogoProductos'])->name('proveedor-catalogo-productos.show');
@@ -132,8 +134,6 @@ Route::controller(OportunidadesController::class)->group(function() {
                 'updateAlerta')->middleware(['role:proveedor', 'auth'])->name('oportunidades-negocio-alertas.update');
     Route::get('/oportunidades-de-negocio/export', 'exportOportunidadesNegocio')->name('oportunidades-negocio.export');
 });
-
-Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'index'])->middleware(['auth', 'verified'])->name('centro-notificaciones');
 
 Route::get('/programacion-anual', [ProgramacionAnualController::class, 'index'])->name('programacion-anual');
 
