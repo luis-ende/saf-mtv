@@ -1,7 +1,4 @@
-<x-app-layout>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/share.js') }}"></script>
-
+<x-app-layout>        
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden min-h-screen">
             <div class="px-6 bg-white border-b border-gray-200 flex flex-row items-baseline">
@@ -57,20 +54,21 @@
             @php($numProductosBien = count($productos_bien))
             @php($numProductosServicio = count($productos_servicio))
             <div class="py-6 px-12 mb-5">
-                <div x-data="{ tab: 'bienes' }">
-                    <nav class="font-bold text-lg text-mtv-gold flex flex-row mb-5">
-                        <a class="no-underline border-b-4 basis-1/2 text-center"
-                           :class="tab === 'bienes' ? 'text-mtv-secondary border-mtv-secondary hover:text-mtv-secondary' : 'text-mtv-gold border-mtv-gold-light hover:text-mtv-gold'"
-                           x-on:click.prevent="tab = 'bienes'"
-                           href="#">
+                <div x-data="{ 
+                    tab: 'bienes',
+                    tabActive: 'text-white bg-mtv-secondary hover:text-mtv-secondary', 
+                    tabInactive: 'text-white bg-mtv-gold-light hover:text-white' }">
+                    <nav class="font-bold text-lg flex md:flex-row xs:flex-col md:space-x-7 md:space-y-0 xs:space-y-4 xs:space-x-0 px-7 mx-auto mb-14 w-3/4">
+                        <button class="no-underline rounded-3xl basis-1/2 text-center py-2 px-5"
+                           :class="tab === 'bienes' ? tabActive : tabInactive"
+                           x-on:click.prevent="tab = 'bienes'">
                            {{ $numProductosBien }} Productos
-                        </a>
-                        <a class="no-underline border-b-4 basis-1/2 text-center"
-                           :class="tab === 'servicios' ? 'text-mtv-secondary border-mtv-secondary hover:text-mtv-secondary' : 'text-mtv-gold border-mtv-gold-light hover:text-mtv-gold'"
-                           x-on:click.prevent="tab = 'servicios'"
-                           href="#">
+                        </button>
+                        <button class="no-underline rounded-3xl basis-1/2 text-center py-2 px-5"
+                           :class="tab === 'servicios' ?  tabActive : tabInactive"
+                           x-on:click.prevent="tab = 'servicios'">
                            {{ $numProductosServicio }} Servicios
-                        </a>
+                        </button>
                     </nav>
                     @php($modo = isset($proveedor) ? 'visitante' : 'proveedor')
                     <div x-show="tab === 'bienes'">
