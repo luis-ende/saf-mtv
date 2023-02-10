@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OportunidadNegocio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\OportunidadesNotificacionesRepository;
@@ -15,8 +16,16 @@ class CentroNotificacionesController extends Controller
     {
         $user = Auth::user();
         $opn_sugeridas =  $opnNotifRepo->obtieneOportunidadesSugeridas($user);
-        $opn_marcadas = $opnNotifRepo->obtieneOportunidadesMarcadas($user);
+        $opn_guardadas = $opnNotifRepo->obtieneOportunidadesGuardadas($user);
 
-        return view('notificaciones.index', compact('opn_sugeridas', 'opn_marcadas'));
+        return view('notificaciones.index', compact('opn_sugeridas', 'opn_guardadas'));
+    }
+
+    public function destroy(Request $request, OportunidadNegocio $oportunidad, OportunidadesNotificacionesRepository $opnNotifRepo)  
+    {
+        $user = Auth::user();
+        $result = $opnNotifRepo->agregaSugerenciaDescartada($user, $oportunidad);
+
+        return [$result];
     }
 }

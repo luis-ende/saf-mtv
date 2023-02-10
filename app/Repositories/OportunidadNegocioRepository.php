@@ -9,7 +9,7 @@ use App\Services\CalculadoraFechasService;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * Clase para extraer convocatorias de la página de concurso digital o de alguna otra fuente de datos establecida.
+ * Clase repositorio para oportunidades de negocio.
  */
 class OportunidadNegocioRepository
 {

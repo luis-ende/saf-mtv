@@ -29,15 +29,13 @@
                 <br>
             @else
                 <p class="my-0">Presentación de propuestas: <strong>{{ Carbon\Carbon::parse($oportunidad->fecha_presentacion_propuestas)->translatedFormat('d F Y') }}</strong></p>                
-            @endif                        
-            {{--<hr>--}}
+            @endif                                    
             <div class="border-t border-b mt-3 mb-3">
                 <p class="my-0 mt-3">Grandes rubros de gastos: <strong>-</strong></p>
                 <p>Rubro de gasto: <strong>-</strong></p>
                 <p class="my-0">Tipo de contratación: <strong>{{ $oportunidad->tipo_contratacion }}</strong></p>
                 <p>Método de contratación: <strong>{{ $oportunidad->metodo_contratacion }}</strong></p>
-            </div>
-            {{--<hr>--}}
+            </div>            
             <p class="my-0"><strong>Más información:</strong></p>
             <div class="my-2 flex flex-col flex-nowrap justify-center items-center">
                 @if($oportunidad->fuente_url)
@@ -50,17 +48,17 @@
                     </div>
                 @endif                
             </div>
-        </div>
-        <div class="bg-white p-3 border border-l border-r border-b rounded-bl-lg rounded-br-lg flex flex-col justify-center items-center">
-            @if(!$procedimientoCerrado)
-                <x-oportunidades.oportunidad-alerta-button 
+        </div>        
+        @php($es_opn_sugerida = $oportunidad->oportunidad_sugerida ?? false)
+        <div class="bg-white p-3 border border-l border-r border-b rounded-bl-lg rounded-br-lg flex {{ $es_opn_sugerida ? 'flex-row space-x-7' : 'flex-col' }} justify-center items-center">
+            <x-oportunidades.oportunidad-alerta-button 
+                :oportunidad="$oportunidad"
+                :procedimiento_cerrado="$procedimientoCerrado"
+            />            
+            @if($es_opn_sugerida)                
+                <x-oportunidades.sugerido-eliminar-button
                     :oportunidad="$oportunidad"
-                />
-            @else
-                <div class="my-0 text-white font-bold bg-mtv-gray-light border border-slate-200 rounded-lg px-3 py-2">
-                    @svg('codicon-bell-dot', ['class' => 'w-5 h-5 inline-block mr-2'])
-                    Activar alerta
-                </div>
+                 />
             @endif
         </div>                
     </div>

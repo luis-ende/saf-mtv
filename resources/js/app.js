@@ -334,4 +334,28 @@ Alpine.data('oportunidadesFiltrosURLParams', () => ({
     },
 }))
 
+Alpine.data('oportunidadNegocioSugeridos', () => ({
+    eliminaSugerido(oportunidadId, token) {
+        Swal.fire({
+            ...SwalMTVCustom,
+            title: 'Oportunidades de negocio sugeridas',
+            html: '<span>¿Deseas eliminar borrar la oportunidad sugerida para que no aparezca en esta sección?</span>',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('/notificaciones/sugerencias/delete/' + oportunidadId, {
+                    method: "DELETE",
+                    credentials: 'same-origin',
+                    headers: {
+                        'X-CSRF-Token': token,
+                    },
+                }).then(response => {                    
+                    if (response.ok) {
+                        location.reload();
+                    }
+                });                                
+            }
+        })
+    }
+}))
+
 Alpine.start();

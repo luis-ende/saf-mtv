@@ -9,14 +9,14 @@ use App\Models\OportunidadNegocio;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Clase para extraer convocatorias de la página de concurso digital o de alguna otra fuente de datos establecida.
+ * Clase repositorio para el centro de notificaciones de oportunidades de negocio.
  */
 class OportunidadesNotificacionesRepository
 {
     /**
-     * Obtiene las oportunidades de negocio marcadas por el usuario.
+     * Obtiene las oportunidades de negocio marcadas con bookmark por el usuario.
      */
-    public function obtieneOportunidadesMarcadas(User $user) 
+    public function obtieneOportunidadesGuardadas(User $user) 
     {        
         $query = OportunidadNegocio::whereHasBookmark($user);
         $oportunidades = $this->getQuerySelectOportunidades($query, $user)
@@ -33,14 +33,40 @@ class OportunidadesNotificacionesRepository
     {     
         $query = OportunidadNegocio::from('oportunidades_negocio');
         $query = $this->getQuerySelectOportunidades($query, $user)
-                      // Deben ser solamente oportunidades vigentes
+                      ->addSelect(DB::raw('true AS oportunidad_sugerida'))
+                      // Deben ser solamente oportunidades vigentes.
                       ->where('ec.estatus', "<>", "Cerrado");
 
-        // TODO Seleccionar sugeridos...
+        // Omitir sugerencias de oportunidades que hayan sido descartadas por el usuario.
+        $userId = $user->id;
+        $query = $query->whereNotExists(function($subQ) use($userId) {
+            $subQ->select('opns.sugerencia_descartada')
+                 ->from('oportunidades_sugeridas AS opns')
+                 ->whereRaw(DB::raw('opns.id_oportunidad_negocio = oportunidades_negocio.id'))
+                 ->where('opns.id_user', $userId);
+        });
+
+        // TODO Sugerencias deben hacer "match" por partida presupuestal con el perfil de negocio y productos del catálogo
+        // TODO De no existir el dato de la partida presupuestal, se buscan las coincidencias usando el nombre del procedimiento
 
         $oportunidades = $query->limit(30)->get();
 
         return $oportunidades;        
+    }
+
+    /**
+     * Marca la oportunidad de negocio como descartada por el usuario en notificaciones (oportunidades sugeridas).
+     */
+    public function agregaSugerenciaDescartada(User $user, OportunidadNegocio $oportunidad) 
+    {
+        return DB::table('oportunidades_sugeridas')->updateOrInsert([
+            'id_user' => $user->id,
+            'id_oportunidad_negocio' => $oportunidad->id,            
+        ], [
+            'sugerencia_descartada' => true,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     private function getQuerySelectOportunidades($query, User $user) 

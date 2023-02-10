@@ -101,7 +101,10 @@ Route::middleware(['role:proveedor', 'auth', 'verified', 'registro_mtv.status'])
     Route::delete('/productos/delete/{producto}', [ProductosController::class, 'destroy'])->name('productos.destroy');
     Route::get('/productos/{producto}/fotos', [ProductosController::class, 'showFotos'])->name('productos-fotos.show');
     
-    Route::get('/centro-notificaciones', [CentroNotificacionesController::class, 'index'])->name('centro-notificaciones');
+    Route::controller(CentroNotificacionesController::class)->group(function () {
+        Route::get('/centro-notificaciones', 'index')->name('centro-notificaciones');
+        Route::delete('/notificaciones/sugerencias/delete/{oportunidad}', 'destroy')->name('notificaciones-sugerencias.destroy');
+    });
 });
 
 Route::get('/proveedor/catalogo-productos/{catalogo}', [ProveedorController::class, 'showCatalogoProductos'])->name('proveedor-catalogo-productos.show');

@@ -18,7 +18,7 @@
                         <button class="no-underline rounded-3xl basis-1/2 text-center py-2 px-5"
                            :class="tab === 2 ?  tabActive : tabInactive"
                            x-on:click.prevent="tab = 2">
-                           Siguiendo {{ count($opn_marcadas) }} oportunidades
+                           Siguiendo {{ count($opn_guardadas) }} oportunidades
                         </button>
                     </nav>
                     <div x-show="tab === 1" class="px-5">
@@ -27,7 +27,7 @@
                     </div>
                     <div x-show="tab === 2" class="px-5">
                         <x-oportunidades.oportunidades-grid
-                            :oportunidades="$opn_marcadas" />
+                            :oportunidades="$opn_guardadas" />
                     </div>
                 </div>
             </div>
