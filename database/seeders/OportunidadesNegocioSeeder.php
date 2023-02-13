@@ -6,6 +6,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Services\OportunidadesNegocio\ConcursoDigitalService;
+use App\Services\OportunidadesNegocio\PrebasesService;
 
 class OportunidadesNegocioSeeder extends Seeder
 {
@@ -14,8 +15,10 @@ class OportunidadesNegocioSeeder extends Seeder
      *
      * @return void
      */
-    public function run(ConcursoDigitalService $concursoDService): void
+    public function run(ConcursoDigitalService $concursoDService, 
+                        PrebasesService $prebasesService): void
     {
         $concursoDService->importaOportunidadesNegocio();
+        $prebasesService->importaOportunidadesNegocio();
     }
 }

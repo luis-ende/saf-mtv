@@ -10,8 +10,8 @@ use App\Spiders\ConvocatoriasOportunidadesSpider;
 
 
 /**
- * Clase para procesar oportunidades de negocio provienientes de la página de concurso digital, 
- * correspondiente a la etapa "Licitación en proceso".
+ * Clase para procesar la extracción de oportunidades de negocio provienientes de la página de Concurso Digital (convocatorias), 
+ * correspondiente a la etapa "Licitaciones en proceso" en MTV.
  * 
  * Ver: https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas
  */
@@ -39,8 +39,7 @@ class ConcursoDigitalService
             $fechaPresentacionP = $concurso['fecha_presentacion_propuestas'] ? 
                                     Carbon::createFromFormat('Y-m-d', substr($concurso['fecha_presentacion_propuestas'], 0, 10)) : 
                                     Carbon::now();            
-    
-            // TODO Abrir transacción
+                
             OportunidadNegocio::updateOrInsert([
                     'nombre_procedimiento' => $concurso['nombre_procedimiento'],
                     'fecha_publicacion' => $fechaPublicacion,
@@ -53,6 +52,8 @@ class ConcursoDigitalService
                     'id_etapa_procedimiento' => $etapaLicEnProc,
                     'id_estatus_contratacion' => $estatusContrVigente,
                     'fuente_url' => $concurso['fuente_url'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
             ]);
             
             // Actualizar estatus de oportunidades de negocio con fecha de presentación de propuestas haya transcurrido.

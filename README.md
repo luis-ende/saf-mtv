@@ -64,6 +64,7 @@ Para realizar una actualización completa del ambiente de desarrollo ejecutar de
   - Los favoritos de productos se encuentran en la tabla `markable_favorites`
   - Las alertas de oportunidades de negocio se encuentran en la tabla `markable_bookmarks`
 - Enlaces de redes sociales (en este proyecto se usan solamente las funciones para generar los enlaces, no los botones en el front-end): https://github.com/jorenvh/laravel-share
+- Para la extracción de datos vía [web scrapping](https://es.wikipedia.org/wiki/Web_scraping) de los sitios de Concurso Digital y Prebases se utiliza el paquete: Laravel Roach PHP - [https://roach-php.dev/docs/laravel/](https://roach-php.dev/docs/laravel/). Para abrir una línea de comando interactiva usar: `php artisan roach:shell https://roach-php.dev/docs/introduction` O para ejecutar un spider específico (desde el directorio raíz del proyecto), por ejemplo: `vendor/bin/roach roach:run App\\Spiders\\PrebasesOportunidadesSpider`
 
 ## MTV en Docker
 
