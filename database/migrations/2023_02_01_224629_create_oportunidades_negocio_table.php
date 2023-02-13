@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignId('id_metodo_contratacion')->constrained('cat_metodos_contratacion');
             $table->foreignId('id_etapa_procedimiento')->constrained('cat_etapas_procedimiento');
             $table->foreignId('id_estatus_contratacion')->constrained('cat_estatus_contratacion');
+            $table->string('partidas', 60)->nullable();
             $table->text('fuente_url')->nullable();
             $table->timestamps();
 

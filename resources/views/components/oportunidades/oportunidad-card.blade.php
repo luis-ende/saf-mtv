@@ -31,8 +31,8 @@
                 <p class="my-0">Presentación de propuestas: <strong>{{ Carbon\Carbon::parse($oportunidad->fecha_presentacion_propuestas)->translatedFormat('d F Y') }}</strong></p>                
             @endif                                    
             <div class="border-t border-b mt-3 mb-3">
-                <p class="my-0 mt-3">Grandes rubros de gastos: <strong>-</strong></p>
-                <p>Rubro de gasto: <strong>-</strong></p>
+                <p class="my-0 mt-3">Grandes rubros de gastos: <strong>{{ $oportunidad->capitulo }}</strong></p>
+                <p>Rubro de gasto: <strong>{{ $oportunidad->partidas }}</strong></p>
                 <p class="my-0">Tipo de contratación: <strong>{{ $oportunidad->tipo_contratacion }}</strong></p>
                 <p>Método de contratación: <strong>{{ $oportunidad->metodo_contratacion }}</strong></p>
             </div>            

@@ -3,12 +3,10 @@
 namespace App\Spiders;
 
 use Generator;
-use RoachPHP\Roach;
 use RoachPHP\Http\Response;
 use RoachPHP\Spider\BasicSpider;
 use RoachPHP\Spider\ParseResult;
 use RoachPHP\Extensions\LoggerExtension;
-use RoachPHP\Spider\Configuration\Overrides;
 use RoachPHP\Extensions\StatsCollectorExtension;
 use RoachPHP\Downloader\Middleware\RequestDeduplicationMiddleware;
 

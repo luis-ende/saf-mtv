@@ -37,6 +37,15 @@ class PrebasesService
             $fechaPublicacion = $proyecto['fecha_publicacion'] ? 
                                     Carbon::createFromFormat('d/m/Y', substr(trim($proyecto['fecha_publicacion']), 0, 10)) : 
                                     Carbon::now();            
+
+            $partidas = null;
+            if (!empty($proyecto['partidas'])) {
+                // Encontrar y usar solamente los números de partida sin descripciones
+                preg_match_all('/\d+/', $proyecto['partidas'], $matches);
+                if ($matches[0]) {
+                    $partidas = implode(',', $matches[0]);
+                }                
+            }
                 
             OportunidadNegocio::updateOrInsert([
                     'nombre_procedimiento' => $proyecto['nombre_proyecto'],
@@ -48,7 +57,8 @@ class PrebasesService
                     'id_metodo_contratacion' => strtolower($proyecto['metodo_contratacion']) === 'licitación pública' ?  $tipoMetodoContratacionLP : $tipoMetodoContratacionIR,
                     'id_etapa_procedimiento' => $etapaLicEnProc,
                     'id_estatus_contratacion' => strtolower($proyecto['estatus']) === 'abierto' ? $estatusContrVigente : $estatusContrCerrado,
-                    'fuente_url' => $proyecto['fuente_url'],
+                    'partidas' => $partidas,
+                    'fuente_url' => $proyecto['fuente_url'],                    
                     'created_at' => now(),
                     'updated_at' => now(),
             ]);                    

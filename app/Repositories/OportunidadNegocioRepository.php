@@ -52,7 +52,9 @@ class OportunidadNegocioRepository
         $query = OportunidadNegocio::from('oportunidades_negocio AS opn')
                                     ->select('opn.id', 'opn.nombre_procedimiento', 'opn.fecha_publicacion', 
                                              'opn.fecha_presentacion_propuestas', 'opn.id_etapa_procedimiento',
-                                             'opn.fuente_url', 'opn.id_unidad_compradora', 'uc.nombre AS unidad_compradora',
+                                             'opn.fuente_url', 'opn.id_unidad_compradora', 'opn.partidas',
+                                             DB::raw("SUBSTRING((STRING_TO_ARRAY(partidas, ','))[1], 1, 1) || '000' AS capitulo"),
+                                             'uc.nombre AS unidad_compradora',
                                              'ec.estatus AS estatus_contratacion', 'tc.tipo as tipo_contratacion',
                                              'mc.metodo AS metodo_contratacion', 'etp.etapa as etapa_procedimiento',
                                              'etp.secuencia as etapa_secuencia')
@@ -113,6 +115,16 @@ class OportunidadNegocioRepository
                 $query->whereIn(DB::raw('opn.id_estatus_contratacion'), $estatusContr);
             });
         }        
+
+        // if (isset($filtros['capitulo_filtro'])) {
+        //     $capitulos = $filtros['capitulo_filtro'];
+
+        //     $query = $query->where(function($query) use($capitulos) {                
+        //         foreach($capitulos as $c) {
+        //             $query = $query->orWhere(DB::raw("opn.partidas LIKE '" . $c[0] . "%'"));
+        //         }                
+        //     });
+        // }
 
         if ($terminoBusqueda) {
             $query = $query->where(function ($orQuery) use($terminoBusqueda) {

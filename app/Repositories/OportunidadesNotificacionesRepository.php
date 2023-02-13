@@ -77,7 +77,9 @@ class OportunidadesNotificacionesRepository
         return $query->select('oportunidades_negocio.id', 'oportunidades_negocio.nombre_procedimiento', 
                             'oportunidades_negocio.fecha_publicacion', 'oportunidades_negocio.fecha_presentacion_propuestas', 
                             'oportunidades_negocio.id_etapa_procedimiento', 'oportunidades_negocio.fuente_url', 
-                            'oportunidades_negocio.id_unidad_compradora', 'uc.nombre AS unidad_compradora',
+                            'oportunidades_negocio.id_unidad_compradora', 'oportunidades_negocio.partidas',
+                            DB::raw("SUBSTRING((STRING_TO_ARRAY(partidas, ','))[1], 1, 1) || '000' AS capitulo"),
+                            'uc.nombre AS unidad_compradora',
                             'ec.estatus AS estatus_contratacion', 'tc.tipo as tipo_contratacion',
                             'mc.metodo AS metodo_contratacion', 'etp.etapa as etapa_procedimiento',
                             'etp.secuencia as etapa_secuencia')
