@@ -29,7 +29,7 @@ class CatEtapasProcedimientoSeeder extends Seeder
         ]);
 
         DB::table('cat_etapas_procedimiento')->insert([
-            'etapa' =>  'Licitación en proceso',
+            'etapa' =>  'Licitaciones en proceso',
             'secuencia' => 3,
             'created_at' => now(),
             'updated_at' => now(),

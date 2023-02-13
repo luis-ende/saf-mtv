@@ -28,7 +28,7 @@ class ConcursoDigitalService
         $tipoContratacionServicio = DB::table('cat_tipos_contratacion')->where('tipo', 'Prestación de Servicios')->value('id');
         $tipoMetodoContratacionLP = DB::table('cat_metodos_contratacion')->where('metodo', 'Licitación pública')->value('id');
         $tipoMetodoContratacionIR = DB::table('cat_metodos_contratacion')->where('metodo', 'Invitación restringida')->value('id');
-        $etapaLicEnProc = DB::table('cat_etapas_procedimiento')->where('etapa', 'Licitación en proceso')->value('id');
+        $etapaLicEnProc = DB::table('cat_etapas_procedimiento')->where('etapa', 'Licitaciones en proceso')->value('id');
         $estatusContrVigente = DB::table('cat_estatus_contratacion')->where('estatus', 'En proceso')->value('id');
         $estatusContrCerrado = DB::table('cat_estatus_contratacion')->where('estatus', 'Cerrado')->value('id');
         
