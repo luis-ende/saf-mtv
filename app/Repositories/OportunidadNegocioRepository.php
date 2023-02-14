@@ -116,15 +116,17 @@ class OportunidadNegocioRepository
             });
         }        
 
-        // if (isset($filtros['capitulo_filtro'])) {
-        //     $capitulos = $filtros['capitulo_filtro'];
+        if (isset($filtros['capitulo_filtro'])) {
+            $capitulos = DB::table('cat_capitulos')
+                            ->select(DB::raw('SUBSTRING(numero, 1, 1) AS num_capitulo'))
+                            ->whereIn('id', $filtros['capitulo_filtro'])
+                            ->pluck('num_capitulo')
+                            ->toArray();
 
-        //     $query = $query->where(function($query) use($capitulos) {                
-        //         foreach($capitulos as $c) {
-        //             $query = $query->orWhere(DB::raw("opn.partidas LIKE '" . $c[0] . "%'"));
-        //         }                
-        //     });
-        // }
+            $query = $query->where(function($orQuery) use($capitulos) {                
+                $orQuery->orWhereIn(DB::raw('SUBSTRING(opn.partidas, 1, 1)'), $capitulos);
+            });
+        }
 
         if ($terminoBusqueda) {
             $query = $query->where(function ($orQuery) use($terminoBusqueda) {
@@ -158,6 +160,8 @@ class OportunidadNegocioRepository
         // Paginación
         $query = $query->offset($offset)
                        ->limit(self::BUSQUEDA_OPORTUNIDADES_PAGINATION_OFFSET);        
+
+        //dd($query->toSql());
                     
         $oportunidades = $query->get();
 
