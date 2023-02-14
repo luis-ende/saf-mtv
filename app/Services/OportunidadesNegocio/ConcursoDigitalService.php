@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use RoachPHP\Roach;
 use App\Models\OportunidadNegocio;
 use Illuminate\Support\Facades\DB;
+use App\Models\EstatusContratacion;
 use App\Spiders\ConvocatoriasOportunidadesSpider;
 
 
@@ -29,8 +30,8 @@ class ConcursoDigitalService
         $tipoMetodoContratacionLP = DB::table('cat_metodos_contratacion')->where('metodo', 'Licitación pública')->value('id');
         $tipoMetodoContratacionIR = DB::table('cat_metodos_contratacion')->where('metodo', 'Invitación restringida')->value('id');
         $etapaLicEnProc = DB::table('cat_etapas_procedimiento')->where('etapa', 'Licitaciones en proceso')->value('id');
-        $estatusContrVigente = DB::table('cat_estatus_contratacion')->where('estatus', 'En proceso')->value('id');
-        $estatusContrCerrado = DB::table('cat_estatus_contratacion')->where('estatus', 'Cerrado')->value('id');
+        $estatusContrVigente = DB::table('cat_estatus_contratacion')->where('estatus', EstatusContratacion::ESTATUS_CONTRATACION_VIGENTE)->value('id');
+        $estatusContrCerrado = DB::table('cat_estatus_contratacion')->where('estatus', EstatusContratacion::ESTATUS_CONTRATACION_FINALIZADO)->value('id');
         
         foreach($concursos as $concurso) {
             $fechaPublicacion = $concurso['fecha_publicacion'] ? 

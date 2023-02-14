@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use RoachPHP\Roach;
 use App\Models\OportunidadNegocio;
 use Illuminate\Support\Facades\DB;
+use App\Models\EstatusContratacion;
 use App\Spiders\PrebasesProyectoSpider;
 use App\Spiders\PrebasesOportunidadesSpider;
 use RoachPHP\Spider\Configuration\Overrides;
@@ -30,8 +31,8 @@ class PrebasesService
         $tipoMetodoContratacionLP = DB::table('cat_metodos_contratacion')->where('metodo', 'Licitación pública')->value('id');
         $tipoMetodoContratacionIR = DB::table('cat_metodos_contratacion')->where('metodo', 'Invitación restringida')->value('id');
         $etapaLicEnProc = DB::table('cat_etapas_procedimiento')->where('etapa', 'Prebases')->value('id');
-        $estatusContrVigente = DB::table('cat_estatus_contratacion')->where('estatus', 'En proceso')->value('id');
-        $estatusContrCerrado = DB::table('cat_estatus_contratacion')->where('estatus', 'Cerrado')->value('id');
+        $estatusContrVigente = DB::table('cat_estatus_contratacion')->where('estatus', EstatusContratacion::ESTATUS_CONTRATACION_VIGENTE)->value('id');
+        $estatusContrCerrado = DB::table('cat_estatus_contratacion')->where('estatus', EstatusContratacion::ESTATUS_CONTRATACION_FINALIZADO)->value('id');
         
         foreach($proyectos as $proyecto) {
             $fechaPublicacion = $proyecto['fecha_publicacion'] ? 
