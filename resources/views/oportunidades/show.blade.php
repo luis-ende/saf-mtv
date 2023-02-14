@@ -20,11 +20,11 @@
                 </div>                    
             </div>                
             <div class="my-4 text-lg text-mtv-text-gray flex flex-col items-center">
-                <span class="font-bold md:text-xl xs:text-base text-mtv-secondary mb-4 block">
+                <span class="font-bold md:text-xl xs:text-base text-mtv-secondary mb-4 block text-center">
                     Identifica qué productos y servicios compra la CDMX.
                 </span>
                 <span class="md:w-2/5 block text-base xs:text-sm text-center">
-                    <a href="{{ route('registro-inicio') }}" class="underline font-bold mtv-link-gold">Regístrate en “Mi Tiendita Virtual”.</a>
+                    <a href="{{ route('registro-inicio') }}" class="underline font-bold mtv-link-gold">Regístrate en “Mi Tiendita Virtual”</a>
                     para guardar y seguir las oportunidades de negocio de tu interés. Sólo da clic en el icono del “Marcador” y en la sección “Notificaciones” los encontrarás.
                 </span>
             </div>

@@ -12,6 +12,7 @@
                 <input class="mr-2 border focus:ring-mtv-secondary"
                        type="checkbox" id="unidad-c-0"
                        name="unidad_compradora_filtro[]" value="0"
+                       :checked="this.unidadesSeleccionadas.includes(0)"
                        @change="if ($event.target.checked) { uncheckAll(); $event.target.checked = true }">
                 <label class="font-bold" for="unidad-c-0">Todos</label>
             </li>
