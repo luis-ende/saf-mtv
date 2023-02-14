@@ -120,8 +120,7 @@ class OportunidadNegocioRepository
             $capitulos = DB::table('cat_capitulos')
                             ->select(DB::raw('SUBSTRING(numero, 1, 1) AS num_capitulo'))
                             ->whereIn('id', $filtros['capitulo_filtro'])
-                            ->pluck('num_capitulo')
-                            ->toArray();
+                            ->pluck('num_capitulo');
 
             $query = $query->where(function($orQuery) use($capitulos) {                
                 $orQuery->orWhereIn(DB::raw('SUBSTRING(opn.partidas, 1, 1)'), $capitulos);

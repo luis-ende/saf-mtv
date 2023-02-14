@@ -19,16 +19,13 @@
                     <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
                 </div>                    
             </div>                
-            <div class="my-4 text-lg text-mtv-text-gray text-center">
-                <span class="font-bold md:text-xl xs:text-base text-mtv-secondary my-4 inline-block">
+            <div class="my-4 text-lg text-mtv-text-gray flex flex-col items-center">
+                <span class="font-bold md:text-xl xs:text-base text-mtv-secondary mb-4 block">
                     Identifica qué productos y servicios compra la CDMX.
                 </span>
-                <span class="md:w-3/4 inline-block text-base xs:text-sm">
-                    Para activar las alertas de tu interés, 
-                    <a href="{{ route('registro-inicio') }}" class="underline font-bold mtv-link-gold">regístrate en “Mi Tiendita Virtual”.</a>
-                </span>
-                <span class="md:w-3/4 text-base xs:text-sm inline-block">
-                    Si ya estás registrado en Padrón de Proveedores, ahí te llegarán las notificaciones, sólo activa las alertas aquí.
+                <span class="md:w-2/5 block text-base xs:text-sm text-center">
+                    <a href="{{ route('registro-inicio') }}" class="underline font-bold mtv-link-gold">Regístrate en “Mi Tiendita Virtual”.</a>
+                    para guardar y seguir las oportunidades de negocio de tu interés. Sólo da clic en el icono del “Marcador” y en la sección “Notificaciones” los encontrarás.
                 </span>
             </div>
 
