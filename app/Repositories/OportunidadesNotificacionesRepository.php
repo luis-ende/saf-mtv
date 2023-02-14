@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\EstatusContratacion;
 use App\Models\User;
 use App\Models\Persona;
 use App\Models\PerfilNegocio;
@@ -33,9 +34,9 @@ class OportunidadesNotificacionesRepository
     {     
         $query = OportunidadNegocio::from('oportunidades_negocio');
         $query = $this->getQuerySelectOportunidades($query, $user)
-                      ->addSelect(DB::raw('true AS oportunidad_sugerida'))
+                      ->addSelect(DB::raw('true AS oportunidad_sugerida'))                      
                       // Deben ser solamente oportunidades vigentes.
-                      ->where('ec.estatus', "<>", "Cerrado");
+                      ->where('ec.estatus', "<>", EstatusContratacion::ESTATUS_CONTRATACION_FINALIZADO);
 
         // Omitir sugerencias de oportunidades que hayan sido descartadas por el usuario.
         $userId = $user->id;
@@ -47,7 +48,9 @@ class OportunidadesNotificacionesRepository
         });
 
         // TODO Sugerencias deben hacer "match" por partida presupuestal con el perfil de negocio y productos del catálogo
-        // TODO De no existir el dato de la partida presupuestal, se buscan las coincidencias usando el nombre del procedimiento
+        // TODO De no existir el dato de la partida presupuestal, se buscan las coincidencias usando el nombre del procedimiento        
+
+        // select distinct(id_categoria_scian) from cat_cabms where partida = '5412';
 
         $oportunidades = $query->limit(30)->get();
 
