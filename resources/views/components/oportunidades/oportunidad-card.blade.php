@@ -7,7 +7,7 @@
         </span>
     </div>
     <div class="flex flex-col">
-        @php($procedimientoCerrado = strtolower($oportunidad->estatus_contratacion) === 'cerrado')        
+        @php($procedimientoCerrado = $oportunidad->estatus_contratacion === App\Models\EstatusContratacion::ESTATUS_CONTRATACION_FINALIZADO)        
         <div class="h-28 bg-gray-100 border-l border-r block px-3 py-3">
             <span @class([
                 'text-mtv-primary' => !$procedimientoCerrado,
