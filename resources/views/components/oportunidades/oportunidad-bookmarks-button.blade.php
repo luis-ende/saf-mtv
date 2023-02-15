@@ -15,8 +15,8 @@
             @click="toggleBookmark(@js($apiRoute), @js(csrf_token()))"
         @endauth
 >    
-    @svg('bi-bookmark-heart', ['x-show' => '!bookmarkActivo', 'class' => 'w-5 h-5 inline-block mr-2 stroke-2'])
-    @svg('bi-bookmark-heart-fill', ['x-show' => 'bookmarkActivo', 'class' => 'w-5 h-5 inline-block mr-2 stroke-2'])
+    @svg('bi-bookmark-heart', ['x-show' => '!bookmarkActivo', 'class' => 'w-6 h-6 inline-block mr-2 stroke-2'])
+    @svg('bi-bookmark-heart-fill', ['x-show' => 'bookmarkActivo', 'class' => 'w-6 h-6 inline-block mr-2 stroke-2'])
     <span x-show="numBookmarks > 0" x-text="numBookmarks + ' '"></span>
     <span>Me gusta</span>
 </button>
