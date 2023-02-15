@@ -3,10 +3,10 @@
         <div class="bg-white overflow-hidden min-h-screen">
             <div class="px-6 bg-white border-b border-gray-200">
                 <x-page-header-label title="Notificaciones" />
-            </div>            
+            </div>        
             <div class="py-6 px-12">
                 <div x-data="{ 
-                    tab: 1,
+                    tab: @js($seccion),
                     tabActive: 'text-white bg-mtv-secondary hover:text-mtv-secondary', 
                     tabInactive: 'text-white bg-mtv-gold-light hover:text-white' }">
                     <nav class="font-bold text-lg flex md:flex-row xs:flex-col md:space-x-7 md:space-y-0 xs:space-y-4 xs:space-x-0 px-7 mx-auto mb-14 w-3/4">

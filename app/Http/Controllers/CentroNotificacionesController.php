@@ -12,13 +12,13 @@ class CentroNotificacionesController extends Controller
     /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function index(Request $request, OportunidadesNotificacionesRepository $opnNotifRepo)
+    public function index(Request $request, OportunidadesNotificacionesRepository $opnNotifRepo, ?int $seccion = 1)
     {
         $user = Auth::user();
         $opn_sugeridas =  $opnNotifRepo->obtieneOportunidadesSugeridas($user);
         $opn_guardadas = $opnNotifRepo->obtieneOportunidadesGuardadas($user);
 
-        return view('notificaciones.index', compact('opn_sugeridas', 'opn_guardadas'));
+        return view('notificaciones.index', compact('opn_sugeridas', 'opn_guardadas', 'seccion'));
     }
 
     public function destroy(Request $request, OportunidadNegocio $oportunidad, OportunidadesNotificacionesRepository $opnNotifRepo)  
