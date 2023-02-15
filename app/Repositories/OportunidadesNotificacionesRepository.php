@@ -51,7 +51,25 @@ class OportunidadesNotificacionesRepository
         // TODO Sugerencias deben hacer "match" por partida presupuestal con el perfil de negocio y productos del catálogo
         // TODO De no existir el dato de la partida presupuestal, se buscan las coincidencias usando el nombre del procedimiento        
 
+
+        $query = $query->where(function($subQ) use($userId) {
+            $subQ->whereIn('oportunidades_negocio.partidas', function($subSel) {                
+                $subSel->selectRaw(DB::raw("select distinct(partida) from cat_cabms ccb where ccb.id_categoria_scian = (select ccs.id from perfil_negocio as perfn left join cat_categorias_scian ccs on ccs.id = perfn.id_categoria_scian where perfn.id = 1) union select distinct(ccb.partida) from productos p join cat_cabms ccb on ccb.id = p.id_cabms where p.id_cat_productos = 7 union select distinct(ccb.partida) from productos_categorias cp join productos p on p.id = cp.id_producto left join cat_cabms ccb on ccb.id_categoria_scian = cp.id_categoria_scian where p.id_cat_productos = 7"));
+                // $subselPerfNeg = DB::raw("select distinct(partida) from cat_cabms ccb where ccb.id_categoria_scian = (select ccs.id from perfil_negocio as perfn left join cat_categorias_scian ccs on ccs.id = perfn.id_categoria_scian where perfn.id = 1)");
+                // $subselProductos = DB::raw("select distinct(ccb.partida) from productos p join cat_cabms ccb on ccb.id = p.id_cabms where p.id_cat_productos = 7");
+                // $subselProdCategorias = DB::raw("select distinct(ccb.partida) from productos_categorias cp join productos p on p.id = cp.id_producto left join cat_cabms ccb on ccb.id_categoria_scian = cp.id_categoria_scian where p.id_cat_productos = 7");
+                //DB::raw union  union ")
+                //$subselProductos = DB::table('productos p')->selectRaw('distinct(ccb.partida)')
+
+                //$subSel->union($subselPerfNeg);
+            });
+        });
+
         // select distinct(id_categoria_scian) from cat_cabms where partida = '5412';
+
+        // select distinct(partida) from cat_cabms ccb where ccb.id_categoria_scian = (select ccs.id from perfil_negocio as perfn left join cat_categorias_scian ccs on ccs.id = perfn.id_categoria_scian where perfn.id = 1) union
+        // select distinct(ccb.partida) from productos p join cat_cabms ccb on ccb.id = p.id_cabms where p.id_cat_productos = 7 union
+        // select distinct(ccb.partida) from productos_categorias cp join productos p on p.id = cp.id_producto left join cat_cabms ccb on ccb.id_categoria_scian = cp.id_categoria_scian where p.id_cat_productos = 7;
 
         $oportunidades = $query->limit(30)->get();
 
@@ -97,6 +115,7 @@ class OportunidadesNotificacionesRepository
                     ->leftJoin('cat_estatus_contratacion AS ec', 'ec.id', 'oportunidades_negocio.id_estatus_contratacion')
                     ->leftJoin('cat_tipos_contratacion AS tc', 'tc.id', 'oportunidades_negocio.id_tipo_contratacion')
                     ->leftJoin('cat_metodos_contratacion AS mc', 'mc.id', 'oportunidades_negocio.id_metodo_contratacion')
-                    ->leftJoin('cat_etapas_procedimiento AS etp', 'etp.id', 'oportunidades_negocio.id_etapa_procedimiento');
+                    ->leftJoin('cat_etapas_procedimiento AS etp', 'etp.id', 'oportunidades_negocio.id_etapa_procedimiento')
+                    ->orderByDesc('oportunidades_negocio.fecha_publicacion');        
     }
 }
