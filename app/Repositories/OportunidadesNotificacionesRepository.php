@@ -2,12 +2,13 @@
 
 namespace App\Repositories;
 
-use App\Models\EstatusContratacion;
 use App\Models\User;
 use App\Models\Persona;
 use App\Models\PerfilNegocio;
 use App\Models\OportunidadNegocio;
 use Illuminate\Support\Facades\DB;
+use App\Models\EstatusContratacion;
+use App\Repositories\OportunidadNegocioRepository;
 
 /**
  * Clase repositorio para el centro de notificaciones de oportunidades de negocio.
@@ -76,6 +77,8 @@ class OportunidadesNotificacionesRepository
     {
         $userId = $user->id;
         $opnClass = OportunidadNegocio::class;
+
+        $querySelectNumBookmarks = OportunidadNegocioRepository::subqueryOportunidadBookmarks('oportunidades_negocio');
         
         return $query->select('oportunidades_negocio.id', 'oportunidades_negocio.nombre_procedimiento', 
                             'oportunidades_negocio.fecha_publicacion', 'oportunidades_negocio.fecha_presentacion_propuestas', 
@@ -85,7 +88,7 @@ class OportunidadesNotificacionesRepository
                             'uc.nombre AS unidad_compradora',
                             'ec.estatus AS estatus_contratacion', 'tc.tipo as tipo_contratacion',
                             'mc.metodo AS metodo_contratacion', 'etp.etapa as etapa_procedimiento',
-                            'etp.secuencia as etapa_secuencia')
+                            'etp.secuencia as etapa_secuencia', $querySelectNumBookmarks)
                     ->addSelect(DB::raw("EXISTS((SELECT 1 FROM markable_bookmarks AS mb " . 
                                     "WHERE mb.markable_id = oportunidades_negocio.id " .
                                     "AND mb.markable_type = '{$opnClass}' " . 

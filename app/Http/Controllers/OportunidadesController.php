@@ -22,13 +22,14 @@ class OportunidadesController extends Controller
         return view('oportunidades.show', compact('filtros_opciones', 'oportunidades', 'estadisticas', 'busqueda_termino'));
     }
 
-    public function updateAlerta(Request $request, OportunidadNegocio $oportunidadNegocio) 
+    public function updateBookmark(Request $request, OportunidadNegocio $oportunidadNegocio) 
     {
         $user = Auth::user();
         Bookmark::toggle($oportunidadNegocio, $user);
         $alerta_estatus = Bookmark::has($oportunidadNegocio, $user);
+        $num_bookmarks = Bookmark::count($oportunidadNegocio);
 
-        return compact('alerta_estatus');
+        return compact('alerta_estatus', 'num_bookmarks');
     }
 
     /**

@@ -18,7 +18,7 @@
                         <button class="no-underline rounded-3xl basis-1/2 text-center py-2 px-5"
                            :class="tab === 2 ?  tabActive : tabInactive"
                            x-on:click.prevent="tab = 2">
-                           Siguiendo {{ count($opn_guardadas) }} oportunidades
+                           {{ count($opn_guardadas) }} Favoritos
                         </button>
                     </nav>
                     <div x-show="tab === 1" class="px-5">

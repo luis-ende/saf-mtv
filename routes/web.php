@@ -134,7 +134,7 @@ Route::controller(OportunidadesController::class)->group(function() {
     Route::get('/oportunidades-de-negocio', 'search')->name('oportunidades-negocio.search');
     Route::post('/oportunidades-de-negocio', 'search')->name('oportunidades-negocio.search');
     Route::post('/oportunidades-de-negocio/alertas/{oportunidad_negocio}', 
-                'updateAlerta')->middleware(['role:proveedor', 'auth'])->name('oportunidades-negocio-alertas.update');
+                'updateBookmark')->middleware(['role:proveedor', 'auth'])->name('oportunidades-negocio-bookmarks.update');
     Route::get('/oportunidades-de-negocio/export', 'exportOportunidadesNegocio')->name('oportunidades-negocio.export');
 });
 

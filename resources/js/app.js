@@ -240,10 +240,47 @@ Alpine.data('animatedCounter', (targer, time = 200, start = 0) => ({
     }      
 }))
 
-Alpine.data('oportunidadNegocioAlertas', () => ({
-    alertaActiva: false,
-    toggleAlerta(route, token) {
-        fetch(route, {
+Alpine.data('oportunidadNegocioBookmarks', () => ({
+    get currentColor() {        
+        let color = 'text-mtv-secondary';
+        if (this.bookmarkActivo) {
+            color = 'text-mtv-primary';
+        } else 
+        {
+            if (this.procedimientoCerrado) {
+                color = 'text-mtv-gray';
+            }            
+        }
+
+        return color;
+    },
+    numBookmarks: 0,
+    bookmarkActivo: false,    
+    procedimientoCerrado: false,
+    toggleBookmark(updateRoute, token) {
+        let newState = !this.bookmarkActivo;
+        if (newState === false) {
+            const props = SwalMTVCustom;
+            props.customClass['title'] = 'swal2-mtv-title';        
+            Swal.fire({
+                ...SwalMTVCustom,
+                title: 'Quitar de favoritos',
+                html: '<p class="swal-mtv-html-container-action">¿Quieres quitar esta oportunidad de negocio de tus favoritos?</p>',
+                confirmButtonText: 'Quitar',
+                cancelButtonText: 'Conservar',
+                showCloseButton: true,
+            }).then((result) => {                        
+                if (result.isConfirmed) {
+                    this.sendToggleRequest(updateRoute, token);
+                }
+            });            
+        } else {
+            this.sendToggleRequest(updateRoute, token);
+        }
+        
+    },
+    sendToggleRequest(updateRoute, token) {
+        fetch(updateRoute, {
             method: "POST",
             credentials: 'same-origin',
             headers: {
@@ -251,7 +288,8 @@ Alpine.data('oportunidadNegocioAlertas', () => ({
             },
         }).then(response => response.json())
         .then(json => {
-            this.alertaActiva = json.alerta_estatus;
+            this.bookmarkActivo = json.alerta_estatus;
+            this.numBookmarks = json.num_bookmarks;
         })
     },
     showMessage(rutaLogin, rutaRegistro) {
@@ -272,6 +310,11 @@ Alpine.data('oportunidadNegocioAlertas', () => ({
                 window.location.href = rutaRegistro;
             }            
         });
+    },
+    initBookmarks(numBookmarks, bookmarkActivo, procedimientoCerrado) {
+        this.bookmarkActivo = bookmarkActivo;
+        this.numBookmarks = numBookmarks;
+        this.procedimientoCerrado = procedimientoCerrado;
     }
 }))
 

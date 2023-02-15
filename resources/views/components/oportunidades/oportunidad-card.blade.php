@@ -51,7 +51,7 @@
         </div>        
         @php($es_opn_sugerida = $oportunidad->oportunidad_sugerida ?? false)
         <div class="bg-white p-3 border border-l border-r border-b rounded-bl-lg rounded-br-lg flex {{ $es_opn_sugerida ? 'flex-row space-x-7' : 'flex-col' }} justify-center items-center">
-            <x-oportunidades.oportunidad-alerta-button 
+            <x-oportunidades.oportunidad-bookmarks-button 
                 :oportunidad="$oportunidad"
                 :procedimiento_cerrado="$procedimientoCerrado"
             />            

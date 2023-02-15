@@ -7,6 +7,7 @@ use App\Models\OportunidadNegocio;
 use Illuminate\Support\Facades\DB;
 use App\Services\CalculadoraFechasService;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Query\Expression;
 
 /**
  * Clase repositorio para oportunidades de negocio.
@@ -49,6 +50,8 @@ class OportunidadNegocioRepository
 
     public function buscarOportunidadesNegocio(?string $terminoBusqueda = null, ?int $userId, array $filtros = [], int $offset = 0) 
     {
+        $querySelectNumBookmarks = self::subqueryOportunidadBookmarks();
+
         $query = OportunidadNegocio::from('oportunidades_negocio AS opn')
                                     ->select('opn.id', 'opn.nombre_procedimiento', 'opn.fecha_publicacion', 
                                              'opn.fecha_presentacion_propuestas', 'opn.id_etapa_procedimiento',
@@ -57,7 +60,7 @@ class OportunidadNegocioRepository
                                              'uc.nombre AS unidad_compradora',
                                              'ec.estatus AS estatus_contratacion', 'tc.tipo as tipo_contratacion',
                                              'mc.metodo AS metodo_contratacion', 'etp.etapa as etapa_procedimiento',
-                                             'etp.secuencia as etapa_secuencia')
+                                             'etp.secuencia as etapa_secuencia', $querySelectNumBookmarks)
                                     ->leftJoin('cat_unidades_compradoras AS uc', 'uc.id', 'opn.id_unidad_compradora')
                                     ->leftJoin('cat_estatus_contratacion AS ec', 'ec.id', 'opn.id_estatus_contratacion')
                                     ->leftJoin('cat_tipos_contratacion AS tc', 'tc.id', 'opn.id_tipo_contratacion')
@@ -66,10 +69,11 @@ class OportunidadNegocioRepository
         
         if ($userId) {
             $opnClass = OportunidadNegocio::class;
+            // Seleccionar si el usuario tiene una alerta (bookmark) en la oportunidad de negocio
             $query = $query->addSelect(DB::raw("EXISTS((SELECT 1 FROM markable_bookmarks AS mb " . 
                                                "WHERE mb.markable_id = opn.id " .
                                                "AND mb.markable_type = '{$opnClass}' " . 
-                                               "AND mb.user_id = {$userId})) AS alerta_estatus"));
+                                               "AND mb.user_id = {$userId})) AS alerta_estatus"));            
         } else {
             $query = $query->addSelect(DB::raw('false AS alerta_estatus'));
         }
@@ -198,15 +202,16 @@ class OportunidadNegocioRepository
         $estadisticas['conteo_dependencias'] = $unidadesCompradoras->values()->count();
                 
         return $estadisticas;
-    } 
-    
+    }     
+
     /**
-     * Obtiene oportunidades para la descarga en Excel en la vista de búsqueda de oportunidades de negocio.
-     * Ver app/Exports/OportunidadesExport.php
+     * Optiene expresión de subquery para obtener el número de bookmarks de oportunidades de negocio.
      */
-    public function obtieneOportunidadesDescarga(): array
+    public static function subqueryOportunidadBookmarks(string $tableAlias = 'opn'): Expression
     {
-        return [];
+        $opnClass = OportunidadNegocio::class;
+        return DB::raw("(SELECT COUNT(markable_id) FROM markable_bookmarks " . 
+                       "WHERE markable_id = {$tableAlias}.id AND markable_type = '{$opnClass}') AS num_bookmarks");
     }
 
     /**
@@ -245,5 +250,5 @@ class OportunidadNegocioRepository
         }
 
         return $rangoFechas;
-    }    
+    }        
 }
