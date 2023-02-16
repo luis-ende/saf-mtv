@@ -12,7 +12,7 @@ class CentroNotificacionesController extends Controller
     /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function index(Request $request, OportunidadesNotificacionesRepository $opnNotifRepo, ?int $seccion = 1)
+    public function index(Request $request, OportunidadesNotificacionesRepository $opnNotifRepo, int $seccion = 1)
     {
         $user = Auth::user();
         $opn_sugeridas =  $opnNotifRepo->obtieneOportunidadesSugeridas($user);

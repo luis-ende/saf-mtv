@@ -12,12 +12,12 @@
                     <nav class="font-bold text-lg flex md:flex-row xs:flex-col md:space-x-7 md:space-y-0 xs:space-y-4 xs:space-x-0 px-7 mx-auto mb-14 w-3/4">
                         <button class="no-underline rounded-3xl basis-1/2 text-center py-2"
                             :class="tab === 1 ? tabActive : tabInactive"
-                            x-on:click.prevent="tab = 1">
+                            x-on:click.prevent="tab = 1; window.history.replaceState({}, '', `/centro-notificaciones/1`);">
                             {{ count($opn_sugeridas) }} Oportunidades sugeridas
                         </button>
                         <button class="no-underline rounded-3xl basis-1/2 text-center py-2"
                            :class="tab === 2 ?  tabActive : tabInactive"
-                           x-on:click.prevent="tab = 2">
+                           x-on:click.prevent="tab = 2; window.history.replaceState({}, '', `/centro-notificaciones/2`);">
                            {{ count($opn_guardadas) }} Favoritos
                         </button>
                     </nav>

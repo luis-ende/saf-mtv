@@ -102,7 +102,10 @@ Route::middleware(['role:proveedor', 'auth', 'verified', 'registro_mtv.status'])
     Route::get('/productos/{producto}/fotos', [ProductosController::class, 'showFotos'])->name('productos-fotos.show');
     
     Route::controller(CentroNotificacionesController::class)->group(function () {
-        Route::get('/centro-notificaciones/{seccion?}', 'index')->name('centro-notificaciones.index');
+        Route::get('/centro-notificaciones', function() {  
+            return redirect()->route('centro-notificaciones.index', [1]);
+        })->name('centro-notificaciones.index');
+        Route::get('/centro-notificaciones/{seccion}', 'index')->name('centro-notificaciones.index');
         Route::delete('/notificaciones/sugerencias/delete/{oportunidad}', 'destroy')->name('notificaciones-sugerencias.destroy');
     });
 });

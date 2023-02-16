@@ -245,9 +245,8 @@ Alpine.data('oportunidadNegocioBookmarks', () => ({
         let color = 'text-mtv-secondary';
         if (this.bookmarkActivo) {
             color = 'text-mtv-primary';
-        } else 
-        {
-            if (this.procedimientoCerrado) {
+        } else {
+            if (this.procedimientoCerrado && !this.bookmarkActivo) {
                 color = 'text-mtv-gray';
             }            
         }
@@ -257,6 +256,7 @@ Alpine.data('oportunidadNegocioBookmarks', () => ({
     numBookmarks: 0,
     bookmarkActivo: false,    
     procedimientoCerrado: false,
+    esVistaNotif: false,
     toggleBookmark(updateRoute, token) {
         let newState = !this.bookmarkActivo;
         if (newState === false) {
@@ -275,11 +275,13 @@ Alpine.data('oportunidadNegocioBookmarks', () => ({
                 }
             });            
         } else {
-            this.sendToggleRequest(updateRoute, token);
+            if (!this.procedimientoCerrado) {
+                this.sendToggleRequest(updateRoute, token);
+            }            
         }
         
     },
-    sendToggleRequest(updateRoute, token) {
+    sendToggleRequest(updateRoute, token) {        
         fetch(updateRoute, {
             method: "POST",
             credentials: 'same-origin',
@@ -289,27 +291,32 @@ Alpine.data('oportunidadNegocioBookmarks', () => ({
         }).then(response => response.json())
         .then(json => {
             this.bookmarkActivo = json.alerta_estatus;
-            this.numBookmarks = json.num_bookmarks;
+            this.numBookmarks = json.num_bookmarks;            
+            if (this.esVistaNotif) {
+                window.location.reload();
+            }            
         })
     },
     showMessage(rutaLogin, rutaRegistro) {
-        const props = SwalMTVCustom;
-        props.customClass['title'] = 'swal2-mtv-title';        
-        Swal.fire({
-            ...SwalMTVCustom,
-            title: 'Activar alerta',
-            html: "Para activar las alertas debes estar registrado o haber ingresado a Mi Tiendita Virtual." +
-                  '<p class="swal-mtv-html-container-action">¿Quieres activar la alerta?</p>',
-            confirmButtonText: 'Ingresar',
-            cancelButtonText: 'Regístrate',
-            showCloseButton: true,
-        }).then((result) => {                        
-            if (result.isConfirmed) {
-                window.location.href = rutaLogin;
-            } else if (!(result.dismiss === 'close' || result.dismiss === 'esc')) {
-                window.location.href = rutaRegistro;
-            }            
-        });
+        if (!this.procedimientoCerrado) {
+            const props = SwalMTVCustom;
+            props.customClass['title'] = 'swal2-mtv-title';        
+            Swal.fire({
+                ...SwalMTVCustom,
+                title: 'Activar alerta',
+                html: "Para activar las alertas debes estar registrado o haber ingresado a Mi Tiendita Virtual." +
+                      '<p class="swal-mtv-html-container-action">¿Quieres activar la alerta?</p>',
+                confirmButtonText: 'Ingresar',
+                cancelButtonText: 'Regístrate',
+                showCloseButton: true,
+            }).then((result) => {                        
+                if (result.isConfirmed) {
+                    window.location.href = rutaLogin;
+                } else if (!(result.dismiss === 'close' || result.dismiss === 'esc')) {
+                    window.location.href = rutaRegistro;
+                }            
+            });
+        }        
     },
     initBookmarks(numBookmarks, bookmarkActivo, procedimientoCerrado) {
         this.bookmarkActivo = bookmarkActivo;
