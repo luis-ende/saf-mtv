@@ -1,11 +1,16 @@
-<div class="hidden sm:flex sm:items-center sm:ml-6">                        
-    @role('proveedor')    
-    <a href="{{ route('centro-notificaciones.index', [1]) }}" class="text-mtv-primary mr-9" title="Notificaciones">
-        @svg('codicon-bell-dot', ['class' => 'h-6 w-6 inline-block'])
-    </a>
-    <a href="{{ route('centro-notificaciones.index', [2]) }}" class="text-mtv-primary mr-7" title="Favoritos">
-        @svg('bi-bookmark-heart', ['class' => 'h-6 w-6 inline-block'])
-    </a>
+<div class="hidden sm:flex sm:items-center sm:ml-6">
+    @role('proveedor')
+        <a href="{{ route('centro-notificaciones.index', [1]) }}" class="text-mtv-primary mr-9" title="Notificaciones">
+            @svg('codicon-bell', ['class' => 'h-6 w-6 inline-block'])
+        </a>
+        @php($numBookmarks = App\Repositories\OportunidadesNotificacionesRepository::obtieneNumBookmarks(request()->user()))        
+        <a href="{{ route('centro-notificaciones.index', [2]) }}" class="text-mtv-primary mr-7" title="Favoritos">
+            @if($numBookmarks > 0)
+                @svg('bi-bookmark-heart-fill', ['class' => 'h-6 w-6 inline-block'])
+            @else 
+                @svg('bi-bookmark-heart', ['class' => 'h-6 w-6 inline-block'])
+            @endif 
+        </a>                
     @endrole
 
     <x-dropdown align="right" width="36">
@@ -36,10 +41,14 @@
                     Mi tiendita virtual
                 </x-dropdown-link>                
                 <div class="border-b"></div>
-                <x-dropdown-link :href="route('centro-notificaciones.index', [1])">
+                <x-dropdown-link 
+                    :href="route('centro-notificaciones.index', [1])"
+                    :active="request()->is('centro-notificaciones', 'centro-notificaciones/1')">
                     Notificaciones
                 </x-dropdown-link>
-                <x-dropdown-link :href="route('centro-notificaciones.index', [2])">
+                <x-dropdown-link 
+                    :href="route('centro-notificaciones.index', [2])"
+                    :active="request()->is('centro-notificaciones', 'centro-notificaciones/2')">
                     Favoritos
                 </x-dropdown-link>
                 <div class="border-b"></div>

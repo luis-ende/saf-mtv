@@ -3,8 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\User;
-use App\Models\Persona;
-use App\Models\PerfilNegocio;
 use App\Models\OportunidadNegocio;
 use Illuminate\Support\Facades\DB;
 use App\Models\EstatusContratacion;
@@ -93,6 +91,16 @@ class OportunidadesNotificacionesRepository
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+    }
+
+    /**
+     * Obtiene el número de bookmarks guardados por un usuario.
+     */
+    public static function obtieneNumBookmarks(User $user): int
+    {
+        return DB::table('markable_bookmarks')->selectRaw('COUNT(*) AS usuario_num_bookmarks')
+                                              ->where('user_id', $user->id)
+                                              ->value('usuario_num_bookmarks');
     }
 
     private function getQuerySelectOportunidades($query, User $user) 
