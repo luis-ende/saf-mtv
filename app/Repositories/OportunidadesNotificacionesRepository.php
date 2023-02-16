@@ -46,30 +46,34 @@ class OportunidadesNotificacionesRepository
                  ->from('oportunidades_sugeridas AS opns')
                  ->whereRaw(DB::raw('opns.id_oportunidad_negocio = oportunidades_negocio.id'))
                  ->where('opns.id_user', $userId);
-        });
+        });        
 
-        // TODO Sugerencias deben hacer "match" por partida presupuestal con el perfil de negocio y productos del catálogo
-        // TODO De no existir el dato de la partida presupuestal, se buscan las coincidencias usando el nombre del procedimiento        
+        $perfNegocioId = $user->persona->perfil_negocio->id;
+        $catProductosId = $user->persona->catalogoProductos->id;        
+        $query = $query->where(function($subQ) use($catProductosId, $perfNegocioId) {
+            // Filtro de oportunidades de negocio por partidas similares en perfil de negocio, productos y categorías de productos del usuario
+            // TODO Funciona solamente para una partida en la oportunidad de negocio, no se ha definido aún si habrá múltiples partidas
+            $subQ->whereIn('oportunidades_negocio.partidas', function($subSel) use($catProductosId, $perfNegocioId) {
+                $subselProductos = DB::table('productos AS p')->selectRaw(DB::raw('DISTINCT(ccb.partida)'))
+                                                              ->join('cat_cabms AS ccb', 'ccb.id', 'p.id_cabms')
+                                                              ->where('p.id_cat_productos', $catProductosId);
 
+                $subselProdCategorias = DB::table('productos_categorias AS pc')->selectRaw(DB::raw('DISTINCT(ccb.partida)'))
+                                                                               ->join('productos AS p', 'p.id', 'pc.id_producto')
+                                                                               ->join('cat_cabms AS ccb', 'ccb.id_categoria_scian', 'pc.id_categoria_scian')
+                                                                               ->where('p.id_cat_productos', $catProductosId);
 
-        $query = $query->where(function($subQ) use($userId) {
-            $subQ->whereIn('oportunidades_negocio.partidas', function($subSel) {                
-                $subSel->selectRaw(DB::raw("select distinct(partida) from cat_cabms ccb where ccb.id_categoria_scian = (select ccs.id from perfil_negocio as perfn left join cat_categorias_scian ccs on ccs.id = perfn.id_categoria_scian where perfn.id = 1) union select distinct(ccb.partida) from productos p join cat_cabms ccb on ccb.id = p.id_cabms where p.id_cat_productos = 7 union select distinct(ccb.partida) from productos_categorias cp join productos p on p.id = cp.id_producto left join cat_cabms ccb on ccb.id_categoria_scian = cp.id_categoria_scian where p.id_cat_productos = 7"));
-                // $subselPerfNeg = DB::raw("select distinct(partida) from cat_cabms ccb where ccb.id_categoria_scian = (select ccs.id from perfil_negocio as perfn left join cat_categorias_scian ccs on ccs.id = perfn.id_categoria_scian where perfn.id = 1)");
-                // $subselProductos = DB::raw("select distinct(ccb.partida) from productos p join cat_cabms ccb on ccb.id = p.id_cabms where p.id_cat_productos = 7");
-                // $subselProdCategorias = DB::raw("select distinct(ccb.partida) from productos_categorias cp join productos p on p.id = cp.id_producto left join cat_cabms ccb on ccb.id_categoria_scian = cp.id_categoria_scian where p.id_cat_productos = 7");
-                //DB::raw union  union ")
-                //$subselProductos = DB::table('productos p')->selectRaw('distinct(ccb.partida)')
-
-                //$subSel->union($subselPerfNeg);
+                $subSel->from('cat_cabms AS ccb')
+                       ->selectRaw(DB::raw('DISTINCT(ccb.partida)'))
+                       ->where('ccb.id_categoria_scian', '=', function($subSel) use($perfNegocioId) {
+                                                                    $subSel->from('perfil_negocio AS perfn')
+                                                                        ->select('perfn.id_categoria_scian')
+                                                                        ->where('perfn.id', $perfNegocioId);
+                                                                })
+                       ->union($subselProductos)
+                       ->union($subselProdCategorias);                
             });
-        });
-
-        // select distinct(id_categoria_scian) from cat_cabms where partida = '5412';
-
-        // select distinct(partida) from cat_cabms ccb where ccb.id_categoria_scian = (select ccs.id from perfil_negocio as perfn left join cat_categorias_scian ccs on ccs.id = perfn.id_categoria_scian where perfn.id = 1) union
-        // select distinct(ccb.partida) from productos p join cat_cabms ccb on ccb.id = p.id_cabms where p.id_cat_productos = 7 union
-        // select distinct(ccb.partida) from productos_categorias cp join productos p on p.id = cp.id_producto left join cat_cabms ccb on ccb.id_categoria_scian = cp.id_categoria_scian where p.id_cat_productos = 7;
+        });        
 
         $oportunidades = $query->limit(30)->get();
 
