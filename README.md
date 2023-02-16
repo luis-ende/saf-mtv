@@ -85,6 +85,7 @@ Para realizar una actualización completa del ambiente de desarrollo ejecutar de
     - En línea de comando con psql, revisar si la extensión ya se encuentra activada usar: `\dx`
     - Para activar la extensión: `CREATE EXTENSION pg_trgm;`
     - Más información sobre la extensión y su uso: https://www.postgresql.org/docs/current/pgtrgm.html
+  - Algunos catálogos se guardan en cache (por ejemplo, ver clase `OportunidadNegocioRepository`), se puede usar `Cache::flush()` para eliminar todos los caches, o uno específico con `Cache::forget('key')` según sea el caso
 
 ### Integraciones de MTV con otros sistemas:
 

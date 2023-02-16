@@ -5,9 +5,10 @@ namespace App\Repositories;
 use Carbon\Carbon;
 use App\Models\OportunidadNegocio;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Query\Expression;
 use App\Services\CalculadoraFechasService;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Query\Expression;
 
 /**
  * Clase repositorio para oportunidades de negocio.
@@ -18,34 +19,64 @@ class OportunidadNegocioRepository
 
     public function obtieneRubros() 
     {
-        return DB::table('cat_capitulos')->select('id', 'numero', 'nombre')->get();
+        return Cache::rememberForever('cat_capitulos', function() {
+            return DB::table('cat_capitulos')->select('id', 'numero', 'nombre')->get();
+        });
     }
 
     public function obtieneTiposContratacion() 
     {
-        return DB::table('cat_tipos_contratacion')->select('id', 'tipo')->get();
+        return Cache::rememberForever('cat_tipos_contratacion', function() {
+            return DB::table('cat_tipos_contratacion')->select('id', 'tipo')->get();
+        });                
     }
 
     public function obtieneMetodosContratacion() 
     {
-        return DB::table('cat_metodos_contratacion')->select('id', 'metodo')->get();
+        return Cache::rememberForever('cat_metodos_contratacion', function() {
+            return DB::table('cat_metodos_contratacion')->select('id', 'metodo')->get();
+        });        
     }
 
     public function obtieneEtapasProcedimiento()
     {
-        return DB::table('cat_etapas_procedimiento')->select('id', 'etapa')
-                                                          ->orderBy('secuencia')
-                                                          ->get();
+        return Cache::rememberForever('cat_etapas_procedimiento', function() {
+            return DB::table('cat_etapas_procedimiento')->select('id', 'etapa')
+                                                        ->orderBy('secuencia')
+                                                        ->get();
+        });        
     }
 
     public function obtieneEstatusContratacion()
     {
-        return DB::table('cat_estatus_contratacion')->select('id', 'estatus')->get();
+        return Cache::rememberForever('cat_estatus_contratacion', function() {
+            return DB::table('cat_estatus_contratacion')->select('id', 'estatus')->get();
+        });        
     }
 
     public function obtieneInstitucionesCompradoras()
     {
-        return DB::table('cat_unidades_compradoras')->select('id', 'nombre')->get();
+        return Cache::rememberForever('cat_unidades_compradoras', function() {
+            return DB::table('cat_unidades_compradoras')->select('id', 'nombre')->get();
+        });        
+    }
+
+    /**
+     * Obtiene un arreglo de números iniciales de los capítulos filtrados.
+     */
+    public function obtieneCapitulosNumeros(array $capituloFiltros): array 
+    {
+        $capitulos = Cache::rememberForever('cat_capitulos_numeros', function() {
+            return DB::table('cat_capitulos')
+                    ->select('id', DB::raw('SUBSTRING(numero, 1, 1) AS num_capitulo'))
+                    ->get();
+        });       
+
+        return $capitulos->filter(function($c) use($capituloFiltros) {
+                                    return in_array($c->id, $capituloFiltros);
+                                  })
+                         ->map(function($c) { return $c->num_capitulo; })
+                         ->toArray();
     }
 
     public function buscarOportunidadesNegocio(?string $terminoBusqueda = null, ?int $userId, array $filtros = [], int $offset = 0) 
@@ -121,10 +152,7 @@ class OportunidadNegocioRepository
         }        
 
         if (isset($filtros['capitulo_filtro'])) {
-            $capitulos = DB::table('cat_capitulos')
-                            ->select(DB::raw('SUBSTRING(numero, 1, 1) AS num_capitulo'))
-                            ->whereIn('id', $filtros['capitulo_filtro'])
-                            ->pluck('num_capitulo');
+            $capitulos = $this->obtieneCapitulosNumeros($filtros['capitulo_filtro']);
 
             $query = $query->where(function($orQuery) use($capitulos) {                
                 $orQuery->orWhereIn(DB::raw('SUBSTRING(opn.partidas, 1, 1)'), $capitulos);
