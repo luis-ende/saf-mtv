@@ -307,7 +307,7 @@ Alpine.data('oportunidadNegocioBookmarks', () => ({
                 html: "Para guardar la notificación debes estar registrado o ingresado a Mi Tiendita Virtual." +
                       '<p class="swal-mtv-html-container-action">¿Quieres guardar la oportunidad de negocio?</p>',
                 confirmButtonText: 'Ingresar',
-                cancelButtonText: 'Regístrarte',
+                cancelButtonText: 'Registrarte',
                 showCloseButton: true,
             }).then((result) => {                        
                 if (result.isConfirmed) {
