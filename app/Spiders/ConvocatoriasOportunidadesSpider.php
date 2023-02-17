@@ -56,7 +56,9 @@ class ConvocatoriasOportunidadesSpider extends BasicSpider
     }
 
     /**
-     * Obtiene datos de concursos vigentes
+     * Obtiene datos de concursos vigentes.
+     *      
+     * @return array<mixed>     
      */
     private function extraerConcursos(Response $response): array
     {

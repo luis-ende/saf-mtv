@@ -50,6 +50,9 @@ class PrebasesOportunidadesSpider extends BasicSpider
         yield $this->item($proyectos);
     }
 
+    /**
+     * @return array<mixed>
+     */
     private function extraePrebases(Response $response): array
     {
         $grid = $response->filter('body > div > div > div > div.grid.grid-cols-1');

@@ -50,6 +50,9 @@ class PrebasesProyectoSpider extends BasicSpider
         yield $this->item($proyecto);
     }
 
+    /**
+     * @return array<mixed>
+     */
     private function extraeProyecto(Response $response): array
     {
         $proyecto = [];

@@ -94,8 +94,9 @@
                             </button>
                         </div>
 
-                        <x-busqueda.enlaces-catalogos-pdf />
-
+                        <div class="md:basis-2/12 xs:basis-full xs:self-center">
+                            <x-busqueda.enlaces-catalogos-pdf />
+                        </div>
                     </div>
                 </form>
             </div>            
