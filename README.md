@@ -15,7 +15,7 @@
 
 **IMPORTANTE:** El archivo .env contiene las variables TEST_MODE, API_URL_BUSQUEDA_RFC_PADRON_PROVEEDORES, API_URL_BUSQUEDA_CURP, las cuales apuntan a endpoints de prueba. En modo producción TEST_MODE debe ser `false` y las URLs de las APIs deben apuntar a direcciones en producción.
 
-## Ambiente local de desarrollo
+## Instalación del ambiente local de desarrollo
 
 - VirtualBox 6.1
 - Vagrant 2.3.1
