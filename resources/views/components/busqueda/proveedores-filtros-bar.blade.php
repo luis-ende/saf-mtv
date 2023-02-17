@@ -18,7 +18,7 @@
                     <ul class="list-none list-outside p-0">
                         @foreach($filtros_opciones['sectores'] as $sector)
                             <li>
-                                <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="sector_prov_{{ $sector->id }}" name="sector_prov_filtro[]" value="{{ $sector->id }}">
+                                <input class="mr-1 focus:ring-mtv-secondary" type="checkbox" id="sector_prov_{{ $sector->id }}" name="sector_prov_filtro[]" value="{{ $sector->id }}">
                                 <label for="sector_prov_{{ $sector->id }}">{{ $sector->sector }}</label>
                             </li>
                         @endforeach
@@ -51,7 +51,7 @@
                                        id="grupo_p-{{ $grupo->id }}"
                                        name="grupo_p_filtro[]"
                                        value="{{ $grupo->id }}"
-                                       class="mr-1 border rounded focus:ring-mtv-secondary">
+                                       class="mr-1 focus:ring-mtv-secondary">
                                 <label for="grupo_p-{{ $grupo->id }}">{{ $grupo->grupo }}</label>
                             </li>
                         @endforeach
@@ -111,7 +111,7 @@
                     <ul class="list-none list-outside p-1 text-xs">
                         @foreach($filtros_opciones['alcaldias'] as $alcaldia)
                             <li class="mb-2">
-                                <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="alcaldia-{{ $alcaldia->id }}" name="alcaldia_filtro[]" value="{{ $alcaldia->id }}">
+                                <input class="mr-1 focus:ring-mtv-secondary" type="checkbox" id="alcaldia-{{ $alcaldia->id }}" name="alcaldia_filtro[]" value="{{ $alcaldia->id }}">
                                 <label for="alcaldia-{{ $alcaldia->id }}">{{ $alcaldia->alcaldia }}</label>
                             </li>
                         @endforeach
@@ -142,12 +142,12 @@
                         @foreach($filtros_opciones['padron_prov_estatus'] as $key => $estatus)
                             @php($estatusLabel = $key === 4 ? 'En revisión' : ($key === 7 ? 'Constancia vigente' : $estatus))
                             <li>
-                                <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="prov_estatus_{{ $key }}" name="padron_prov_estatus[]" value="{{ $key }}">
+                                <input class="mr-1 focus:ring-mtv-secondary" type="checkbox" id="prov_estatus_{{ $key }}" name="padron_prov_estatus[]" value="{{ $key }}">
                                 <label for="prov_estatus_{{ $key }}">{{ $estatusLabel }}</label>
                             </li>
                         @endforeach
                         <li>
-                            <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="sector_prov_0" name="sector_prov_filtro[]" value="{{ $sector->id }}">
+                            <input class="mr-1 focus:ring-mtv-secondary" type="checkbox" id="sector_prov_0" name="sector_prov_filtro[]" value="{{ $sector->id }}">
                             <label for="sector_prov_0">Sin registro</label>
                         </li>
                     </ul>
