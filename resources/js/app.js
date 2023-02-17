@@ -303,11 +303,11 @@ Alpine.data('oportunidadNegocioBookmarks', () => ({
             props.customClass['title'] = 'swal2-mtv-title';        
             Swal.fire({
                 ...SwalMTVCustom,
-                title: 'Activar alerta',
-                html: "Para activar las alertas debes estar registrado o haber ingresado a Mi Tiendita Virtual." +
-                      '<p class="swal-mtv-html-container-action">¿Quieres activar la alerta?</p>',
+                title: 'Guardar oportunidad de negocio',
+                html: "Para guardar la notificación debes estar registrado o ingresado a Mi Tiendita Virtual." +
+                      '<p class="swal-mtv-html-container-action">¿Quieres guardar la oportunidad de negocio?</p>',
                 confirmButtonText: 'Ingresar',
-                cancelButtonText: 'Regístrate',
+                cancelButtonText: 'Regístrarte',
                 showCloseButton: true,
             }).then((result) => {                        
                 if (result.isConfirmed) {
