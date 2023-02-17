@@ -78,7 +78,7 @@
                     <label for="oportunidades_search" class="text-mtv-secondary text-sm mb-2">
                         Búsqueda por palabra clave:
                     </label>
-                    <div class="flex md:flex-row md:space-x-3 md:space-y-0 xs:flex-col xs:space-y-3">
+                    <div class="flex md:flex-row md:space-x-5 md:space-y-0 xs:flex-col xs:space-y-3">
                         <div class="md:basis-10/12 xs:basis-full relative">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 @svg('forkawesome-search', ['class' => 'w-4 h-4 text-mtv-gray-2'])
