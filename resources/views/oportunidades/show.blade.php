@@ -1,5 +1,16 @@
-<x-app-layout>        
-    <div class="bg-white overflow-hidden min-h-screen">
+<x-app-layout>            
+    <div class="bg-white overflow-hidden min-h-screen"
+         x-data="{
+            etapasConteo: [],
+            calculaEstadisticas() {
+                this.etapasConteo.forEach((e, key) => this.etapasConteo[key] = 0);                
+                document.querySelectorAll('[data-ep]').forEach(e => this.etapasConteo[e.dataset.ep] += 1);
+            },
+            initEtapasConteo() {
+                Object.values(@js($estadisticas['conteo_etapas'])).forEach(e => this.etapasConteo[e.id] = e.conteo);
+            }
+        }"
+        x-init="initEtapasConteo()">
         <div class="py-6 md:px-12 xs:px-6 bg-white border-b border-gray-200 flex flex-col">
             <div class="self-center">
                 <label class="text-mtv-gray-2 md:text-xl">
@@ -40,7 +51,8 @@
                     <button 
                         :class="esFiltroEtapaActivo(@js($etapa['id'])) ? 'mtv-button-filtro-ep-active' : 'mtv-button-filtro-ep-inactive'"
                         @click="activaFiltro(@js($etapa['id']))">
-                        <span class="font-bold text-5xl xs:text-1xl">{{ $etapa['conteo'] }}</span>
+                        <span class="font-bold text-5xl xs:text-1xl" x-model="etapasConteo[@js($etapa['id'])]" 
+                                                                     x-text="etapasConteo[@js($etapa['id'])]"></span>
                         <span class="md:text-lg xs:text-sm">{{ $etapa['nombre_etapa']  }}</span>
                     </button>
                 @endforeach
@@ -48,7 +60,7 @@
                 @push('scripts')
                 <script type="text/javascript">
                     function etapasFiltros() {
-                        return {
+                        return {                            
                             activaFiltro(etapaId) {
                                 const querystring = window.location.search; 
                                 const params = new URLSearchParams(querystring); 
@@ -61,6 +73,9 @@
                                 const params = new URLSearchParams(querystring);                                                                                                                             
 
                                 return params.has("ep") && params.get("ep") === etapaId.toString();
+                            },
+                            getEtapaConteo(etapaId) {
+                                return this.$data.etapasConteo.filter(e => e.id === etapaId)[0].conteo;
                             }
                         }
                     }

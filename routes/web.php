@@ -139,6 +139,7 @@ Route::controller(OportunidadesController::class)->group(function() {
     Route::post('/oportunidades-de-negocio/alertas/{oportunidad_negocio}', 
                 'updateBookmark')->middleware(['role:proveedor', 'auth'])->name('oportunidades-negocio-bookmarks.update');
     Route::get('/oportunidades-de-negocio/export', 'exportOportunidadesNegocio')->name('oportunidades-negocio.export');
+    Route::get('/oportunidades-items-cards', 'getItemsCards')->name('oportunidades.items-cards');
 });
 
 Route::get('/programacion-anual', [ProgramacionAnualController::class, 'index'])->name('programacion-anual');

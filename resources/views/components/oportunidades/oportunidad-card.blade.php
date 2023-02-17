@@ -1,6 +1,8 @@
 @props(['oportunidad' => null, 'vista' => ''])
 
-<article class="md:mb-0 xs:mb-5 md:hover:shadow-lg rounded-bl-lg rounded-br-lg">
+<article class="md:mb-0 xs:mb-5 md:hover:shadow-lg rounded-bl-lg rounded-br-lg"
+         data-ep="{{ $oportunidad->id_etapa_procedimiento }}"
+         data-uc="{{ $oportunidad->id_unidad_compradora }}">
     <div class="h-16 bg-mtv-primary rounded-tl-lg rounded-tr-lg md:p-3 xs:p-2">                
         <span class="text-white md:text-base sm:text-sm uppercase md:font-bold block">
             {{ Str::of($oportunidad->unidad_compradora)->limit(102, '...') }}

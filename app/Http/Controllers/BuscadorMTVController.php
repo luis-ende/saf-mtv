@@ -175,7 +175,7 @@ class BuscadorMTVController extends Controller
         }
 
         if ($tipoBusqueda === BuscadorMTVService::TIPO_BUSQUEDA_PROVEEDORES) {
-            $resultadosBusqueda = $perfNegRepo->buscaProveedoresPorTermino($busquedaTermino, $filtros);
+            $resultadosBusqueda = $perfNegRepo->buscaProveedoresPorTermino($busquedaTermino, $filtros, $offset);
         }
 
         return [

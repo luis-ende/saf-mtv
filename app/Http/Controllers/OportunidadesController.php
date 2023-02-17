@@ -8,6 +8,7 @@ use Maize\Markable\Models\Bookmark;
 use App\Exports\OportunidadesExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 use App\Repositories\OportunidadNegocioRepository;
 
 class OportunidadesController extends Controller
@@ -45,6 +46,22 @@ class OportunidadesController extends Controller
                     \Maatwebsite\Excel\Excel::XLSX);
     }
 
+    /**
+     * Devuelve las tarjetas de más resultados (oportunidades de negocio) encontrados (para infinite scroll de la búsqueda).
+     */
+    public function getItemsCards(Request $request, OportunidadNegocioRepository $oportunidadesRepo) 
+    {        
+        if (request()->ajax()) {
+            $oportunidades = $this->searchHandleRequest($request, $oportunidadesRepo);
+            $estadisticas = $oportunidadesRepo->obtieneEstadisticas($oportunidades);
+
+            return View::make('components.oportunidades.oportunidades-cards',
+                                compact('oportunidades', 'estadisticas'))->render();
+        }
+
+        return response()->json(['error' => 'Tipo de busqueda no reconocida.']);            
+    }
+
     private function searchHandleRequest(Request $request, OportunidadNegocioRepository $oportunidadesRepo) 
     {
         $this->convierteQueryParams($request);
@@ -63,6 +80,7 @@ class OportunidadesController extends Controller
             'fecha_trimestre2_filtro' => 'nullable|boolean',
             'fecha_trimestre3_filtro' => 'nullable|boolean',
             'fecha_trimestre4_filtro' => 'nullable|boolean',
+            'offset' => 'integer',
         ]);        
 
         $filtros = $request->only('capitulo_filtro', 'unidad_compradora_filtro', 'tipo_contr_filtro', 
@@ -74,7 +92,12 @@ class OportunidadesController extends Controller
         $busqueda_termino = $request->input('tb');
         $userId = auth()->user()?->id;
 
-        $oportunidades = $oportunidadesRepo->buscarOportunidadesNegocio($busqueda_termino, $userId, $filtros);   
+        $offset = 0;
+        if ($request->has('offset')) {
+            $offset = $request->integer('offset');
+        }
+
+        $oportunidades = $oportunidadesRepo->buscarOportunidadesNegocio($busqueda_termino, $userId, $filtros, $offset);   
 
         return $oportunidades;
     }
