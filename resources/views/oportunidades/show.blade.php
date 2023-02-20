@@ -199,12 +199,13 @@
                 </div>
 
                 <button
+                    x-cloak
                     x-data="{ scrollBackTop: false }"
                     x-show="scrollBackTop"
                     x-on:scroll.window="scrollBackTop = (window.pageYOffset > window.outerHeight * 0.5) ? true : false"
                     x-on:click="window.scrollTo (0,0)"
                     aria-label="Back to top"
-                    class="fixed bottom-0 right-0 p-2 mx-10 my-10 bg-white rounded opacity-95 text-mtv-primary font-bold focus:outline-none">
+                    class="fixed bottom-0 right-0 p-2 mx-10 my-16 bg-white rounded opacity-95 text-mtv-primary font-bold focus:outline-none">
                         @svg('bi-arrow-bar-up', ['class' => 'w-10 h-10 block'])                        
                 </button>
             </div>
