@@ -96,11 +96,11 @@
                             </div>
                         @endrole
 
-                        @isset($resultados)
+                        @if(isset($resultados) && $tipo_busqueda === 'productos')                            
                             <x-busqueda.resultados-view 
                                 :tipo_busqueda="$tipo_busqueda"
                                 :resultados="$resultados" />
-                        @endisset
+                        @endif
                     </div>
 
                     <div class="flex flex-col" x-show="tab === 'proveedores'">
@@ -117,11 +117,11 @@
                             </x-busqueda.search-input>                            
                         </div>
 
-                        @isset($resultados)
+                        @if(isset($resultados) && $tipo_busqueda === 'proveedores')                            
                             <x-busqueda.resultados-view 
                                 :tipo_busqueda="$tipo_busqueda"
                                 :resultados="$resultados" />
-                        @endisset                        
+                        @endif                        
                     </div>
                 </div>
             </div>

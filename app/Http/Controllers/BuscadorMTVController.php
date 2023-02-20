@@ -145,8 +145,7 @@ class BuscadorMTVController extends Controller
             // $this->convierteFiltro($request, 'categoria_filtro');
             $this->convierteFiltro($request, 'grupo_p_filtro');
 
-            $this->validate($request, [
-                // 'sort_proveedores' => [Rule::in(['nombre_negocio', 'sector', 'categoria_scian'])],
+            $this->validate($request, [                
                 'sort_proveedores' => [Rule::in(['nombre_negocio', 'sector', 'categoria_scian'])],
                 'sector_prov_filtro' => 'array',
                 'alcaldia_filtro' => 'array',
