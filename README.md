@@ -41,7 +41,16 @@
 
 **IMPORTANTE:** Se recomienda levantar el proyecto en el ambiente de desarrollo con Homestead, ya que la máquina virtual contiene todos los requerimientos necesarios que de otra manera sería necesario instalar en el host.
 
-Para realizar una actualización completa del ambiente de desarrollo ejecutar desde el directorio raíz del proyecto: `./scripts/deploy-fresh-homestead.sh` (la base de datos local será restaurada completamente, por lo que se recomienda hacer un backup si se quieren conservar datos de prueba generados)
+- Para realizar una actualización completa del ambiente de desarrollo ejecutar desde el directorio raíz del proyecto: `./scripts/deploy-fresh-homestead.sh` (la base de datos local será restaurada completamente, por lo que se recomienda hacer un backup si se quieren conservar datos de prueba generados)
+
+- Generar respaldo de la base de datos en producción (u otro ambiente), ejemplo:
+  - `pg_dump -U saf_mtv_dbuser -W -d saf_mtv > mtv_saf_db_20Feb2023.sql`
+
+- Para restaurar un respaldo local en el servidor local de desarrollo (Homestead) (cambiar ubicación del archivo de respaldo a utilizar):  
+  - Eliminar la base de datos `saf_mtv` y recrearla vacía
+  - `psql -v ON_ERROR_STOP=1 -h homestead -U saf_mtv_dbuser -W -d saf_mtv < database/backups/mtv_saf_db_20Feb2023.sql`
+
+- No olvidar copiar la carpeta `storage`, en donde se guardan imágenes y documentos
 
 ### Compilación de assets
 
