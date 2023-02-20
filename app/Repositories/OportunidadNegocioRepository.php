@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class OportunidadNegocioRepository
 {
-    public const BUSQUEDA_OPORTUNIDADES_PAGINATION_OFFSET = 5;
+    public const BUSQUEDA_OPORTUNIDADES_PAGINATION_OFFSET = 30;
 
     public function obtieneRubros() 
     {
