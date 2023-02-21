@@ -4,8 +4,6 @@ namespace Tests\Feature\Auth;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Persona;
-use App\Models\PersonaFisica;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -47,12 +45,6 @@ class AuthenticationTest extends TestCase
 
     private function createTestUser()
     {
-        $personaFisica = PersonaFisica::factory()->create();
-        $persona = Persona::factory()->create([
-            'personable_id' => $personaFisica->id, 
-            'personable_type' => gettype($personaFisica)
-        ]);
-
-        return User::factory()->create(['id_persona' => $persona->id]);
+        return User::factory()->create([]);
     }
 }
