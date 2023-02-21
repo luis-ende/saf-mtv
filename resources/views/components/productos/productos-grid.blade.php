@@ -6,7 +6,7 @@
 @if($modo === 'busqueda')
 {{-- TIP: Buscar esta función reutilizable 'infiniteScrolling()' en resources/js/app.js --}}
 <div x-data="infiniteScrolling"
-     {{-- initInfiniteScrolling(paginationOffset, numRecords, filtros, ) --}}
+     {{-- initInfiniteScrolling(paginationOffset, numRecords, filtros, buscadorItemsRoute) --}}
     x-init="initInfiniteScrolling(@js($pagination_offset), @js(count($productos)), @js(@$filtros), '{{ $buscador_items_route }}')">
 @endif
 

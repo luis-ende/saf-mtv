@@ -219,15 +219,11 @@
                     etapasConteo: [],
                     unidadesCConteo: @js($estadisticas['conteo_dependencias']),
                     calculaEstadisticas() {
-                        {{-- setTimeout establece un tiempo de espera para asegurarse de que el html de las tarjetas oportunidades --}}
-                        {{-- haya sido agregado al DOM (Ver infiniteScrolling en resources/js/app.js) --}}
-                        setTimeout(() => {
-                            this.etapasConteo.forEach((e, key) => this.etapasConteo[key] = 0);
-                            document.querySelectorAll('article[data-ep]').forEach(e => this.etapasConteo[e.dataset.ep] += 1);
-                            let ucConteo = new Set();
-                            document.querySelectorAll('article[data-uc]').forEach(u => ucConteo.add(u.dataset.uc));                                                        
-                            this.unidadesCConteo = ucConteo.size;
-                        }, 500);
+                        this.etapasConteo.forEach((e, key) => this.etapasConteo[key] = 0);
+                        document.querySelectorAll('article[data-ep]').forEach(e => this.etapasConteo[e.dataset.ep] += 1);                        
+                        let ucConteo = new Set();
+                        document.querySelectorAll('article[data-uc]').forEach(u => ucConteo.add(u.dataset.uc));                                                        
+                        this.unidadesCConteo = ucConteo.size;
                     },
                     initEncabezadoEstadisticas() {
                         Object.values(@js($estadisticas['conteo_etapas'])).forEach(e => this.etapasConteo[e.id] = e.conteo);                        

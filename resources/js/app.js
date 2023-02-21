@@ -189,7 +189,7 @@ Alpine.data('infiniteScrolling', () => ({
     htmlData: null,
     numResults: 0,
     filtros: [],
-    isLoading: false,
+    isLoading: false,    
     async retrieveData() {
         // Remueve elementos con valor nulo
         const filtrosValidos = Object.fromEntries(Object.entries(this.filtros).filter(([_, v]) => v != null));
@@ -216,7 +216,8 @@ Alpine.data('infiniteScrolling', () => ({
         this.filtros = filtros;
         this.buscadorItemsRoute = buscadorItemsRoute;
         this.$watch('htmlData', value => {
-            this.$refs.resultsGrid.innerHTML += this.htmlData
+            this.$refs.resultsGrid.innerHTML += this.htmlData;            
+            document.dispatchEvent(new CustomEvent("infiniteScrollingUpdate", {}));            
         })
     },
 }))
