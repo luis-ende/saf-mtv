@@ -21,6 +21,7 @@
                     <x-nav-link :href="'#'">
                         ¿Qué es Mi Tiendita Virtual?
                     </x-nav-link>
+                    <x-menus.mtv-catalogo-menu-item />
                     <x-nav-link href="#">
                         Calendario de compras
                     </x-nav-link>
@@ -28,15 +29,16 @@
                         Oportunidades de negocio
                     </x-nav-link>
                     <x-nav-link :href="'#'">
-                        Preguntas frecuentes
-                    </x-nav-link>                    
-                    <x-nav-link :href="'#'">
                         Directorio CDMX
                     </x-nav-link>
                     <x-nav-link :href="'#'">
+                        Preguntas frecuentes
+                    </x-nav-link>                    
+                 
+                    <x-nav-link :href="'#'">
                         Padrón de Proveedores
                     </x-nav-link>
-                    <x-menus.mtv-catalogo-menu-item />
+                    
                 </div>
             </div>
         </div>

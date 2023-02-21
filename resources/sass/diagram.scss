@@ -51,6 +51,7 @@
     font-weight: 700;
     color: $primary;
     text-align: center;
+    margin-bottom: -5px;
 }
 
 .information-container-subtitle {
@@ -58,6 +59,7 @@
     font-weight: 700;
     color: $secondary;
     text-align: center;
+    margin-top: 30px;
 }
 
 .information-container-message {
@@ -129,7 +131,8 @@
     }
 }
 .button-container {
-    color: $gold;
+    color: #6f7271;
+    font-weight: 300;
 
     & button:hover,
     button:active,
@@ -138,8 +141,7 @@
         color: $secondary;
         .img-svg {
             height: auto;
-            max-height: 100px;
-            width: 100px;
+            width: 130px;
             margin-bottom: 10px;
             transform: scale(1);
         }
@@ -150,7 +152,7 @@
             opacity: 1;
             transition: all 0.25s;
             color: $secondary;
-            padding-top: -1rem;
+            padding-top: 0.4rem;
             padding-bottom: 3rem;
         }
 
@@ -161,7 +163,7 @@
             opacity: 1;
             transition: all 0.25s;
             color: $secondary;
-            padding-top: 1.6rem;
+            padding-top: 2.4rem;
             padding-bottom: 3rem;
         }
 
@@ -227,7 +229,7 @@
     height: 2px;
     background-color: #bebebf;
     position: absolute;
-    top: 609px;
+    top: 99%;
     z-index: -2;
     @media (max-width: 420px) {
         display: none;
@@ -248,6 +250,10 @@
     & svg {
         color: $secondary;
     }
+
+    @media (max-width: 420px) {
+        margin-top: -110px;
+    }
 }
 
 .line-divider {
@@ -256,7 +262,7 @@
     height: 245px;
 
     @media (max-width: 420px) {
-        height: 310px;
+        height: 260px;
     }
 }
 .item {
@@ -323,7 +329,7 @@
         transform: rotate(90deg);
 
         @media (max-width: 420px) {
-            left: calc(-12% - 4px);
+            left: calc(-11% - 1px);
         }
     }
 
@@ -336,7 +342,7 @@
 
     @media (max-width: 420px) {
         width: 100%;
-        box-shadow: 0.5px 4px 12px rgba(0, 0, 0, 0.6);
+        box-shadow: 0.5px 4px 22px rgba(0, 0, 0, 0.2);
     }
 }
 
@@ -344,6 +350,10 @@
     font-weight: 700;
     font-size: 1rem;
     color: $secondary;
+
+    @media (max-width: 420px) {
+        font-size: 0.8rem;
+    }
 }
 
 .message {
@@ -399,7 +409,7 @@ table {
     width: 100%;
 }
 th {
-    background: #f5f5f5;
+    background: white;
     display: none;
 }
 td,
@@ -427,9 +437,11 @@ td.default {
 
 .bg-green {
     border-top: 4px solid #235b4e;
+    width: 20%;
 }
 .bg-gold {
     border-top: 4px solid #bc955c;
+    width: 20%;
 }
 .sep {
     background: #f5f5f5;
@@ -479,6 +491,22 @@ td.default {
         width: auto;
     }
 }
+
+@media (max-width: 420px) {
+    td,
+    th {
+        display: table-cell !important;
+    }
+    td,
+    th {
+        width: 40%;
+        font-size: 0.8rem;
+    }
+    td + td,
+    th + th {
+        width: auto;
+    }
+}
 .admin-subtitle {
     font-size: 1rem;
     font-weight: 700;
@@ -488,6 +516,11 @@ td.default {
     font-size: 1.2rem;
     font-weight: 700;
     color: $secondary;
+
+    @media (max-width: 420px) {
+        font-size: 1rem;
+        text-align: center;
+    }
 }
 .doc-divider {
     height: 5px;
@@ -548,4 +581,22 @@ td.default {
         padding: 30px 30px 0 30px;
         margin-bottom: 20px;
     }
+}
+.content-mobile {
+    margin-left: -40px;
+    margin-right: -40px;
+}
+
+.accordion-body {
+    @media (max-width: 420px) {
+    }
+}
+
+.tittle-table {
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 700;
+    color: $gold;
+    padding-left: 30%;
+    text-decoration: underline;
 }
