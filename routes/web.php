@@ -1,19 +1,20 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminMTVController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\EntidadURGController;
+use App\Http\Controllers\BuscadorMTVController;
 use App\Http\Controllers\RegistroMTVController;
 use App\Http\Controllers\CatalogoCABMSController;
 use App\Http\Controllers\OportunidadesController;
 use App\Http\Controllers\PerfilNegocioController;
-use App\Http\Controllers\BuscadorMTVController;
+use App\Http\Controllers\Admin\AdminMTVController;
+use App\Http\Controllers\CalendarioComprasController;
 use App\Http\Controllers\CatalogoProductosController;
 use App\Http\Controllers\ProgramacionAnualController;
 use App\Http\Controllers\CentroNotificacionesController;
-use App\Http\Controllers\EntidadURGController;
 use App\Http\Controllers\UsuarioConfiguracionController;
 
 /*
@@ -140,6 +141,10 @@ Route::controller(OportunidadesController::class)->group(function() {
                 'updateBookmark')->middleware(['role:proveedor', 'auth'])->name('oportunidades-negocio-bookmarks.update');
     Route::get('/oportunidades-de-negocio/export', 'exportOportunidadesNegocio')->name('oportunidades-negocio.export');
     Route::get('/oportunidades-items-cards', 'getItemsCards')->name('oportunidades.items-cards');
+});
+
+Route::controller(CalendarioComprasController::class)->group(function () {
+    Route::get('/calendario-compras', 'index')->name('calendario-compras.index');
 });
 
 Route::get('/programacion-anual', [ProgramacionAnualController::class, 'index'])->name('programacion-anual');
