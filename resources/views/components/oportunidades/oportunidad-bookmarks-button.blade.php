@@ -13,9 +13,10 @@
             @php($loginRuta = route('login') . '?url=oportunidades_negocio' . $queryString)
             @click="showMessage(@js($loginRuta), @js(route('registro-inicio')))"
         @endguest
-        @auth
+        @role('proveedor')
+        {{-- Funcionalidad disponible solamente para proveedores, no URGs --}}
             @click="toggleBookmark(@js($apiRoute), @js(csrf_token()))"
-        @endauth
+        @endrole
 >    
     @svg('bi-bookmark-heart', ['x-show' => '!bookmarkActivo', 'class' => 'w-6 h-6 inline-block mr-2 stroke-2'])
     @svg('bi-bookmark-heart-fill', ['x-show' => 'bookmarkActivo', 'class' => 'w-6 h-6 inline-block mr-2 stroke-2'])
