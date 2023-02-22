@@ -18,7 +18,8 @@
                         Mi tiendita virtual
                     </x-nav-link>
                     @endrole
-                    <x-nav-link :href="'#'">
+                    <x-nav-link :href="route('flujograma.show')"
+                        :active="request()->routeIs('flujograma.show')">
                         ¿Qué es Mi Tiendita Virtual?
                     </x-nav-link>
                     <x-nav-link :href="route('calendario-compras.index')"

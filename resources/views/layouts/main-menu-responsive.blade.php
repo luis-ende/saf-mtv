@@ -8,7 +8,8 @@
             Mi tiendita virtual
         </x-responsive-nav-link>
         @endrole
-        <x-responsive-nav-link href="'#'">
+        <x-responsive-nav-link :href="route('flujograma.show')"
+            :active="request()->routeIs('flujograma.show')">            
             ¿Qué es Mi Tiendita Virtual?
         </x-responsive-nav-link>
         <x-responsive-nav-link :href="route('calendario-compras.index')"
