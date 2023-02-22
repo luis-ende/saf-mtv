@@ -20,7 +20,9 @@
                         @svg('icono_catalogo', ['class' => 'w-5 h-5 inline-block mr-2'])
                         Catálogo
                     </a>                                                            
-                    <x-solicitar-info-button />
+                    <x-solicitar-info-button 
+                        :producto="$producto"
+                    />
                 </div>
             </div>
             <div class="py-6 px-12">

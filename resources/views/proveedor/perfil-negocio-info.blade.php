@@ -73,13 +73,10 @@
                                             />
                                             <input type="hidden" id="logotipo_path" name="logotipo_path" value="{{ $logotipoUrl ?? '' }}">
                                             <x-perfil-negocio.redes-sociales-links :links="$persona->perfil_negocio->enlacesRedesSociales()" />
-                                            <div class="text-center py-4">
-                                                {{-- <a href="mailto:{{ $persona->email }}"
-                                                   class="mtv-button-secondary py-2 md:text-sm xs:text-xs">
-                                                    @svg('ri-mail-send-line', ['class' => 'w-5 h-5 inline-block mr-3'])
-                                                    Solicitar información
-                                                </a> --}}
-                                                <x-solicitar-info-button />
+                                            <div class="text-center mb-4">                                                
+                                                <x-solicitar-info-button
+                                                    :proveedor="$persona"
+                                                 />
                                             </div>
                                         </div>
                                         <div class="md:basis-3/4 xs:basis-full mx-0 text-mtv-gray-2">

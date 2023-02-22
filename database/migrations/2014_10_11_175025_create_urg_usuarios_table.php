@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('urg_usuarios', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 160);
+            $table->string('email');
             $table->timestamps();
         });
     }

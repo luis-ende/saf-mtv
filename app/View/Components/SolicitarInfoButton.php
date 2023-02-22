@@ -6,6 +6,8 @@ use Illuminate\View\Component;
 
 class SolicitarInfoButton extends Component
 {    
+    public array $usuarioURG = [];
+
     /**
      * Create a new component instance.
      *
@@ -13,6 +15,10 @@ class SolicitarInfoButton extends Component
      */
     public function __construct()
     {        
+        if ($this->esUsuarioURG()) {
+            $this->usuarioURG['nombre'] = request()->user()->urg->nombre;
+            $this->usuarioURG['email'] = "example@example.com";
+        }
     }    
 
     public function esUsuarioURG(): bool 
@@ -22,11 +28,6 @@ class SolicitarInfoButton extends Component
         }        
 
         return false;
-    }
-
-    public function getUsuarioURGDatos() 
-    {
-        return [];
     }
 
     /**
