@@ -8,10 +8,11 @@
             Mi tiendita virtual
         </x-responsive-nav-link>
         @endrole
-        <x-responsive-nav-link href="#virtual-store'">
+        <x-responsive-nav-link href="'#'">
             ¿Qué es Mi Tiendita Virtual?
         </x-responsive-nav-link>
-        <x-responsive-nav-link :href="route('calendario-compras.index')" :active="request()->routeIs('calendario-compras.index')">
+        <x-responsive-nav-link :href="route('calendario-compras.index')"
+            :active="request()->routeIs('calendario-compras.index')">
             Calendario de compras
         </x-responsive-nav-link>
         <x-responsive-nav-link :href="route('oportunidades-negocio.search')"

@@ -30,14 +30,15 @@
                         Oportunidades de negocio
                     </x-nav-link>
                     <x-nav-link :href="'#'">
-                        Directorio CDMX
+                        Preguntas frecuentes
                     </x-nav-link>
                     <x-nav-link :href="'#'">
-                        Preguntas frecuentes
+                        Directorio CDMX
                     </x-nav-link>
                     <x-nav-link :href="'#'">
                         Padrón de Proveedores
                     </x-nav-link>
+                    <x-menus.mtv-catalogo-menu-item />
                 </div>
             </div>
         </div>
