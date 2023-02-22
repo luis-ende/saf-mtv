@@ -116,16 +116,22 @@
     width: 50%;
     background-image: url("../svg/vertical-plot.svg");
     background-repeat: no-repeat;
+    @media only screen and (max-width: 600px) {
+        width: 100%;
+    }
 }
 
 .what-mtv-left img {
     width: 300px;
-    margin-top: 100px;
-    margin-left: 300px;
+    margin-left: 30%;
+    margin-top: 10%;
+    margin-bottom: 8%;
 
     @media only screen and (max-width: 600px) {
-        margin-left: 100px;
+        width: 200px;
         margin-top: 50px;
+        margin-bottom: 15%;
+        margin-left: 25%;
     }
 }
 
@@ -151,6 +157,7 @@
 
 .for-mtv {
     display: flex;
+    margin-top: -60px;
 }
 
 .image-container {

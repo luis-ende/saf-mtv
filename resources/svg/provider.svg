@@ -6,11 +6,11 @@
   style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd"
   viewBox="0 0 13000000 13000000"
 ><defs><style
-    >.fil3{fill:#f0e2c8}.fil2{fill:#fff}.fil1,.fil4,.fil5{fill:#bc955c;fill-rule:nonzero}.fil1{fill:#fff}</style></defs><g
+    >.fil3{fill:#f0e2c8}.fil2{fill:#fff}.fil1,.fil4,.fil5{fill:#bc955c;fill-rule:nonzero}.fil1{fill:#fff}.fil6{fill:#f9f5ed;stroke:#f9f5ed;stroke-width:90000.5}</style></defs><g
     id="Capa_x0020_1"
   ><path
+      class="fil6"
       d="M6454173 9078126c944888 0 1710837 765949 1710837 1710837s-765949 1710837-1710837 1710837c-945006 0-1710955-765949-1710955-1710837s765949-1710837 1710955-1710837zM3725928 500082c1680010 0 3041948 1361819 3041948 3041829S5405938 6583859 3725928 6583859 683981 5221921 683981 3541911 2045918 500082 3725928 500082zm6549725 821461c1126778 0 2040248 913471 2040248 2040249s-913470 2040249-2040248 2040249c-1126779 0-2040131-913471-2040131-2040249s913352-2040249 2040131-2040249z"
-      style="fill:#f9f5ed;stroke:#f9f5ed;stroke-width:90000.5"
     /><path
       class="fil1"
       d="M6084722 6100431H4367507v845556L3038168 5732869l1329339-1213117v845556h1717215v735123zm0-367562"
