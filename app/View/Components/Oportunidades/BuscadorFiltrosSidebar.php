@@ -6,6 +6,9 @@ use Illuminate\View\Component;
 
 class BuscadorFiltrosSidebar extends Component
 {
+    /**
+     * @var array<mixed>
+     */
     public array $filtrosActivos = [
         'ca' => [], // Capitulos
         'uc' => [], // Unidades compradoras

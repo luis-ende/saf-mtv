@@ -6,12 +6,13 @@ use Carbon\Carbon;
 use RoachPHP\Roach;
 use App\Models\OportunidadNegocio;
 use Illuminate\Support\Facades\DB;
+use App\Models\EstatusContratacion;
 use App\Spiders\ConvocatoriasOportunidadesSpider;
 
 
 /**
- * Clase para procesar oportunidades de negocio provienientes de la página de concurso digital, 
- * correspondiente a la etapa "Licitación en proceso".
+ * Clase para procesar la extracción de oportunidades de negocio provienientes de la página de Concurso Digital (convocatorias), 
+ * correspondiente a la etapa "Licitaciones en proceso" en MTV.
  * 
  * Ver: https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas
  */
@@ -28,9 +29,9 @@ class ConcursoDigitalService
         $tipoContratacionServicio = DB::table('cat_tipos_contratacion')->where('tipo', 'Prestación de Servicios')->value('id');
         $tipoMetodoContratacionLP = DB::table('cat_metodos_contratacion')->where('metodo', 'Licitación pública')->value('id');
         $tipoMetodoContratacionIR = DB::table('cat_metodos_contratacion')->where('metodo', 'Invitación restringida')->value('id');
-        $etapaLicEnProc = DB::table('cat_etapas_procedimiento')->where('etapa', 'Licitación en proceso')->value('id');
-        $estatusContrVigente = DB::table('cat_estatus_contratacion')->where('estatus', 'En proceso')->value('id');
-        $estatusContrCerrado = DB::table('cat_estatus_contratacion')->where('estatus', 'Cerrado')->value('id');
+        $etapaLicEnProc = DB::table('cat_etapas_procedimiento')->where('etapa', 'Licitaciones en proceso')->value('id');
+        $estatusContrVigente = DB::table('cat_estatus_contratacion')->where('estatus', EstatusContratacion::ESTATUS_CONTRATACION_VIGENTE)->value('id');
+        $estatusContrCerrado = DB::table('cat_estatus_contratacion')->where('estatus', EstatusContratacion::ESTATUS_CONTRATACION_FINALIZADO)->value('id');
         
         foreach($concursos as $concurso) {
             $fechaPublicacion = $concurso['fecha_publicacion'] ? 
@@ -39,8 +40,7 @@ class ConcursoDigitalService
             $fechaPresentacionP = $concurso['fecha_presentacion_propuestas'] ? 
                                     Carbon::createFromFormat('Y-m-d', substr($concurso['fecha_presentacion_propuestas'], 0, 10)) : 
                                     Carbon::now();            
-    
-            // TODO Abrir transacción
+                
             OportunidadNegocio::updateOrInsert([
                     'nombre_procedimiento' => $concurso['nombre_procedimiento'],
                     'fecha_publicacion' => $fechaPublicacion,
@@ -53,6 +53,8 @@ class ConcursoDigitalService
                     'id_etapa_procedimiento' => $etapaLicEnProc,
                     'id_estatus_contratacion' => $estatusContrVigente,
                     'fuente_url' => $concurso['fuente_url'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
             ]);
             
             // Actualizar estatus de oportunidades de negocio con fecha de presentación de propuestas haya transcurrido.

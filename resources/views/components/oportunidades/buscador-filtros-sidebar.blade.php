@@ -107,6 +107,7 @@
     </div>
 </form>
 
+@push('scripts')
 <script type="text/javascript">
     function oportunidadesFiltros() {        
         return {            
@@ -139,3 +140,4 @@
         }
     }
 </script>
+@endpush

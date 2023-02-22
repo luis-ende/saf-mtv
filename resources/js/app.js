@@ -189,7 +189,7 @@ Alpine.data('infiniteScrolling', () => ({
     htmlData: null,
     numResults: 0,
     filtros: [],
-    isLoading: false,
+    isLoading: false,    
     async retrieveData() {
         // Remueve elementos con valor nulo
         const filtrosValidos = Object.fromEntries(Object.entries(this.filtros).filter(([_, v]) => v != null));
@@ -216,7 +216,8 @@ Alpine.data('infiniteScrolling', () => ({
         this.filtros = filtros;
         this.buscadorItemsRoute = buscadorItemsRoute;
         this.$watch('htmlData', value => {
-            this.$refs.resultsGrid.innerHTML += this.htmlData
+            this.$refs.resultsGrid.innerHTML += this.htmlData;            
+            document.dispatchEvent(new CustomEvent("infiniteScrollingUpdate", {}));            
         })
     },
 }))
@@ -240,10 +241,49 @@ Alpine.data('animatedCounter', (targer, time = 200, start = 0) => ({
     }      
 }))
 
-Alpine.data('oportunidadNegocioAlertas', () => ({
-    alertaActiva: false,
-    toggleAlerta(route, token) {
-        fetch(route, {
+Alpine.data('oportunidadNegocioBookmarks', () => ({
+    get currentColor() {        
+        let color = 'text-mtv-secondary';
+        if (this.bookmarkActivo) {
+            color = 'text-mtv-primary';
+        } else {
+            if (this.procedimientoCerrado && !this.bookmarkActivo) {
+                color = 'text-mtv-gray';
+            }            
+        }
+
+        return color;
+    },
+    numBookmarks: 0,
+    bookmarkActivo: false,    
+    procedimientoCerrado: false,
+    esVistaNotif: false,
+    toggleBookmark(updateRoute, token) {
+        let newState = !this.bookmarkActivo;
+        if (newState === false) {
+            const props = SwalMTVCustom;
+            props.customClass['title'] = 'swal2-mtv-title';        
+            Swal.fire({
+                ...SwalMTVCustom,
+                title: 'Quitar de favoritos',
+                html: '<p class="swal-mtv-html-container-action">¿Quieres quitar esta oportunidad de negocio de tus favoritos?</p>',
+                confirmButtonText: 'Quitar',
+                cancelButtonText: 'Conservar',
+                showCloseButton: true,
+            }).then((result) => {                        
+                if (result.isConfirmed) {
+                    this.sendToggleRequest(updateRoute, token);
+                }
+            });            
+        } else {
+            if (!this.procedimientoCerrado) {
+                this.sendToggleRequest(updateRoute, token);
+            }            
+        }
+        
+    },
+    sendToggleRequest(updateRoute, token) {        
+        fetch(updateRoute, {
             method: "POST",
             credentials: 'same-origin',
             headers: {
@@ -251,27 +291,38 @@ Alpine.data('oportunidadNegocioAlertas', () => ({
             },
         }).then(response => response.json())
         .then(json => {
-            this.alertaActiva = json.alerta_estatus;
+            this.bookmarkActivo = json.alerta_estatus;
+            this.numBookmarks = json.num_bookmarks;            
+            if (this.esVistaNotif) {
+                window.location.reload();
+            }            
         })
     },
     showMessage(rutaLogin, rutaRegistro) {
-        const props = SwalMTVCustom;
-        props.customClass['title'] = 'swal2-mtv-title';        
-        Swal.fire({
-            ...SwalMTVCustom,
-            title: 'Activar alerta',
-            html: "Para activar las alertas debes estar registrado o haber ingresado a Mi Tiendita Virtual." +
-                  '<p class="swal-mtv-html-container-action">¿Quieres activar la alerta?</p>',
-            confirmButtonText: 'Ingresar',
-            cancelButtonText: 'Regístrate',
-            showCloseButton: true,
-        }).then((result) => {                        
-            if (result.isConfirmed) {
-                window.location.href = rutaLogin;
-            } else if (!(result.dismiss === 'close' || result.dismiss === 'esc')) {
-                window.location.href = rutaRegistro;
-            }            
-        });
+        if (!this.procedimientoCerrado) {
+            const props = SwalMTVCustom;
+            props.customClass['title'] = 'swal2-mtv-title';        
+            Swal.fire({
+                ...SwalMTVCustom,
+                title: 'Guardar oportunidad de negocio',
+                html: "Para guardar la notificación debes estar registrado o ingresado a Mi Tiendita Virtual." +
+                      '<p class="swal-mtv-html-container-action">¿Quieres guardar la oportunidad de negocio?</p>',
+                confirmButtonText: 'Ingresar',
+                cancelButtonText: 'Registrarte',
+                showCloseButton: true,
+            }).then((result) => {                        
+                if (result.isConfirmed) {
+                    window.location.href = rutaLogin;
+                } else if (!(result.dismiss === 'close' || result.dismiss === 'esc')) {
+                    window.location.href = rutaRegistro;
+                }            
+            });
+        }        
+    },
+    initBookmarks(numBookmarks, bookmarkActivo, procedimientoCerrado) {
+        this.bookmarkActivo = bookmarkActivo;
+        this.numBookmarks = numBookmarks;
+        this.procedimientoCerrado = procedimientoCerrado;
     }
 }))
 
@@ -332,6 +383,30 @@ Alpine.data('oportunidadesFiltrosURLParams', () => ({
 
         return counter;
     },
+}))
+
+Alpine.data('oportunidadNegocioSugeridos', () => ({
+    eliminaSugerido(oportunidadId, token) {
+        Swal.fire({
+            ...SwalMTVCustom,
+            title: 'Oportunidades de negocio sugeridas',
+            html: '<span>¿Deseas eliminar borrar la oportunidad sugerida para que no aparezca en esta sección?</span>',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('/notificaciones/sugerencias/delete/' + oportunidadId, {
+                    method: "DELETE",
+                    credentials: 'same-origin',
+                    headers: {
+                        'X-CSRF-Token': token,
+                    },
+                }).then(response => {                    
+                    if (response.ok) {
+                        location.reload();
+                    }
+                });                                
+            }
+        })
+    }
 }))
 
 Alpine.start();

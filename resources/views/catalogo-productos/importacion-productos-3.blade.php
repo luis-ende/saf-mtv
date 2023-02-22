@@ -158,8 +158,7 @@
                                             headers: {
                                                 'X-CSRF-Token': '{{ csrf_token() }}',
                                             },
-                                        }).then(response => {
-                                            console.log(response);
+                                        }).then(response => {                                            
                                             if (response.ok) {
                                                 this.productos = this.productos.filter(item => item.id !== id);
                                             }

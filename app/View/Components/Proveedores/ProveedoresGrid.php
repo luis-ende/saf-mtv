@@ -8,6 +8,9 @@ use Illuminate\View\Component;
 class ProveedoresGrid extends Component
 {
     public int $pagination_offset;
+    /**
+     * @var array<mixed>
+     */
     public array $filtros;
     public string $buscador_items_route;
 

@@ -21,8 +21,8 @@
                     <x-nav-link :href="'#'">
                         ¿Qué es Mi Tiendita Virtual?
                     </x-nav-link>
-                    <x-menus.mtv-catalogo-menu-item />
-                    <x-nav-link href="#">
+                    <x-nav-link :href="route('calendario-compras.index')"
+                        :active="request()->routeIs('calendario-compras.index')">
                         Calendario de compras
                     </x-nav-link>
                     <x-nav-link :href="route('oportunidades-negocio.search')"

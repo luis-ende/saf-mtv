@@ -54,6 +54,8 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
 <script type="text/javascript">
     function filtrosFechas() {
         return {
@@ -75,3 +77,4 @@
         }
     }
 </script>
+@endpush

@@ -21,18 +21,20 @@
                 </a>
             </div>
             @isset($producto->id_persona)
-                <div>
+                <div class="h-6">
                     <a href="{{ route('proveedor-perfil.show', [$producto->id_persona]) }}"
-                       class="mtv-link-gold uppercase m-0">
-                        {{ $producto->nombre_negocio }}
+                       class="mtv-link-gold uppercase m-0 line-clamp-1">
+                        {{ $producto->nombre_negocio }}                        
                     </a>
                 </div>
             @endisset
 
-            <a href="{{ $productoRoute }}"
-               class="text-mtv-primary hover:text-mtv-primary no-underline font-bold m-0" >
-               {{ $producto->nombre }}
-            </a>
+            <div class="h-12">
+                <a href="{{ $productoRoute }}"
+                class="text-mtv-primary hover:text-mtv-primary no-underline font-bold m-0 line-clamp-2" >                
+                {{ $producto->nombre }}
+                </a>
+            </div>
 
             <div class="my-2">
                 <x-productos.producto-favoritos-input 

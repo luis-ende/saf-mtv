@@ -17,3 +17,4 @@ yarn-error.log
 Homestead/vendor
 Homestead/.vagrant
 /database/data/cat_ciudadano_cabms.*
+/database/backups

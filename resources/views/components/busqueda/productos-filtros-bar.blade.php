@@ -18,7 +18,7 @@
                     <ul class="list-none list-outside p-1">
                     @foreach($filtros_opciones['sectores'] as $sector)
                         <li>
-                            <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="sector-{{ $sector->id }}" name="sector_filtro[]" value="{{ $sector->id }}">
+                            <input class="mr-1 focus:ring-mtv-secondary" type="checkbox" id="sector-{{ $sector->id }}" name="sector_filtro[]" value="{{ $sector->id }}">
                             <label for="sector-{{ $sector->id }}">{{ $sector->sector }}</label>
                         </li>
                     @endforeach
@@ -48,7 +48,7 @@
                     <ul class="list-none list-outside p-1">
                         @foreach($filtros_opciones['capitulos'] as $capitulo)
                             <li>
-                                <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="capitulo-{{ $capitulo }}" name="capitulo_filtro[]" value="{{ $capitulo }}">
+                                <input class="mr-1 focus:ring-mtv-secondary" type="checkbox" id="capitulo-{{ $capitulo }}" name="capitulo_filtro[]" value="{{ $capitulo }}">
                                 <label for="capitulo-{{ $capitulo }}">{{ $capitulo }}</label>
                             </li>
                         @endforeach
@@ -78,7 +78,7 @@
                     <ul class="list-none list-outside p-1">
                         @foreach($filtros_opciones['partidas'] as $partida)
                             <li>
-                                <input class="mr-1 border rounded focus:ring-mtv-secondary" type="checkbox" id="partida-{{ $partida }}" name="partida_filtro[]" value="{{ $partida }}">
+                                <input class="mr-1 focus:ring-mtv-secondary" type="checkbox" id="partida-{{ $partida }}" name="partida_filtro[]" value="{{ $partida }}">
                                 <label for="partida-{{ $partida }}">{{ $partida }}</label>
                             </li>
                         @endforeach

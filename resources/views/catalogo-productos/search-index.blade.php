@@ -50,7 +50,7 @@
                         tabInactive: 'text-white bg-mtv-gold-light hover:text-white' }" 
                      x-modelable="tab" 
                      x-model="tipoBusqueda">
-                    <nav class="font-bold text-lg text-mtv-gold flex md:flex-row xs:flex-col md:space-x-7 md:space-y-0 xs:space-y-4 xs:space-x-0 px-7 mx-auto mb-14 w-3/4">
+                    <nav class="font-bold text-lg flex md:flex-row xs:flex-col md:space-x-7 md:space-y-0 xs:space-y-4 xs:space-x-0 px-7 mx-auto mb-14 w-3/4">
                         @php($plural = $num_productos_registrados > 1)
                         <button class="no-underline rounded-3xl basis-1/2 text-center py-2 px-5"
                            :class="tab === 'productos' ? tabActive : tabInactive"
@@ -96,11 +96,11 @@
                             </div>
                         @endrole
 
-                        @isset($resultados)
+                        @if(isset($resultados) && $tipo_busqueda === 'productos')                            
                             <x-busqueda.resultados-view 
                                 :tipo_busqueda="$tipo_busqueda"
                                 :resultados="$resultados" />
-                        @endisset
+                        @endif
                     </div>
 
                     <div class="flex flex-col" x-show="tab === 'proveedores'">
@@ -117,11 +117,11 @@
                             </x-busqueda.search-input>                            
                         </div>
 
-                        @isset($resultados)
+                        @if(isset($resultados) && $tipo_busqueda === 'proveedores')                            
                             <x-busqueda.resultados-view 
                                 :tipo_busqueda="$tipo_busqueda"
                                 :resultados="$resultados" />
-                        @endisset                        
+                        @endif                        
                     </div>
                 </div>
             </div>

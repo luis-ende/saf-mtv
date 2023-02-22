@@ -1,5 +1,7 @@
-<x-app-layout>        
-    <div class="bg-white overflow-hidden min-h-screen">
+<x-app-layout>      
+    <div class="bg-white overflow-hidden min-h-screen"
+         x-data="encabezadoEstadisticas()"
+         x-init="initEncabezadoEstadisticas()">
         <div class="py-6 md:px-12 xs:px-6 bg-white border-b border-gray-200 flex flex-col">
             <div class="self-center">
                 <label class="text-mtv-gray-2 md:text-xl">
@@ -19,23 +21,22 @@
                     <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
                 </div>                    
             </div>                
-            <div class="my-4 text-lg text-mtv-text-gray text-center">
-                <span class="font-bold md:text-xl xs:text-base text-mtv-secondary my-4 inline-block">
+            <div class="my-4 text-lg text-mtv-text-gray flex flex-col items-center">
+                <span class="font-bold md:text-xl xs:text-base text-mtv-secondary mb-4 block text-center">
                     Identifica qué productos y servicios compra la CDMX.
                 </span>
-                <span class="md:w-3/4 inline-block text-base xs:text-sm">
-                    Para activar las alertas de tu interés, 
-                    <a href="{{ route('registro-inicio') }}" class="underline font-bold mtv-link-gold">regístrate en “Mi Tiendita Virtual”.</a>
-                </span>
-                <span class="md:w-3/4 text-base xs:text-sm inline-block">
-                    Si ya estás registrado en Padrón de Proveedores, ahí te llegarán las notificaciones, sólo activa las alertas aquí.
+                <span class="md:w-2/5 block text-base xs:text-sm text-center">
+                    <a href="{{ route('registro-inicio') }}" class="underline font-bold mtv-link-gold">Regístrate en “Mi Tiendita Virtual”</a>
+                    para guardar y seguir las oportunidades de negocio de tu interés. Sólo da clic en el icono del “Marcador” y en la sección “Notificaciones” los encontrarás.
                 </span>
             </div>
 
             <div class="md:w-10/12 xs:w-full md:flex md:flex-row md:space-x-16 md:space-y-0 xs:grid xs:grid-cols-2 xs:grid-rows-2 xs:gap-x-5 xs:gap-y-2 my-4 self-center"
                  x-data=etapasFiltros()>
                 <div class="md:basis-1/5 text-mtv-gray flex flex-column items-center py-2 md:inline-flex xs:hidden">
-                    <span class="font-bold text-5xl">{{ $estadisticas['conteo_dependencias'] }}</span>
+                    <span class="font-bold text-5xl" 
+                          x-model="unidadesCConteo" 
+                          x-text="unidadesCConteo"></span>
                     <span class="text-lg">Instituciones compradoras</span>
                 </div>
 
@@ -43,30 +44,36 @@
                     <button 
                         :class="esFiltroEtapaActivo(@js($etapa['id'])) ? 'mtv-button-filtro-ep-active' : 'mtv-button-filtro-ep-inactive'"
                         @click="activaFiltro(@js($etapa['id']))">
-                        <span class="font-bold text-5xl xs:text-1xl">{{ $etapa['conteo'] }}</span>
+                        <span class="font-bold text-5xl xs:text-1xl" x-model="etapasConteo[@js($etapa['id'])]" 
+                                                                     x-text="etapasConteo[@js($etapa['id'])]"></span>
                         <span class="md:text-lg xs:text-sm">{{ $etapa['nombre_etapa']  }}</span>
                     </button>
                 @endforeach
 
-                <script type="text/javascript">
-                    function etapasFiltros() {
-                        return {
-                            activaFiltro(etapaId) {
-                                const querystring = window.location.search; 
-                                const params = new URLSearchParams(querystring); 
-                                params.delete("ep");
-                                params.append("ep", etapaId); 
-                                window.location.href = `${window.location.pathname}?${params}` + '#seccion-principal';
-                            },
-                            esFiltroEtapaActivo(etapaId) {
-                                const querystring = window.location.search; 
-                                const params = new URLSearchParams(querystring);                                                                                                                             
+                @push('scripts')
+                    <script type="text/javascript">
+                        function etapasFiltros() {
+                            return {                            
+                                activaFiltro(etapaId) {
+                                    const querystring = window.location.search; 
+                                    const params = new URLSearchParams(querystring); 
+                                    params.delete("ep");
+                                    params.append("ep", etapaId); 
+                                    window.location.href = `${window.location.pathname}?${params}` + '#seccion-principal';
+                                },
+                                esFiltroEtapaActivo(etapaId) {
+                                    const querystring = window.location.search; 
+                                    const params = new URLSearchParams(querystring);                                                                                                                             
 
-                                return params.has("ep") && params.get("ep") === etapaId.toString();
+                                    return params.has("ep") && params.get("ep") === etapaId.toString();
+                                },
+                                getEtapaConteo(etapaId) {
+                                    return this.$data.etapasConteo.filter(e => e.id === etapaId)[0].conteo;
+                                }
                             }
                         }
-                    }
-                </script>
+                    </script>
+                @endpush
             </div>                
         </div>
         
@@ -79,7 +86,7 @@
                     <label for="oportunidades_search" class="text-mtv-secondary text-sm mb-2">
                         Búsqueda por palabra clave:
                     </label>
-                    <div class="flex md:flex-row md:space-x-3 md:space-y-0 xs:flex-col xs:space-y-3">
+                    <div class="flex md:flex-row md:space-x-5 md:space-y-0 xs:flex-col xs:space-y-3">
                         <div class="md:basis-10/12 xs:basis-full relative">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 @svg('forkawesome-search', ['class' => 'w-4 h-4 text-mtv-gray-2'])
@@ -95,24 +102,16 @@
                             </button>
                         </div>
 
-                        <x-busqueda.enlaces-catalogos-pdf />
-
+                        <div class="md:basis-2/12 xs:basis-full xs:self-center">
+                            <x-busqueda.enlaces-catalogos-pdf />
+                        </div>
                     </div>
                 </form>
             </div>            
             <div id="seccion-principal" x-ref="seccionPrincipal" class="flex md:flex-row xs:flex-col m-4"
                 {{-- TIP: Buscar inicialización de esta función reutilizable 'oportunidadesFiltrosURLParams()' en resources/js/app.js --}}
                  x-data="oportunidadesFiltrosURLParams">
-                <div x-data="{
-                    filtrosSideBarOpen: false,
-                    filtrosModalOpen: false,
-                    stickyFiltrosButton: false,
-                    setModalOpen() {
-                        this.filtrosModalOpen = !filtrosModalOpen;
-                        if (this.filtrosModalOpen) {
-                            this.filtrosSideBarOpen = false;
-                        }
-                    }}"
+                <div x-data="filtrosSideBar()"
                     @scroll.window="stickyFiltrosButton = $refs.seccionPrincipal.getBoundingClientRect().top <= 0">
                     <div class="basis-full md:basis-1/4 md:mr-7">
                         <div :class="{'flex flex-row justify-between': filtrosModalOpen, 'hidden': !filtrosModalOpen}"
@@ -148,6 +147,24 @@
                     </div>
                 </div>
 
+                @push('scripts')        
+                    <script type="text/javascript">
+                        function filtrosSideBar() {
+                            return {
+                                filtrosSideBarOpen: false,
+                                filtrosModalOpen: false,
+                                stickyFiltrosButton: false,
+                                setModalOpen() {
+                                    this.filtrosModalOpen = !filtrosModalOpen;
+                                    if (this.filtrosModalOpen) {
+                                        this.filtrosSideBarOpen = false;
+                                    }
+                                }
+                            }
+                        }
+                    </script>
+                @endpush    
+
                 <div class="basis-full md:basis-3/4 flex flex-col" x-data="{ rutaDescarga: '' }">
                     @if(count($oportunidades) >= 1)
                         <a :href="rutaDescarga"
@@ -180,7 +197,39 @@
                         @endif
                     </div>
                 </div>
+
+                <button
+                    x-cloak
+                    x-data="{ scrollBackTop: false }"
+                    x-show="scrollBackTop"
+                    x-on:scroll.window="scrollBackTop = (window.pageYOffset > window.outerHeight * 0.5) ? true : false"
+                    x-on:click="window.scrollTo (0,0)"
+                    aria-label="Back to top"
+                    class="fixed bottom-0 right-0 p-2 mx-10 my-16 bg-white rounded opacity-95 text-mtv-primary font-bold focus:outline-none">
+                        @svg('bi-arrow-bar-up', ['class' => 'w-10 h-10 block'])                        
+                </button>
             </div>
         </div>
     </div>
+
+    @push('scripts')        
+        <script type="text/javascript">
+            function encabezadoEstadisticas() {
+                return {
+                    etapasConteo: [],
+                    unidadesCConteo: @js($estadisticas['conteo_dependencias']),
+                    calculaEstadisticas() {
+                        this.etapasConteo.forEach((e, key) => this.etapasConteo[key] = 0);
+                        document.querySelectorAll('article[data-ep]').forEach(e => this.etapasConteo[e.dataset.ep] += 1);                        
+                        let ucConteo = new Set();
+                        document.querySelectorAll('article[data-uc]').forEach(u => ucConteo.add(u.dataset.uc));                                                        
+                        this.unidadesCConteo = ucConteo.size;
+                    },
+                    initEncabezadoEstadisticas() {
+                        Object.values(@js($estadisticas['conteo_etapas'])).forEach(e => this.etapasConteo[e.id] = e.conteo);                        
+                    }
+                }
+            }
+        </script>
+    @endpush
 </x-app-layout>

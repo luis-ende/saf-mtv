@@ -11,7 +11,7 @@
         <x-responsive-nav-link href="#virtual-store'">
             ¿Qué es Mi Tiendita Virtual?
         </x-responsive-nav-link>
-        <x-responsive-nav-link href="#">
+        <x-responsive-nav-link :href="route('calendario-compras.index')" :active="request()->routeIs('calendario-compras.index')">
             Calendario de compras
         </x-responsive-nav-link>
         <x-responsive-nav-link :href="route('oportunidades-negocio.search')"
