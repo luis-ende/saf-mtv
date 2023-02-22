@@ -403,36 +403,68 @@
     }
 }
 
-table {
-    border-collapse: collapse;
-    table-layout: fixed;
-    width: 100%;
-}
-th {
-    background: white;
-    display: none;
-}
-td,
-th {
-    height: 100%;
-}
-td,
-th {
-    border: 1px solid #ddd;
-    padding: 10px;
-    empty-cells: show;
-}
-td,
-th {
-    text-align: left;
-}
-td + td,
-th + th {
-    text-align: center;
-    display: none;
-}
-td.default {
-    display: table-cell;
+.documents-table {
+    table {
+        border-collapse: collapse;
+        table-layout: fixed;
+        width: 100%;
+    }
+    th {
+        background: white;
+        display: none;
+    }
+    td,
+    th {
+        height: 100%;
+    }
+    td,
+    th {
+        border: 1px solid #ddd;
+        padding: 10px;
+        empty-cells: show;
+    }
+    td,
+    th {
+        text-align: left;
+    }
+    td + td,
+    th + th {
+        text-align: center;
+        display: none;
+    }
+    td.default {
+        display: table-cell;
+    }
+    @media (min-width: 640px) {
+        td,
+        th {
+            display: table-cell !important;
+        }
+        td,
+        th {
+            width: 330px;
+        }
+        td + td,
+        th + th {
+            width: auto;
+        }
+    }
+
+    @media (max-width: 420px) {
+        td,
+        th {
+            display: table-cell !important;
+        }
+        td,
+        th {
+            width: 40%;
+            font-size: 0.8rem;
+        }
+        td + td,
+        th + th {
+            width: auto;
+        }
+    }
 }
 
 .bg-green {
@@ -477,36 +509,6 @@ td.default {
     background: none;
 }
 
-@media (min-width: 640px) {
-    td,
-    th {
-        display: table-cell !important;
-    }
-    td,
-    th {
-        width: 330px;
-    }
-    td + td,
-    th + th {
-        width: auto;
-    }
-}
-
-@media (max-width: 420px) {
-    td,
-    th {
-        display: table-cell !important;
-    }
-    td,
-    th {
-        width: 40%;
-        font-size: 0.8rem;
-    }
-    td + td,
-    th + th {
-        width: auto;
-    }
-}
 .admin-subtitle {
     font-size: 1rem;
     font-weight: 700;

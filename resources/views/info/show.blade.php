@@ -165,7 +165,7 @@
                 </div>
             </div>
             <p class="admin-title">Documentación requerida para tramitar la constancia en el padrón de proveedores</p>
-            <div>
+            <div class="documents-table">
                 <table>
                     <thead>
                         <tr>
@@ -193,7 +193,6 @@
                             <td></td>
                             <td><span class="tick-gold">@svg('check', ['class' => 'h-8 w-8 ml-8 '])</span></td>
                         </tr>
-
                         <tr>
                             <td class="text-gray">4. Protocolizaciones (si aplica)</td>
                             <td></td>
@@ -563,7 +562,7 @@
                                 <div id="flush-collapseOne" class="accordion-collapse collapse"
                                     aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                     <div>
-                                        <div class="p-3">
+                                        <div class="p-3 documents-table">
                                             <table>
                                                 <thead>
                                                     <tr>
