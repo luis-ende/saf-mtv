@@ -5,6 +5,7 @@
 @import "~bootstrap/scss/bootstrap";
 @import "main_page";
 @import "login";
+@import "diagram";
 
 @import "choices.js/src/styles/choices.scss";
 
@@ -177,7 +178,8 @@
     max-width: 32rem;
 }
 
-.choices__list--dropdown, .choices__list[aria-expanded] {
+.choices__list--dropdown,
+.choices__list[aria-expanded] {
     z-index: 60;
 }
 

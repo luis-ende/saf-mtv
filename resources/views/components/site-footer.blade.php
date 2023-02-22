@@ -1,5 +1,12 @@
-<footer class="text-mtv-gold-light">
-    <div class="p-3 bg-mtv-secondary-dark">
+<style>
+    .footer-bottom {
+        position: absolute;
+        bottom:0;
+        display:none;
+    }
+</style>
+<footer class="text-mtv-gold-light footer-bottom" >
+    <div class="p-3 bg-mtv-secondary-dark" >
         <div class="flex flex-row">
             <div class="basis-1/12 text-white self-center">   
                  @svg('logotipo_CDMX_blanco', ['class' => 'object-fill'])                
