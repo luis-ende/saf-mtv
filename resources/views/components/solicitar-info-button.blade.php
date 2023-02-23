@@ -36,13 +36,13 @@
                             </div>
                             <div class="mtv-input-wrapper">
                                 <select type="text" class="mtv-text-input" id="asunto" name="asunto" required>
-                                    <option value="1">Más información</option>
-                                    <option value="2">Solicitar cotización</option>
+                                    <option value="Más información">Más información</option>
+                                    <option value="Solicitar cotización">Solicitar cotización</option>
                                 </select>
                                 <label class="mtv-input-label" for="asunto">Asunto</label>
                             </div>
                         </div>
-                        <p class="text-mtv-text-gray my-3 text-left">
+                        <p class="text-mtv-text-gray my-3 text-left text-sm">
                             Estimado proveedor <strong>{{ $proveedor_nombre }}</strong>,
                             nos encontramos interesados en conocer más información sobre
                             @isset($producto_nombre)
@@ -52,12 +52,12 @@
                             @endisset
                         </p>
                         <div class="mtv-input-wrapper">
-                        <textarea class="mtv-text-input" id="mensaje" name="mensaje"
+                        <textarea class="mtv-text-input" id="mensaje" name="mensaje" rows="4"
                                   placeholder="Escriba aquí el mensaje" required></textarea>
                             <label class="mtv-input-label" for="mensaje"></label>
                         </div>
-                        <p class="text-mtv-text-gray my-2 text-left">Esperamos contar con su pronta respuesta.</p>
-                        <p class="text-mtv-text-gray my-2 text-left">Atentamente, {{ $usuarioURG['nombre'] }}</p>
+                        <p class="text-mtv-text-gray my-2 text-left text-sm">Esperamos contar con su pronta respuesta.</p>
+                        <p class="text-mtv-text-gray my-2 text-left text-sm">Atentamente, {{ $usuarioURG['nombre'] }}</p>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -76,31 +76,14 @@
 @push('scripts')
 <script type="text/javascript">
     function solicitarInfoButton() {
-        return {            
+        return {
+        @if($esUsuarioURG())
             mensajeModalForm: new bootstrap.Modal(document.getElementById('mensajeModal'), { keyboard: true }),
             mostrarFormulario() {
-                this.mensajeModalForm.show();                
+                this.mensajeModalForm.show();
             },
-            cerrarFormulario() {                
+            cerrarFormulario() {
                 this.mensajeModalForm.hide();
-            },
-            mostrarMensaje() {
-                const props = SwalMTVCustom;
-                props.customClass['title'] = 'swal2-mtv-title';        
-                Swal.fire({
-                    ...SwalMTVCustom,
-                    title: 'Solicitud de información',
-                    html: "Por el momento sólo las instituciones compradoras pueden solicitar más información." +
-                        '<p class="swal-mtv-html-container-action">¿Quieres ingresar al sistema y enviar un mensaje?</p>',
-                    confirmButtonText: 'Ingresar',
-                    showCancelButton: false,
-                    showCloseButton: true,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        //window.location.href = rutaLogin;
-                        // TODO Login y redirect
-                    }
-                });
             },
             enviarMensaje() {
                 const mensajeForm = document.getElementById('mensajeForm');
@@ -127,9 +110,27 @@
                         this.cerrarFormulario();
                     }
                 });
-
-                //mensajeForm.submit();
-            }
+            },
+        @else
+            mostrarMensaje() {
+                const props = SwalMTVCustom;
+                props.customClass['title'] = 'swal2-mtv-title';
+                Swal.fire({
+                    ...SwalMTVCustom,
+                    title: 'Solicitud de información',
+                    html: "Por el momento sólo las instituciones compradoras pueden solicitar más información." +
+                        '<p class="swal-mtv-html-container-action">¿Quieres ingresar al sistema y enviar un mensaje?</p>',
+                    confirmButtonText: 'Ingresar',
+                    showCancelButton: false,
+                    showCloseButton: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        //window.location.href = rutaLogin;
+                        // TODO Login y redirect
+                    }
+                });
+            },
+        @endif
         }
     }
 </script>

@@ -12,7 +12,7 @@ class SolicitarInfoButton extends Component
     public int $proveedor_id;
     public string $proveedor_email;
     public string $proveedor_nombre;
-    public ?string $producto_nombre;
+    public ?string $producto_nombre = null;
 
     /**
      * Create a new component instance.

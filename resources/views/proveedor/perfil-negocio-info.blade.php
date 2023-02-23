@@ -75,7 +75,8 @@
                                             <x-perfil-negocio.redes-sociales-links :links="$persona->perfil_negocio->enlacesRedesSociales()" />
                                             <div class="text-center mt-2 mb-3">
                                                 <x-solicitar-info-button
-                                                    :proveedor="$persona"
+                                                    :producto="null"
+                                                    :persona="$persona"
                                                  />
                                             </div>
                                         </div>
