@@ -6,8 +6,9 @@
                 <h1>Bienvenido a Mi Tiendita Virtual</h1>
                 <h2>URGs</h2>
 
+                @php($queryParams = count(request()->query()) > 0 ? '?' . http_build_query(request()->query()) : '')
                 <div class="form-register">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('login') . $queryParams }}">
                         @csrf
                                 
                         <div class="mtv-input-wrapper">

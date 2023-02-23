@@ -24,7 +24,7 @@ class SolicitarInfoButton extends Component
         if ($this->esUsuarioURG()) {
             $this->usuarioURG['id'] = request()->user()->id;
             $this->usuarioURG['nombre'] = request()->user()->urg->nombre;
-            $this->usuarioURG['email'] = "example@example.com";
+            $this->usuarioURG['email'] = request()->user()->urg->email;
         }
 
         // El mensaje puede enviarse desde la página de detalle de un producto o desde la página de

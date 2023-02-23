@@ -1,3 +1,5 @@
+{{-- Clase del componente: app/View/Components/SolicitarInfoButton.php --}}
+
 <div x-data="solicitarInfoButton()">
     <button class="mtv-button-secondary mb-0"
         @if($esUsuarioURG())
@@ -21,7 +23,7 @@
                 <div id="mensajeFormContainer" class="modal-body">
                     <form id="mensajeForm" method="POST" action="{{ route('urg-mensajes.send') }}">
                         @csrf
-                        <div class="w-1/2">
+                        
                             <input type="hidden" name="user_from" value="{{ $usuarioURG['id'] }}">
                             <input type="hidden" name="user_to" value="{{ $proveedor_id }}">
                             <div class="mtv-input-wrapper">
@@ -41,8 +43,8 @@
                                 </select>
                                 <label class="mtv-input-label" for="asunto">Asunto</label>
                             </div>
-                        </div>
-                        <p class="text-mtv-text-gray my-3 text-left text-sm">
+                        
+                        {{-- <p class="text-mtv-text-gray my-3 text-left text-sm">
                             Estimado proveedor <strong>{{ $proveedor_nombre }}</strong>,
                             nos encontramos interesados en conocer más información sobre
                             @isset($producto_nombre)
@@ -50,14 +52,24 @@
                             @else
                                 sus productos.
                             @endisset
-                        </p>
-                        <div class="mtv-input-wrapper">
-                        <textarea class="mtv-text-input" id="mensaje" name="mensaje" rows="4"
-                                  placeholder="Escriba aquí el mensaje" required></textarea>
-                            <label class="mtv-input-label" for="mensaje"></label>
+                        </p> --}}
+                        <div class="mtv-input-wrapper mt-2">
+                            <textarea class="mtv-text-input" id="mensaje" name="mensaje" rows="4" required>
+                                Estimado proveedor <strong>{{ $proveedor_nombre }}</strong>,
+                                nos encontramos interesados en conocer más información sobre
+                                @isset($producto_nombre)
+                                    el producto: <strong>{{ $producto_nombre }}</strong>.
+                                @else
+                                    sus productos.
+                                @endisset
+                                [Escriba aquí el mensaje]
+                                Esperamos contar con su pronta respuesta.
+                                Atentamente, {{ $usuarioURG['nombre'] }}   
+                            </textarea>
+                            <label class="mtv-input-label" for="mensaje">Mensaje</label>
                         </div>
-                        <p class="text-mtv-text-gray my-2 text-left text-sm">Esperamos contar con su pronta respuesta.</p>
-                        <p class="text-mtv-text-gray my-2 text-left text-sm">Atentamente, {{ $usuarioURG['nombre'] }}</p>
+                        {{-- <p class="text-mtv-text-gray my-2 text-left text-sm">Esperamos contar con su pronta respuesta.</p>
+                        <p class="text-mtv-text-gray my-2 text-left text-sm">Atentamente, {{ $usuarioURG['nombre'] }}</p> --}}
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -77,6 +89,7 @@
 <script type="text/javascript">
     function solicitarInfoButton() {
         return {
+            rutaLogin: '{{ route("urg-login") }}',
         @if($esUsuarioURG())
             mensajeModalForm: new bootstrap.Modal(document.getElementById('mensajeModal'), { keyboard: true }),
             mostrarFormulario() {
@@ -108,6 +121,22 @@
                         })
                     } else {
                         this.cerrarFormulario();
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                            })
+
+                            Toast.fire({
+                            icon: 'success',
+                            title: 'Mensaje enviado'
+                        });
                     }
                 });
             },
@@ -125,8 +154,7 @@
                     showCloseButton: true,
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        //window.location.href = rutaLogin;
-                        // TODO Login y redirect
+                        window.location.href = this.rutaLogin + '?url=' + window.location.pathname;
                     }
                 });
             },

@@ -8,7 +8,6 @@ use Cmgmyr\Messenger\Models\Thread;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Validation\ValidationException;
-use Matrix\Exception;
 
 class UsuariosMensajesController extends Controller
 {
@@ -45,11 +44,14 @@ class UsuariosMensajesController extends Controller
             return response()->json(['error' => $e->errors()], 400);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
-        }
-
-        // Obtener threads de un usuario:
-        // Cmgmyr\Messenger\Models\Thread::forUser(4)->get();
+        }        
 
         return response()->json(true);
+    }
+
+    public function index() 
+    {
+        // Obtener threads de un usuario:
+        // Cmgmyr\Messenger\Models\Thread::forUser(4)->get();
     }
 }
