@@ -24,13 +24,64 @@
                     Identifica qué productos y servicios planea comprar la CDMX
                 </span>
                 <span class="md:w-2/5 block text-base xs:text-sm text-center">
-                    En la sección <a href="{{ route('oportunidades-negocio.search') }}" class="underline font-bold mtv-link-gold">Oportunidades de negocio</a>
-                    encontrarás los procedimientos programados.
-                </span>
-                <span class="md:w-2/5 block text-base xs:text-sm text-center">
-                    Puedes agregarlos a tus favoritos para darles seguimiento.
-                </span>
+                    Aquí encontrarás los procedimientos programados y en la sección <a href="{{ route('oportunidades-negocio.search') }}" class="underline font-bold mtv-link-gold">Oportunidades de negocio</a>
+                    puedes visualizar el detalle y agregarlos a tus favoritos para darles seguimiento.
+                </span>                
+            </div>
+            <div id="seccion-estadisticas" 
+                 class="md:w-8/12 w-full flex flex-col md:flex-row md:space-x-16 md:space-y-0  my-4 self-center">
+                <div class="md:basis-1/3 text-mtv-gray flex flex-column items-center py-2">
+                    <span class="font-bold text-3xl text-mtv-secondary">
+                        93
+                    </span>
+                    <span class="text-base text-center">Instituciones compradoras</span>
+                </div>
+                <div class="md:basis-1/3 text-mtv-gray flex flex-column items-center py-2">
+                    <span class="font-bold text-3xl text-mtv-secondary">
+                        5,640
+                    </span>
+                    <span class="text-base text-center">Total de procedimientos programados</span>
+                </div>
+                <div class="md:basis-1/3 text-mtv-gray flex flex-column items-center py-2">
+                    <span class="font-bold text-3xl text-mtv-secondary">
+                        $57,951,987,120.62
+                    </span>
+                    <span class="text-base text-center">Prespueesto para contratación aprobado</span>
+                </div>
             </div>
         </div>
+        <div id="seccion-filtro-letras" class="flex flex-row space-x-3 md:space-x-8 justify-center my-4">
+            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">A</button>
+            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">C</button>
+            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">E</button>
+            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">F</button>
+            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">H</button>
+            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">I</button>
+            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">J</button>
+            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">M</button>
+            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">O</button>
+            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">P</button>
+            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">R</button>
+            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">S</button>
+            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">U</button>
+        </div>                       
+        <div class="block relative md:w-96 w-80 mx-auto">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                @svg('forkawesome-search', ['class' => 'w-4 h-4 text-mtv-gray-2'])
+            </div>
+            <input type="search"
+                    id="calendario_search" name="calendario_search"
+                    class="block w-full pt-2 pb-2 pl-10 text-sm text-mtv-text-gray border border-gray-300 rounded-lg bg-gray-50 focus:ring-mtv-primary focus:border-mtv-primary"
+                    autofocus
+                    placeholder="Búsqueda por nombre o palabra clave"
+                    x-model="terminoBusqueda">
+            <button type="submit"
+                    class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1 hidden">
+                Buscar
+            </button>
+        </div>
+        <div id="seccion-datos" class="my-5 mx-14">
+            <x-data-table />
+        </div>        
     </div>
 </x-app-layout>      
