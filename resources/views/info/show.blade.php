@@ -1,19 +1,33 @@
 <x-guest-layout>
     <div class="information-container">
-        <p class="information-container-title">Aprende cómo venderle a la CDMX</p>
-        <div class="self-center">
-            <div class="flex flex-row space-x-4 mt-2">
-                <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+        <div class="py-6 px-12 bg-white flex flex-col">
+            <div class="self-center">
+                <label class="text-mtv-gray-2 text-xl">
+                    Quiero ser proveedor
+                </label>
+                <div class="text-mtv-primary font-bold text-3xl">
+                    Aprende cómo venderle a la CDMX
+                </div>
+
+            </div>
+            <div class="self-center">
+                <div class="flex flex-row space-x-4 mt-2">
+                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                </div>
+            </div>
+            <div class="mt-3 text-lg text-mtv-text-gray text-center">
+                <span class="font-bold text-xl text-mtv-secondary my-4 inline-block">
+                    Si te has preguntado cómo venderle al Gobierno, qué requisitos y documentos debes reunir, continúa
+                    leyendo.
+                </span>
+
             </div>
         </div>
-        <p class="information-container-subtitle">Si te has preguntado cómo venderle al Gobierno, qué requisitos y
-            documentos debes reunir,
-            continúa leyendo.</p>
         <p class="information-container-message">El Gobierno de la Ciudad de México adquiere a través de cada una de sus
             <a href="#" class="text-[#BC955C] hover:text-[#8B1232]">Instituciones compradoras</a>, una amplia variedad
             de bienes y servicios año con año, lo cual brinda la oportunidad a personas
@@ -35,34 +49,36 @@
 
     <div class="tab-wrapper" x-data="{ activeTab:  -1}">
         <div class="buttons-container">
-            <div class="button-container">
-                <label @click="activeTab = 0" class="tab-control" :class="{ 'active': activeTab === 0 }">
+            <div :class="activeTab === 0 ? 'button-container-active' : 'button-container'">
+                <label @click="activeTab = 0" class="tab-control">
                     @svg('register',
                     ['class' => 'h-20 w-20 img-svg'])
                     @svg('point', ['class' => 'point-df'])
                     Regístrate en Mi Tiendita Virtua</label>
             </div>
-            <div class="button-container">
-                <label @click="activeTab = 1" class="tab-control" :class="{ 'active': activeTab === 1 }">@svg('search',
+            <div :class="activeTab === 1 ? 'button-container-active' : 'button-container'">
+                <label @click="activeTab = 1" class="tab-control">@svg('search',
                     ['class' => 'h-20 w-20 img-svg'])
                     @svg('point', ['class' => 'point'])
                     Encuentra una Oportunidad de negocio</label>
             </div>
-            <div class="button-container">
-                <label @click="activeTab = 2" class="tab-control" :class="{ 'active': activeTab === 2 }">
+            <div :class="activeTab === 2 ? 'button-container-active' : 'button-container'">
+                <label @click="activeTab = 2" class="tab-control">
                     @svg('provider',
                     ['class' => 'h-20 w-20 img-svg'])
                     @svg('point', ['class' => 'point'])
                     Tramita tu constancia en el Padrón de Proveedores</label>
             </div>
-            <div class="button-container">
-                <label @click="activeTab = 3" class="tab-control" :class="{ 'active': activeTab === 3 }">
+            <div :class="activeTab === 3 ? 'button-container-active' : 'button-container'">
+                <label @click="activeTab = 3" class="tab-control">
                     @svg('document',
                     ['class' => 'h-20 w-20 img-svg'])
                     @svg('point', ['class' => 'point'])
                     Documentos para participar en un procedimiento</label>
             </div>
+            <div class="cares-line"></div>
         </div>
+
         <!-- item 1 -->
         <div class="tab-panel" :class="{ 'active': activeTab === 0 }"
             x-show.transition.in.opacity.duration.600="activeTab === 0">
@@ -271,7 +287,6 @@
                             <div class="line-divider"></div>
                             @svg('document-check', ['class' => 'h-14 w-14 '])
                         </div>
-
                         <div class="content-card-items">
                             <div class="card-items">
                                 <p class="title">Cotiza tu Bien o Servicio</p>
@@ -439,7 +454,7 @@
             </div>
         </div>
     </div>
-    <div class="cares-line"></div>
+
 
     <!-- mobile -->
 
