@@ -72,7 +72,7 @@
 
 .what-mtv {
     display: flex;
-    padding-top: 40px;
+    padding-top: 2%;
 
     @media only screen and (max-width: 600px) {
         display: flex;
@@ -82,7 +82,6 @@
 
 .what-mtv-right {
     width: 50%;
-    padding-top: 40px;
     padding-right: 140px;
     margin-top: 50px;
 
@@ -368,7 +367,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 40%;
+    width: 60%;
     margin: 0px auto;
     text-align: center;
     margin-top: -5%;

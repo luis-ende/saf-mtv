@@ -8,7 +8,6 @@
                 <div class="text-mtv-primary font-bold text-3xl">
                     Aprende cómo venderle a la CDMX
                 </div>
-
             </div>
             <div class="self-center">
                 <div class="flex flex-row space-x-4 mt-2">
