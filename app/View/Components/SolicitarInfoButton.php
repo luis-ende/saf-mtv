@@ -51,6 +51,19 @@ class SolicitarInfoButton extends Component
     }
 
     /**
+     * Obtiene el mensaje de la plantilla para el mensaje a enviar.
+     */
+    public function mensajePlantilla() 
+    {
+        $productosLabel = isset($this->producto_nombre) ? " el producto: {$this->producto_nombre}." : ' sus productos.';
+        $usuarioURGNombre = $this->usuarioURG['nombre'];
+
+        return "Estimado proveedor {$this->proveedor_nombre}, nos encontramos interesados en conocer más información sobre" . 
+            $productosLabel . 
+            "\n\n[Escriba aquí el mensaje]\n\nEsperamos contar con su pronta respuesta.\nAtentamente, {$usuarioURGNombre}";
+    }
+
+    /**
      * Get the view / contents that represent the component.
      *
      * @return \Illuminate\Contracts\View\View|\Closure|string

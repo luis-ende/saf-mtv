@@ -17,13 +17,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-mtv-gray-light">
-                    <h5 class="modal-title" id="mensajeModalLabel"></h5>
+                    <h5 class="modal-title" id="mensajeModalLabel">Solicitar información</h5>
                     <button type="button" class="btn-close" @click="cerrarFormulario()" aria-label="Close"></button>
                 </div>
                 <div id="mensajeFormContainer" class="modal-body">
                     <form id="mensajeForm" method="POST" action="{{ route('urg-mensajes.send') }}">
-                        @csrf
-                        
+                        @csrf                        
                             <input type="hidden" name="user_from" value="{{ $usuarioURG['id'] }}">
                             <input type="hidden" name="user_to" value="{{ $proveedor_id }}">
                             <div class="mtv-input-wrapper">
@@ -42,34 +41,13 @@
                                     <option value="Solicitar cotización">Solicitar cotización</option>
                                 </select>
                                 <label class="mtv-input-label" for="asunto">Asunto</label>
-                            </div>
-                        
-                        {{-- <p class="text-mtv-text-gray my-3 text-left text-sm">
-                            Estimado proveedor <strong>{{ $proveedor_nombre }}</strong>,
-                            nos encontramos interesados en conocer más información sobre
-                            @isset($producto_nombre)
-                                el producto: <strong>{{ $producto_nombre }}</strong>.
-                            @else
-                                sus productos.
-                            @endisset
-                        </p> --}}
+                            </div>                                            
                         <div class="mtv-input-wrapper mt-2">
-                            <textarea class="mtv-text-input" id="mensaje" name="mensaje" rows="4" required>
-                                Estimado proveedor <strong>{{ $proveedor_nombre }}</strong>,
-                                nos encontramos interesados en conocer más información sobre
-                                @isset($producto_nombre)
-                                    el producto: <strong>{{ $producto_nombre }}</strong>.
-                                @else
-                                    sus productos.
-                                @endisset
-                                [Escriba aquí el mensaje]
-                                Esperamos contar con su pronta respuesta.
-                                Atentamente, {{ $usuarioURG['nombre'] }}   
-                            </textarea>
+                            <textarea class="mtv-text-input" 
+                                      id="mensaje" name="mensaje" 
+                                      rows="10" required>{{ $mensajePlantilla() }}</textarea>
                             <label class="mtv-input-label" for="mensaje">Mensaje</label>
-                        </div>
-                        {{-- <p class="text-mtv-text-gray my-2 text-left text-sm">Esperamos contar con su pronta respuesta.</p>
-                        <p class="text-mtv-text-gray my-2 text-left text-sm">Atentamente, {{ $usuarioURG['nombre'] }}</p> --}}
+                        </div>                        
                     </form>
                 </div>
                 <div class="modal-footer">
