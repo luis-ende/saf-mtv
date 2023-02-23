@@ -73,7 +73,7 @@
                                             />
                                             <input type="hidden" id="logotipo_path" name="logotipo_path" value="{{ $logotipoUrl ?? '' }}">
                                             <x-perfil-negocio.redes-sociales-links :links="$persona->perfil_negocio->enlacesRedesSociales()" />
-                                            <div class="text-center mb-4">                                                
+                                            <div class="text-center mt-2 mb-3">
                                                 <x-solicitar-info-button
                                                     :proveedor="$persona"
                                                  />
