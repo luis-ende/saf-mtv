@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\UsuariosMensajesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProductosController;
@@ -12,6 +11,8 @@ use App\Http\Controllers\CatalogoCABMSController;
 use App\Http\Controllers\OportunidadesController;
 use App\Http\Controllers\PerfilNegocioController;
 use App\Http\Controllers\Admin\AdminMTVController;
+use App\Http\Controllers\ComprasDetalleController;
+use App\Http\Controllers\UsuariosMensajesController;
 use App\Http\Controllers\CalendarioComprasController;
 use App\Http\Controllers\CatalogoProductosController;
 use App\Http\Controllers\ProgramacionAnualController;
@@ -138,7 +139,6 @@ Route::middleware(['role:admin', 'auth'])->group(function() {
     });
 });
 
-
 Route::controller(OportunidadesController::class)->group(function() {
     Route::get('/oportunidades-de-negocio', 'search')->name('oportunidades-negocio.search');
     Route::post('/oportunidades-de-negocio', 'search')->name('oportunidades-negocio.search');
@@ -150,6 +150,10 @@ Route::controller(OportunidadesController::class)->group(function() {
 
 Route::controller(CalendarioComprasController::class)->group(function () {
     Route::get('/calendario-compras', 'index')->name('calendario-compras.index');
+});
+
+Route::controller(ComprasDetalleController::class)->group(function () {
+    Route::get('/compras-detalle/{unidad}', 'index')->name('compras-detalle.index');
 });
 
 Route::get('/programacion-anual', [ProgramacionAnualController::class, 'index'])->name('programacion-anual');

@@ -31,19 +31,30 @@
         <template x-for="(comprasRow, index) in compras" :key="index">
             <tr x-show="comprasRow.visible" 
                 class="border text-mtv-text-gray hover:bg-mtv-text-gray-extra-light">
-                <td class="px-3 uppercase w-[800px]" x-text="comprasRow.unidad_compradora"></td>
-                <td class="text-right w-[300px]" x-text="currencyFormat.format(comprasRow.presup_contratacion_aprobado)"></td>
-                <td class="text-center w-[400px]" x-text="comprasRow.total_procedimientos"></td>
-                <td class="flex flex-col md:flex-row md:space-x-10 justify-center">
-                    <button class="mtv-link-gold no-underline">
-                        @svg('heroicon-o-calendar-days', ['class' => 'w-7 h-7'])
-                    </button>
-                    <button class="mtv-link-gold no-underline">
-                        @svg('export_pdf', ['class' => 'w-5 h-5'])
-                    </button>
-                    <button class="mtv-link-gold no-underline">
-                        @svg('export_xls', ['class' => 'w-5 h-5'])
-                    </button>
+                <td class="px-3 uppercase w-[800px]" 
+                    x-text="comprasRow.unidad_compradora"></td>
+                <td class="text-right w-[300px]" 
+                    x-text="currencyFormat.format(comprasRow.presup_contratacion_aprobado)"></td>
+                <td class="text-center w-[400px]" 
+                    x-text="comprasRow.total_procedimientos"></td>
+                <td>
+                    <div class="flex flex-col md:flex-row md:space-x-10 justify-center items-center">
+                        <a href="{{ route('compras-detalle.index', [1]) }}" 
+                           title="Ir a página de detalle" 
+                           class="mtv-link-gold no-underline">
+                            @svg('heroicon-o-calendar-days', ['class' => 'w-7 h-7'])
+                        </a>
+                        <a href="#"
+                           title="Descargar en formato Pdf"
+                           class="mtv-link-gold no-underline">
+                            @svg('export_pdf', ['class' => 'w-5 h-5'])
+                        </a>
+                        <a href="#"
+                           title="Descargar en formato Excel"
+                           class="mtv-link-gold no-underline">
+                            @svg('export_xls', ['class' => 'w-5 h-5'])
+                        </a>
+                    </div>                    
                 </td>
             </tr>
         </template>

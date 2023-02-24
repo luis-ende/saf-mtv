@@ -10,14 +10,7 @@
                 </h1>
             </div>
             <div class="self-center">
-                <div class="flex flex-row space-x-4 mt-2">
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                </div>                    
+                <x-global.puntos-block />
             </div>                
             <div class="my-4 text-lg text-mtv-text-gray flex flex-col items-center">
                 <span class="font-bold md:text-xl xs:text-base text-mtv-secondary mb-4 block text-center">
@@ -46,7 +39,7 @@
                     <span class="font-bold text-3xl text-mtv-secondary">
                         $57,951,987,120.62
                     </span>
-                    <span class="text-base text-center">Prespueesto para contratación aprobado</span>
+                    <span class="text-base text-center">Prespuesto para contratación aprobado</span>
                 </div>
             </div>
         </div>
@@ -76,7 +69,7 @@
         </div>
         @push('scripts')
         <script type="text/javascript">
-            function comprasFiltros() {                
+            function comprasFiltros() {
                 return {
                     filtroLetraInicial: '',
                     terminoBusqueda: '',
