@@ -1,5 +1,7 @@
 <div style="overflow-x: auto;">
-    <table x-data="calendarioDataTable()" class="w-full text-xs md:text-sm">
+    <table x-data="calendarioDataTable()" 
+           x-init="initCalendarioDataTable()"
+           class="w-full text-xs md:text-sm">
         <thead>
             <tr>
                 <th class="py-2 uppercase text-mtv-primary md:text-lg">
@@ -26,11 +28,12 @@
             </tr>
         </thead>
         <tbody>
-        <template x-for="(item, index) in compras" :key="index">
-            <tr class="border text-mtv-text-gray">
-                <td class="px-3 uppercase w-[800px]" x-text="item.unidad_compradora"></td>
-                <td class="text-right w-[300px]" x-text="currencyFormat.format(item.presup_contratacion_aprobado)"></td>
-                <td class="text-center w-[400px]" x-text="item.total_procedimientos"></td>
+        <template x-for="(comprasRow, index) in compras" :key="index">
+            <tr x-show="comprasRow.visible" 
+                class="border text-mtv-text-gray hover:bg-mtv-text-gray-extra-light">
+                <td class="px-3 uppercase w-[800px]" x-text="comprasRow.unidad_compradora"></td>
+                <td class="text-right w-[300px]" x-text="currencyFormat.format(comprasRow.presup_contratacion_aprobado)"></td>
+                <td class="text-center w-[400px]" x-text="comprasRow.total_procedimientos"></td>
                 <td class="flex flex-col md:flex-row md:space-x-10 justify-center">
                     <button class="mtv-link-gold no-underline">
                         @svg('heroicon-o-calendar-days', ['class' => 'w-7 h-7'])
@@ -63,7 +66,53 @@
     function calendarioDataTable() {
         return {
             currencyFormat: new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN'}),
-            compras: @js($compras),
+            compras: [],
+            initCalendarioDataTable() {
+                const compras = @js($compras);
+                this.compras = compras.map(c => {
+                    return {
+                        ...c,
+                        visible: true,                        
+                    }
+                });
+
+                this.$watch('filtroLetraInicial', letra => {
+                    this.compras.forEach(c => {
+                        c.visible = c.unidad_compradora.charAt(0) === letra
+                        // TODO incluir vocales con acento
+                    });                    
+                });
+
+                this.$watch('terminoBusqueda', termino => {
+                    this.search(termino);
+                });
+            },
+            {{-- Buscar sólo en la propiedad del nombre de la unidad compradora --}}
+            search(value) {
+                this.searchKeyword = value;
+                if (value.length > 1) {
+                    const options = {                        
+                        keys: ['unidad_compradora'],
+                        includeScore: true,
+                    }
+                    const fuse = new Fuse(this.compras, options);
+                    const scores = fuse.search(value);
+
+                    this.compras.forEach((u, index) => {
+                        this.compras[index].visible = false;
+                    });
+
+                    scores.forEach(c => {
+                        if (c.score > 0 && c.score <= 0.6) {
+                            this.compras[c.refIndex].visible = true;
+                        }
+                    });
+                } else {
+                    this.compras.forEach((c, index) => {
+                        this.compras[index].visible = true;
+                    });
+                }
+            },
         }
     }
 </script>

@@ -23,7 +23,8 @@ module.exports = {
                 'mtv-gray-light': '#e6e6e6',
                 'mtv-gray-2': '#98989A',
                 'mtv-text-gray': '#6f7271',       
-                'mtv-text-gray-light': '#bbbbbb'         
+                'mtv-text-gray-light': '#bbbbbb',
+                'mtv-text-gray-extra-light': '#fbfbfb',
             },
             fontFamily: {
                 sans: ['Source Sans Pro', ...defaultTheme.fontFamily.sans],
