@@ -98,7 +98,7 @@
                                 homoclave y un correo electrónico, así como los datos generales de tu negocio.
                             </p>
                             <div class="d-flex align-items-center">
-                                <a href="#" class="mr-3">Regístrate aquí</a>
+                                <a href="{{ route('registro-inicio') }}" class="mr-3">Regístrate aquí</a>
                                 @svg('arrow-link')
                             </div>
                         </div>
@@ -109,7 +109,7 @@
                                 Instituciones compradoras podrán conocer tus productos y contactarte.
                                 Además, puedes compartir el enlace con tus clientes y prospectos.</p>
                             <div class="d-flex align-items-center">
-                                <a href="#" class="mr-3">Crea tu Tiendita Virtual</a>
+                                <a href="{{ route('login') }}" class="mr-3">Crea tu Tiendita Virtual</a>
                                 @svg('arrow-link')
                             </div>
                         </div>
@@ -138,7 +138,8 @@
                                 procedimiento
                                 de tu interés (fechas, tipo de procedimiento, bases, entre otros).</p>
                             <div class="d-flex align-items-center">
-                                <a href="#" class="mr-3">Oportunidades de negocio</a>
+                                <a <a href="{{ route('oportunidades-negocio.search') }}" class="mr-3">Oportunidades de
+                                    negocio</a>
                                 @svg('arrow-link')
                             </div>
                         </div>
@@ -150,7 +151,7 @@
                                     y tu Tiendita Virtual,</strong> además podrás guardar las que sean de tu interés.
                             </p>
                             <div class="d-flex align-items-center">
-                                <a href="#" class="mr-3">Favoritos</a>
+                                <a href="{{ route('login') }}" class="mr-3">Favoritos</a>
                                 @svg('arrow-link')
                             </div>
                         </div>
@@ -180,21 +181,21 @@
                                 <p class="title">Regístrate en Padrón de Proveedores</p>
                                 <p class="message">Si encontraste alguna oportunidad de negocio y algún procedimiento es
                                     de tu
-                                    interés, tramita tu <a href="#"
-                                        class="text-[#BC955C] hover:text-[#8B1232] text-decoration-underline">Constancia
-                                        de
-                                        Registro en el Padrón de Proveedores</a> de la
+                                    interés, tramita tu <strong>Constancia
+                                        de Registro en el Padrón de Proveedores</strong> de la
                                     Administración Pública de la Ciudad de México.</p>
                                 <div class="d-flex align-items-center">
-                                    <a href="#" class="mr-3">Tramita tu constancia</a>
+                                    <a href="https://tianguisdigital.finanzas.cdmx.gob.mx/requisitos" target="_blank"
+                                        class="mr-3">Tramita tu constancia</a>
                                     @svg('arrow-link')
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <p class="admin-title">Documentación requerida para tramitar la constancia en el padrón de
-                        proveedores</p>
+
                     <div class="documents-table">
+                        <p class="admin-title">Documentación requerida para tramitar la constancia en el padrón de
+                            proveedores</p>
                         <table>
                             <thead>
                                 <tr>
@@ -487,7 +488,7 @@
                                         homoclave y un correo electrónico, así como los datos generales de tu negocio.
                                     </p>
                                     <div class="d-flex align-items-center">
-                                        <a href="#" class="mr-3">Regístrate aquí</a>
+                                        <a href="{{ route('registro-inicio') }}" class="mr-3">Regístrate aquí</a>
                                         @svg('arrow-link')
                                     </div>
                                 </div>
@@ -497,7 +498,7 @@
                                         Instituciones compradoras podrán conocer tus productos y contactarte. Además,
                                         puedes compartir el enlace con tus clientes y prospectos.</p>
                                     <div class="d-flex align-items-center">
-                                        <a href="#" class="mr-3">Crea tu Tiendita virtual</a>
+                                        <a href="{{ route('login') }}" class="mr-3">Crea tu Tiendita virtual</a>
                                         @svg('arrow-link')
                                     </div>
                                 </div>
@@ -506,7 +507,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="accordion-item">
                 <div class="accordion-header" id="flush-headingTwo">
                     <div class="button-container">
@@ -537,7 +537,8 @@
                                             del procedimiento de tu interés (fechas, tipo de procedimiento, bases, entre
                                             otros).</p>
                                         <div class="d-flex align-items-center">
-                                            <a href="#" class="mr-3">Oportunidades de negocio</a>
+                                            <a href="{{ route('oportunidades-negocio.search') }}"
+                                                class="mr-3">Oportunidades de negocio</a>
                                             @svg('arrow-link')
                                         </div>
                                     </div>
@@ -547,7 +548,7 @@
                                             oportunidades de acuerdo a tu Perfil y tu Tiendita Virtual, además podrás
                                             guardar las que sean de tu interés.</p>
                                         <div class="d-flex align-items-center">
-                                            <a href="#" class="mr-3">Favoritos</a>
+                                            <a href="{{ route('login') }}" class="mr-3">Favoritos</a>
                                             @svg('arrow-link')
                                         </div>
                                     </div>
@@ -557,8 +558,6 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="accordion-item">
                 <div class="accordion-header" id="flush-headingThree">
                     <div class="button-container">
@@ -587,7 +586,8 @@
                                                 Padrón de Proveedores</a> de la
                                             Administración Pública de la Ciudad de México.</p>
                                         <div class="d-flex align-items-center">
-                                            <a href="#" class="mr-3">Tramita tu constancia</a>
+                                            <a href="https://tianguisdigital.finanzas.cdmx.gob.mx/requisitos"
+                                                target="_blank" class="mr-3">Tramita tu constancia</a>
                                             @svg('arrow-link')
                                         </div>
                                     </div>
@@ -596,117 +596,151 @@
                             <p class="admin-title"> Documentación Requerida para tramitar la constancia en el padrón de
                                 proveedores </p>
                             <div class="accordion-item">
-                                <h2 id="flush-headingOne">
-                                    <button class="tittle-table hover:text-[##691c20] " type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
-                                        aria-expanded="false" aria-controls="flush-collapseOne">
-                                        Mostrar documentos
-                                    </button>
-                                </h2>
+                                <div class="d-flex justify-content-center">
+                                    <h2 class="accordion-header admin-title" id="flush-headingOne">
+                                        <button class="accordion-button collapsed hover:text-[#BC955C]" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Mostrar Documentos
+                                            <svg class="w-6 h-6" fill="currentColor" style="margin-left:5px"
+                                                viewBox="0 0 24 24">
+                                                <path
+                                                    d="M12 4a8 8 0 100 16 8 8 0 000-16zM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12zm10-4a1 1 0 011 1v2h2a1 1 0 110 2h-2v2a1 1 0 11-2 0v-2H9a1 1 0 110-2h2V9a1 1 0 011-1z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </h2>
+                                </div>
                                 <div id="flush-collapseOne" class="accordion-collapse collapse"
                                     aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                    <div>
-                                        <div class="p-3 documents-table">
-                                            <table>
-                                                <thead>
-                                                    <tr>
-                                                        <th class="hide"></th>
-                                                        <th class="bg-green">PERSONA FÍSICA</th>
-                                                        <th class="bg-gold">PERSONA MORAL</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="text-gray">
-                                                            1. Identificación oficial (INE vigente, pasaporte vigente o
-                                                            cédula
-                                                            profesional)
-                                                        </td>
-                                                        <td class="tick">Contribuyente</td>
-                                                        <td class="tick-gold">Representante Legal</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-gray">Acta de Nacimiento</td>
-                                                        <td><span class="tick">@svg('check', ['class' => 'h-8 w-8 ml-8
-                                                                '])</span></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-gray">3. Acta constitutiva</td>
-                                                        <td></td>
-                                                        <td><span class="tick-gold">@svg('check', ['class' => 'h-8 w-8
-                                                                ml-8 '])</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-gray">4. Protocolizaciones (si aplica)</td>
-                                                        <td></td>
-                                                        <td><span class="tick-gold">@svg('check', ['class' => 'h-8 w-8
-                                                                ml-8 '])</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-gray">5. Poder notarial (si aplica)</td>
-                                                        <td><span class="tick">@svg('check', ['class' => 'h-8 w-8 ml-8
-                                                                '])</span></td>
-                                                        <td><span class="tick-gold">@svg('check', ['class' => 'h-8 w-8
-                                                                ml-8 '])</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-gray">
-                                                            6. Comprobante de domicilio vigente (con domicilio en la
-                                                            CDMX)
-                                                        </td>
-                                                        <td><span class="tick">@svg('check', ['class' => 'h-8 w-8 ml-8
-                                                                '])</span></td>
-                                                        <td><span class="tick-gold">@svg('check', ['class' => 'h-8 w-8
-                                                                ml-8 '])</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-gray">7. Comprobante de domicilio fiscal vigente
-                                                        </td>
-                                                        <td><span class="tick">@svg('check', ['class' => 'h-8 w-8 ml-8
-                                                                '])</span></td>
-                                                        <td><span class="tick-gold">@svg('check', ['class' => 'h-8 w-8
-                                                                ml-8 '])</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-gray">8. Comprobante de alta ante el SAT</td>
-                                                        <td><span class="tick">@svg('check', ['class' => 'h-8 w-8 ml-8
-                                                                '])</span></td>
-                                                        <td><span class="tick-gold">@svg('check', ['class' => 'h-8 w-8
-                                                                ml-8 '])</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-gray">9. Constancia de Situación Fiscal vigente
-                                                        </td>
-                                                        <td><span class="tick">@svg('check', ['class' => 'h-8 w-8 ml-8
-                                                                '])</span></td>
-                                                        <td><span class="tick-gold">@svg('check', ['class' => 'h-8 w-8
-                                                                ml-8 '])</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-gray">10. Declaración anual de ISR del ejercicio
-                                                            anterior</td>
-                                                        <td><span class="tick">@svg('check', ['class' => 'h-8 w-8 ml-8
-                                                                '])</span></td>
-                                                        <td><span class="tick-gold">@svg('check', ['class' => 'h-8 w-8
-                                                                ml-8 '])</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-gray">11. Registro ante el IMSS e INFONAVIT</td>
-                                                        <td class="tick">Si aplica</td>
-                                                        <td><span class="tick-gold">@svg('check', ['class' => 'h-8 w-8
-                                                                ml-8 '])</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-gray">12. Certificado e.firma del proveedor
-                                                            emitido por el SAT</td>
-                                                        <td><span class="tick">@svg('check', ['class' => 'h-8 w-8 ml-8
-                                                                '])</span></td>
-                                                        <td><span class="tick-gold">@svg('check', ['class' => 'h-8 w-8
-                                                                ml-8 '])</span></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                    <div class="accordion-body border-0">
+                                        <div>
+                                            <div class="p-3 documents-table">
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="hide"></th>
+                                                            <th class="bg-green">PERSONA FÍSICA</th>
+                                                            <th class="bg-gold">PERSONA MORAL</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-gray">
+                                                                1. Identificación oficial (INE vigente, pasaporte
+                                                                vigente o
+                                                                cédula
+                                                                profesional)
+                                                            </td>
+                                                            <td class="tick">Contribuyente</td>
+                                                            <td class="tick-gold">Representante Legal</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-gray">Acta de Nacimiento</td>
+                                                            <td><span class="tick">@svg('check', ['class' => 'h-8 w-8
+                                                                    ml-8
+                                                                    '])</span></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-gray">3. Acta constitutiva</td>
+                                                            <td></td>
+                                                            <td><span class="tick-gold">@svg('check', ['class' => 'h-8
+                                                                    w-8
+                                                                    ml-8 '])</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-gray">4. Protocolizaciones (si aplica)</td>
+                                                            <td></td>
+                                                            <td><span class="tick-gold">@svg('check', ['class' => 'h-8
+                                                                    w-8
+                                                                    ml-8 '])</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-gray">5. Poder notarial (si aplica)</td>
+                                                            <td><span class="tick">@svg('check', ['class' => 'h-8 w-8
+                                                                    ml-8
+                                                                    '])</span></td>
+                                                            <td><span class="tick-gold">@svg('check', ['class' => 'h-8
+                                                                    w-8
+                                                                    ml-8 '])</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-gray">
+                                                                6. Comprobante de domicilio vigente (con domicilio en la
+                                                                CDMX)
+                                                            </td>
+                                                            <td><span class="tick">@svg('check', ['class' => 'h-8 w-8
+                                                                    ml-8
+                                                                    '])</span></td>
+                                                            <td><span class="tick-gold">@svg('check', ['class' => 'h-8
+                                                                    w-8
+                                                                    ml-8 '])</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-gray">7. Comprobante de domicilio fiscal
+                                                                vigente
+                                                            </td>
+                                                            <td><span class="tick">@svg('check', ['class' => 'h-8 w-8
+                                                                    ml-8
+                                                                    '])</span></td>
+                                                            <td><span class="tick-gold">@svg('check', ['class' => 'h-8
+                                                                    w-8
+                                                                    ml-8 '])</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-gray">8. Comprobante de alta ante el SAT
+                                                            </td>
+                                                            <td><span class="tick">@svg('check', ['class' => 'h-8 w-8
+                                                                    ml-8
+                                                                    '])</span></td>
+                                                            <td><span class="tick-gold">@svg('check', ['class' => 'h-8
+                                                                    w-8
+                                                                    ml-8 '])</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-gray">9. Constancia de Situación Fiscal
+                                                                vigente
+                                                            </td>
+                                                            <td><span class="tick">@svg('check', ['class' => 'h-8 w-8
+                                                                    ml-8
+                                                                    '])</span></td>
+                                                            <td><span class="tick-gold">@svg('check', ['class' => 'h-8
+                                                                    w-8
+                                                                    ml-8 '])</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-gray">10. Declaración anual de ISR del
+                                                                ejercicio
+                                                                anterior</td>
+                                                            <td><span class="tick">@svg('check', ['class' => 'h-8 w-8
+                                                                    ml-8
+                                                                    '])</span></td>
+                                                            <td><span class="tick-gold">@svg('check', ['class' => 'h-8
+                                                                    w-8
+                                                                    ml-8 '])</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-gray">11. Registro ante el IMSS e INFONAVIT
+                                                            </td>
+                                                            <td class="tick">Si aplica</td>
+                                                            <td><span class="tick-gold">@svg('check', ['class' => 'h-8
+                                                                    w-8
+                                                                    ml-8 '])</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-gray">12. Certificado e.firma del proveedor
+                                                                emitido por el SAT</td>
+                                                            <td><span class="tick">@svg('check', ['class' => 'h-8 w-8
+                                                                    ml-8
+                                                                    '])</span></td>
+                                                            <td><span class="tick-gold">@svg('check', ['class' => 'h-8
+                                                                    w-8
+                                                                    ml-8 '])</span></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -714,7 +748,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="accordion-item">
                     <div class="accordion-header" id="flush-headingFour">
                         <div class="button-container">
@@ -736,7 +769,6 @@
                                             <div class="line-divider"></div>
                                             @svg('document-check')
                                         </div>
-
                                         <div class="content-card-items mt-10">
                                             <div class="card-items">
                                                 <p class="title">Cotiza tu Bien o Servicio</p>
