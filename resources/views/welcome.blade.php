@@ -71,7 +71,7 @@
     <div class="menu-bottom">
         <div class="card-menu-bottom">
             <div class="circle">
-                @svg('provider', ['class' => 'h-20 w-20 '])
+                @svg('provider2', ['class' => 'h-20 w-20 '])
             </div>
             <p class="message-one">Quiero ser proveedor</p>
             <p class="message-second">Aprende cómo venderle a la CDMX</p>
@@ -165,7 +165,23 @@
             </div>
         </div>
         <div class="what-mtv-right">
-            <p class="what-mtv-right-title">¿Qué es mi tiendita virtual?</p>
+            <div class="py-6 px-12 bg-white flex flex-col">
+                <div class="self-center">
+                    <div class="text-mtv-primary font-bold text-3xl">
+                        ¿Qué es Mi Tiendita Virtual?
+                    </div>
+                </div>
+                <div class="self-center">
+                    <div class="flex flex-row space-x-4 mt-2">
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                    </div>
+                </div>
+            </div>
             <p class="what-mtv-mesagge">Es una plataforma diseñada para facilitar la interacción entre empresarios
                 (personas
                 físicas o morales) e Instituciones compradoras (Organismos Autónomos, Dependencias,
@@ -174,7 +190,24 @@
                 Esta plataforma tiene tres funcionalidades principales: creación de tu <stong>Tiendita Virtual</stong>
                 (Catálogo de Bienes / Servicios), <strong>Calendario anual de compras y Buscador de
                     oportunidades</strong> para participar en procedimientos y venderle al Gobierno de la CDMX*.</p>
-            <p class="what-mtv-right-title-second">Promueve tu producto o servicio</p>
+
+            <div class="py-6 px-12 bg-white flex flex-col">
+                <div class="self-center">
+                    <div class="text-mtv-gold font-bold text-3xl">
+                        Promueve tu producto o servicio
+                    </div>
+                </div>
+                <div class="self-center">
+                    <div class="flex flex-row space-x-4 mt-2">
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                    </div>
+                </div>
+            </div>
             <p class="what-mtv-mesagge">Al <strong>crear tu Tiendita Virtual</strong> tienes la posibilidad de
                 <strong>hacer visible tu negocio y
                     promocionarte con las Instituciones compradoras de la CDMX</strong>. Te pueden contactar
@@ -206,7 +239,23 @@
         </div>
         <div class="for-mtv-information-container">
             <div class="for-mtv-information-container-top">
-                <p class="for-mtv-information-container-top-title">¿Para quién es Mi Tiendita Virtual?</p>
+                <div class=" px-12  flex flex-col">
+                    <div class="self-center">
+                        <div class="text-mtv-primary font-bold text-3xl">
+                            ¿Para quién es Mi Tiendita Virtual?
+                        </div>
+                    </div>
+                    <div class="self-center">
+                        <div class="flex flex-row space-x-4 mt-2">
+                            <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                            <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                            <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                            <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                            <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                            <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        </div>
+                    </div>
+                </div>
                 <p class="for-mtv-information-container-top-message"> Es para empresarios o público en general que
                     quieren conocer cómo venderle al Gobierno de la CDMX
                     pero no saben por dónde empezar. Esta plataforma los ayudará en sus primeros pasos y ya que estén
@@ -249,7 +298,6 @@
                         <button>Ingresa</button>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -257,7 +305,23 @@
     <div class="how-part" id="how-part-virtual-store">
         @svg('horizontal-plot',['class' => 'd-none d-xl-block'])
         <div class="how-part-information">
-            <p class="how-part-information-title">¿Cómo formo parte de Mi Tiendita Virtual?</p>
+            <div class="py-6 px-12  flex flex-col">
+                <div class="self-center">
+                    <div class="text-mtv-primary font-bold text-3xl">
+                        ¿Cómo formo parte de Mi Tiendita Virtual?
+                    </div>
+                </div>
+                <div class="self-center">
+                    <div class="flex flex-row space-x-4 mt-2">
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                        <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
+                    </div>
+                </div>
+            </div>
             <p class="how-part-information-text">Sólo tienes que registrar tu negocio y al menos un producto. Además
                 <strong>con tu registro puedes guardar las
                     oportunidades de negocio de tu interés y de acuerdo a tu perfil y oferta comercial, se te sugerirán
