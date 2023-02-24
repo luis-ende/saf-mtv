@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UsuariosMensajesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProductosController;
@@ -124,6 +125,10 @@ Route::middleware(['role:urg', 'auth'])->group(function() {
         Route::get('/urg-productos/favoritos', 'indexFavoritos')->name('urg-productos-favoritos.index');
         Route::post('/urg-productos/favoritos/{producto}', 'updateProductoFavoritos')->name('urg-productos-favoritos.update');
         Route::get('/urg-productos/favoritos/export', 'exportProductosFavoritos')->name('urg-productos-favoritos.export');
+    });
+
+    Route::controller(UsuariosMensajesController::class)->group(function () {
+        Route::post('/urg-mensajes', 'send')->name('urg-mensajes.send');
     });
 });
 

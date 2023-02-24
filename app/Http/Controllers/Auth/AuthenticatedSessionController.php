@@ -45,7 +45,9 @@ class AuthenticatedSessionController extends Controller
                 $opnRoute = route('oportunidades-negocio.search') . $queryString . '#seccion-principal';
 
                 return redirect()->intended($opnRoute);
-            }            
+            }
+            
+            return redirect()->intended($request->get('url'));
         }
 
         return redirect()->intended(RouteServiceProvider::HOME);

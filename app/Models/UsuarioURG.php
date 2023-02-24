@@ -20,5 +20,6 @@ class UsuarioURG extends Model
      */
     protected $fillable = [        
         'nombre',
+        'email',
     ];
 }

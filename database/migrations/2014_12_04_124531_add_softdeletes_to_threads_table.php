@@ -1,10 +1,11 @@
 <?php
 
+use Cmgmyr\Messenger\Models\Models;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class AddSoftdeletesToThreadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +14,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('urg_usuarios', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre', 160);
-            $table->string('email');
-            $table->timestamps();
+        Schema::table(Models::table('threads'), function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('urg_usuarios');
+        Schema::table(Models::table('threads'), function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
-};
+}

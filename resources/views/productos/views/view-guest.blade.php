@@ -19,12 +19,10 @@
                        class="mtv-button-gold">
                         @svg('icono_catalogo', ['class' => 'w-5 h-5 inline-block mr-2'])
                         Catálogo
-                    </a>                                        
-                    <a href="mailto:{{ $producto->proveedor_email }}" 
-                       class="mtv-button-secondary">
-                        @svg('ri-mail-send-line', ['class' => 'w-5 h-5 inline-block mr-2'])
-                        Solicitar información
-                    </a>                    
+                    </a>                                                            
+                    <x-solicitar-info-button 
+                        :producto="$producto"
+                    />
                 </div>
             </div>
             <div class="py-6 px-12">
