@@ -36,10 +36,10 @@
                         @svg('heroicon-o-calendar-days', ['class' => 'w-7 h-7'])
                     </button>
                     <button class="mtv-link-gold no-underline">
-                        @svg('heroicon-o-calendar-days', ['class' => 'w-7 h-7'])
+                        @svg('export_pdf', ['class' => 'w-5 h-5'])
                     </button>
                     <button class="mtv-link-gold no-underline">
-                        @svg('heroicon-o-calendar-days', ['class' => 'w-7 h-7'])
+                        @svg('export_xls', ['class' => 'w-5 h-5'])
                     </button>
                 </td>
             </tr>
