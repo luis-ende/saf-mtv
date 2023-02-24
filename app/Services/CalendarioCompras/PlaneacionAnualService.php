@@ -3,6 +3,7 @@
 namespace App\Services\CalendarioCompras;
 
 use App\Imports\CalendarioComprasImport;
+use App\Repositories\OportunidadNegocioRepository;
 use Maatwebsite\Excel\Facades\Excel;
 
 /**
@@ -14,6 +15,6 @@ class PlaneacionAnualService
 {
     public function importaPlaneacionAnual(string $csvFilePath) 
     {
-        Excel::import(new CalendarioComprasImport, $csvFilePath);
+        Excel::import(new CalendarioComprasImport(new OportunidadNegocioRepository()), $csvFilePath);
     }    
 }

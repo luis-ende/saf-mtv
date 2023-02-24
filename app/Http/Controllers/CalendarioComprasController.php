@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\CalendarioComprasRepository;
 use Illuminate\Http\Request;
 
 class CalendarioComprasController extends Controller
@@ -9,8 +10,10 @@ class CalendarioComprasController extends Controller
 /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function index(Request $request)
+    public function index(Request $request, CalendarioComprasRepository $calendarioRepo)
     {
-        return view('calendario-compras.index');
+        $compras = $calendarioRepo->obtieneCalendarioCompras();
+
+        return view('calendario-compras.index', compact('compras'));
     }
 }

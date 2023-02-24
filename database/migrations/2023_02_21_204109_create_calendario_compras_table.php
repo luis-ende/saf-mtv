@@ -16,10 +16,8 @@ return new class extends Migration
         Schema::create('calendario_compras', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_unidad_compradora')->constrained('cat_unidades_compradoras');            
-            $table->decimal('presup_contratacion_aprobado', 10, 2);
-            $table->decimal('monto_total_bienes', 10, 2);
-            $table->decimal('monto_total_servicios', 10, 2);
-            $table->decimal('monto_total_aprobado', 10, 2);
+            $table->decimal('presup_contratacion_aprobado', 12, 2);
+            $table->unsignedSmallInteger('total_procedimientos');
             $table->timestamps(); 
         });
     }

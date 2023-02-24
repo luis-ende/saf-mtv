@@ -14,7 +14,7 @@ class CalendarioComprasSeeder extends Seeder
     {
         // Importar planeación anual del 2022 de la descarga en formato json de
         // https://brandmestudio-test.com/contrataciones-abiertas?page=1
-        $path = base_path('database/data/planeaciones_2022.csv');
+        $path = base_path('database/data/calendario_compras.csv');
         $planeacionAService->importaPlaneacionAnual($path);
     }
 }

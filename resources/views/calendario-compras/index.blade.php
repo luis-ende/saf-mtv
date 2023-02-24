@@ -32,7 +32,7 @@
                  class="md:w-8/12 w-full flex flex-col md:flex-row md:space-x-16 md:space-y-0  my-4 self-center">
                 <div class="md:basis-1/3 text-mtv-gray flex flex-column items-center py-2">
                     <span class="font-bold text-3xl text-mtv-secondary">
-                        93
+                        {{ count($compras) }}
                     </span>
                     <span class="text-base text-center">Instituciones compradoras</span>
                 </div>
@@ -50,20 +50,8 @@
                 </div>
             </div>
         </div>
-        <div id="seccion-filtro-letras" class="flex flex-row space-x-3 md:space-x-8 justify-center my-4">
-            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">A</button>
-            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">C</button>
-            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">E</button>
-            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">F</button>
-            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">H</button>
-            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">I</button>
-            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">J</button>
-            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">M</button>
-            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">O</button>
-            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">P</button>
-            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">R</button>
-            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">S</button>
-            <button type="button" class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline">U</button>
+        <div id="seccion-filtro-letras" class="my-4">
+            <x-calendario-compras.iniciales-filtros :compras="$compras" />
         </div>                       
         <div class="block relative md:w-96 w-80 mx-auto">
             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -80,8 +68,8 @@
                 Buscar
             </button>
         </div>
-        <div id="seccion-datos" class="my-5 mx-14">
-            <x-data-table />
+        <div id="seccion-datos" class="my-5 md:mx-20 xs:mx-3">
+            <x-calendario-compras.calendario-data-table :compras="$compras" />
         </div>        
     </div>
 </x-app-layout>      

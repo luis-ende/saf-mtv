@@ -23,10 +23,25 @@ class CalendarioComprasImport implements ToModel, WithHeadingRow
     * @return \Illuminate\Database\Eloquent\Model|null
     */
     public function model(array $row)
-    {    
-        
-        return new CalendarioCompra([
-            //
-        ]);
+    {
+        $nombreURG = $row['nombre_urg'];
+        $unidadCompradora = $this->unidadesCompradoras->first(function (object $value, int $key) use($nombreURG) {
+            similar_text(strtolower($nombreURG), strtolower($value->nombre), $perc);
+
+            return $perc > 75;
+        });
+
+        // TODO Agregar unidad compradora si no existe
+
+        $presupContrAprobado = str_replace('$', '', $row['presupuesto_contratacion_aprobado']);
+        $presupContrAprobado = str_replace(',', '', $presupContrAprobado);
+
+        if ($unidadCompradora) {
+            return new CalendarioCompra([
+                'id_unidad_compradora' => $unidadCompradora->id,
+                'presup_contratacion_aprobado' => $presupContrAprobado,
+                'total_procedimientos' => $row['total_procedimientos'],
+            ]);
+        }
     }
 }
