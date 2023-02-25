@@ -57,7 +57,8 @@
                         class="block w-full pt-2 pb-2 pl-10 text-sm text-mtv-text-gray border border-gray-300 rounded-lg bg-gray-50 focus:ring-mtv-primary focus:border-mtv-primary"
                         autofocus
                         placeholder="Búsqueda por nombre o palabra clave"
-                        x-model="terminoBusqueda">
+                        x-model="terminoBusqueda"
+                        x-ref="calendarioSearchInput">
                 <button type="submit"
                         class="mtv-button-secondary absolute right-2.5 bottom-[0.525rem] m-0 mt-1 hidden">
                     Buscar

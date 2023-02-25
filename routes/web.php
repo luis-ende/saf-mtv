@@ -156,6 +156,4 @@ Route::controller(ComprasDetalleController::class)->group(function () {
     Route::get('/compras-detalle/{unidad}', 'index')->name('compras-detalle.index');
 });
 
-Route::get('/programacion-anual', [ProgramacionAnualController::class, 'index'])->name('programacion-anual');
-
 require __DIR__.'/auth.php';
