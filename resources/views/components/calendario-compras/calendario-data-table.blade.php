@@ -43,7 +43,7 @@
                             <td>
                                 <div class="flex flex-col md:flex-row md:space-x-10 justify-center items-center">
                                     <a title="Ir a página de detalle"
-                                       :href="'/compras-detalle/' + comprasRow.id + '?cpag=' + $data.pagination.currentPage + '&rid=' + comprasRow.id"
+                                       :href="'/compras-detalle/' + comprasRow.id + '?rid=' + comprasRow.id + getQueryParams()"
                                        class="mtv-link-gold no-underline">
                                         @svg('heroicon-o-calendar-days', ['class' => 'w-7 h-7'])
                                     </a>
@@ -109,14 +109,15 @@
                     this.rows =
                         this.compras.filter(c => letrasIniciales.includes(c.unidad_compradora.charAt(0)));
 
-                    this.$data.resizePages();
+                    this.$data.resizePages(this.getStartPage());
                 });
 
                 this.$watch('terminoBusqueda', termino => {
                     this.$data.search(termino);
-                    this.$data.resizePages();
+                    this.$data.resizePages(this.getStartPage());
                 });
 
+                this.setQueryParams();
                 this.$data.resizePages(this.getStartPage());
             },
             getStartPage() {
@@ -127,6 +128,25 @@
 
                 return startPage;
             },
+            getQueryParams() {
+                let queryParams = '&cpag=' + this.$data.pagination.currentPage;
+                if (this.$data.terminoBusqueda !== '') {
+                    queryParams += '&tb=' + this.$data.terminoBusqueda;
+                }
+                if (this.$data.filtroLetraInicial !== '') {
+                    queryParams += '&fl=' + this.$data.filtroLetraInicial;
+                }
+
+                return queryParams;
+            },
+            setQueryParams() {
+                if (this.urlParams.has('tb')) {
+                    this.$data.terminoBusqueda = this.urlParams.get('tb');
+                }
+                if (this.urlParams.has('fl')) {
+                    this.$data.filtroLetraInicial = this.urlParams.get('fl');
+                }
+            }
         }
     }
 </script>
