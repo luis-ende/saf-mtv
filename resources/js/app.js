@@ -29,6 +29,8 @@ window.Choices = choices;
 import fuse from 'fuse.js';
 window.Fuse = fuse;
 
+import { DateTime } from "luxon";
+
 import Alpine from 'alpinejs';
 import mask from '@alpinejs/mask'
 
@@ -406,6 +408,131 @@ Alpine.data('oportunidadNegocioSugeridos', () => ({
                 });                                
             }
         })
+    }
+}))
+
+// Funciones de filtro, búsqueda y ordenamiento para tablas de datos (p.e. tablas del Calendario de compras y detalle).
+Alpine.data('dataTable', () => ({
+    // Paginación y ordenamiento
+    dataTableSource: null,
+    searchKeys: [],
+    rows: [],
+    pages: [],
+    view: 10,
+    offset: 10,
+    pagination: {
+        total: 0,
+        lastPage: 0,
+        perPage: 10,
+        currentPage: 1,
+        from: 1,
+        to: 1 * 10
+    },
+    currentPage: 1,
+    sorted: {
+        field: '',
+        rule: 'asc'
+    },
+    search(value) {
+        this.searchKeyword = value;
+        let filteredRows = [];
+        if (value.length > 1) {
+            const options = {
+                keys: this.searchKeys,
+                includeScore: true,
+            }
+            const fuse = new Fuse(this.dataTableSource, options);
+            const scores = fuse.search(value);
+            scores.forEach(c => {
+                if (c.score > 0 && c.score <= 0.6) {
+                    filteredRows.push(this.dataTableSource[c.refIndex])
+                }
+            });
+        } else {
+            filteredRows = this.dataTableSource;
+        }
+        this.rows = filteredRows;
+    },
+    showPages() {
+        const pages = []
+        let from = this.pagination.currentPage - Math.ceil(this.offset / 2)
+        if (from < 1) {
+            from = 1
+        }
+        let to = from + this.offset - 1
+        if (to > this.pagination.lastPage) {
+            to = this.pagination.lastPage
+        }
+        while (from <= to) {
+            pages.push(from)
+            from++
+        }
+        this.pages = pages
+    },
+    changePage(page) {
+        if (page >= 1 && page <= this.pagination.lastPage) {
+            this.currentPage = page
+            const total = this.rows.length
+            const lastPage = Math.ceil(total / this.view) || 1
+            const from = (page - 1) * this.view + 1
+            let to = page * this.view
+            if (page === lastPage) {
+                to = total
+            }
+            this.pagination.total = total
+            this.pagination.lastPage = lastPage
+            this.pagination.perPage = this.view
+            this.pagination.currentPage = page
+            this.pagination.from = from
+            this.pagination.to = to
+            this.showPages()
+        }
+    },
+    checkView(index) {
+        return !(index > this.pagination.to || index < this.pagination.from)
+    },
+    sort(field, rule) {
+        this.items = this.rows.sort(this.compareOnKey(field, rule))
+        this.sorted.field = field
+        this.sorted.rule = rule
+    },
+    compareOnKey(key, rule) {
+        return function(a, b) {
+            let comparison = 0
+            const fieldADate = DateTime.fromFormat(a[key], 'dd/mm/yyyy')
+            let fieldA
+            let fieldB
+            if (fieldADate.isValid) {
+                fieldA = fieldADate
+                fieldB = DateTime.fromFormat(b[key], 'dd/mm/yyyy')
+            } else {
+                fieldA = (typeof a[key] === 'string') ? a[key].toUpperCase() : a[key]
+                fieldB = (typeof b[key] === 'string') ? b[key].toUpperCase() : b[key]
+            }
+            if (rule === 'asc') {
+                if (fieldA > fieldB) {
+                    comparison = 1;
+                } else if (fieldA < fieldB) {
+                    comparison = -1;
+                }
+            } else {
+                if (fieldA < fieldB) {
+                    comparison = 1;
+                } else if (fieldA > fieldB) {
+                    comparison = -1;
+                }
+            }
+            return comparison
+        }
+    },
+    resizePages() {
+        this.pagination.total = this.rows.length;
+        this.pagination.lastPage = Math.ceil(this.rows.length / this.view);
+        this.changePage(1)
+        this.showPages();
+    },
+    isEmpty() {
+        return !this.pagination.total
     }
 }))
 

@@ -4,11 +4,11 @@ namespace App\Repositories;
 
 use Carbon\Carbon;
 use App\Models\OportunidadNegocio;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Query\Expression;
 use App\Services\CalculadoraFechasService;
-use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Clase repositorio para oportunidades de negocio.
@@ -24,7 +24,7 @@ class OportunidadNegocioRepository
         });
     }
 
-    public function obtieneTiposContratacion() 
+    public function obtieneTiposContratacion(): Collection
     {
         return Cache::rememberForever('cat_tipos_contratacion', function() {
             return DB::table('cat_tipos_contratacion')->select('id', 'tipo')->get();

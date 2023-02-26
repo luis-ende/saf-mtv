@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\CalendarioCompra;
+use App\Models\CalendarioCompras;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use App\Repositories\OportunidadNegocioRepository;
@@ -37,7 +37,7 @@ class CalendarioComprasImport implements ToModel, WithHeadingRow
         $presupContrAprobado = str_replace(',', '', $presupContrAprobado);
 
         if ($unidadCompradora) {
-            return new CalendarioCompra([
+            return new CalendarioCompras([
                 'id_unidad_compradora' => $unidadCompradora->id,
                 'presup_contratacion_aprobado' => $presupContrAprobado,
                 'total_procedimientos' => $row['total_procedimientos'],

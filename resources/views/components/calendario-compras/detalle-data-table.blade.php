@@ -1,125 +1,100 @@
-<div style="overflow-x: auto;">
-    <table x-data="calendarioDataTable()" 
-           x-init="initCalendarioDataTable()"
-           class="w-full text-xs md:text-sm">
-        <thead>
-            <tr>
-                <th class="py-2 uppercase text-mtv-primary md:text-lg">
-                    <button>
-                        @svg('fluentui-arrow-sort-down-lines-24-o', ['class' => 'w-4 h-4 inline-block'])
-                    </button>
-                    Objeto de contratación proyectado
-                </th>
-                <th class="py-2 text-mtv-primary text-right">
-                    <button>
-                        @svg('fluentui-arrow-sort-down-lines-24-o', ['class' => 'w-4 h-4 inline-block'])
-                    </button>
-                    Tipo de contratación
-                </th>
-                <th class="py-2 text-mtv-primary text-center">
-                    <button>
-                        @svg('fluentui-arrow-sort-down-lines-24-o', ['class' => 'w-4 h-4 inline-block'])
-                    </button>
-                    Procedimiento de contratación proyectado
-                </th>                
-                <th class="py-2 text-mtv-primary text-center">
-                    <button>
-                        @svg('fluentui-arrow-sort-down-lines-24-o', ['class' => 'w-4 h-4 inline-block'])
-                    </button>
-                    Realizar procedimiento de contratación
-                </th>                
-                <th class="py-2 text-mtv-primary text-center">
-                    <button>
-                        @svg('fluentui-arrow-sort-down-lines-24-o', ['class' => 'w-4 h-4 inline-block'])
-                    </button>
-                    Inicio de vigencia del contrato
-                </th>                
-                <th class="py-2 text-mtv-primary text-center">
-                    <button>
-                        @svg('fluentui-arrow-sort-down-lines-24-o', ['class' => 'w-4 h-4 inline-block'])
-                    </button>
-                    Finalización del contrato
-                </th>                
-            </tr>
-        </thead>
-        <tbody>
-        {{-- <template x-for="(comprasRow, index) in compras" :key="index">
-            <tr x-show="comprasRow.visible" 
-                class="border text-mtv-text-gray hover:bg-mtv-text-gray-extra-light">
-                <td class="px-3 uppercase w-[800px]" x-text="comprasRow.unidad_compradora"></td>
-                <td class="text-right w-[300px]" x-text="currencyFormat.format(comprasRow.presup_contratacion_aprobado)"></td>
-                <td class="text-center w-[400px]" x-text="comprasRow.total_procedimientos"></td>
-                <td class="flex flex-col md:flex-row md:space-x-10 justify-center">
-                    <button class="mtv-link-gold no-underline">
-                        @svg('heroicon-o-calendar-days', ['class' => 'w-7 h-7'])
-                    </button>
-                    <button class="mtv-link-gold no-underline">
-                        @svg('export_pdf', ['class' => 'w-5 h-5'])
-                    </button>
-                    <button class="mtv-link-gold no-underline">
-                        @svg('export_xls', ['class' => 'w-5 h-5'])
-                    </button>
-                </td>
-            </tr>
-        </template> --}}
-        </tbody>
-    </table>
-</div>
+<div x-data="dataTable">
+    <div x-data="procedimientosDataTable()"
+         x-init="initProcedimientosDataTable()">
+        <div style="overflow-x: auto;" class="h-[550px]">
+            <table class="w-full text-xs md:text-sm">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th class="border-b"></th>
+                        <th class="border-b text-mtv-text-gray font-normal">Fechas estimadas</th>
+                        <th class="border-b"></th>
+                    </tr>
+                    <tr>
+                        <th class="py-2 uppercase text-mtv-primary md:text-lg">
+                            <x-calendario-compras.data-table-column-sort
+                                    data_column="objeto_contratacion"
+                            />
+                            Objeto de contratación proyectado
+                        </th>
+                        <th class="py-2 text-mtv-primary text-right">
+                            <x-calendario-compras.data-table-column-sort
+                                    data_column="tipo_contratacion"
+                            />
+                            Tipo de contratación
+                        </th>
+                        <th class="py-2 text-mtv-primary text-center">
+                            <x-calendario-compras.data-table-column-sort
+                                    data_column="metodo_contr_proyectado"
+                            />
+                            Procedimiento de contratación proyectado
+                        </th>
+                        <th class="py-2 text-mtv-primary text-center">
+                            <x-calendario-compras.data-table-column-sort
+                                    data_column="fecha_estimada_procedimiento"
+                            />
+                            Realizar procedimiento de contratación
+                        </th>
+                        <th class="py-2 text-mtv-primary text-center">
+                            <x-calendario-compras.data-table-column-sort
+                                    data_column="fecha_estimada_inicio_contr"
+                            />
+                            Inicio de vigencia del contrato
+                        </th>
+                        <th class="py-2 text-mtv-primary text-center">
+                            <x-calendario-compras.data-table-column-sort
+                                    data_column="fecha_estimada_fin_contr"
+                            />
+                            Finalización del contrato
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template x-for="(procedimientosRow, index) in $data.rows" :key="index">
+                        <tr x-show="$data.checkView(index + 1)"
+                            class="border text-mtv-text-gray hover:bg-mtv-text-gray-extra-light">
+                            <td class="px-3 uppercase"
+                                x-text="procedimientosRow.objeto_contratacion"></td>
+                            <td class="px-3 uppercase"
+                                x-text="procedimientosRow.tipo_contratacion"></td>
+                            <td class="px-3 uppercase"
+                                x-text="procedimientosRow.metodo_contr_proyectado"></td>
+                            <td class="px-3 text-center"
+                                x-text="procedimientosRow.fecha_estimada_procedimiento"></td>
+                            <td class="px-3 text-center"
+                                x-text="procedimientosRow.fecha_estimada_inicio_contr"></td>
+                            <td class="px-3 text-center"
+                                x-text="procedimientosRow.fecha_estimada_fin_contr"></td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
 
-<div class="text-mtv-secondary font-bold flex flex-row my-4 justify-center items-center">    
-    <button type="button">
-        @svg('fas-arrow-left', ['class' => 'w-4 h-4 mr-4'])
-    </button>
-    1 de 12
-    <button type="button">
-        @svg('fas-arrow-right', ['class' => 'w-4 h-4 ml-4'])
-    </button>
+        <!-- Paginador -->
+        <x-calendario-compras.data-table-pagination />
+    </div>
 </div>
 
 @push('scripts')
 <script type="text/javascript">
-    function calendarioDataTable() {
-        return {            
-            detalles: [],
-            initCalendarioDataTable() {
-                const detalles = @js($detalles);
-                this.detalles = detalles.map(d => {
-                    return {
-                        ...d,
-                        visible: true,
-                    }
+    function procedimientosDataTable() {
+        return {
+            procedimientos: @js($procedimientos),
+            initProcedimientosDataTable() {
+                this.$data.dataTableSource = this.procedimientos;
+                this.$data.searchKeys.push('objeto_contratacion', 'tipo_contratacion', 'metodo_contr_proyectado');
+                this.$data.sorted.field = 'objeto_contratacion';
+                this.$data.rows = this.procedimientos.sort(this.$data.compareOnKey('objeto_contratacion', 'asc'));
+                this.$data.resizePages();
+
+                this.$watch('terminoBusqueda', termino => {
+                    this.$data.search(termino);
+                    this.$data.resizePages();
                 });
-
-                // this.$watch('terminoBusqueda', termino => {
-                //     this.search(termino);
-                // });
             },
-            {{-- Buscar sólo en la propiedad del nombre de la unidad compradora --}}
-            // search(value) {
-            //     this.searchKeyword = value;
-            //     if (value.length > 1) {
-            //         const options = {                        
-            //             keys: ['unidad_compradora'],
-            //             includeScore: true,
-            //         }
-            //         const fuse = new Fuse(this.compras, options);
-            //         const scores = fuse.search(value);
-
-            //         this.compras.forEach((u, index) => {
-            //             this.compras[index].visible = false;
-            //         });
-
-            //         scores.forEach(c => {
-            //             if (c.score > 0 && c.score <= 0.6) {
-            //                 this.compras[c.refIndex].visible = true;
-            //             }
-            //         });
-            //     } else {
-            //         this.compras.forEach((c, index) => {
-            //             this.compras[index].visible = true;
-            //         });
-            //     }
-            // },
         }
     }
 </script>

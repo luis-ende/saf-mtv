@@ -13,9 +13,6 @@ class CalendarioComprasController extends Controller
     public function index(Request $request, CalendarioComprasRepository $calendarioRepo)
     {
         $compras = $calendarioRepo->obtieneCalendarioCompras();
-        foreach ($compras as $row) {
-            $row->presup_contratacion_aprobado = (double) $row->presup_contratacion_aprobado;
-        }
 
         return view('calendario-compras.index', compact('compras'));
     }

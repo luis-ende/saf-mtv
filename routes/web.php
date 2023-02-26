@@ -153,7 +153,7 @@ Route::controller(CalendarioComprasController::class)->group(function () {
 });
 
 Route::controller(ComprasDetalleController::class)->group(function () {
-    Route::get('/compras-detalle/{unidad}', 'index')->name('compras-detalle.index');
+    Route::get('/compras-detalle/{calendario_item}', 'index')->name('compras-detalle.index');
 });
 
 require __DIR__.'/auth.php';
