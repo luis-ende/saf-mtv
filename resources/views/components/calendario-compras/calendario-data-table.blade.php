@@ -31,7 +31,9 @@
                 <tbody>
                     <template x-for="(comprasRow, index) in $data.rows" :key="index">
                         <tr x-show="checkView(index + 1)"
-                            class="border text-mtv-text-gray hover:bg-mtv-text-gray-extra-light">
+                            class="border text-mtv-text-gray hover:bg-mtv-text-gray-extra-light"
+                            :class="comprasRow.id == rid ? 'bg-amber-50' : ''"
+                            :data-id="comprasRow.id">
                             <td class="px-3 uppercase w-[800px]"
                                 x-text="comprasRow.unidad_compradora"></td>
                             <td class="text-right w-[300px]"
@@ -40,8 +42,8 @@
                                 x-text="comprasRow.total_procedimientos"></td>
                             <td>
                                 <div class="flex flex-col md:flex-row md:space-x-10 justify-center items-center">
-                                    <a :href="'/compras-detalle/' + comprasRow.id"
-                                       title="Ir a página de detalle"
+                                    <a title="Ir a página de detalle"
+                                       :href="'/compras-detalle/' + comprasRow.id + '?cpag=' + $data.pagination.currentPage + '&rid=' + comprasRow.id"
                                        class="mtv-link-gold no-underline">
                                         @svg('heroicon-o-calendar-days', ['class' => 'w-7 h-7'])
                                     </a>
@@ -72,38 +74,40 @@
 <script type="text/javascript">
     function calendarioDataTable() {
         return {
+            get rid() {
+                return this.urlParams.has('rid') ? this.urlParams.get('rid') : null;
+            },
+            urlParams: new URLSearchParams(window.location.search),
             currencyFormat: new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN'}),
             compras: @js($compras),
-            // Paginación y ordenamiento
-            /*rows: [],
-            pages: [],
-            view: 10,
-            offset: 10,
-            pagination: {
-                total: 0,
-                lastPage: 0,
-                perPage: 10,
-                currentPage: 1,
-                from: 1,
-                to: 1 * 10
-            },
-            currentPage: 1,
-            sorted: {
-                field: 'unidad_compradora',
-                rule: 'asc'
-            },*/
-            // Paginación y ordenamiento
             initCalendarioDataTable() {
                 this.$data.dataTableSource = this.compras;
-                this.$data.searchKeys.push('unidad_compradora');
+                this.$data.searchOptions.keys.push('unidad_compradora');
                 this.$data.sorted.field = 'unidad_compradora';
-                this.rows = this.compras.sort(this.$data.compareOnKey('unidad_compradora', 'asc'));
+                this.rows = this.compras.sort(this.$data.sortFunction('unidad_compradora', 'asc'));
 
                 this.$watch('filtroLetraInicial', letra => {
-                    // TODO incluir vocales con acento
                     this.$refs.calendarioSearchInput.value = '';
+                    const letrasIniciales = [letra];
+                    switch(letra) {
+                        case 'A':
+                            letrasIniciales.push('\u00c1')
+                            break;
+                        case 'E':
+                            letrasIniciales.push('\u00c9')
+                            break;
+                        case 'I':
+                            letrasIniciales.push('\u00cd')
+                            break;
+                        case 'O':
+                            letrasIniciales.push('\u00d3')
+                            break;
+                        case 'U':
+                            letrasIniciales.push('\u00da')
+                            break;
+                    }
                     this.rows =
-                        this.compras.filter(c => c.unidad_compradora.charAt(0) === letra );
+                        this.compras.filter(c => letrasIniciales.includes(c.unidad_compradora.charAt(0)));
 
                     this.$data.resizePages();
                 });
@@ -113,106 +117,16 @@
                     this.$data.resizePages();
                 });
 
-                this.$data.resizePages();
+                this.$data.resizePages(this.getStartPage());
             },
-            // Paginación y ordenamiento
-            {{-- Buscar sólo en la propiedad del nombre de la unidad compradora --}}
-            /*search(value) {
-                this.searchKeyword = value;
-                let filteredRows = [];
-                if (value.length > 1) {
-                    const options = {
-                        keys: ['unidad_compradora'],
-                        includeScore: true,
-                    }
-                    const fuse = new Fuse(this.compras, options);
-                    const scores = fuse.search(value);
-                    scores.forEach(c => {
-                        if (c.score > 0 && c.score <= 0.6) {
-                            filteredRows.push(this.compras[c.refIndex])
-                        }
-                    });
-                } else {
-                    filteredRows = this.compras;
+            getStartPage() {
+                let startPage = 1;
+                if (this.urlParams.has('cpag')) {
+                    startPage = parseInt(this.urlParams.get('cpag'));
                 }
-                this.rows = filteredRows;
+
+                return startPage;
             },
-            showPages() {
-                const pages = []
-                let from = this.pagination.currentPage - Math.ceil(this.offset / 2)
-                if (from < 1) {
-                    from = 1
-                }
-                let to = from + this.offset - 1
-                if (to > this.pagination.lastPage) {
-                    to = this.pagination.lastPage
-                }
-                while (from <= to) {
-                    pages.push(from)
-                    from++
-                }
-                this.pages = pages
-            },
-            changePage(page) {
-                if (page >= 1 && page <= this.pagination.lastPage) {
-                    this.currentPage = page
-                    const total = this.rows.length
-                    const lastPage = Math.ceil(total / this.view) || 1
-                    const from = (page - 1) * this.view + 1
-                    let to = page * this.view
-                    if (page === lastPage) {
-                        to = total
-                    }
-                    this.pagination.total = total
-                    this.pagination.lastPage = lastPage
-                    this.pagination.perPage = this.view
-                    this.pagination.currentPage = page
-                    this.pagination.from = from
-                    this.pagination.to = to
-                    this.showPages()
-                }
-            },
-            checkView(index) {
-                return !(index > this.pagination.to || index < this.pagination.from)
-            },
-            sort(field, rule) {
-                this.items = this.rows.sort(this.compareOnKey(field, rule))
-                this.sorted.field = field
-                this.sorted.rule = rule
-            },
-            compareOnKey(key, rule) {
-                return function(a, b) {
-                    if (key === 'unidad_compradora' || key === 'presup_contratacion_aprobado' || key === 'total_procedimientos') {
-                        let comparison = 0
-                        const fieldA = (typeof a[key] === 'string') ? a[key].toUpperCase() : a[key];
-                        const fieldB = (typeof b[key] === 'string') ? b[key].toUpperCase() : b[key];
-                        if (rule === 'asc') {
-                            if (fieldA > fieldB) {
-                                comparison = 1;
-                            } else if (fieldA < fieldB) {
-                                comparison = -1;
-                            }
-                        } else {
-                            if (fieldA < fieldB) {
-                                comparison = 1;
-                            } else if (fieldA > fieldB) {
-                                comparison = -1;
-                            }
-                        }
-                        return comparison
-                    }
-                }
-            },
-            resizePages() {
-                this.pagination.total = this.rows.length;
-                this.pagination.lastPage = Math.ceil(this.rows.length / this.view);
-                this.changePage(1)
-                this.showPages();
-            },
-            isEmpty() {
-                return !this.pagination.total
-            }*/
-            // Paginación y ordenamiento
         }
     }
 </script>

@@ -415,7 +415,6 @@ Alpine.data('oportunidadNegocioSugeridos', () => ({
 Alpine.data('dataTable', () => ({
     // Paginación y ordenamiento
     dataTableSource: null,
-    searchKeys: [],
     rows: [],
     pages: [],
     view: 10,
@@ -433,15 +432,17 @@ Alpine.data('dataTable', () => ({
         field: '',
         rule: 'asc'
     },
+    // https://fusejs.io/api/options.html
+    searchOptions: {
+        keys: [],
+        includeScore: true,
+        ignoreLocation: true,
+    },
     search(value) {
         this.searchKeyword = value;
         let filteredRows = [];
         if (value.length > 1) {
-            const options = {
-                keys: this.searchKeys,
-                includeScore: true,
-            }
-            const fuse = new Fuse(this.dataTableSource, options);
+            const fuse = new Fuse(this.dataTableSource, this.searchOptions);
             const scores = fuse.search(value);
             scores.forEach(c => {
                 if (c.score > 0 && c.score <= 0.6) {
@@ -492,11 +493,11 @@ Alpine.data('dataTable', () => ({
         return !(index > this.pagination.to || index < this.pagination.from)
     },
     sort(field, rule) {
-        this.items = this.rows.sort(this.compareOnKey(field, rule))
+        this.items = this.rows.sort(this.sortFunction(field, rule))
         this.sorted.field = field
         this.sorted.rule = rule
     },
-    compareOnKey(key, rule) {
+    sortFunction(key, rule) {
         return function(a, b) {
             let comparison = 0
             let fieldA
@@ -530,10 +531,11 @@ Alpine.data('dataTable', () => ({
             return comparison
         }
     },
-    resizePages() {
+    resizePages(startPage = 1) {
+        this.currentPage = startPage;
         this.pagination.total = this.rows.length;
         this.pagination.lastPage = Math.ceil(this.rows.length / this.view);
-        this.changePage(1)
+        this.changePage(startPage)
         this.showPages();
     },
     isEmpty() {

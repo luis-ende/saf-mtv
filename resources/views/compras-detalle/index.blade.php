@@ -27,7 +27,8 @@
         </div>        
         <div x-data="comprasDetalleFiltros()">
             <div class="flex flex-row items-center justify-center space-x-14 my-4">
-                <a href="{{ route('calendario-compras.index') }}" class="mtv-button-secondary-white no-underline">
+                @php($queryParams = count(request()->query()) > 0 ? '?' . http_build_query(request()->query()) : '')
+                <a href="{{ route('calendario-compras.index') . $queryParams . '#seccion-datos' }}" class="mtv-button-secondary-white no-underline">
                     @svg('fas-arrow-left', ['class' => 'h-5 w-5 inline-block mr-3'])
                     Atrás
                 </a>

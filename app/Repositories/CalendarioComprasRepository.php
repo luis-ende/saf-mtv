@@ -32,7 +32,7 @@ class CalendarioComprasRepository
     {
         $row = DB::table('calendario_compras AS cc')
                     ->select('cc.id', DB::raw('CAST(cc.presup_contratacion_aprobado AS DECIMAL(12,2))'),
-                                     'cuc.nombre AS unidad_compradora')
+                                     'cc.id_unidad_compradora', 'cuc.nombre AS unidad_compradora')
                     ->join('cat_unidades_compradoras AS cuc', 'cuc.id', 'cc.id_unidad_compradora')
                     ->where('cc.id', $id)
                     ->first();

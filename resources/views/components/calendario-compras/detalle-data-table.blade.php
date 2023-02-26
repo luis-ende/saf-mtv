@@ -85,9 +85,9 @@
             procedimientos: @js($procedimientos),
             initProcedimientosDataTable() {
                 this.$data.dataTableSource = this.procedimientos;
-                this.$data.searchKeys.push('objeto_contratacion', 'tipo_contratacion', 'metodo_contr_proyectado');
+                this.$data.searchOptions.keys.push('objeto_contratacion', 'tipo_contratacion', 'metodo_contr_proyectado');
                 this.$data.sorted.field = 'objeto_contratacion';
-                this.$data.rows = this.procedimientos.sort(this.$data.compareOnKey('objeto_contratacion', 'asc'));
+                this.$data.rows = this.procedimientos.sort(this.$data.sortFunction('objeto_contratacion', 'asc'));
                 this.$data.resizePages();
 
                 this.$watch('terminoBusqueda', termino => {
