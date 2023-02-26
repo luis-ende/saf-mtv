@@ -499,15 +499,20 @@ Alpine.data('dataTable', () => ({
     compareOnKey(key, rule) {
         return function(a, b) {
             let comparison = 0
-            const fieldADate = DateTime.fromFormat(a[key], 'dd/mm/yyyy')
             let fieldA
             let fieldB
-            if (fieldADate.isValid) {
-                fieldA = fieldADate
-                fieldB = DateTime.fromFormat(b[key], 'dd/mm/yyyy')
+            if (typeof a[key] === 'number') {
+                fieldA = a[key]
+                fieldB = b[key]
             } else {
-                fieldA = (typeof a[key] === 'string') ? a[key].toUpperCase() : a[key]
-                fieldB = (typeof b[key] === 'string') ? b[key].toUpperCase() : b[key]
+                const fieldADate = DateTime.fromFormat(a[key], 'dd/mm/yyyy')
+                if (fieldADate.isValid) {
+                    fieldA = fieldADate
+                    fieldB = DateTime.fromFormat(b[key], 'dd/mm/yyyy')
+                } else {
+                    fieldA = (typeof a[key] === 'string') ? a[key].toUpperCase() : a[key]
+                    fieldB = (typeof b[key] === 'string') ? b[key].toUpperCase() : b[key]
+                }
             }
             if (rule === 'asc') {
                 if (fieldA > fieldB) {
