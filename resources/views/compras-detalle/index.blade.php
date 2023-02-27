@@ -26,7 +26,7 @@
             </div>
         </div>        
         <div x-data="comprasDetalleFiltros()">
-            <div class="flex flex-row items-center justify-center space-x-14 my-4">
+            <div class="flex flex-col md:flex-row items-center justify-center md:space-x-14 md:space-y-0 space-y-10 my-5">
                 @php($queryParams = count(request()->query()) > 0 ? '?' . http_build_query(request()->query()) : '')
                 <a href="{{ route('calendario-compras.index') . $queryParams . '#seccion-datos' }}" class="mtv-button-secondary-white no-underline">
                     @svg('fas-arrow-left', ['class' => 'h-5 w-5 inline-block mr-3'])
@@ -47,14 +47,16 @@
                         Buscar
                     </button>
                 </div>
-                <a href="#" class="mtv-button-secondary-white border-none">
-                    @svg('export_pdf', ['class' => 'w-7 h-7'])
-                </a>
-                <a href="#" class="mtv-button-secondary-white border-none">
-                    @svg('export_xls', ['class' => 'w-7 h-7'])
-                </a>
+                <div class="flex flex-row space-x-14">
+                    <a href="#" class="mtv-button-secondary-white border-none">
+                        @svg('export_pdf', ['class' => 'w-7 h-7'])
+                    </a>
+                    <a href="#" class="mtv-button-secondary-white border-none">
+                        @svg('export_xls', ['class' => 'w-7 h-7'])
+                    </a>
+                </div>
             </div>
-            <div id="seccion-datos" class="my-5 md:mx-20 xs:mx-3">
+            <div id="seccion-datos" class="mb-5 md:mx-20 xs:mx-3 hidden md:block">
                 <x-calendario-compras.detalle-data-table
                         :procedimientos="$procedimientos"
                 />

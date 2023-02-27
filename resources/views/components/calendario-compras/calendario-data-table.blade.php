@@ -79,15 +79,15 @@
             },
             urlParams: new URLSearchParams(window.location.search),
             currencyFormat: new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN'}),
-            compras: @js($compras),
+            compras: @js($compras),     
+            queryUpdating: false,       
             initCalendarioDataTable() {
                 this.$data.dataTableSource = this.compras;
-                this.$data.searchOptions.keys.push('unidad_compradora');
-                this.$data.sorted.field = 'unidad_compradora';
-                this.rows = this.compras.sort(this.$data.sortFunction('unidad_compradora', 'asc'));
+                this.$data.searchOptions.keys.push('unidad_compradora');            
 
                 this.$watch('filtroLetraInicial', letra => {
-                    this.$refs.calendarioSearchInput.value = '';
+                    this.$data.bloqueoFiltroInicial = true;
+                    this.$data.terminoBusqueda = '';                    
                     const letrasIniciales = [letra];
                     switch(letra) {
                         case 'A':
@@ -105,20 +105,24 @@
                         case 'U':
                             letrasIniciales.push('\u00da')
                             break;
-                    }
+                    }                                        
                     this.rows =
                         this.compras.filter(c => letrasIniciales.includes(c.unidad_compradora.charAt(0)));
-
-                    this.$data.resizePages(1);
+                    
+                    if (!this.queryUpdating) {
+                        this.$data.resizePages(1);                        
+                    }                                                 
                 });
 
-                this.$watch('terminoBusqueda', termino => {
-                    this.$data.search(termino);
-                    this.$data.resizePages(1);
+                this.$watch('terminoBusqueda', termino => {                    
+                    if (!this.$data.bloqueoFiltroInicial) {
+                        this.$data.search(termino);                        
+                        this.$data.resizePages(1);                        
+                    }                    
+                    this.$data.bloqueoFiltroInicial = false;
                 });
-
-                this.setQueryParams();
-                this.$data.resizePages(this.getStartPage());
+                
+                this.setQueryParams();                             
             },
             getStartPage() {
                 let startPage = 1;
@@ -136,18 +140,42 @@
                 if (this.$data.filtroLetraInicial !== '') {
                     queryParams += '&fl=' + this.$data.filtroLetraInicial;
                 }
+                if (!(this.$data.sorted.field === 'unidad_compradora' && 
+                      this.$data.sorted.rule === 'asc')) {
+                    queryParams += '&sortf=' + this.$data.sorted.field;
+                    queryParams += '&sortd=' + this.$data.sorted.rule;
+                }
 
                 return queryParams;
             },
             setQueryParams() {
-                if (this.urlParams.has('tb')) {
-                    this.$data.terminoBusqueda = this.urlParams.get('tb');
-                    this.$data.changePage(this.getStartPage());
+                let sortField = 'unidad_compradora';
+                let sortRule = 'asc';
+                if (this.urlParams.has('sortf')) {
+                    sortField = this.urlParams.has('sortf');
+                    sortRule = this.urlParams.has('sortd');
                 }
-                if (this.urlParams.has('fl')) {
-                    this.$data.filtroLetraInicial = this.urlParams.get('fl');
-                    this.$data.changePage(this.getStartPage());
-                }
+
+                if (this.urlParams.has('tb') || this.urlParams.has('fl')) {
+                    if (this.urlParams.has('tb')) {
+                        this.queryUpdating = true;
+                        this.$data.terminoBusqueda = this.urlParams.get('tb');
+                        this.$data.rows = this.compras.sort(this.$data.sortFunction(sortField, sortRule));
+                        this.$data.resizePages(this.getStartPage());                    
+                        this.queryUpdating = false;           
+                    } 
+                    
+                    if (this.urlParams.has('fl')) {
+                        this.queryUpdating = true;
+                        this.$data.filtroLetraInicial = this.urlParams.get('fl');                    
+                        this.$data.rows = this.compras.sort(this.$data.sortFunction(sortField, sortRule));
+                        this.$data.resizePages(this.getStartPage());                    
+                        this.queryUpdating = false;           
+                    }                     
+                } else {
+                    this.$data.rows = this.compras.sort(this.$data.sortFunction(sortField, sortRule));
+                    this.$data.resizePages(1);   
+                }                                                            
             }
         }
     }

@@ -46,7 +46,10 @@
     </div>
     <!-- Refactoring -->
 
-    <div class="tab-wrapper" x-data="{ activeTab:  -1}">
+    <div class="tab-wrapper relative" x-data="{ activeTab:  -1}">        
+        <div class="w-full absolute top-[9.3rem] -z-10">
+            <div class="border-b-2 mx-[10%]"></div>
+        </div>
         <div class="buttons-container">
             <div :class="activeTab === 0 ? 'button-container-active' : 'button-container'">
                 <label @click="activeTab = 0" class="tab-control">
@@ -74,9 +77,8 @@
                     ['class' => 'h-20 w-20 img-svg'])
                     @svg('point', ['class' => 'point'])
                     Documentos para participar en un procedimiento</label>
-            </div>
-            <div class="cares-line"></div>
-        </div>
+            </div>                        
+        <div>
 
         <!-- item 1 -->
         <div class="tab-panel" :class="{ 'active': activeTab === 0 }"

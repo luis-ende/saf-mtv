@@ -71,9 +71,10 @@
         @push('scripts')
         <script type="text/javascript">
             function comprasFiltros() {
-                return {
+                return {                    
                     filtroLetraInicial: '',
                     terminoBusqueda: '',
+                    bloqueoFiltroInicial: false,
                 }
             }
         </script>

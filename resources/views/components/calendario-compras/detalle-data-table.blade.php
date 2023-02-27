@@ -1,7 +1,7 @@
 <div x-data="dataTable">
     <div x-data="procedimientosDataTable()"
          x-init="initProcedimientosDataTable()">
-        <div style="overflow-x: auto;" class="h-[550px]">
+        <div style="overflow-x: auto;" class="h-[600px]">
             <table class="w-full text-xs md:text-sm">
                 <thead>
                     <tr>
@@ -13,13 +13,13 @@
                         <th class="border-b"></th>
                     </tr>
                     <tr>
-                        <th class="py-2 uppercase text-mtv-primary md:text-lg">
+                        <th class="py-2 uppercase text-mtv-primary md:text-lg text-left">
                             <x-calendario-compras.data-table-column-sort
                                     data_column="objeto_contratacion"
                             />
                             Objeto de contratación proyectado
                         </th>
-                        <th class="py-2 text-mtv-primary text-right">
+                        <th class="py-2 text-mtv-primary text-center">
                             <x-calendario-compras.data-table-column-sort
                                     data_column="tipo_contratacion"
                             />
@@ -55,17 +55,17 @@
                     <template x-for="(procedimientosRow, index) in $data.rows" :key="index">
                         <tr x-show="$data.checkView(index + 1)"
                             class="border text-mtv-text-gray hover:bg-mtv-text-gray-extra-light">
-                            <td class="px-3 uppercase"
+                            <td class="px-3 uppercase w-[700px]"
                                 x-text="procedimientosRow.objeto_contratacion"></td>
-                            <td class="px-3 uppercase"
+                            <td class="px-3 uppercase w-[200px]"
                                 x-text="procedimientosRow.tipo_contratacion"></td>
-                            <td class="px-3 uppercase"
+                            <td class="px-3 uppercase w-[300px]"
                                 x-text="procedimientosRow.metodo_contr_proyectado"></td>
-                            <td class="px-3 text-center"
+                            <td class="px-3 text-center w-[200px]"
                                 x-text="procedimientosRow.fecha_estimada_procedimiento"></td>
-                            <td class="px-3 text-center"
+                            <td class="px-3 text-center w-[200px]"
                                 x-text="procedimientosRow.fecha_estimada_inicio_contr"></td>
-                            <td class="px-3 text-center"
+                            <td class="px-3 text-center w-[200px]"
                                 x-text="procedimientosRow.fecha_estimada_fin_contr"></td>
                         </tr>
                     </template>

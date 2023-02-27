@@ -19,9 +19,11 @@
         return {
             filtroActivo: 'A',
             initLetrasInicialesFiltro() {
-                this.$watch('terminoBusqueda', letra => {
+                this.$watch('terminoBusqueda', termino => {                    
                     if (this.filtroActivo !== '') {
-                        this.filtroActivo = '';
+                        if (!this.$data.bloqueoFiltroInicial) {
+                            this.filtroActivo = '';
+                        }                        
                     }                    
                 });
             }
