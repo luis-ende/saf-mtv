@@ -109,12 +109,12 @@
                     this.rows =
                         this.compras.filter(c => letrasIniciales.includes(c.unidad_compradora.charAt(0)));
 
-                    this.$data.resizePages(this.getStartPage());
+                    this.$data.resizePages(1);
                 });
 
                 this.$watch('terminoBusqueda', termino => {
                     this.$data.search(termino);
-                    this.$data.resizePages(this.getStartPage());
+                    this.$data.resizePages(1);
                 });
 
                 this.setQueryParams();
@@ -142,9 +142,11 @@
             setQueryParams() {
                 if (this.urlParams.has('tb')) {
                     this.$data.terminoBusqueda = this.urlParams.get('tb');
+                    this.$data.changePage(this.getStartPage());
                 }
                 if (this.urlParams.has('fl')) {
                     this.$data.filtroLetraInicial = this.urlParams.get('fl');
+                    this.$data.changePage(this.getStartPage());
                 }
             }
         }
