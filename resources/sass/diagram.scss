@@ -141,9 +141,25 @@
         .img-svg {
             height: auto;
             width: 130px;
-            margin-bottom: 10px;
             transform: scale(1);
         }
+
+        .icon-register {
+            margin-bottom: 10px;
+        }
+
+        .icon-search {
+            margin-bottom: 10px;
+        }
+
+        .icon-provider {
+            margin-bottom: 5px;
+        }
+
+        .icon-document {
+            margin-bottom: 1px;
+        }
+
         .point {
             width: 16px;
             display: block;
@@ -217,8 +233,23 @@
     & svg {
         height: auto;
         width: 130px;
-        margin-bottom: 10px;
         transform: scale(1);
+    }
+
+    .icon-register {
+        margin-bottom: 10px;
+    }
+
+    .icon-search {
+        margin-bottom: 10px;
+    }
+
+    .icon-provider {
+        margin-bottom: 5px;
+    }
+
+    .icon-document {
+        margin-bottom: 1px;
     }
 
     .point {
@@ -393,11 +424,9 @@
 }
 .cares-line {
     width: 100%;
-    height: 2px;
-    background-color: #bebebf;
     position: absolute;
-    top: 110%;
-    z-index: -2;
+    top: 9.3rem;
+    z-index: -10;
 
     @media (max-width: 420px) {
         display: none;
