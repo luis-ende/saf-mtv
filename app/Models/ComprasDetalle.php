@@ -14,5 +14,5 @@ class ComprasDetalle extends Model
      *
      * @var string
      */
-    protected $table = 'compras_detalle';
+    protected $table = 'compras_procedimientos';
 }
