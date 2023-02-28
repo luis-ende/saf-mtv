@@ -83,6 +83,7 @@
             queryUpdating: false,       
             initCalendarioDataTable() {
                 this.$data.dataTableSource = this.compras;
+                this.$data.rows = this.compras;
                 this.$data.searchOptions.keys.push('unidad_compradora');            
 
                 this.$watch('filtroLetraInicial', letra => {
@@ -152,30 +153,28 @@
                 let sortField = 'unidad_compradora';
                 let sortRule = 'asc';
                 if (this.urlParams.has('sortf')) {
-                    sortField = this.urlParams.has('sortf');
-                    sortRule = this.urlParams.has('sortd');
+                    sortField = this.urlParams.get('sortf');
+                    sortRule = this.urlParams.get('sortd');
                 }
+                this.$data.sort(sortField, sortRule);
 
                 if (this.urlParams.has('tb') || this.urlParams.has('fl')) {
                     if (this.urlParams.has('tb')) {
                         this.queryUpdating = true;
                         this.$data.terminoBusqueda = this.urlParams.get('tb');
-                        this.$data.rows = this.compras.sort(this.$data.sortFunction(sortField, sortRule));
-                        this.$data.resizePages(this.getStartPage());                    
+                        this.$data.resizePages(this.getStartPage());
                         this.queryUpdating = false;           
                     } 
                     
                     if (this.urlParams.has('fl')) {
                         this.queryUpdating = true;
-                        this.$data.filtroLetraInicial = this.urlParams.get('fl');                    
-                        this.$data.rows = this.compras.sort(this.$data.sortFunction(sortField, sortRule));
+                        this.$data.filtroLetraInicial = this.urlParams.get('fl');
                         this.$data.resizePages(this.getStartPage());                    
                         this.queryUpdating = false;           
                     }                     
                 } else {
-                    this.$data.rows = this.compras.sort(this.$data.sortFunction(sortField, sortRule));
-                    this.$data.resizePages(1);   
-                }                                                            
+                    this.$data.resizePages(this.getStartPage());
+                }
             }
         }
     }
