@@ -109,18 +109,27 @@
                     }                                        
                     this.rows =
                         this.compras.filter(c => letrasIniciales.includes(c.unidad_compradora.charAt(0)));
-                    
-                    if (!this.queryUpdating) {
+                                        
+                    if (this.queryUpdating) {                                                
+                        this.$data.resizePages(this.getStartPage());                                                                    
+                        this.queryUpdating = false;                    
+                    } else {
                         this.$data.resizePages(1);                        
-                    }                                                 
+                    }                                
                 });
 
-                this.$watch('terminoBusqueda', termino => {                    
+                this.$watch('terminoBusqueda', termino => {                                        
                     if (!this.$data.bloqueoFiltroInicial) {
                         this.$data.search(termino);                        
-                        this.$data.resizePages(1);                        
+
+                        if (this.queryUpdating) {
+                            this.$data.resizePages(this.getStartPage());
+                            this.queryUpdating = false;                    
+                        } else {
+                            this.$data.resizePages(1);
+                        }                                        
                     }                    
-                    this.$data.bloqueoFiltroInicial = false;
+                    this.$data.bloqueoFiltroInicial = false;                                                
                 });
                 
                 this.setQueryParams();                             
@@ -160,17 +169,13 @@
 
                 if (this.urlParams.has('tb') || this.urlParams.has('fl')) {
                     if (this.urlParams.has('tb')) {
-                        this.queryUpdating = true;
-                        this.$data.terminoBusqueda = this.urlParams.get('tb');
-                        this.$data.resizePages(this.getStartPage());
-                        this.queryUpdating = false;           
+                        this.queryUpdating = true;                        
+                        this.$data.terminoBusqueda = this.urlParams.get('tb');                        
                     } 
-                    
+                                        
                     if (this.urlParams.has('fl')) {
-                        this.queryUpdating = true;
-                        this.$data.filtroLetraInicial = this.urlParams.get('fl');
-                        this.$data.resizePages(this.getStartPage());                    
-                        this.queryUpdating = false;           
+                        this.queryUpdating = true                                                
+                        this.$data.filtroLetraInicial = this.urlParams.get('fl');                                                                        
                     }                     
                 } else {
                     this.$data.resizePages(this.getStartPage());
