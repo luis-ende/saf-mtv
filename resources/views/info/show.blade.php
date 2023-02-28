@@ -1,11 +1,11 @@
 <x-guest-layout>
     <div class="information-container">
-        <div class="py-6 px-12 bg-white flex flex-col">
+        <div class="py-6 px-12 bg-white flex flex-col sm py-1 px-3">
             <div class="self-center">
                 <label class="text-mtv-gray-2 text-xl">
                     Quiero ser proveedor
                 </label>
-                <div class="text-mtv-primary font-bold text-3xl">
+                <div class="text-mtv-primary font-bold text-3xl sm text-2xl">
                     Aprende cómo venderle a la CDMX
                 </div>
             </div>
