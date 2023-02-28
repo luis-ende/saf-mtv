@@ -1,11 +1,11 @@
 <x-guest-layout>
     <div class="information-container">
-        <div class="py-6 px-12 bg-white flex flex-col sm py-1 px-3">
+        <div class="py-6 px-12 bg-white flex flex-col sm py-1 px-1">
             <div class="self-center">
-                <label class="text-mtv-gray-2 text-xl">
+                <label class="text-mtv-gray-2 text-xl flowchart-subtitle">
                     Quiero ser proveedor
                 </label>
-                <div class="text-mtv-primary font-bold text-3xl sm text-2xl">
+                <div class="text-mtv-primary font-bold text-3xl flowchart-information">
                     Aprende cómo venderle a la CDMX
                 </div>
             </div>
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="mt-3 text-lg text-mtv-text-gray text-center">
-                <span class="font-bold text-xl text-mtv-secondary my-4 inline-block">
+                <span class="font-bold text-xl text-mtv-secondary my-4 inline-block flowchart-message">
                     Si te has preguntado cómo venderle al Gobierno, qué requisitos y documentos debes reunir, continúa
                     leyendo.
                 </span>

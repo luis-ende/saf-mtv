@@ -46,20 +46,25 @@
     }
 }
 
-.information-container-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: $primary;
-    text-align: center;
-    margin-bottom: -5px;
+.flowchart-information {
+    @media (max-width: 420px) {
+        font-size: 1.5rem;
+        text-align: left;
+    }
 }
 
-.information-container-subtitle {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: $secondary;
-    text-align: center;
-    margin-top: 30px;
+.flowchart-subtitle {
+    @media (max-width: 420px) {
+        text-align: center;
+        font-size: 1rem;
+    }
+}
+
+.flowchart-message {
+    @media (max-width: 420px) {
+        text-align: center;
+        font-size: 1rem;
+    }
 }
 
 .information-container-message {
