@@ -31,13 +31,13 @@
                 </div>
                 <div class="md:basis-1/3 text-mtv-gray flex flex-column items-center py-2">
                     <span class="font-bold text-3xl text-mtv-secondary">
-                        5,640
+                        {{ $total_procedimientos }}
                     </span>
                     <span class="text-base text-center">Total de procedimientos programados</span>
                 </div>
                 <div class="md:basis-1/3 text-mtv-gray flex flex-column items-center py-2">
                     <span class="font-bold text-3xl text-mtv-secondary">
-                        $57,951,987,120.62
+                        {{ $total_presupuesto_aprobado }}
                     </span>
                     <span class="text-base text-center">Prespuesto para contratación aprobado</span>
                 </div>

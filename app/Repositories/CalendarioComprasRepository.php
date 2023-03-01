@@ -30,6 +30,21 @@ class CalendarioComprasRepository
         return $compras;
     }
 
+    public function obtieneCalendarioTotales(array $items): array
+    {
+        $totalProcedimientos = 0;
+        $totalPresupuestoAprobado = 0;
+        foreach ($items as $item) {
+            $totalProcedimientos += $item->total_procedimientos;
+            $totalPresupuestoAprobado += $item->presup_contratacion_aprobado;
+        }
+
+        $totalProcedimientos = number_format($totalProcedimientos, 0);
+        $totalPresupuestoAprobado = '$' . number_format(((double) $totalPresupuestoAprobado), 2);
+
+        return compact('totalProcedimientos', 'totalPresupuestoAprobado');
+    }
+
     public function obtieneComprasDetalles(int $unidadCompradoraId): array
     {
         return DB::table('compras_procedimientos AS cp')
@@ -48,10 +63,10 @@ class CalendarioComprasRepository
 
     public function obtieneProcedimientosTotales(array $procedimientos): array 
     {
-        $totalPresupAprobado = array_reduce($procedimientos, function($carry, $proc) {
-            $carry += $proc->valor_estimado_contratacion;
+        $totalPresupAprobado = array_reduce($procedimientos, function($suma, $proc) {
+            $suma += $proc->valor_estimado_contratacion;
             
-            return $carry;
+            return $suma;
         });
 
         $totalPresupAprobado = '$' . number_format(((double) $totalPresupAprobado), 2);

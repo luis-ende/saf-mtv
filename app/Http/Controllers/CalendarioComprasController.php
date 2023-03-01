@@ -13,7 +13,11 @@ class CalendarioComprasController extends Controller
     public function index(Request $request, CalendarioComprasRepository $calendarioRepo)
     {
         $compras = $calendarioRepo->obtieneCalendarioCompras();
+        $totales = $calendarioRepo->obtieneCalendarioTotales($compras);
+        $total_procedimientos = $totales['totalProcedimientos'];
+        $total_presupuesto_aprobado = $totales['totalPresupuestoAprobado'];
 
-        return view('calendario-compras.index', compact('compras'));
+        return view('calendario-compras.index',
+                    compact('compras', 'total_procedimientos', 'total_presupuesto_aprobado'));
     }
 }
