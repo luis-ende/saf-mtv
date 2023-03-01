@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CalendarioCompras;
 use App\Repositories\CalendarioComprasRepository;
 use App\Repositories\OportunidadNegocioRepository;
 use Illuminate\Http\Request;

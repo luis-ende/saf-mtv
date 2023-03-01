@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use Carbon\Carbon;
-use App\Models\ComprasDetalle;
+use App\Models\ComprasProcedimiento;
 use App\Models\UnidadCompradora;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -40,11 +40,6 @@ class ComprasDetalleImport implements ToModel, WithHeadingRow
         $unidadCompradora = $this->unidadesCompradoras->first(function (object $value, int $key) use($nombreURG) {
             return strtolower($nombreURG) === strtolower($value->nombre);
         });
-        // $calendarioUC = $this->calendarioUnidadesC->first(function (object $value, int $key) use($nombreURG) {
-        //     similar_text(strtolower($nombreURG), strtolower($value->unidad_compradora), $perc);
-
-        //     return $perc > 75;
-        // });
 
         // TODO Agregar tipo de contratación 'SERVICIO INTEGRAL'?
         $tipoContrBienesId = $this->tiposContratacion->where('tipo', '=', 'Adquisición de Bienes')->value('id');
@@ -56,14 +51,12 @@ class ComprasDetalleImport implements ToModel, WithHeadingRow
             ]);  
             $this->unidadesCompradoras = $this->oportunidadesRepo->obtieneInstitucionesCompradoras(false);
             $unidadCompradora = $this->unidadesCompradoras->firstWhere('nombre', $nombreURG);
-            //var_dump($unidadCompradora);
         }        
         
         $valorContr = str_replace('$', '', $row['valor_estimado_contratacion']);
         $valorContr = str_replace(',', '', $valorContr);
 
-        return new ComprasDetalle([
-            //'id_calendario_compras' => $calendarioUC->id,
+        return new ComprasProcedimiento([
             'id_unidad_compradora' => $unidadCompradora->id,
             'objeto_contratacion' => $row['objeto_contratacion_proyectado'],
             'metodo_contr_proyectado' => $row['procedimiento_contratacion_proyectado'],

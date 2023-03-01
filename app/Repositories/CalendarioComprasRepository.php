@@ -2,11 +2,10 @@
 
 namespace App\Repositories;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Clase repositorio para oportunidades de negocio.
+ * Clase repositorio para calendario de compras y detalle (procedimientos).
  */
 class CalendarioComprasRepository
 {
@@ -30,25 +29,6 @@ class CalendarioComprasRepository
 
         return $compras;
     }
-
-    // public function obtieneCalendarioItem($id)
-    // {
-    //     $row = DB::table('calendario_compras AS cc')
-    //                 ->select('cc.id', DB::raw('CAST(cc.presup_contratacion_aprobado AS DECIMAL(12,2))'),
-    //                                  'cc.id_unidad_compradora', 'cuc.nombre AS unidad_compradora')
-    //                 ->join('cat_unidades_compradoras AS cuc', 'cuc.id', 'cc.id_unidad_compradora')
-    //                 ->where('cc.id', $id)
-    //                 ->first();
-
-    //     if ($row) {
-    //         $row->presup_contratacion_aprobado =
-    //             '$' . number_format(((double) $row->presup_contratacion_aprobado), 2);
-
-    //         return $row;
-    //     }
-
-    //     return null;
-    // }
 
     public function obtieneComprasDetalles(int $unidadCompradoraId): array
     {
@@ -81,12 +61,4 @@ class CalendarioComprasRepository
             'presup_contratacion_aprobado' => $totalPresupAprobado,
         ]; 
     }
-
-    // public function obtieneCalendarioUnidadesCompradoras(): Collection
-    // {
-    //     return DB::table('calendario_compras AS cc')
-    //                 ->select('cc.id', 'cc.id_unidad_compradora', 'cuc.nombre as unidad_compradora')
-    //                 ->join('cat_unidades_compradoras AS cuc', 'cc.id_unidad_compradora', 'cuc.id')
-    //                 ->get();
-    // }
 }
