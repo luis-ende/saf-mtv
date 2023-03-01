@@ -54,11 +54,15 @@ class OportunidadNegocioRepository
         });        
     }
 
-    public function obtieneInstitucionesCompradoras()
+    public function obtieneInstitucionesCompradoras(bool $cached = true)
     {
-        return Cache::rememberForever('cat_unidades_compradoras', function() {
+        if ($cached) {
+            return Cache::rememberForever('cat_unidades_compradoras', function() {
+                return DB::table('cat_unidades_compradoras')->select('id', 'nombre')->get();
+            });        
+        } else {
             return DB::table('cat_unidades_compradoras')->select('id', 'nombre')->get();
-        });        
+        }
     }
 
     /**

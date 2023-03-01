@@ -43,7 +43,7 @@
                             <td>
                                 <div class="flex flex-col md:flex-row md:space-x-10 justify-center items-center">
                                     <a title="Ir a página de detalle"
-                                       :href="'/compras-detalle/' + comprasRow.id + '?rid=' + comprasRow.id + getQueryParams()"
+                                       :href="'/compras-detalle/' + comprasRow.id_unidad_compradora + '?rid=' + comprasRow.id + getQueryParams()"
                                        class="mtv-link-gold no-underline">
                                         @svg('heroicon-o-calendar-days', ['class' => 'w-7 h-7'])
                                     </a>
