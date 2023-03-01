@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Mi Tiendita Virtual CDMX</title>
+    <title>Mi Tiendita Virtual CDMX - @yield('page_title')</title>
     <link rel="shortcut icon" href="{{ asset('images/tianguis.png') }}">
 
     <style>
