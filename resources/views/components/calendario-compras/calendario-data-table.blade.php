@@ -52,7 +52,7 @@
                                        class="mtv-link-gold no-underline">
                                         @svg('export_pdf', ['class' => 'w-5 h-5'])
                                     </a>
-                                    <a href="#"
+                                    <a :href="'/compras-procedimientos/export-xls/' + comprasRow.id_unidad_compradora"
                                        title="Descargar en formato Excel"
                                        class="mtv-link-gold no-underline">
                                         @svg('export_xls', ['class' => 'w-5 h-5'])

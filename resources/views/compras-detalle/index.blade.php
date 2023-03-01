@@ -51,7 +51,8 @@
                     <a href="#" class="mtv-button-secondary-white border-none">
                         @svg('export_pdf', ['class' => 'w-7 h-7'])
                     </a>
-                    <a href="#" class="mtv-button-secondary-white border-none">
+                    <a href="{{ route('compras-procedimientos.export-xls', [$unidad_compradora->id]) }}"
+                       class="mtv-button-secondary-white border-none">
                         @svg('export_xls', ['class' => 'w-7 h-7'])
                     </a>
                 </div>
