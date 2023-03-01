@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\ComprasProcedimientosExport;
 use App\Repositories\CalendarioComprasRepository;
 use App\Repositories\OportunidadNegocioRepository;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -36,6 +37,22 @@ class CalendarioComprasController extends Controller
         return Excel::download(new ComprasProcedimientosExport($procedimientos, $unidadCompradora),
                                 $archivoDescarga,
                                 \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+    public function exportComprasProcedimientosPdf(Request $request,
+                                                   CalendarioComprasRepository $calendarioRepo,
+                                                   OportunidadNegocioRepository $opnRepo,
+                                                   int $unidad_compradora)
+    {
+        $procedimientos = $calendarioRepo->obtieneComprasDetalles($unidad_compradora);
+        $unidadCompradora = $opnRepo->obtieneInstitucionesCompradoras()->firstWhere('id', $unidad_compradora)->nombre;
+        $archivoDescarga = $this->generaArchivoDescargaNombre($unidadCompradora) . '.pdf';
+        $pdf = Pdf::loadView('exports.compras-procedimientos', [
+            'procedimientos' => $procedimientos,
+            'unidad_compradora' => $unidadCompradora
+        ])->setPaper('a4', 'landscape');
+
+        return $pdf->download($archivoDescarga);
     }
 
     private function generaArchivoDescargaNombre(string $unidadCompradora): string

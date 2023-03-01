@@ -155,6 +155,7 @@ Route::controller(OportunidadesController::class)->group(function() {
 Route::controller(CalendarioComprasController::class)->group(function () {
     Route::get('/calendario-compras', 'index')->name('calendario-compras.index');
     Route::get('/compras-procedimientos/export-xls/{unidad_compradora}', 'exportComprasProcedimientosXls')->name('compras-procedimientos.export-xls');
+    Route::get('/compras-procedimientos/export-pdf/{unidad_compradora}', 'exportComprasProcedimientosPdf')->name('compras-procedimientos.export-pdf');
 });
 
 Route::controller(ComprasDetalleController::class)->group(function () {

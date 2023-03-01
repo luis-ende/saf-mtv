@@ -1,8 +1,9 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <table>
     <thead>
         @isset($unidad_compradora)
             <tr>
-                <th>Institución compradora: {{ $unidad_compradora }}</th>
+                <th colspan="6">Institución compradora: {{ $unidad_compradora }}</th>
             </tr>
         @endisset
         <tr>

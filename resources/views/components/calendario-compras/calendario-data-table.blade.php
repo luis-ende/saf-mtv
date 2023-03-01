@@ -47,12 +47,14 @@
                                        class="mtv-link-gold no-underline">
                                         @svg('heroicon-o-calendar-days', ['class' => 'w-7 h-7'])
                                     </a>
-                                    <a href="#"
+                                    <a :href="'/compras-procedimientos/export-pdf/' + comprasRow.id_unidad_compradora"
                                        title="Descargar en formato Pdf"
+                                       download
                                        class="mtv-link-gold no-underline">
                                         @svg('export_pdf', ['class' => 'w-5 h-5'])
                                     </a>
                                     <a :href="'/compras-procedimientos/export-xls/' + comprasRow.id_unidad_compradora"
+                                       download
                                        title="Descargar en formato Excel"
                                        class="mtv-link-gold no-underline">
                                         @svg('export_xls', ['class' => 'w-5 h-5'])

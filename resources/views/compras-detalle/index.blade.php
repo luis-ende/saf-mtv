@@ -48,11 +48,14 @@
                     </button>
                 </div>
                 <div class="flex flex-row space-x-14">
-                    <a href="#" class="mtv-button-secondary-white border-none">
+                    <a href="{{ route('compras-procedimientos.export-pdf', [$unidad_compradora->id]) }}"
+                       class="mtv-button-secondary-white border-none"
+                       download>
                         @svg('export_pdf', ['class' => 'w-7 h-7'])
                     </a>
                     <a href="{{ route('compras-procedimientos.export-xls', [$unidad_compradora->id]) }}"
-                       class="mtv-button-secondary-white border-none">
+                       class="mtv-button-secondary-white border-none"
+                       download>
                         @svg('export_xls', ['class' => 'w-7 h-7'])
                     </a>
                 </div>
