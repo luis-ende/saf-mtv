@@ -30,7 +30,8 @@
                         :active="request()->routeIs('oportunidades-negocio.search')">
                         Oportunidades de negocio
                     </x-nav-link>
-                    <x-nav-link :href="'#'">
+                    <x-nav-link :href="route('preguntas-frecuentes.show')"
+                                :active="request()->routeIs('preguntas-frecuentes.show')">
                         Preguntas frecuentes
                     </x-nav-link>
                     <x-nav-link :href="'#'">

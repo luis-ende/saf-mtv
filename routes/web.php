@@ -38,6 +38,10 @@ Route::get('/info-venderle-a-cdmx', function() {
     return view('info.show');
 })->name('flujograma.show');
 
+Route::get('/preguntas-frecuentes', function() {
+    return view('preguntas-frecuentes.show');
+})->name('preguntas-frecuentes.show');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified', 'registro_mtv.status'])->name('dashboard');

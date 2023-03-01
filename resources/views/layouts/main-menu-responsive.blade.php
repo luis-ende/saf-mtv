@@ -20,7 +20,8 @@
             :active="request()->routeIs('oportunidades-negocio.search')">
             Oportunidades de negocio
         </x-responsive-nav-link>
-        <x-responsive-nav-link href="'#'">
+        <x-responsive-nav-link :href="route('preguntas-frecuentes.show')"
+                               :active="request()->routeIs('preguntas-frecuentes.show')">
             Preguntas frecuentes
         </x-responsive-nav-link>
         <x-responsive-nav-link href="#">
