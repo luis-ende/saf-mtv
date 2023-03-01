@@ -1,4 +1,5 @@
-<x-app-layout>      
+<x-app-layout>
+    @section('page_title', 'Oportunidades de negocio')
     <div class="bg-white overflow-hidden min-h-screen"
          x-data="encabezadoEstadisticas()"
          x-init="initEncabezadoEstadisticas()">

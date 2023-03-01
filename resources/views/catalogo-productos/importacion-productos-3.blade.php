@@ -1,4 +1,5 @@
 <x-app-layout :show_main_menu="false">
+    @section('page_title', 'Carga masiva de productos 3')
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-4">
         <div class="bg-white overflow-hidden shadow-sm min-h-screen"
              x-data="busquedaCABMS"
