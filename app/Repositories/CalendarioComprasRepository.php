@@ -57,6 +57,7 @@ class CalendarioComprasRepository
                 'ctc.tipo AS tipo_contratacion')
             ->leftJoin('cat_tipos_contratacion AS ctc', 'cp.id_tipo_contratacion', 'ctc.id')            
             ->where('cp.id_unidad_compradora', $unidadCompradoraId)
+            ->orderBy('cp.objeto_contratacion')
             ->get()
             ->toArray();
     }
