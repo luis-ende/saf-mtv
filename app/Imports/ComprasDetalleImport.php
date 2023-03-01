@@ -36,9 +36,9 @@ class ComprasDetalleImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        $nombreURG = $row['nombre_urg'];
-        $unidadCompradora = $this->unidadesCompradoras->first(function (object $value, int $key) use($nombreURG) {
-            return strtolower($nombreURG) === strtolower($value->nombre);
+        $nombreURG = trim($row['nombre_urg']);
+        $unidadCompradora = $this->unidadesCompradoras->first(function (object $uc, int $key) use($nombreURG) {
+            return mb_strtolower($uc->nombre) === mb_strtolower($nombreURG);
         });
 
         // TODO Agregar tipo de contratación 'SERVICIO INTEGRAL'?
@@ -66,6 +66,6 @@ class ComprasDetalleImport implements ToModel, WithHeadingRow
             'fecha_estimada_inicio_contr' => Carbon::createFromFormat('d-m-Y', $row['fecha_estimada_inicio_vigencia_contrato']),
             'fecha_estimada_fin_contr' => Carbon::createFromFormat('d-m-Y', $row['fecha_estimada_fin_contrato']),
             'id_tipo_contratacion' => $row['tipo_de_contratacion'] === 'BIEN' ? $tipoContrBienesId : $tipoContrServiciosId,
-        ]);        
+        ]);
     }
 }
