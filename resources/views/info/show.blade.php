@@ -1,11 +1,11 @@
 <x-guest-layout>
     <div class="information-container">
-        <div class="py-6 px-12 bg-white flex flex-col">
+        <div class="py-6 px-12 bg-white flex flex-col sm py-1 px-1">
             <div class="self-center">
-                <label class="text-mtv-gray-2 text-xl">
+                <label class="text-mtv-gray-2 text-xl flowchart-subtitle">
                     Quiero ser proveedor
                 </label>
-                <div class="text-mtv-primary font-bold text-3xl">
+                <div class="text-mtv-primary font-bold text-3xl flowchart-information">
                     Aprende cómo venderle a la CDMX
                 </div>
             </div>
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="mt-3 text-lg text-mtv-text-gray text-center">
-                <span class="font-bold text-xl text-mtv-secondary my-4 inline-block">
+                <span class="font-bold text-xl text-mtv-secondary my-4 inline-block flowchart-message">
                     Si te has preguntado cómo venderle al Gobierno, qué requisitos y documentos debes reunir, continúa
                     leyendo.
                 </span>
@@ -46,36 +46,38 @@
     </div>
     <!-- Refactoring -->
 
-    <div class="tab-wrapper" x-data="{ activeTab:  -1}">
+    <div class="tab-wrapper relative" x-data="{ activeTab:  -1}">
+        <div class="cares-line">
+            <div class="border-b-2 mx-[10%]"></div>
+        </div>
         <div class="buttons-container">
             <div :class="activeTab === 0 ? 'button-container-active' : 'button-container'">
                 <label @click="activeTab = 0" class="tab-control">
                     @svg('register',
-                    ['class' => 'h-20 w-20 img-svg'])
+                    ['class' => 'h-20 w-20 img-svg icon-register'])
                     @svg('point', ['class' => 'point-df'])
                     Regístrate en Mi Tiendita Virtua</label>
             </div>
             <div :class="activeTab === 1 ? 'button-container-active' : 'button-container'">
                 <label @click="activeTab = 1" class="tab-control">@svg('search',
-                    ['class' => 'h-20 w-20 img-svg'])
+                    ['class' => 'h-20 w-20 img-svg icon-search'])
                     @svg('point', ['class' => 'point'])
                     Encuentra una Oportunidad de negocio</label>
             </div>
             <div :class="activeTab === 2 ? 'button-container-active' : 'button-container'">
                 <label @click="activeTab = 2" class="tab-control">
                     @svg('provider',
-                    ['class' => 'h-20 w-20 img-svg'])
+                    ['class' => 'h-20 w-20 img-svg icon-provider'])
                     @svg('point', ['class' => 'point'])
                     Tramita tu constancia en el Padrón de Proveedores</label>
             </div>
             <div :class="activeTab === 3 ? 'button-container-active' : 'button-container'">
                 <label @click="activeTab = 3" class="tab-control">
                     @svg('document',
-                    ['class' => 'h-20 w-20 img-svg'])
+                    ['class' => 'h-20 w-20 img-svg icon-document'])
                     @svg('point', ['class' => 'point'])
                     Documentos para participar en un procedimiento</label>
             </div>
-            <div class="cares-line"></div>
         </div>
 
         <!-- item 1 -->
@@ -596,7 +598,7 @@
                             <p class="admin-title"> Documentación Requerida para tramitar la constancia en el padrón de
                                 proveedores </p>
                             <div class="accordion-item">
-                                <div class="d-flex justify-content-center">
+                                <div class="d-flex justify-content-center mb-10">
                                     <h2 class="accordion-header admin-title" id="flush-headingOne">
                                         <button class="accordion-button collapsed hover:text-[#BC955C]" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
