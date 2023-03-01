@@ -39,9 +39,12 @@
 - Generar respaldo de la base de datos en producción (u otro ambiente), ejemplo:
   - `pg_dump -U saf_mtv_dbuser -W -d saf_mtv > mtv_saf_db_20Feb2023.sql`
 
-- Para restaurar un respaldo local en el servidor local de desarrollo (Homestead) (cambiar ubicación del archivo de respaldo a utilizar):  
-  - Eliminar la base de datos `saf_mtv` y recrearla vacía
-  - `psql -v ON_ERROR_STOP=1 -h homestead -U saf_mtv_dbuser -W -d saf_mtv < database/backups/mtv_saf_db_20Feb2023.sql`
+- Para restaurar un respaldo local en el servidor local de desarrollo (Homestead):
+  - Entrar al servidor Homestead con `vagrant ssh`, después al servidor Postgresql con `psql -h homestead -U saf_mtv_dbuser -d saf_mtv`
+  - Eliminar el esquema `public` de la base de datos `saf_mtv` y recrearla vacía:
+    - `DROP SCHEMA public CASCADE` y `CREATE SCHEMA public` 
+  - Importar el archivo de respaldo (cambiar ubicación del archivo de respaldo a utilizar):
+    - `psql -v ON_ERROR_STOP=1 -h homestead -U saf_mtv_dbuser -W -d saf_mtv < database/backups/mtv_saf_db_20Feb2023.sql`
 
 - No olvidar copiar la carpeta `storage`, en donde se guardan imágenes y documentos
 
