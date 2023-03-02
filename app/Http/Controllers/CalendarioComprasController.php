@@ -32,7 +32,7 @@ class CalendarioComprasController extends Controller
     {
         $procedimientos = $calendarioRepo->obtieneComprasDetalles($unidad_compradora);
         $unidadCompradora = $opnRepo->obtieneInstitucionesCompradoras()->firstWhere('id', $unidad_compradora)->nombre;
-        $archivoDescarga = $this->generaArchivoDescargaNombre($unidadCompradora) . '.xls';
+        $archivoDescarga = $this->generaArchivoDescargaNombre($unidadCompradora) . '.xlsx';
 
         return Excel::download(new ComprasProcedimientosExport($procedimientos, $unidadCompradora),
                                 $archivoDescarga,
