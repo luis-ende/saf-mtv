@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PreguntasFrecuentesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProductosController;
@@ -38,15 +39,14 @@ Route::get('/info-venderle-a-cdmx', function() {
     return view('info.show');
 })->name('flujograma.show');
 
-Route::get('/preguntas-frecuentes', function() {
-    return view('preguntas-frecuentes.show');
-})->name('preguntas-frecuentes.show');
+Route::controller(PreguntasFrecuentesController::class)->group(function () {
+    Route::get('/preguntas-frecuentes', 'show')->name('preguntas-frecuentes.show');
+    Route::get('/preguntas-frecuentes/list/{categoria?}/{subcategoria?}', 'list')->name('preguntas-frecuentes.list');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified', 'registro_mtv.status'])->name('dashboard');
-
-// TODO: Crear grupos
 
 Route::post('persona/{persona}/contactos', [PersonaController::class, 'storeContactos'])
         ->middleware(['role:proveedor', 'auth'])
