@@ -114,4 +114,8 @@
   - [Pendiente] Consulta de datos de precotizaciones desde el portal de **Precotizaciones** [https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login](https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login) y PAAAPS (Programa Anual de Adquisiciones, Arrendamientos y Prestación de Servicios)
 
   - En MTV la tabla `oportunidades_negocio` concentra todos los registro provenientes de las diferentes plataformas. Para la extracción de información se utilizan las clases/servicio ubicadas en `app/Services/OportunidadesNegocio`, las cuales transforman los registros de la fuente a oportunidad de negocio. Para extraer la información se utilizan seeders. Por ejemplo, el seeder `database/seeders/OportunidadNegocioSeeder.php` hace uso del servicio para importar convocatorias públicas del sitio de Concurso digital. Estos seeder pueden ser ejecutados con la misma regularidad (por ejemplo, una vez al día) o en diferentes tiempos según la frecuencia con que cambien los datos en la fuente.
+
+### Documentación e información relacionada con el repositorio del proyecto
+
+- Para consultar la lista de tareas abiertas y pendientes, ver: https://gitlab.com/saf-mtv/saf-mtv/-/issues
   
