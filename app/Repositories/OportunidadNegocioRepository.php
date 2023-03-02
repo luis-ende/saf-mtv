@@ -58,10 +58,14 @@ class OportunidadNegocioRepository
     {
         if ($cached) {
             return Cache::rememberForever('cat_unidades_compradoras', function() {
-                return DB::table('cat_unidades_compradoras')->select('id', 'nombre')->get();
+                return DB::table('cat_unidades_compradoras')->select('id', 'nombre')
+                                                                  ->orderBy('nombre')
+                                                                  ->get();
             });        
         } else {
-            return DB::table('cat_unidades_compradoras')->select('id', 'nombre')->get();
+            return DB::table('cat_unidades_compradoras')->select('id', 'nombre')
+                                                              ->orderBy('nombre')
+                                                              ->get();
         }
     }
 
