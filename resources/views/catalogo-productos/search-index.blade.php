@@ -7,14 +7,14 @@
                 tipoBusqueda: '{{ $tipo_busqueda }}' }">
             <div class="py-6 px-12 bg-white flex flex-col">
                 <div class="self-center">
-                    <label class="text-mtv-gray-2 text-xl">
+                    <label class="text-mtv-gray-2 md:text-xl">
                         Tienditas virtuales
                     </label>
-                    <div class="text-mtv-primary font-bold text-3xl"
+                    <div class="text-mtv-primary font-bold md:text-3xl xs:text-lg"
                          x-show="tipoBusqueda === 'productos'">
                          Catálogo de productos
                     </div>
-                    <div class="text-mtv-primary font-bold text-3xl"
+                    <div class="text-mtv-primary font-bold md:text-3xl xs:text-lg"
                          x-show="tipoBusqueda === 'proveedores'">
                          Directorio de proveedores
                     </div>
@@ -30,10 +30,10 @@
                     </div>
                 </div>
                 <div class="mt-3 text-lg text-mtv-text-gray text-center">
-                    <span x-show="tipoBusqueda === 'productos'" class="font-bold text-xl text-mtv-secondary my-4 inline-block">
+                    <span x-show="tipoBusqueda === 'productos'" class="font-bold text-base md:text-xl text-mtv-secondary my-4 inline-block">
                         Encuentra productos y servicios registrados en Mi Tiendita Virtual
                     </span>
-                    <span x-show="tipoBusqueda === 'proveedores'" class="font-bold text-xl text-mtv-secondary my-4 inline-block">
+                    <span x-show="tipoBusqueda === 'proveedores'" class="font-bold text-base md:text-xl text-mtv-secondary my-4 inline-block">
                         Encuentra proveedores registrados en Mi Tiendita Virtual
                     </span>
                     <span x-show="tipoBusqueda === 'productos'" class="w-3/4 inline-block text-base">
