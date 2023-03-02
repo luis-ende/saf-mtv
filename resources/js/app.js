@@ -511,8 +511,8 @@ Alpine.data('dataTable', () => ({
                     fieldA = fieldADate
                     fieldB = DateTime.fromFormat(b[key], 'dd/mm/yyyy')
                 } else {
-                    fieldA = (typeof a[key] === 'string') ? a[key].toUpperCase() : a[key]
-                    fieldB = (typeof b[key] === 'string') ? b[key].toUpperCase() : b[key]
+                    fieldA = (typeof a[key] === 'string') ? a[key].toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : a[key]
+                    fieldB = (typeof b[key] === 'string') ? b[key].toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : b[key]
                 }
             }
             if (rule === 'asc') {
