@@ -33,7 +33,7 @@
                     @svg('fas-arrow-left', ['class' => 'h-5 w-5 inline-block mr-3'])
                     Atrás
                 </a>
-                <div class="relative md:w-96 w-80">
+                <div class="relative md:w-96 w-80 hidden md:block">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         @svg('forkawesome-search', ['class' => 'w-4 h-4 text-mtv-gray-2'])
                     </div>

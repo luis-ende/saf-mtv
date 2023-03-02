@@ -1,7 +1,7 @@
 <div x-data="dataTable">
     <div x-data="calendarioDataTable()"
          x-init="initCalendarioDataTable()">
-        <div style="overflow-x: auto;" class="h-96">
+        <div style="overflow-x: auto;" class="md:h-96">
             <table class="w-full text-xs md:text-sm">
                 <thead>
                 <tr>
@@ -41,7 +41,7 @@
                             <td class="text-center w-[400px]"
                                 x-text="comprasRow.total_procedimientos"></td>
                             <td>
-                                <div class="flex flex-col md:flex-row md:space-x-10 justify-center items-center">
+                                <div class="flex flex-col space-y-3 md:flex-row md:space-x-10 md:space-y-0 justify-center items-center">
                                     <a title="Ir a página de detalle"
                                        :href="'/compras-detalle/' + comprasRow.id_unidad_compradora + '?rid=' + comprasRow.id + getQueryParams()"
                                        class="mtv-link-gold no-underline">

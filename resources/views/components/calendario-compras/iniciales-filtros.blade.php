@@ -1,11 +1,11 @@
 <div x-data="letrasInicialesFiltro()"
      x-init="initLetrasInicialesFiltro()"
-     class="flex flex-row space-x-3 md:space-x-8 justify-center"
+     class="flex flex-row flex-wrap space-x-2 md:flex-nowrap md:space-x-8 justify-center"
      x-modelable="filtroActivo"
      x-model="filtroLetraInicial">
     @foreach($letrasIniciales as $inicial)
         <button type="button"
-                class="text-2xl md:text-3xl font-bold mtv-link-gold no-underline p-1"
+                class="text-lg md:text-3xl font-bold mtv-link-gold no-underline p-1"
                 :class="{ 'text-mtv-primary border-b-2 border-mtv-primary': filtroActivo === '{{ $inicial }}' }"
                 @click="filtroActivo = '{{ $inicial }}'">
             {{ $inicial }}
