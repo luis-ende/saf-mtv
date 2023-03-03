@@ -1,7 +1,7 @@
 @props(['label' => '', 'id' => 'productos_search', 'name' => 'productos_search'])
 
 <form method="POST"
-      x-bind:action="'/buscador-mtv/' + $data.tipoBusqueda + '/' + $data.terminoBusqueda">
+      x-bind:action="'/buscador-mtv/' + $data.tipoBusqueda + '/' + $data.terminoBusqueda + '#seccion-resultados'">
     @csrf
 
     <label for="{{ $id }}" class="text-mtv-secondary text-sm mb-2">

@@ -62,7 +62,7 @@
                 </nav>
             </div>
         </div>
-        <div class="py-6 px-20 max-w-7xl mx-auto">
+        <div id="seccion-resultados" class="py-6 px-20 max-w-7xl mx-auto">
             <div class="flex flex-col" x-show="tab === 'productos'">
                 <div class="w-full md:w-3/4 self-center">
                     <x-busqueda-productos.search-input
