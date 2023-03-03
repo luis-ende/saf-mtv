@@ -1,7 +1,7 @@
 @props(['filtros_opciones' => []])
 
 <div class="py-3">
-    <div class="flex flex-row space-x-2 md:flex-nowrap xs:flex-wrap">
+    <div class="flex flex-row md:space-x-2 md:flex-nowrap xs:flex-wrap">
         <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ sectorIsOpen: false }" x-cloak>
             <button type="button"
                 class="border rounded p-1 uppercase flex flex-row justify-center"
