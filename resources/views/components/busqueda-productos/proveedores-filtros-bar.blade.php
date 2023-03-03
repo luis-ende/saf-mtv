@@ -1,7 +1,7 @@
 @props(['filtros_opciones' => []])
 
 <div class="py-3">
-    <div class="flex flex-row space-x-2">
+    <div class="flex flex-row md:space-x-2 md:flex-nowrap xs:flex-wrap">
         <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ sectorIsOpen: false }" x-cloak>
             <button type="button"
                     class="border rounded p-1 uppercase flex flex-row justify-center"
@@ -33,7 +33,7 @@
 
         <div class="w-full text-mtv-text-gray flex flex-col relative" x-data="{ grupoPrioritarioIsOpen: false }" x-cloak>
             <button type="button"
-                class="w-56 border rounded p-1 uppercase flex flex-row justify-center"
+                class="md:w-56 border rounded p-1 uppercase flex flex-row justify-center"
                 @click="grupoPrioritarioIsOpen=true">
                 Sector prioritario
                 <svg class="fill-current h-4 w-4 inline-block self-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -127,7 +127,7 @@
 
         <div class="w-full text-mtv-text-gray uppercase flex flex-col relative" x-data="{ padronEstatusIsOpen: false }" x-cloak>
             <button type="button"
-                    class="w-56 border rounded p-1 uppercase flex flex-row justify-center"
+                    class="md:w-56 border rounded p-1 uppercase flex flex-row justify-center"
                     @click="padronEstatusIsOpen=true">
                 Padrón de Proveedores
                 <svg class="fill-current h-4 w-4 inline-block self-center" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

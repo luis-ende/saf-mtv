@@ -104,7 +104,7 @@
                         </div>
 
                         <div class="md:basis-2/12 xs:basis-full xs:self-center">
-                            <x-busqueda.enlaces-catalogos-pdf />
+                            <x-busqueda-productos.enlaces-catalogos-pdf />
                         </div>
                     </div>
                 </form>
