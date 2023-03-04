@@ -25,4 +25,16 @@ class PreguntaFrecuente extends Model
      * @var string
      */
     protected $table = 'preguntas_frecuentes';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'categoria',
+        'subcategoria',
+        'pregunta',
+        'respuesta',
+    ];
 }

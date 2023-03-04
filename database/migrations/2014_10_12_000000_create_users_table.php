@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('rfc', 13)->unique();
             $table->string('password');
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
             $table->boolean('activo')->default(true);
             $table->timestamp('last_login');
             $table->foreignId('id_persona')->nullable()->constrained('personas');

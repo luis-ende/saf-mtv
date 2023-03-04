@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Cmgmyr\Messenger\Traits\Messagable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -30,6 +31,8 @@ class User extends Authenticatable
         'activo',
         'last_login',
         'password',
+        'name',
+        'email',
     ];
 
     /**
@@ -80,5 +83,21 @@ class User extends Authenticatable
         } else {
             return $this->rfc;
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model)
+        {
+            if ($model->attributes['name']) {
+                $model->attributes['rfc'] = $model->attributes['name'];
+            }
+            $model->attributes['last_login'] = Carbon::now();
+        });
     }
 }
