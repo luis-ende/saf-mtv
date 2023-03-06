@@ -45,7 +45,7 @@
                                     <a title="Ir a página de detalle"
                                        :href="'/compras-detalle/' + comprasRow.id_unidad_compradora + '?rid=' + comprasRow.id + getQueryParams()"
                                        class="mtv-link-gold no-underline">
-                                        @svg('heroicon-o-calendar-days', ['class' => 'w-7 h-7'])
+                                        @svg('mtv-o-calendar-days', ['class' => 'w-7 h-7'])
                                     </a>
                                     <a :href="'/compras-procedimientos/export-pdf/' + comprasRow.id_unidad_compradora"
                                        title="Descargar en formato Pdf"
