@@ -9,6 +9,7 @@
         "barryvdh/laravel-dompdf": "^2.0",
         "blade-ui-kit/blade-icons": "^1.4",
         "cmgmyr/messenger": "^2.28",
+        "filament/filament": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "jorenvanhocht/laravel-share": "^4.2",
         "laravel/framework": "^9.19",
@@ -53,7 +54,8 @@
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan filament:upgrade"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""

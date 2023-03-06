@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\PreguntasFrecuentes;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,4 +25,16 @@ class PreguntaFrecuente extends Model
      * @var string
      */
     protected $table = 'preguntas_frecuentes';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'categoria',
+        'subcategoria',
+        'pregunta',
+        'respuesta',
+    ];
 }

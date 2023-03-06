@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\PreguntaFrecuente;
+use App\Models\PreguntasFrecuentes\PreguntaFrecuente;
 use Maatwebsite\Excel\Concerns\WithConditionalSheets;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
