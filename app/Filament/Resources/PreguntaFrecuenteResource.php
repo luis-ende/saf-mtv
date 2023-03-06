@@ -19,7 +19,10 @@ class PreguntaFrecuenteResource extends Resource
 {
     protected static ?string $model = PreguntaFrecuente::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $slug = 'catalogos/preguntas-frecuentes';
+    protected static ?string $navigationIcon = 'heroicon-o-question-mark-circle';
+
+    protected static ?string $navigationGroup = 'Catálogos';
 
     public static function form(Form $form): Form
     {

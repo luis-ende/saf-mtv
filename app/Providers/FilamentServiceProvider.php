@@ -9,6 +9,10 @@ class FilamentServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
+        Filament::registerNavigationGroups([
+            'Catálogos',
+        ]);
+
         Filament::serving(function () {
             Filament::registerViteTheme('resources/css/filament.css');
         });
