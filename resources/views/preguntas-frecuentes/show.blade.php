@@ -2,10 +2,10 @@
     <div class="py-6 md:px-12 xs:px-6 bg-white  flex flex-col">
         <div class="self-center">
             <label class="text-mtv-gray-2 md:text-xl">
-                Buscador de
+                Preguntas frecuentes
             </label>
             <h1 class="text-mtv-primary font-bold md:text-3xl xs:text-lg">
-                Oportunidades para venderle a la CDMX
+                ¿Cómo podemos ayudarte?
             </h1>
         </div>
         <div class="self-center">
@@ -20,7 +20,7 @@
         </div>
         <div class="my-4 text-lg text-mtv-text-gray flex flex-col items-center">
             <span class="font-bold md:text-xl xs:text-base text-mtv-secondary mb-4 block text-center">
-                Identifica qué productos y servicios compra la CDMX.
+                Conoce las respuesta a las preguntas que otros usuarios nos han hecho.
             </span>
             <span class="md:w-2/5 block text-base xs:text-sm text-center">
                 Las preguntas están agrupadas por perfil de usuario. Utiliza los iconos para navegar entre
@@ -55,15 +55,24 @@
         </div>
         <div class="tab-panel" :class="{ 'active': activeTab === 0 }"
             x-show.transition.in.opacity.duration.600="activeTab === 0">
-            <p>This is the example content of the first tab.</p>
+            <div class="flex flex-row space-x-3 items-center justify-center">
+                <button type="submit" class="font-normal mtv-button-secondary-white">Conceptos</button>
+                <button type="submit" class="font-normal mtv-button-secondary-white">Compras Públicas</button>
+                <button type="submit" class="font-normal mtv-button-secondary-white">Mi Tiendita Virtual</button>
+            </div>
         </div>
         <div class="tab-panel" :class="{ 'active': activeTab === 1 }"
             x-show.transition.in.opacity.duration.600="activeTab === 1">
-            <p>The second tab’s example content.</p>
+            <div class="flex flex-row space-x-3 items-center justify-center">
+                <button type="submit" class="font-normal mtv-button-secondary-white">Padrón de proveedores</button>
+                <button type="submit" class="font-normal mtv-button-secondary-white">Precotizaciones</button>
+            </div>
         </div>
         <div class="tab-panel" :class="{ 'active': activeTab === 2 }"
             x-show.transition.in.opacity.duration.600="activeTab === 2">
-            <p>The content of the third and final tab in this set.</p>
+            <div class="flex flex-row space-x-3 items-center justify-center">
+                <button type="submit" class="font-normal mtv-button-secondary-white">Sistema PAAAPS</button>
+            </div>
         </div>
     </div>
 
@@ -91,6 +100,52 @@
                 Horario de atención de Lunes a Viernes de 9:00 - 15:00 hrs.
                 Tiempo promedio de respuesta: 24 hrs.
             </span>
+        </div>
+    </div>
+    <div class="flex flex-col mb-20">
+        <div class="flex justify-center w-3/5 ml-80">
+            <div class="mtv-input-wrapper mr-3 basis-1/3">
+                <input type="text" class="mtv-text-input" id="nombre" name="nombre">
+                <label class="mtv-input-label" for="nombre">Nombre</label>
+            </div>
+            <div class="mtv-input-wrapper mr-3 basis-1/3">
+                <input type="text" class="mtv-text-input" id="alcaldia" name="alacaldia">
+                <label class="mtv-input-label" for="nombre">Alcaldía o Ciudad</label>
+            </div>
+            <div class="mtv-input-wrapper basis-1/3">
+                <input type="text" class="mtv-text-input" id="mail" name="mail">
+                <label class="mtv-input-label" for="nombre">Correo electrónico</label>
+            </div>
+        </div>
+        <div class="flex justify-center ml-80 w-3/5">
+            <div class="flex flex-col w-1/5">
+                <div class="flex mt-3 mb-3">
+                    <input type="radio" class="self-center mr-4 focus:ring-slate-200" id="tipo_persona_fisica"
+                        name="tipo_persona">
+                    <label class="mr-3 text-l text-mtv-gray" for="tipo_persona_fisica">Física</label>
+                    <input type="radio" class="self-center mr-4 focus:ring-slate-200" id="tipo_persona_moral"
+                        name="tipo_persona">
+                    <label class="text-mtv-gray" for="tipo_persona_moral">Moral
+                    </label>
+                </div>
+                <div>
+                    <div class="mtv-input-wrapper">
+                        <select class="mtv-text-input" id="tipo_de_empresa" name="empresa">
+                            <option value="0">Tipo de empresa</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="w-4/5">
+                <div class="mtv-input-wrapper ml-3">
+                    <textarea class="mtv-text-input" id="mensaje" name="mensaje" rows="3" cols="50"></textarea>
+                    <label class="mtv-input-label" for="mensaje">Mensaje</label>
+                </div>
+            </div>
+        </div>
+        <div :class="{'fixed bottom-0 left-0 bg-white w-full border-t-2': filtrosModalOpen}"
+            class="flex flex-row space-x-3 items-center justify-center">
+            <button type="submit" class="mtv-button-secondary">Enviar mensaje</button>
         </div>
     </div>
 </x-guest-layout>
