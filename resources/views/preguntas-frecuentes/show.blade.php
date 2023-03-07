@@ -28,6 +28,12 @@
             </span>
         </div>
     </div>
+    <!-- Menu de botones  -->
+
+
+
+
+
 
     <div class="tab-wrapper" x-data="{ activeTab:  -1 }">
         <div class="w-full flex justify-center border-b border-gray-200 pb-6 mb-20">
@@ -53,13 +59,56 @@
                     Instituciones compradoras</label </label>
             </div>
         </div>
+
+        <!-- submenu botones  -->
+
         <div class="tab-panel" :class="{ 'active': activeTab === 0 }"
             x-show.transition.in.opacity.duration.600="activeTab === 0">
-            <div class="flex flex-row space-x-3 items-center justify-center">
-                <button type="submit" class="font-normal mtv-button-secondary-white">Conceptos</button>
-                <button type="submit" class="font-normal mtv-button-secondary-white">Compras Públicas</button>
-                <button type="submit" class="font-normal mtv-button-secondary-white">Mi Tiendita Virtual</button>
+
+            <!-- btn 1 -->
+
+            <div class="tab-wrapper" x-data="{ activeTab:  0 }">
+                <div class="flex">
+                    <label @click="activeTab = 0" class="tab-control" :class="{ 'active': activeTab === 0 }">
+                        <button type="submit" class="font-normal mtv-button-secondary-white">Conceptos</button>
+                    </label>
+                    <label @click="activeTab = 1" class="tab-control" :class="{ 'active': activeTab === 1 }">
+                        <button type="submit" class="font-normal mtv-button-secondary-white">Compras Públicas</button>
+                    </label>
+                    <label @click="activeTab = 2" class="tab-control" :class="{ 'active': activeTab === 2 }"><button
+                            type="submit" class="font-normal mtv-button-secondary-white">Mi Tiendita
+                            Virtual</button></label>
+                </div>
+
+                <div class="tab-panel" :class="{ 'active': activeTab === 0 }"
+                    x-show.transition.in.opacity.duration.600="activeTab === 0">
+                    <div>
+                        <div>
+                            <x-preguntas-frecuentes.preguntas-accordion :accordion_key="1" :categoria="1"
+                                :subcategoria="1" />
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="tab-panel" :class="{ 'active': activeTab === 1 }"
+                    x-show.transition.in.opacity.duration.600="activeTab === 1">
+                    <p>The second tab’s example content.</p>
+                </div>
+                <div class="tab-panel" :class="{ 'active': activeTab === 2 }"
+                    x-show.transition.in.opacity.duration.600="activeTab === 2">
+                    <p>The content of the third and final tab in this set.</p>
+                </div>
             </div>
+
+
+
+
+            <!-- <div class="flex flex-row space-x-3 items-center justify-center">
+
+                <button type="submit" class="font-normal mtv-button-secondary-white">Compras Públicas</button>
+
+            </div> -->
         </div>
         <div class="tab-panel" :class="{ 'active': activeTab === 1 }"
             x-show.transition.in.opacity.duration.600="activeTab === 1">
@@ -76,6 +125,19 @@
         </div>
     </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Formulario  -->
     <div class="py-6 md:px-12 xs:px-6 bg-white  flex flex-col">
         <div class="self-center">
             <h1 class="text-mtv-primary font-bold md:text-3xl xs:text-lg">
