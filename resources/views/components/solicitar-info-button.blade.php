@@ -89,11 +89,11 @@
                 }).then(response => response.json())
                   .then(json => {
                     if (json.error) {
+                        let error = Array.isArray(json.error) ? json.error.mensaje.map((item, index) => item).join(',') : json.error;
                         Swal.fire({
                             ...SwalMTVCustom,
                             title: 'Error',
-                            html: "Ocurrió un error al enviar el mensaje: " +
-                                json.error.mensaje.map((item, index) => item).join(','),
+                            html: "Ocurrió un error al enviar el mensaje: " + error,
                             showCancelButton: false,
                             confirmButtonText: 'Aceptar',
                         })

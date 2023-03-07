@@ -48,7 +48,7 @@ class UsuariosMensajesController extends Controller
         } catch (ValidationException $e) {
             return response()->json(['error' => $e->errors()], 400);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
+            return response()->json(['error' => 'Error interno del servidor.'], 400);
         }        
 
         return response()->json(true);
