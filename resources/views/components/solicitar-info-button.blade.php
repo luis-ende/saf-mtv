@@ -68,6 +68,7 @@
     function solicitarInfoButton() {
         return {
             rutaLogin: '{{ route("urg-login") }}',
+            isGuest: @js($isGuest),
         @if($esUsuarioURG())
             mensajeModalForm: new bootstrap.Modal(document.getElementById('mensajeModal'), { keyboard: true }),
             mostrarFormulario() {
@@ -132,7 +133,20 @@
                     showCloseButton: true,
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = this.rutaLogin + '?url=' + window.location.pathname;
+                        if (this.isGuest) {
+                            window.location.href = this.rutaLogin + '?url=' + window.location.pathname;
+                        } else {
+                            fetch('{{ route('logout-current') }}', {
+                                method: "POST",
+                                credentials: 'same-origin',
+                                headers: {
+                                    'X-CSRF-Token': '{{ csrf_token() }}',
+                                },
+                            }).then(res => res.json())
+                                .then(json => {
+                                    window.location.href = this.rutaLogin + '?url=' + window.location.pathname;
+                                })
+                        }
                     }
                 });
             },

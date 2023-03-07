@@ -4,6 +4,7 @@ namespace App\View\Components;
 
 use App\Models\Persona;
 use App\Models\Producto;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
 class SolicitarInfoButton extends Component
@@ -13,6 +14,8 @@ class SolicitarInfoButton extends Component
     public string $proveedor_email;
     public string $proveedor_nombre;
     public ?string $producto_nombre = null;
+
+    public bool $isGuest = true;
 
     /**
      * Create a new component instance.
@@ -39,6 +42,8 @@ class SolicitarInfoButton extends Component
             $this->proveedor_email = $persona->email;
             $this->proveedor_nombre = $persona->perfil_negocio->nombre_negocio;
         }
+
+        $this->isGuest = Auth::user() === null;
     }    
 
     public function esUsuarioURG(): bool 
