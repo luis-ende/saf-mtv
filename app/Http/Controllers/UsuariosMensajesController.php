@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ProveedorSolicitudInfo;
+use App\Models\User;
 use Cmgmyr\Messenger\Models\Message;
 use Cmgmyr\Messenger\Models\Participant;
 use Cmgmyr\Messenger\Models\Thread;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 
 class UsuariosMensajesController extends Controller
@@ -40,6 +43,8 @@ class UsuariosMensajesController extends Controller
 
             // Recipients
             $thread->addParticipant($request->input('user_to'));
+
+            $this->enviarNotificacionesEmail($request);
         } catch (ValidationException $e) {
             return response()->json(['error' => $e->errors()], 400);
         } catch (\Exception $e) {
@@ -53,5 +58,18 @@ class UsuariosMensajesController extends Controller
     {
         // Obtener threads de un usuario:
         // Cmgmyr\Messenger\Models\Thread::forUser(4)->get();
+    }
+
+    private function enviarNotificacionesEmail(Request $request): void
+    {
+        $userFrom = User::find($request->input('user_from'));
+        $userTo = User::find($request->input('user_to'));
+        $mailable = new ProveedorSolicitudInfo(
+            $userFrom->urg,
+            $request->input('asunto'),
+            $request->input('mensaje')
+        );
+
+        Mail::to($userTo->persona->email)->send($mailable);
     }
 }
