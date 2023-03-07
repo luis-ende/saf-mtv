@@ -67,11 +67,13 @@
 - Roles y permisos: Spatie Laravel Permission - [https://spatie.be/docs/laravel-permission/v5/introduction](https://spatie.be/docs/laravel-permission/v5/introduction)
 - Imágenes y documentos adjuntos de productos y perfil de negocio: Spatie Media Library - [https://spatie.be/docs/laravel-medialibrary/v10/introduction](https://spatie.be/docs/laravel-medialibrary/v10/introduction)
 - Importación y exportación de datos en formato Excel: Laravel Excel (by Spartner) - [https://laravel-excel.com/](https://laravel-excel.com/)
+- Exportación de datos en formato Pdf: barryvdh/laravel-dompdf - [https://github.com/barryvdh/laravel-dompdf](https://github.com/barryvdh/laravel-dompdf)
 - Marca de favoritos de productos: [https://github.com/maize-tech/laravel-markable](https://github.com/maize-tech/laravel-markable)
   - Los favoritos de productos se encuentran en la tabla `markable_favorites`
   - Las alertas de oportunidades de negocio se encuentran en la tabla `markable_bookmarks`
 - Enlaces de redes sociales (en este proyecto se usan solamente las funciones para generar los enlaces, no los botones en el front-end): https://github.com/jorenvh/laravel-share
 - Para la extracción de datos vía [web scrapping](https://es.wikipedia.org/wiki/Web_scraping) de los sitios de Concurso Digital y Prebases se utiliza el paquete: Laravel Roach PHP - [https://roach-php.dev/docs/laravel/](https://roach-php.dev/docs/laravel/). Para abrir una línea de comando interactiva usar: `php artisan roach:shell https://roach-php.dev/docs/introduction` O para ejecutar un spider específico (desde el directorio raíz del proyecto), por ejemplo: `vendor/bin/roach roach:run App\\Spiders\\PrebasesOportunidadesSpider`
+- Panel de administración de Mi Tiendita Virtual (para catálogos y configuración de la plataforma): Filament - [https://filamentphp.com](https://filamentphp.com) 
 
 ## MTV en Docker
 
@@ -80,8 +82,10 @@
 - Desde la carpeta raíz del proyecto, ir al subdirectorio `scripts` y ejecutar `sh docker-build.sh` para generar la imagen de Docker y levantar los contenedores del proyecto
 	- En Windows: Abrir el archivo docker-build.sh y comentar o descomentar líneas según el sistema operativo (Windows/Linux). Ejecutar en una terminal (preferiblemente PowerShell) como Administrador
 - Para acceder al contenedor de PostgreSQL y la base de datos de MTV con psql: `docker compose exec postgres psql -U saf_mtv_dbuser -W -d saf_mtv`
+- Para correr un servidor de correo de desarrollo local para pruebas (Mailhog): `docker run --name safmtv-mailhog --network="saf-mtv_safmtv" -p 8025:8025 -p 1025:1025 -d mailhog/mailhog`
+  - Usar el ID del contenedor como host en el archivo .env (`MAIL_HOST`)
 
-## Producción:
+## Producción y carga de catálogos y datos predefenidos:
 
 - Consideraciones para el despliegue en ambiente de producción (primera instalación):
   - Generar llave de aplicación, ejecutar: `php artisan key:generate` 
@@ -94,6 +98,8 @@
     - Más información sobre la extensión y su uso: https://www.postgresql.org/docs/current/pgtrgm.html
   - Algunos catálogos se guardan en cache (por ejemplo, ver clase `OportunidadNegocioRepository`), se puede usar `Cache::flush()` para eliminar todos los caches, o uno específico con `Cache::forget('key')` según sea el caso
   - La tabla `cat_ciudadano_cabms` se carga solamente para crear y llenar las tablas `cat_sectores`, `cat_categorias_scian` y `cat_cabms`, pero puede ser eliminada después para ahorrar espacio
+  - La carga predeterminada de datos del Calendario de compras desde un archivo Excel se ejecuta mediante un seeder: `php artisan db:seed --class=ComprasProcedimientosSeeder`
+  - La carga predeterminada de datos de preguntas frecuentes desde un archivo Excel se ejecuta mediante un seeder: `php artisan db:seed --class=PreguntasFrecuentesSeeder`
 
 ### Integraciones de MTV con otros sistemas:
 
