@@ -117,6 +117,7 @@ class PreguntaFrecuenteResource extends Resource
                     ->sortable(),
                 TextColumn::make('pregunta')
                     ->label('Pregunta')
+                    ->searchable()
                     ->limit(50)
                     ->sortable(),
             ])
