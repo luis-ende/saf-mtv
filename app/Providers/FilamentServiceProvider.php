@@ -11,6 +11,7 @@ class FilamentServiceProvider extends ServiceProvider
     {
         Filament::registerNavigationGroups([
             'Catálogos',
+            'Usuarios',
         ]);
 
         Filament::serving(function () {

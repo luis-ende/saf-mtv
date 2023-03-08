@@ -137,12 +137,6 @@ Route::middleware(['role:urg', 'auth'])->group(function() {
     });
 });
 
-Route::middleware(['role:admin', 'auth'])->group(function() {
-    Route::controller(AdminMTVController::class)->group(function () {
-        Route::get('/admin/usuarios', 'indexRolesPermisos')->name('mtv-admin.usuarios');        
-    });
-});
-
 Route::controller(OportunidadesController::class)->group(function() {
     Route::get('/oportunidades-de-negocio', 'search')->name('oportunidades-negocio.search');
     Route::post('/oportunidades-de-negocio', 'search')->name('oportunidades-negocio.search');
