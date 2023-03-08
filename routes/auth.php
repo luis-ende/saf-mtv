@@ -13,9 +13,6 @@ Route::middleware('guest')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
 
-    Route::get('urg-login', [AuthenticatedSessionController::class, 'createURGLogin'])
-    ->name('urg-login');
-
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
@@ -29,6 +26,11 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.update');
+});
+
+Route::middleware(['guest'])->group(function () {
+    Route::get('urg-login', [AuthenticatedSessionController::class, 'createURGLogin'])
+        ->name('urg-login');
 });
 
 Route::middleware('auth')->group(function () {
@@ -50,4 +52,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
+
+    Route::post('logout-current', [AuthenticatedSessionController::class, 'destroyCurrent'])
+        ->name('logout-current');
 });
