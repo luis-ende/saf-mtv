@@ -14,37 +14,37 @@
                     </tr>
                     <tr>
                         <th class="py-2 uppercase text-mtv-primary md:text-lg text-left">
-                            <x-calendario-compras.data-table-column-sort
+                            <x-data-table.column-sort
                                     data_column="objeto_contratacion"
                             />
                             Objeto de contratación proyectado
                         </th>
                         <th class="py-2 text-mtv-primary text-center">
-                            <x-calendario-compras.data-table-column-sort
+                            <x-data-table.column-sort
                                     data_column="tipo_contratacion"
                             />
                             Tipo de contratación
                         </th>
                         <th class="py-2 text-mtv-primary text-center">
-                            <x-calendario-compras.data-table-column-sort
+                            <x-data-table.column-sort
                                     data_column="metodo_contr_proyectado"
                             />
                             Procedimiento de contratación proyectado
                         </th>
                         <th class="py-2 text-mtv-primary text-center">
-                            <x-calendario-compras.data-table-column-sort
+                            <x-data-table.column-sort
                                     data_column="fecha_estimada_procedimiento"
                             />
                             Realizar procedimiento de contratación
                         </th>
                         <th class="py-2 text-mtv-primary text-center">
-                            <x-calendario-compras.data-table-column-sort
+                            <x-data-table.column-sort
                                     data_column="fecha_estimada_inicio_contr"
                             />
                             Inicio de vigencia del contrato
                         </th>
                         <th class="py-2 text-mtv-primary text-center">
-                            <x-calendario-compras.data-table-column-sort
+                            <x-data-table.column-sort
                                     data_column="fecha_estimada_fin_contr"
                             />
                             Finalización del contrato
@@ -74,7 +74,7 @@
         </div>
 
         <!-- Paginador -->
-        <x-calendario-compras.data-table-pagination />
+        <x-data-table.pagination />
     </div>
 </div>
 

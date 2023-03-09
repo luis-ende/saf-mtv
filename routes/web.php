@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DirectorioController;
 use App\Http\Controllers\PreguntasFrecuentesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonaController;
@@ -42,6 +43,10 @@ Route::get('/info-venderle-a-cdmx', function() {
 Route::controller(PreguntasFrecuentesController::class)->group(function () {
     Route::get('/preguntas-frecuentes', 'show')->name('preguntas-frecuentes.show');
     Route::get('/preguntas-frecuentes/list/{categoria?}/{subcategoria?}', 'list')->name('preguntas-frecuentes.list');
+});
+
+Route::controller(DirectorioController::class)->group(function () {
+    Route::get('/directorio', 'index')->name('directorio.index');
 });
 
 Route::get('/dashboard', function () {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\CalendarioCompras;
+namespace App\View\Components\Directorio;
 
 use App\View\Components\Traits\GeneradorInicialesTrait;
 use Illuminate\View\Component;
@@ -16,9 +16,9 @@ class InicialesFiltros extends Component
      *
      * @return void
      */
-    public function __construct(array $compras)
+    public function __construct(array $funcionarios)
     {
-        $this->letrasIniciales = $this->generaLetrasIniciales($compras);
+        $this->letrasIniciales = $this->generaLetrasIniciales($funcionarios);
     }
 
     /**
@@ -28,6 +28,6 @@ class InicialesFiltros extends Component
      */
     public function render()
     {
-        return view('components.calendario-compras.iniciales-filtros');
+        return view('components.directorio.iniciales-filtros');
     }
 }
