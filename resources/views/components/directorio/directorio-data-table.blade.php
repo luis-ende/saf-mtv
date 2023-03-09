@@ -184,6 +184,11 @@
                     if (this.funcionarioDetalle) {
                         this.funcionarioModalForm.show();
                     }
+                },
+                formatoFechaActualizacion(fecha) {
+                    const dateToFormat = new Date(fecha);
+
+                    return dateToFormat.toLocaleString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })
                 }
             }
         }

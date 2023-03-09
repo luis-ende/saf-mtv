@@ -195,6 +195,13 @@
     border: none !important;
 }
 
+/* Estilos de modal de información de detalle de funcionarios (Directorio CDMX) */
+
+.funcionario__funciones ul {
+    list-style: disc outside;
+    padding-left: 1rem;
+}
+
 /* Change Autocomplete styles in Chrome */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
