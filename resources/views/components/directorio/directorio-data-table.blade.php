@@ -45,12 +45,12 @@
                                 <button title="Ver información"
                                     class="mtv-link-gold no-underline"
                                     @click="showFuncionarioModal(funcionarioRow.id)">
-                                    @svg('vaadin-user-card', ['class' => 'w-7 h-7'])
+                                    @svg('phosphor-identification-card-light', ['class' => 'w-7 h-7'])
                                 </button>
                                 <a title="Ir al calendario de la institución"
                                    :href="'/compras-detalle/' + funcionarioRow.id_unidad_compradora"
                                    class="mtv-link-gold no-underline">
-                                    @svg('mtv-o-calendar-days', ['class' => 'w-7 h-7'])
+                                    @svg('mtv-o-calendar-days', ['class' => 'w-6 h-6'])
                                 </a>
                             </div>
                         </td>
