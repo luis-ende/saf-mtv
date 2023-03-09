@@ -2,7 +2,7 @@
     <div x-data="directorioDataTable()"
          x-init="initDirectorioDataTable()">
         <div style="overflow-x: auto;" class="md:h-96">
-            <table class="w-full text-xs md:text-sm">
+            <table id="directorio-tabla" class="w-full text-xs md:text-sm">
                 <thead>
                 <tr>
                     <th class="py-2 uppercase text-mtv-primary md:text-lg">
@@ -42,11 +42,11 @@
                             x-text="funcionarioRow.puesto"></td>
                         <td>
                             <div class="flex flex-col space-y-3 md:flex-row md:space-x-10 md:space-y-0 justify-center items-center">
-                                <a title="Ver información"
-                                   href="#"
-                                   class="mtv-link-gold no-underline">
+                                <button title="Ver información"
+                                    class="mtv-link-gold no-underline"
+                                    @click="showFuncionarioModal(funcionarioRow.id)">
                                     @svg('vaadin-user-card', ['class' => 'w-7 h-7'])
-                                </a>
+                                </button>
                                 <a title="Ir al calendario de la institución"
                                    :href="'/compras-detalle/' + funcionarioRow.id_unidad_compradora"
                                    class="mtv-link-gold no-underline">
@@ -62,6 +62,8 @@
 
         <!-- Paginador -->
         <x-directorio.data-table-pagination />
+
+        <x-directorio.funcionario-modal />
     </div>
 </div>
 
@@ -75,6 +77,8 @@
                 urlParams: new URLSearchParams(window.location.search),
                 funcionarios: @js($funcionarios),
                 queryUpdating: false,
+                funcionarioModalForm: new bootstrap.Modal(document.getElementById('funcionarioModal'), { keyboard: true }),
+                funcionarioDetalle: null,
                 initDirectorioDataTable() {
                     this.$data.dataTableSource = this.funcionarios;
                     this.$data.rows = this.funcionarios;
@@ -173,6 +177,12 @@
                         }
                     } else {
                         this.$data.resizePages(this.getStartPage());
+                    }
+                },
+                showFuncionarioModal(funcionarioId) {
+                    this.funcionarioDetalle = this.funcionarios.find(item => item.id === funcionarioId);
+                    if (this.funcionarioDetalle) {
+                        this.funcionarioModalForm.show();
                     }
                 }
             }
