@@ -4,6 +4,9 @@ namespace App\Repositories;
 
 use App\Models\RegistroMTV;
 use App\Models\PerfilNegocio;
+use App\Services\ConsultaPadronProveedoresService;
+use App\Services\PadronProveedoresService;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class PerfilNegocioRepository
@@ -67,7 +70,7 @@ class PerfilNegocioRepository
         $terminoBusqueda = strtolower($terminoBusqueda);
         $query = PerfilNegocio::select('perfil_negocio.id', 'perfil_negocio.id_persona', 'perfil_negocio.nombre_negocio',
                                        'cat_sectores.sector', 'cat_categorias_scian.categoria_scian', 'cat_productos.id AS id_cat_productos',
-                                       'cat_asentamientos.id_municipio', 'cat_asentamientos.municipio')            
+                                       'cat_asentamientos.id_municipio', 'cat_asentamientos.municipio', 'personas.rfc')
             ->leftJoin('personas', 'personas.id', '=', 'perfil_negocio.id_persona')
             ->leftJoin('cat_asentamientos', 'cat_asentamientos.id', '=', 'personas.id_asentamiento')
             ->leftJoin('cat_sectores', 'cat_sectores.id', '=', 'perfil_negocio.id_sector')
@@ -123,6 +126,45 @@ class PerfilNegocioRepository
             $proveedor['logo_info'] = $proveedor->getFirstMedia('logotipos');
         });
 
+        if (isset($filtros['padron_prov_estatus_filtro'])) {
+            $proveedores = $this->filtraProveedoresPorEstatus($filtros['padron_prov_estatus_filtro'], $proveedores);
+        }
+
         return $proveedores;
+    }
+
+    private function filtraProveedoresPorEstatus(array $filtros, Collection $proveedores): Collection
+    {
+        $consultaPadronPService = new ConsultaPadronProveedoresService();
+        $listaRFC = $proveedores->map(function($proveedor) {
+            return $proveedor->rfc;
+        })->toArray();
+        $proveedoresEstatus = $consultaPadronPService->consultaPadronProveedoresLista($listaRFC);
+
+        $filtrosPP = [];
+        foreach ($filtros as $filtro) {
+            switch ($filtro) {
+                case PadronProveedoresService::FILTRO_ESTATUS_PADRON_EN_REVISION:
+                    $filtrosPP = array_merge($filtrosPP, range(2, 5));
+                    break;
+                case PadronProveedoresService::FILTRO_ESTATUS_PADRON_CONSTANCIA_VIGENTE:
+                    $filtrosPP[] = 7;
+                    break;
+                case PadronProveedoresService::FILTRO_ESTATUS_PADRON_SIN_REGISTRO:
+                    $filtrosPP[] = 0;
+                    break;
+            }
+        }
+
+        return $proveedores->filter(function ($proveedor) use($proveedoresEstatus, $filtrosPP) {
+            if (isset($proveedoresEstatus[$proveedor->rfc])) {
+                $estatusPP = $proveedoresEstatus[$proveedor->rfc];
+                if ($estatusPP >= 0) {
+                    return in_array($estatusPP, $filtrosPP);
+                }
+            }
+
+            return false;
+        });
     }
 }

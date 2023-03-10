@@ -38,4 +38,20 @@ class ConsultaPadronProveedoresService
 
         return $provEtapa;
     }
+
+    public function consultaPadronProveedoresLista(array $listaRFC): array
+    {
+        $listaEstatus = [];
+        foreach ($listaRFC as $rfc) {
+            // TODO Sustituir por llamada a servicio que acepta la lista completa de RFC.
+            $result = $this->consultaPadronProveedores($rfc);
+            if (isset($result['error'])) {
+                $listaEstatus[$rfc] = -1;
+            } else {
+                $listaEstatus[$rfc] = $result['id_etapa'];
+            }
+        }
+
+        return $listaEstatus;
+    }
 }

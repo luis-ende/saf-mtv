@@ -71,10 +71,8 @@ class BuscadorMTVController extends Controller
                                                 ->orderBy('partida')
                                                 ->pluck('partida'),
             'capitulos' => ProductoRepository::obtieneCapitulos(),
-            'grupos_prioritarios' => GrupoPrioritarioRepository::obtieneGruposPrioritarios(),            
-            'padron_prov_estatus' => array_filter(PadronProveedoresService::ETAPAS_PADRON_PROVEEDORES, function($v, $k) {
-                return $k === 4 || $k === 7;
-            }, ARRAY_FILTER_USE_BOTH),
+            'grupos_prioritarios' => GrupoPrioritarioRepository::obtieneGruposPrioritarios(),
+            'padron_prov_estatus' => PadronProveedoresService::FILTROS_ETAPAS_PADRON_PROVEEDORES_MTV,
         ];
     }
 
@@ -144,6 +142,7 @@ class BuscadorMTVController extends Controller
             $this->convierteFiltro($request, 'alcaldia_filtro');
             // $this->convierteFiltro($request, 'categoria_filtro');
             $this->convierteFiltro($request, 'grupo_p_filtro');
+            $this->convierteFiltro($request, 'padron_prov_estatus_filtro');
 
             $this->validate($request, [                
                 'sort_proveedores' => [Rule::in(['nombre_negocio', 'sector', 'categoria_scian'])],
@@ -151,10 +150,11 @@ class BuscadorMTVController extends Controller
                 'alcaldia_filtro' => 'array',
                 // 'categoria_filtro' => 'array',
                 'grupo_p_filtro' => 'array',
+                'padron_prov_estatus_filtro' => 'array',
             ]);
 
-            // $filtros = $request->only('sort_proveedores', 'sector_prov_filtro', 'categoria_filtro', 'grupo_p_filtro');
-            $filtros = $request->only('sort_proveedores', 'sector_prov_filtro', 'alcaldia_filtro', 'grupo_p_filtro');
+            $filtros = $request->only('sort_proveedores', 'sector_prov_filtro',
+                                           'alcaldia_filtro', 'grupo_p_filtro', 'padron_prov_estatus_filtro');
         }
 
         $busquedaTermino = '';
