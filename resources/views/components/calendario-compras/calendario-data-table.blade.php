@@ -6,19 +6,19 @@
                 <thead>
                 <tr>
                     <th class="py-2 uppercase text-mtv-primary md:text-lg">
-                        <x-calendario-compras.data-table-column-sort
+                        <x-data-table.column-sort
                                 data_column="unidad_compradora"
                         />
                         Institución compradora
                     </th>
                     <th class="py-2 text-mtv-primary text-right">
-                        <x-calendario-compras.data-table-column-sort
+                        <x-data-table.column-sort
                                 data_column="presup_contratacion_aprobado"
                         />
                         Ppto. De contratación proyectado
                     </th>
                     <th class="py-2 text-mtv-primary text-center">
-                        <x-calendario-compras.data-table-column-sort
+                        <x-data-table.column-sort
                                 data_column="total_procedimientos"
                         />
                         Total Procedimientos
@@ -68,7 +68,7 @@
         </div>
 
         <!-- Paginador -->
-        <x-calendario-compras.data-table-pagination />
+        <x-data-table.pagination />
     </div>
 </div>
 

@@ -24,7 +24,8 @@
                                :active="request()->routeIs('preguntas-frecuentes.show')">
             Preguntas frecuentes
         </x-responsive-nav-link>
-        <x-responsive-nav-link href="#">
+        <x-responsive-nav-link :href="route('directorio.index')"
+                               :active="request()->routeIs('directorio.index')">
             Directorio CDMX
         </x-responsive-nav-link>
         <x-responsive-nav-link href="#">
