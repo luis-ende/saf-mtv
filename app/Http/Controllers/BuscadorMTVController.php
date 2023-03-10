@@ -27,7 +27,7 @@ class BuscadorMTVController extends Controller
 
         $filtros_opciones = $this->obtieneFiltrosOpciones();
 
-        return view('catalogo-productos.search-index', compact('num_productos_registrados',
+        return view('catalogo-productos.buscador-index', compact('num_productos_registrados',
                                                                 'num_proveedores_registrados',
                                                                 'tipo_busqueda', 'filtros_opciones'));
     }
@@ -42,7 +42,7 @@ class BuscadorMTVController extends Controller
 
         $filtros_opciones = $this->obtieneFiltrosOpciones();
 
-        return view('catalogo-productos.search-index', [
+        return view('catalogo-productos.buscador-index', [
             'term_busqueda' => $busquedaTermino,
             'num_productos_registrados' => $num_productos_registrados,
             'num_proveedores_registrados' => $num_proveedores_registrados,
