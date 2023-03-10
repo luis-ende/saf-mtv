@@ -10,6 +10,13 @@ class UnidadCompradora extends Model
     use HasFactory;
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'cat_unidades_compradoras';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

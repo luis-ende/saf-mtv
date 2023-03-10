@@ -2,6 +2,7 @@
 
 namespace App\Services\OportunidadesNegocio;
 
+use App\Models\UnidadCompradora;
 use Carbon\Carbon;
 use RoachPHP\Roach;
 use App\Models\OportunidadNegocio;
@@ -39,7 +40,14 @@ class ConcursoDigitalService
                                     Carbon::now();
             $fechaPresentacionP = $concurso['fecha_presentacion_propuestas'] ? 
                                     Carbon::createFromFormat('Y-m-d', substr($concurso['fecha_presentacion_propuestas'], 0, 10)) : 
-                                    Carbon::now();            
+                                    Carbon::now();
+            $unidadCompradoraId = DB::table('cat_unidades_compradoras')->where('nombre', $concurso['entidad_convocante'])->value('id');
+            if (is_null($unidadCompradoraId)) {
+                $uc = UnidadCompradora::create([
+                    'nombre' => $concurso['entidad_convocante'],
+                ]);
+                $unidadCompradoraId = $uc->id;
+            }
                 
             OportunidadNegocio::updateOrInsert([
                     'nombre_procedimiento' => $concurso['nombre_procedimiento'],
@@ -47,7 +55,7 @@ class ConcursoDigitalService
                 ],
                 [
                     'fecha_presentacion_propuestas' => $fechaPresentacionP,
-                    'id_unidad_compradora' => DB::table('cat_unidades_compradoras')->where('nombre', $concurso['entidad_convocante'])->value('id'),
+                    'id_unidad_compradora' => $unidadCompradoraId,
                     'id_tipo_contratacion' => $concurso['tipo_contratacion'] === 'Adquisición de Bienes' ? $tipoContratacionBien : $tipoContratacionServicio,
                     'id_metodo_contratacion' => $concurso['metodo_contratacion'] === 'LP - Licitación Pública' ?  $tipoMetodoContratacionLP : $tipoMetodoContratacionIR,
                     'id_etapa_procedimiento' => $etapaLicEnProc,

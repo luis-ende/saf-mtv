@@ -46,11 +46,11 @@ class ComprasDetalleImport implements ToModel, WithHeadingRow
         $tipoContrServiciosId = $this->tiposContratacion->where('tipo', '=', 'Prestación de Servicios')->value('id');
 
         if (!$unidadCompradora) {
-            DB::table('cat_unidades_compradoras')->insert([
-                'nombre' => $nombreURG,                
-            ]);  
+            $unidadCompradora = UnidadCompradora::create([
+                'nombre' => $nombreURG,
+            ]);
+            // Refrescar lista de de unidades compradoras
             $this->unidadesCompradoras = $this->oportunidadesRepo->obtieneInstitucionesCompradoras(false);
-            $unidadCompradora = $this->unidadesCompradoras->firstWhere('nombre', $nombreURG);
         }        
         
         $valorContr = str_replace('$', '', $row['valor_estimado_contratacion']);
