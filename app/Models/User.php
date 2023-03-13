@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\ResetPasswordNotification;
 use Carbon\Carbon;
 use Cmgmyr\Messenger\Traits\Messagable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -99,5 +100,10 @@ class User extends Authenticatable
             }
             $model->attributes['last_login'] = Carbon::now();
         });
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 }
