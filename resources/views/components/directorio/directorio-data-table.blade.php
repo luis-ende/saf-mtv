@@ -1,7 +1,7 @@
 <div x-data="dataTable">
     <div x-data="directorioDataTable()"
          x-init="initDirectorioDataTable()">
-        <div style="overflow-x: auto;" class="md:h-96">
+        <div style="overflow-x: auto;" class="md:h-[500px]">
             <table id="directorio-tabla" class="w-full text-xs md:text-sm">
                 <thead>
                 <tr>
@@ -11,13 +11,13 @@
                         />
                         Institución compradora
                     </th>
-                    <th class="py-2 text-mtv-primary text-right">
+                    <th class="py-2 text-mtv-primary text-left">
                         <x-data-table.column-sort
                                 data_column="nombre"
                         />
                         Nombre
                     </th>
-                    <th class="py-2 text-mtv-primary text-center">
+                    <th class="py-2 text-mtv-primary text-left">
                         <x-data-table.column-sort
                                 data_column="puesto"
                         />
@@ -34,11 +34,11 @@
                         class="border text-mtv-text-gray hover:bg-mtv-text-gray-extra-light"
                         :class="funcionarioRow.id == rid ? 'bg-amber-50' : ''"
                         :data-id="funcionarioRow.id">
-                        <td class="px-3 uppercase w-[800px]"
+                        <td class="px-3 uppercase w-[600px]"
                             x-text="funcionarioRow.unidad_compradora"></td>
-                        <td class="text-right w-[300px]"
+                        <td class="text-left w-[300px]"
                             x-text="funcionarioRow.nombre"></td>
-                        <td class="text-center w-[400px]"
+                        <td class="text-left w-[400px]"
                             x-text="funcionarioRow.puesto"></td>
                         <td>
                             <div class="flex flex-col space-y-3 md:flex-row md:space-x-10 md:space-y-0 justify-center items-center">

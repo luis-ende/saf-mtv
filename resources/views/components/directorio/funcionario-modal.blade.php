@@ -10,8 +10,8 @@
             </div>
             <div id="funcionarioFormContainer" class="modal-body row py-2">
                 <p class="text-xs text-mtv-gray-2 text-right italic"
-                   x-text="'Ultima actualización: ' + $data.formatoFechaActualizacion(funcionarioDetalle?.updated_at) "></p>
-                <div class="border-b">
+                   x-text="'Ultima actualización: ' + $data.formatoFechaActualizacion(funcionarioDetalle?.fecha_actualizacion) "></p>
+                <div class="border-b pb-3">
                     <label class="text-uppercase text-mtv-primary font-bold">Nombre</label>
                     <p class="text-mtv-text-gray text-uppercase"
                        x-text="funcionarioDetalle?.nombre"></p>

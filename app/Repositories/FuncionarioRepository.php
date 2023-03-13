@@ -13,7 +13,7 @@ class FuncionarioRepository
                          'funcionarios.funciones', 'funcionarios.telefono_oficina',
                          'funcionarios.email',
                          'funcionarios.id_unidad_compradora', 'cuc.nombre AS unidad_compradora',
-                         'funcionarios.updated_at')
+                         'funcionarios.fecha_actualizacion')
                 ->join('cat_unidades_compradoras AS cuc', 'cuc.id', '=', 'id_unidad_compradora')
                 ->orderBy('unidad_compradora')
                 ->orderBy('funcionarios.nombre')
