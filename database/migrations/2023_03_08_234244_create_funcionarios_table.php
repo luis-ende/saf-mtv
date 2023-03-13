@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('funciones');
             $table->string('telefono_oficina', 30);
             $table->string('email');
+            $table->date('fecha_actualizacion');
             $table->timestamps();
         });
     }
