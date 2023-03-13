@@ -22,7 +22,7 @@
             <button
                 class="mtv-button-secondary-white my-4"
                 @click="event.preventDefault(); showFormNew()">
-                @svg('heroicon-m-plus-circle', ['class' => 'h-7 w-7 inline-block'])
+                @svg('mtv-m-plus-circle', ['class' => 'h-7 w-7 inline-block'])
                 Agregar
             </button>
         </div>
