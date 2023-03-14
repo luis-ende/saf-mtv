@@ -6,7 +6,6 @@ use App\Notifications\RegistroVerificacionNotification;
 use App\Notifications\ResetPasswordNotification;
 use Carbon\Carbon;
 use Cmgmyr\Messenger\Traits\Messagable;
-use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
