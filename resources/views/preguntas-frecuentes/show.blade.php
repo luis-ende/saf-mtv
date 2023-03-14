@@ -30,14 +30,9 @@
     </div>
     <!-- Menu de botones  -->
 
-
-
-
-
-
     <div class="tab-wrapper" x-data="{ activeTab:  -1 }">
         <div class="w-full flex justify-center border-b border-gray-200 pb-6 mb-20">
-            <div class="flex flex-row items-center space-x-40 mt-2  w-1/2">
+            <div class="flex flex-row items-center space-x-40 mt-2  w-1/2 buttons-content">
                 <label @click="activeTab = 0"
                     class="tab-control group hover:text-base hover:text-mtv-secondary  hover:font-bold"
                     :class="{ 'active': activeTab === 0 }">
@@ -67,19 +62,23 @@
 
             <!-- btn 1 -->
 
-            <div class="tab-wrapper" x-data="{ activeTab:  0 }">
-                <div class="flex">
+            <div class="tab-wrapper w-3/5 mx-64" x-data="{ activeTab:  -1 }">
+                <div class="flex flex-row space-x-3 items-center justify-center">
                     <label @click="activeTab = 0" class="tab-control" :class="{ 'active': activeTab === 0 }">
-                        <button type="submit" class="font-normal mtv-button-secondary-white">Conceptos</button>
+                        <button :class="activeTab === 0 ? 'mtv-button-secondary' : 'mtv-button-secondary-white'"
+                            class="hover:bg-[#235b4e]" type="submit">Conceptos</button>
                     </label>
                     <label @click="activeTab = 1" class="tab-control" :class="{ 'active': activeTab === 1 }">
-                        <button type="submit" class="font-normal mtv-button-secondary-white">Compras Públicas</button>
+                        <button type="submit"
+                            :class="activeTab === 1 ? 'mtv-button-secondary' : 'mtv-button-secondary-white'"
+                            class="hover:bg-[#235b4e]">Compras
+                            Públicas</button>
                     </label>
                     <label @click="activeTab = 2" class="tab-control" :class="{ 'active': activeTab === 2 }"><button
-                            type="submit" class="font-normal mtv-button-secondary-white">Mi Tiendita
+                            type="submit" class="hover:bg-[#235b4e]"
+                            :class="activeTab === 2 ? 'mtv-button-secondary' : 'mtv-button-secondary-white'">Mi Tiendita
                             Virtual</button></label>
                 </div>
-
                 <div class="tab-panel" :class="{ 'active': activeTab === 0 }"
                     x-show.transition.in.opacity.duration.600="activeTab === 0">
                     <div>
@@ -87,40 +86,87 @@
                             <x-preguntas-frecuentes.preguntas-accordion :accordion_key="1" :categoria="1"
                                 :subcategoria="1" />
                         </div>
-
                     </div>
-
                 </div>
                 <div class="tab-panel" :class="{ 'active': activeTab === 1 }"
                     x-show.transition.in.opacity.duration.600="activeTab === 1">
-                    <p>The second tab’s example content.</p>
+                    <div>
+                        <x-preguntas-frecuentes.preguntas-accordion :accordion_key="1" :categoria="1"
+                            :subcategoria="2" />
+                    </div>
                 </div>
                 <div class="tab-panel" :class="{ 'active': activeTab === 2 }"
                     x-show.transition.in.opacity.duration.600="activeTab === 2">
-                    <p>The content of the third and final tab in this set.</p>
+                    <div>
+                        <x-preguntas-frecuentes.preguntas-accordion :accordion_key="1" :categoria="1"
+                            :subcategoria="3" />
+                    </div>
                 </div>
             </div>
+            <!-- btn 2 -->
 
-
-
-
-            <!-- <div class="flex flex-row space-x-3 items-center justify-center">
-
-                <button type="submit" class="font-normal mtv-button-secondary-white">Compras Públicas</button>
-
-            </div> -->
         </div>
         <div class="tab-panel" :class="{ 'active': activeTab === 1 }"
             x-show.transition.in.opacity.duration.600="activeTab === 1">
-            <div class="flex flex-row space-x-3 items-center justify-center">
-                <button type="submit" class="font-normal mtv-button-secondary-white">Padrón de proveedores</button>
-                <button type="submit" class="font-normal mtv-button-secondary-white">Precotizaciones</button>
+            <div class="tab-wrapper w-3/5 mx-64" x-data="{ activeTab:  -1 }">
+                <div class="flex flex-row space-x-3 items-center justify-center">
+                    <label @click="activeTab = 0" class="tab-control" :class="{ 'active': activeTab === 0 }">
+                        <button :class="activeTab === 0 ? 'mtv-button-secondary' : 'mtv-button-secondary-white'"
+                            class="hover:bg-[#235b4e]">Padrón de
+                            proveedores</button>
+                    </label>
+                    <label @click="activeTab = 1" class="tab-control" :class="{ 'active': activeTab === 1 }">
+                        <button :class="activeTab === 1 ? 'mtv-button-secondary' : 'mtv-button-secondary-white'"
+                            class="hover:bg-[#235b4e]">Precotizaciones</button>
+                    </label>
+
+                </div>
+                <div class="tab-panel" :class="{ 'active': activeTab === 0 }"
+                    x-show.transition.in.opacity.duration.600="activeTab === 0">
+                    <div>
+                        <div>
+                            <x-preguntas-frecuentes.preguntas-accordion :accordion_key="2" :categoria="2"
+                                :subcategoria="1" />
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-panel" :class="{ 'active': activeTab === 1 }"
+                    x-show.transition.in.opacity.duration.600="activeTab === 1">
+                    <div>
+                        <x-preguntas-frecuentes.preguntas-accordion :accordion_key="2" :categoria="2"
+                            :subcategoria="2" />
+                    </div>
+                </div>
+                <div class="tab-panel" :class="{ 'active': activeTab === 2 }"
+                    x-show.transition.in.opacity.duration.600="activeTab === 2">
+                    <div>
+                        <x-preguntas-frecuentes.preguntas-accordion :accordion_key="1" :categoria="1"
+                            :subcategoria="3" />
+                    </div>
+                </div>
             </div>
         </div>
+
         <div class="tab-panel" :class="{ 'active': activeTab === 2 }"
             x-show.transition.in.opacity.duration.600="activeTab === 2">
-            <div class="flex flex-row space-x-3 items-center justify-center">
-                <button type="submit" class="font-normal mtv-button-secondary-white">Sistema PAAAPS</button>
+
+            <div class="tab-wrapper w-3/5 mx-64" x-data="{ activeTab:  -1 }">
+                <div class="flex flex-row space-x-3 items-center justify-center">
+                    <label @click="activeTab = 0" class="tab-control" :class="{ 'active': activeTab === 0 }">
+                        <button :class="activeTab === 0 ? 'mtv-button-secondary' : 'mtv-button-secondary-white'"
+                            class="hover:bg-[#235b4e]">Sistema
+                            PAAAPS</button>
+                    </label>
+                </div>
+                <div class="tab-panel" :class="{ 'active': activeTab === 0 }"
+                    x-show.transition.in.opacity.duration.600="activeTab === 0">
+                    <div>
+                        <div>
+                            <x-preguntas-frecuentes.preguntas-accordion :accordion_key="3" :categoria="3"
+                                :subcategoria="1" />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
