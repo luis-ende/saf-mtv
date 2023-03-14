@@ -64,6 +64,7 @@
                                         if (this.rfcExisteEnMTV && this.modoValidacion === 'registro') {    
                                             Swal.fire({
                                                 ...SwalMTVCustom,
+                                                title: 'Ya estás registrado en Mi Tiendita Virtual',
                                                 html: '<div class="">' +
                                                     '<span>Puedes crear tu catálogo de productos y revisar notificaciones al ingresar a Mi Tiendita Virtual.</span>' +
                                                     '<p class="swal-mtv-html-container-action">¿Quieres iniciar sesión?</p>' +
