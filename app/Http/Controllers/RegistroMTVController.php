@@ -15,7 +15,7 @@ use App\Providers\RouteServiceProvider;
 use App\Repositories\PersonaRepository;
 use App\Repositories\TipoPymeRepository;
 use App\Repositories\VialidadRepository;
-use App\Services\RegistroPersonaService;
+use App\Services\RegistroProveedorMTVService;
 use App\Http\Requests\PerfilNegocioRequest;
 use Illuminate\Validation\ValidationException;
 use App\Repositories\GrupoPrioritarioRepository;
@@ -82,7 +82,9 @@ class RegistroMTVController extends Controller
             compact('tipoPersona', 'tipoRegistro', 'personaDatos'));
     }
 
-    public function storeRegistroCreaCuenta(Request $request, RegistroPersonaService $registroService, PersonaRepository $personaRepository)
+    public function storeRegistroCreaCuenta(
+        Request $request,
+        RegistroProveedorMTVService $registroService)
     {
         try {
             $errorMessages = [
@@ -159,10 +161,13 @@ class RegistroMTVController extends Controller
         }
 
         try {
-            $user = $registroService->registraPersonaMTV($personaDatos);
+            $user = $registroService->registraProveedorMTV($personaDatos);
+
             // Iniciar sesión con el nuevo usuario
             event(new Registered($user));
             Auth::login($user);
+
+            $request->user()->sendEmailVerificationNotification();
 
             return redirect()->route('registro-perfil-negocio.show');
         } catch (\Throwable $e) {
@@ -228,7 +233,7 @@ class RegistroMTVController extends Controller
 
                 $perfilNegocio = $persona->perfil_negocio;
                 if (!$perfilNegocio) {
-                    $registroPersonaService = new RegistroPersonaService();
+                    $registroPersonaService = new RegistroProveedorMTVService();
                     $perfilNegocio = $registroPersonaService->registraPerfilNegocio($perfilNegocioDatos, $persona);
                 }
 
@@ -281,7 +286,7 @@ class RegistroMTVController extends Controller
         }
 
         try {
-            $registroPersonaService = new RegistroPersonaService();
+            $registroPersonaService = new RegistroProveedorMTVService();
             $registroPersonaService->registraContactos($request->input('contactos_lista'), $persona);
         } catch (\Throwable $e) {
             return redirect()->back()->withError($e->getMessage());

@@ -13,9 +13,13 @@ use App\Models\CatalogoProductos;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\PersonaRepository;
 
-class RegistroPersonaService
+/*
+ * Clase servicio para crear una cuenta de proveedor con sus datos asociados en MTV.
+ * Las cuentas de URG y administrador se crean por otro medio.
+ */
+class RegistroProveedorMTVService
 {
-    public function registraPersonaMTV(array $personaRegistroDatos): User
+    public function registraProveedorMTV(array $personaRegistroDatos): User
     {
         $user = null;
         DB::transaction(function() use($personaRegistroDatos, &$user) {
@@ -47,6 +51,8 @@ class RegistroPersonaService
 
             $user = User::create([
                 'rfc' => $personaRegistroDatos['rfc'],
+                'name' => $personaRegistroDatos['rfc'],
+                'email' => $personaRegistroDatos['email'],
                 'id_persona' => $persona->id,
                 'activo' => true,
                 'last_login' => now(),
