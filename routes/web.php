@@ -43,6 +43,7 @@ Route::get('/info-venderle-a-cdmx', function() {
 Route::controller(PreguntasFrecuentesController::class)->group(function () {
     Route::get('/preguntas-frecuentes', 'show')->name('preguntas-frecuentes.show');
     Route::get('/preguntas-frecuentes/list/{categoria?}/{subcategoria?}', 'list')->name('preguntas-frecuentes.list');
+    Route::post('/preguntas-frecuentes/contacto', 'formStore')->name('preguntas-frecuentes-form.store');
 });
 
 Route::controller(DirectorioController::class)->group(function () {
