@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->boolean('activo')->default(true);
             $table->timestamp('last_login');
+            $table->timestamp('email_verified_at')->nullable();
             $table->foreignId('id_persona')->nullable()->constrained('personas');
             $table->foreignId('id_urg')->nullable()->constrained('urg_usuarios');
             $table->rememberToken();
