@@ -34,7 +34,7 @@ class ContactoFormularioRequest extends FormRequest
                     Persona::TIPO_PERSONA_MORAL_ID,
                 ])
             ],
-            'tipo_empresa'=> 'int',
+            'tipo_empresa'=> 'nullable|int',
             'mensaje' => 'string',
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Repositories\TipoPymeRepository;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -21,6 +22,23 @@ class ContactoFormularioMail extends Mailable
      */
     public function __construct(public array $mensajeInfo)
     {
+        $this->mensajeInfo['tipo_persona'] = $this->mensajeInfo['tipo_persona'] === 'F' ?
+                                                'Persona Física' :
+                                                ($this->mensajeInfo['tipo_persona'] === 'M' ? 'Persona Moral' : '');
+
+        if (isset($this->mensajeInfo['tipo_empresa'])) {
+            if ($this->mensajeInfo['tipo_empresa'] === '0') {
+                unset($this->mensajeInfo['tipo_empresa']);
+            } else {
+                $tipos_empresa = TipoPymeRepository::obtieneTiposPyme();
+                foreach ($tipos_empresa as $tipo) {
+                    if ($tipo['id'] == $this->mensajeInfo['tipo_empresa']) {
+                        $this->mensajeInfo['tipo_empresa'] = $tipo['tipo_pyme'];
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     /**

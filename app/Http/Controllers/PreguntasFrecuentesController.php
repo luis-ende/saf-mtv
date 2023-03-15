@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContactoFormularioRequest;
 use App\Mail\ContactoFormularioMail;
 use App\Repositories\PreguntasFrecuentesRepository;
+use App\Repositories\TipoPymeRepository;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Collection;
 
@@ -12,7 +13,9 @@ class PreguntasFrecuentesController extends Controller
 {
     public function show()
     {
-        return view('preguntas-frecuentes.show');
+        $tipos_empresa = TipoPymeRepository::obtieneTiposPyme();
+
+        return view('preguntas-frecuentes.show', compact('tipos_empresa'));
     }
 
     public function list(PreguntasFrecuentesRepository $preguntasFrecRepo, ?int $categoria = null, ?int $subcategoria = null)

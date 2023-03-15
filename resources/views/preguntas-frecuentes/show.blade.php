@@ -199,45 +199,48 @@
             </span>
         </div>
     </div>
-    <form method="POST" action="">
+    <form method="POST"
+          action="{{ route('preguntas-frecuentes-form.store') }}">
         @csrf
         <div class="flex flex-col mb-20">
             <div class="flex justify-center w-3/5 ml-80">
                 <div class="mtv-input-wrapper mr-3 basis-1/3">
-                    <input type="text" class="mtv-text-input" id="nombre" name="nombre">
+                    <input type="text" class="mtv-text-input" id="nombre" name="nombre" maxlength="150" required>
                     <label class="mtv-input-label" for="nombre">Nombre</label>
                 </div>
                 <div class="mtv-input-wrapper mr-3 basis-1/3">
-                    <input type="text" class="mtv-text-input" id="alcaldia" name="alacaldia">
-                    <label class="mtv-input-label" for="nombre">Alcaldía o Ciudad</label>
+                    <input type="text" class="mtv-text-input" id="ubicacion" name="ubicacion" maxlength="255" required>
+                    <label class="mtv-input-label" for="ubicacion">Alcaldía o Ciudad</label>
                 </div>
                 <div class="mtv-input-wrapper basis-1/3">
-                    <input type="text" class="mtv-text-input" id="mail" name="mail">
-                    <label class="mtv-input-label" for="nombre">Correo electrónico</label>
+                    <input type="email" class="mtv-text-input" id="email" name="email" required>
+                    <label class="mtv-input-label" for="email">Correo electrónico</label>
                 </div>
             </div>
             <div class="flex justify-center ml-80 w-3/5">
-                <div class="flex flex-col w-1/5">
+                <div class="flex flex-col w-1/3 pr-4">
                     <div class="flex mt-3 mb-3">
                         <input type="radio" class="self-center mr-4 focus:ring-slate-200" id="tipo_persona_fisica"
-                            name="tipo_persona">
-                        <label class="mr-3 text-l text-mtv-gray" for="tipo_persona_fisica">Física</label>
-                        <input type="radio" class="self-center mr-4 focus:ring-slate-200" id="tipo_persona_moral"
-                            name="tipo_persona">
-                        <label class="text-mtv-gray" for="tipo_persona_moral">Moral
-                        </label>
+                            name="tipo_persona" value="F" checked>
+                        <label class="mr-3 text-mtv-gray text-sm" for="tipo_persona_fisica">Persona Física</label>
+                        <input type="radio" class="self-center mr-4 ml-4 focus:ring-slate-200" id="tipo_persona_moral"
+                            name="tipo_persona" value="M">
+                        <label class="text-mtv-gray text-sm" for="tipo_persona_moral">Persona Moral</label>
                     </div>
                     <div>
                         <div class="mtv-input-wrapper">
-                            <select class="mtv-text-input" id="tipo_de_empresa" name="empresa">
+                            <select class="mtv-text-input" id="tipo_empresa" name="tipo_empresa">
                                 <option value="0">Tipo de empresa</option>
+                                @foreach($tipos_empresa as $tipo_empresa)
+                                    <option value="{{ $tipo_empresa['id'] }}">{{ $tipo_empresa['tipo_pyme'] }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="w-4/5">
-                    <div class="mtv-input-wrapper ml-3">
-                        <textarea class="mtv-text-input" id="mensaje" name="mensaje" rows="3" cols="50"></textarea>
+                <div class="w-2/3">
+                    <div class="mtv-input-wrapper">
+                        <textarea class="mtv-text-input" id="mensaje" name="mensaje" rows="3" cols="50" required></textarea>
                         <label class="mtv-input-label" for="mensaje">Mensaje</label>
                     </div>
                 </div>
