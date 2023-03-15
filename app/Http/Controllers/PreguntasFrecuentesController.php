@@ -6,6 +6,7 @@ use App\Http\Requests\ContactoFormularioRequest;
 use App\Mail\ContactoFormularioMail;
 use App\Repositories\PreguntasFrecuentesRepository;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Collection;
 
 class PreguntasFrecuentesController extends Controller
 {
@@ -17,8 +18,26 @@ class PreguntasFrecuentesController extends Controller
     public function list(PreguntasFrecuentesRepository $preguntasFrecRepo, ?int $categoria = null, ?int $subcategoria = null)
     {
         $preguntas = $preguntasFrecRepo->obtienePreguntasFrecuentes($categoria, $subcategoria);
+        $this->procesaRespuestasHtml($preguntas);
 
         return response()->json($preguntas);
+    }
+
+    private function procesaRespuestasHtml(Collection $preguntas)
+    {
+        $htmlDoc = new \DOMDocument();
+        $htmlDoc->encoding='UTF-8';
+        foreach ($preguntas as $pregunta) {
+            $html = $pregunta->respuesta;
+            $htmlDoc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'),
+                LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            $links = $htmlDoc->getElementsByTagName('a');
+            foreach ($links as $link) {
+                $link->setAttribute('class', 'mtv-link-gold font-bold');
+                $link->setAttribute('target', '_blank');
+            }
+            $pregunta->respuesta = $htmlDoc->saveHTML();
+        }
     }
 
     public function formStore(ContactoFormularioRequest $request)
