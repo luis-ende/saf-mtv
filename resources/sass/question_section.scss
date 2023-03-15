@@ -1,0 +1,114 @@
+@import "variables";
+
+.gp-1 {
+    fill: #f9f5ed;
+    fill-rule: evenodd;
+}
+.gp-2 {
+    fill: #bc955c;
+}
+.gp-3 {
+    fill: #f0e2c8;
+}
+
+.buttons-content {
+    & label:hover {
+        font-weight: 700;
+        color: $secondary;
+
+        .text-button {
+            margin-left: 1rem;
+        }
+
+        .text-button-pd {
+            margin-left: 2rem;
+        }
+
+        & svg {
+            height: auto;
+            width: 130px;
+            transform: scale(1);
+        }
+        .gp-1 {
+            fill: #e9efed;
+            fill-rule: evenodd;
+        }
+        .gp-2 {
+            fill: $dark-secondary;
+        }
+        .gp-3 {
+            fill: #d8ede6;
+        }
+        .cls-1 {
+            fill: #e9efed;
+            stroke: #e9efed;
+            stroke-miterlimit: 10;
+            stroke-width: 0.9px;
+        }
+        .cls-2 {
+            fill: #fff;
+            stroke-miterlimit: 10;
+        }
+        .cls-3 {
+            fill-rule: evenodd;
+            fill: #e9efed;
+        }
+
+        .cls-4 {
+            fill: $dark-secondary;
+        }
+
+        .cls-6 {
+            fill: #e9efed;
+        }
+    }
+}
+
+.buttons-content-active {
+    font-weight: 700;
+    color: $secondary;
+    .text-button {
+        margin-left: 1rem;
+    }
+    .text-button-pd {
+        margin-left: 2rem;
+    }
+
+    & svg {
+        height: auto;
+        width: 130px;
+        transform: scale(1);
+    }
+    .gp-1 {
+        fill: #e9efed;
+        fill-rule: evenodd;
+    }
+    .gp-2 {
+        fill: $dark-secondary;
+    }
+    .gp-3 {
+        fill: #d8ede6;
+    }
+    .cls-1 {
+        fill: #e9efed;
+        stroke: #e9efed;
+        stroke-miterlimit: 10;
+        stroke-width: 0.9px;
+    }
+    .cls-2 {
+        fill: #fff;
+        stroke-miterlimit: 10;
+    }
+    .cls-3 {
+        fill-rule: evenodd;
+        fill: #e9efed;
+    }
+
+    .cls-4 {
+        fill: $dark-secondary;
+    }
+
+    .cls-6 {
+        fill: #e9efed;
+    }
+}
