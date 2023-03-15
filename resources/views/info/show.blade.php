@@ -57,7 +57,7 @@
                     @svg('register',
                     ['class' => 'h-20 w-20 img-svg icon-register'])
                     @svg('point', ['class' => 'point-df'])
-                    Regístrate en Mi Tiendita Virtua</label>
+                    Regístrate en Mi Tiendita Virtual</label>
             </div>
             <div :class="activeTab === 1 ? 'button-container-active' : 'button-container'">
                 <label @click="activeTab = 1" class="tab-control">@svg('search',
