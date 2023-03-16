@@ -14,9 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/tokens/create', function (Request $request) {
+    $token = $request->user()->createToken($request->token_name);
+
+    return ['token' => $token->plainTextToken];
+});*/
+
+Route::post('/usuarios-urg/register', [\App\Http\Controllers\Api\UrgAuthController::class, 'registraUsuarioUrg']);
+// @todo Endpoint para registrar proveedores vía API
+//Route::post('/usuarios-urg/login', [\App\Http\Controllers\Api\AuthController::class, 'loginUsuarioUrg']);
 
 Route::get('proveedores/registro/{rfc}', [\App\Http\Controllers\Api\ProveedoresController::class, 'verificaRFCRegistro']);
 

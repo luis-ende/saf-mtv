@@ -33,7 +33,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CatEstatusContratacionSeeder::class);
         $this->call(PreguntasFrecuentesSeeder::class);
 
-        // Roles y usuarios de prueba locales
+        // Roles y usuarios de prueba locales.
+        // Usuarios generados sin tokens de autenticación.
         $this->creaMTVRoles();
         $this->creaUsuarioURG();
     }
