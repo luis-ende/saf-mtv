@@ -3,26 +3,36 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\AuthenticateWithAccessTokenTrait;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthenticatedSessionController extends Controller
 {
+    use AuthenticateWithAccessTokenTrait;
+
     /**
      * Display the login view.
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
+        if ($this->authWithAccessToken($request)) {
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+
         return view('auth.login');
     }
 
-    public function createURGLogin()
+    public function createURGLogin(Request $request)
     {
+        if ($this->authWithAccessToken($request)) {
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+
         return view('auth.urg-login');
     }    
 
