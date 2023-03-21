@@ -19,10 +19,18 @@ use App\Repositories\PersonaRepository;
  */
 class RegistroProveedorMTVService
 {
-    public function registraProveedorMTV(array $personaRegistroDatos): User
+    public const TIPO_REGISTRO_MTV = 1;
+    public const TIPO_REGISTRO_EXTERNO = 2;
+
+    /**
+    /* Servicio de registro de proveedores en MTV, desde el formulario de registro MTV o extenerno,
+     * por ejemplo, Padrón de Proveedores.
+     * Tipo Registro: 1 = Proveedor registrado en MTV | 2 = Proveedor importado de Padrón de Roveedores
+     */
+    public function registraProveedorMTV(array $personaRegistroDatos, ?array $domicilioDatos = null, int $tipoRegistro = 1): User
     {
         $user = null;
-        DB::transaction(function() use($personaRegistroDatos, &$user) {
+        DB::transaction(function() use($personaRegistroDatos, &$user, $domicilioDatos, $tipoRegistro) {
             $tipo_persona = null;
             if ($personaRegistroDatos['tipo_persona'] === Persona::TIPO_PERSONA_FISICA_ID) {
                 $tipo_persona = PersonaFisica::create([
@@ -40,14 +48,19 @@ class RegistroProveedorMTVService
                 ]);
             }
 
-            $persona = Persona::create([
+            $personaDatos = [
                 'id_tipo_persona' => $personaRegistroDatos['tipo_persona'],
                 'personable_id' => $tipo_persona->id,
                 'personable_type' => get_class($tipo_persona),
                 'rfc' => $personaRegistroDatos['rfc'],
                 'email' => $personaRegistroDatos['email'],
                 'registro_fase' => RegistroMTV::REGISTRO_FASE_IDENTIFICACION,
-            ]);
+                'id_tipo_registro' => $tipoRegistro,
+            ];
+            if (isset($domicilioDatos)) {
+                $personaDatos = array_merge($personaDatos, $domicilioDatos);
+            }
+            $persona = Persona::create($personaDatos);
 
             $user = User::create([
                 'rfc' => $personaRegistroDatos['rfc'],
@@ -65,7 +78,8 @@ class RegistroProveedorMTVService
         return $user;
     }
 
-    public function registraPerfilNegocio(array $perfilNegocioDatos, Persona $persona) {
+    public function registraPerfilNegocio(array $perfilNegocioDatos, Persona $persona): PerfilNegocio
+    {
         $perfilNegocioDatos['id_persona'] = $persona->id;
 
         return PerfilNegocio::create($perfilNegocioDatos);
@@ -73,8 +87,8 @@ class RegistroProveedorMTVService
 
     public function registraContactos(string $listaContactos, Persona $persona)
     {
-        $personaRepository = new PersonaRepository();
-        DB::transaction(function() use($persona, $listaContactos, $personaRepository) {
+        DB::transaction(function() use($persona, $listaContactos,) {
+            $personaRepository = new PersonaRepository();
             $personaRepository->updateContactos($persona, $listaContactos);
             $persona->update([
                 'registro_fase' => RegistroMTV::REGISTRO_FASE_CONTACTOS,
