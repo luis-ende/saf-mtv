@@ -36,6 +36,7 @@ class Persona extends Model
         'num_ext',
         'email',
         'registro_fase',
+        'id_tipo_registro',
     ];
 
      /**

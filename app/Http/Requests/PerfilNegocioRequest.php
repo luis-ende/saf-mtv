@@ -31,7 +31,7 @@ class PerfilNegocioRequest extends FormRequest
             'num_ext' => 'required|max:100',
             'num_int' => 'max:80',
             'id_grupo_prioritario' => 'required',
-            'id_tipo_pyme' => 'required',
+            'id_tipo_pyme' => 'sometimes|int',
             'id_sector' => 'required|required',
             'id_categoria_scian' => 'required|integer',
             'nombre_negocio' => 'required|max:100',

@@ -15,12 +15,12 @@ trait AuthenticateWithAccessTokenTrait
                 $userId = $token->tokenable_id;
                 if ($userId) {
                     $user = Auth::loginUsingId($userId);
-                    if (!$request->isJson()) {
+                    if ($request->isJson()) {
+                        if (!$user->hasRole('mtv-admin')) {
+                            return false;
+                        }
+                    } else {
                         $request->session()->regenerate();
-                    }
-
-                    if (!$user->hasRole('mtv-admin')) {
-                        return false;
                     }
 
                     return true;
