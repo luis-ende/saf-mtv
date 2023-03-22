@@ -1,3 +1,6 @@
+<img src="{{ asset('images/logos/gobierno_cdmx_con.svg') }}" style="width: 144px; height: 80px;" alt="Logo CDMX">
+<img src="{{ asset('images/logos/tianguis_digital.svg') }}" style="width: 144px; height: 80px;" alt="Logo Tianguis Digital">
+
 <p>Mensaje enviado a través del formulario de contacto de la sección de <strong>Preguntas frecuentes</strong> de Mi Tiendita Virtual.</p>
 <br>
 <p>Nombre: {{ $mensajeInfo['nombre'] }}</p>
