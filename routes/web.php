@@ -12,12 +12,10 @@ use App\Http\Controllers\RegistroMTVController;
 use App\Http\Controllers\CatalogoCABMSController;
 use App\Http\Controllers\OportunidadesController;
 use App\Http\Controllers\PerfilNegocioController;
-use App\Http\Controllers\Admin\AdminMTVController;
 use App\Http\Controllers\ComprasDetalleController;
 use App\Http\Controllers\UsuariosMensajesController;
 use App\Http\Controllers\CalendarioComprasController;
 use App\Http\Controllers\CatalogoProductosController;
-use App\Http\Controllers\ProgramacionAnualController;
 use App\Http\Controllers\CentroNotificacionesController;
 use App\Http\Controllers\UsuarioConfiguracionController;
 

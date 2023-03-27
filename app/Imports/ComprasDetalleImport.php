@@ -19,11 +19,8 @@ class ComprasDetalleImport implements ToModel, WithHeadingRow
     private Collection $unidadesCompradoras;
     private OportunidadNegocioRepository $oportunidadesRepo;
 
-    public function __construct(CalendarioComprasRepository $calendarioRepo,
-                                OportunidadNegocioRepository $oportunidadesRepo)
+    public function __construct(OportunidadNegocioRepository $oportunidadesRepo)
     {
-        // $this->calendarioUnidadesC =
-        //     $calendarioRepo->obtieneCalendarioUnidadesCompradoras();
         $this->tiposContratacion = $oportunidadesRepo->obtieneTiposContratacion();
         $this->unidadesCompradoras = $oportunidadesRepo->obtieneInstitucionesCompradoras(false);
         $this->oportunidadesRepo = $oportunidadesRepo;

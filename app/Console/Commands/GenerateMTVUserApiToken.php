@@ -26,7 +26,7 @@ class GenerateMTVUserApiToken extends Command
      *
      * @return int
      */
-    public function handle(): string
+    public function handle(): int
     {
         $user = User::find($this->argument('user_id'));
         if ($user) {

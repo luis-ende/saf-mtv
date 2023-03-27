@@ -15,8 +15,7 @@ class PlaneacionAnualService
 {
     public function importaAnaliticoProcedimientos(string $csvFilePath)
     {
-        Excel::import(new ComprasDetalleImport(new CalendarioComprasRepository(),
-                                               new OportunidadNegocioRepository()),
+        Excel::import(new ComprasDetalleImport(new OportunidadNegocioRepository()),
                      $csvFilePath);
     }
 }
