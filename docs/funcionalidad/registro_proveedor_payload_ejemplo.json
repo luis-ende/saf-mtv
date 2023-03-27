@@ -1,0 +1,66 @@
+{
+  "access_token":"",
+  "payload": {
+    "persona": {
+      "tipo_persona": "M",
+      "rfc": "OPC0608115OC",
+      "email": "provtest@test.com",
+      "password": "",
+      "curp": "",
+      "fecha_nacimiento": "",
+      "genero": "",
+      "nombre": "",
+      "primer_ap": "",
+      "segundo_ap": "",
+      "razon_social": "Proveedor generado desde PP",
+      "fecha_constitucion": "01/01/2020"
+    },
+    "domicilio":{
+      "pais": "Mexico",
+      "cp": "01000",
+      "asentamiento": "San Ángel",
+      "alcaldia": "Álvaro Obregón",
+      "ciudad": "Ciudad de México",
+      "entidad": "Ciudad de México",
+      "tipo_vialidad": "Calle",
+      "vialidad": "Insurgentes",
+      "num_ext": "123",
+      "num_int": ""
+    },
+    "perfil_negocio": {
+      "grupo_prioritario": "MIPYMES",
+      "id_tipo_pyme": "1",
+      "sector": "Industria",
+      "categoria_scian": "Empresa de desarrollo de software",
+      "nombre_negocio": "Negocio Nombre S.A.",
+      "lema_negocio": "Lema",
+      "descripcion_negocio": "Descripción del negocio",
+      "diferenciadores": "Precio,Calidad,Servicio",
+      "sitio_web": "",
+      "cuenta_facebook": "",
+      "cuenta_twitter": "",
+      "cuenta_linkedin": "",
+      "num_whatsapp": ""
+    },
+    "contactos": [{
+      "nombre": "contacto 1",
+      "primer_ap": "apellido 1",
+      "segundo_ap": "apellido 2",
+      "cargo": "cargo",
+      "telefono_oficina": "0000000000",
+      "extension": "",
+      "telefono_movil": "0000000000",
+      "email": "email@test.com"
+    },
+    {
+      "nombre": "contacto 2",
+      "primer_ap": "apellido 1",
+      "segundo_ap": "apellido 2",
+      "cargo": "cargo",
+      "telefono_oficina": "0000000000",
+      "extension": "",
+      "telefono_movil": "0000000000",
+      "email": "email@test.com"
+    }]
+  }
+}

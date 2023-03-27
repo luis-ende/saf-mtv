@@ -2,11 +2,15 @@
 
 ## Requerimientos
 
+- PHP 8.1+
 - Laravel 9 (Vite) / Blade Components
 - PostgreSQL 13
 - [Bootstrap 5](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
 - [Tailwind 3](https://tailwindcss.com/docs/installation)
 - [Alpine.js](https://alpinejs.dev/)
+- Composer 2
+- Node.js 16+ (compilación de assets)
+- Nginx o Apache (servidor web para producción)
 
 ## Instalación del ambiente local de desarrollo
 
@@ -71,9 +75,11 @@
 - Marca de favoritos de productos: [https://github.com/maize-tech/laravel-markable](https://github.com/maize-tech/laravel-markable)
   - Los favoritos de productos se encuentran en la tabla `markable_favorites`
   - Las alertas de oportunidades de negocio se encuentran en la tabla `markable_bookmarks`
+- Mensajes simples entre usuarios mediante la plataforma: [https://github.com/cmgmyr/laravel-messenger](https://github.com/cmgmyr/laravel-messenger)
 - Enlaces de redes sociales (en este proyecto se usan solamente las funciones para generar los enlaces, no los botones en el front-end): https://github.com/jorenvh/laravel-share
 - Para la extracción de datos vía [web scrapping](https://es.wikipedia.org/wiki/Web_scraping) de los sitios de Concurso Digital y Prebases se utiliza el paquete: Laravel Roach PHP - [https://roach-php.dev/docs/laravel/](https://roach-php.dev/docs/laravel/). Para abrir una línea de comando interactiva usar: `php artisan roach:shell https://roach-php.dev/docs/introduction` O para ejecutar un spider específico (desde el directorio raíz del proyecto), por ejemplo: `vendor/bin/roach roach:run App\\Spiders\\PrebasesOportunidadesSpider`
-- Panel de administración de Mi Tiendita Virtual (para catálogos y configuración de la plataforma): Filament - [https://filamentphp.com](https://filamentphp.com) 
+- Panel de administración de Mi Tiendita Virtual (para catálogos y configuración de la plataforma): Filament - [https://filamentphp.com](https://filamentphp.com)
+- Tokens para APIs: Laravel Sanctum - [https://laravel.com/docs/9.x/sanctum#issuing-api-tokens](https://laravel.com/docs/9.x/sanctum#issuing-api-tokens)
 
 ## MTV en Docker
 
@@ -100,6 +106,7 @@
   - La tabla `cat_ciudadano_cabms` se carga solamente para crear y llenar las tablas `cat_sectores`, `cat_categorias_scian` y `cat_cabms`, pero puede ser eliminada después para ahorrar espacio
   - La carga predeterminada de datos del Calendario de compras desde un archivo Excel se ejecuta mediante un seeder: `php artisan db:seed --class=ComprasProcedimientosSeeder`
   - La carga predeterminada de datos de preguntas frecuentes desde un archivo Excel se ejecuta mediante un seeder: `php artisan db:seed --class=PreguntasFrecuentesSeeder`
+  - Para generar token de autenticación para el usuario super administrador (mtvadmin) se puede usar el comando `php artisan mtv:gen-token {user_id}` 
 
 ### Integraciones de MTV con otros sistemas:
 
@@ -124,4 +131,5 @@
 ### Documentación e información relacionada con el repositorio del proyecto
 
 - Para consultar la lista de tareas abiertas y pendientes, ver: https://gitlab.com/saf-mtv/saf-mtv/-/issues
+- ***Consultar documentación adicional sobre el proyecto en la carpeta `docs` de este proyecto***
   
