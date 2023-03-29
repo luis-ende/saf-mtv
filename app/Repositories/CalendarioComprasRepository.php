@@ -77,4 +77,9 @@ class CalendarioComprasRepository
             'presup_contratacion_aprobado' => $totalPresupAprobado,
         ]; 
     }
+
+    public function obtieneNumTotalProcedimientos(): int
+    {
+        return DB::table('compras_procedimientos')->count();
+    }
 }

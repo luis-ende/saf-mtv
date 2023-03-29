@@ -3,7 +3,7 @@
         Bienvenido a tu Escritorio virtual
     </span>
     <span class="block text-mtv-gray-2 text-sm md:text-base text-center">
-        Última conexión: miércoles, 25 marzo 2023
+        Última conexión: {{ $ultimo_login }}
     </span>
 </div>
 
@@ -13,9 +13,9 @@
             <span class="text-mtv-primary font-bold 2xl:text-5xl xl:text-4xl lg:text-3xl md:text-2xl text-xl 2xl:mb-3 xl:mb-2 lg:mb-1 md:mb-0">
                 ¿Qué vamos a hacer hoy?
             </span>
-            <a href="#"
+            <a href="{{ $objetivo_tarea->url_accion }}"
                class="mtv-link-gold font-bold 2xl:text-3xl xl:text-2xl lg:text-xl md:text-base text-sm bg-transparent">
-                Busquemos Oportunidades de negocio
+                {{ $objetivo_tarea->sugerencia }}
             </a>
         </div>
         <img class="hidden md:block" src="{{ asset("images/banner_principal.svg") }}" alt="Escritorio de proveedor" />
@@ -50,12 +50,6 @@
 
 {{--Datos de prueba--}}
 @php
-    $objetivos = [
-        [ 'id' => 1, 'objetivo' => 'Crear Perfil de negocio', 'completo' => true ],
-        [ 'id' => 2, 'objetivo' => 'Crear Tu Tiendita Virtual', 'completo' => true ],
-        [ 'id' => 3, 'objetivo' => 'Buscar oportunidades de negocio', 'completo' => false ],
-    ];
-
     $mensajes = [
         [
             'id' => 1,
@@ -85,11 +79,15 @@
     <div class="basis-full md:basis-2/4 2xl:px-16 xl:px-12 md:px-2 md:border-r-2 md:border-dashed md:border-r-mtv-gray-light md:border-l-2 md:border-l-mtv-gray-light">
         <div class="grid grid-cols-2 grid-rows-4 2xl:gap-x-16 xl:gap-x-12 md:gap-x-2 gap-x-2 gap-y-10">
             <div class="md:text-lg sm:text-sm text-xs">
-                <span class="block text-mtv-secondary text-3xl font-bold text-center">93</span>
+                <span class="block text-mtv-secondary text-3xl font-bold text-center">
+                    {{ $estadisticas['num_instituciones_compradoras'] }}
+                </span>
                 <span class="block text-center text-mtv-text-gray">Instituciones compradoras</span>
             </div>
             <div class="md:text-lg sm:text-sm text-xs">
-                <span class="block text-mtv-secondary text-3xl font-bold text-center">5,640</span>
+                <span class="block text-mtv-secondary text-3xl font-bold text-center">
+                    {{ $estadisticas['num_procedimientos_programados'] }}
+                </span>
                 <span class="block text-center text-mtv-text-gray">Procedimientos programados</span>
                 <a href="#" class="block mtv-link-gold text-center">Ver todos los procedimientos</a>
             </div>
@@ -111,7 +109,7 @@
                 @svg('03_Productos', ['class' => 'md:w-12 md:h-12 w-10 h-10 basis-1/3'])
                 <div class="basis-2/3 flex flex-col justify-center items-center md:text-base text-xs">
                     <span class="font-bold text-mtv-gold text-center w-24 md:h-12 h-10">Productos</span>
-                    <span class="text-mtv-text-gray text-lg">12</span>
+                    <span class="text-mtv-text-gray text-lg">{{ $estadisticas['num_productos_proveedor'] }}</span>
                 </div>
             </div>
             <div class="flex flex-row rounded-xl border border-mtv-gray-light px-2 flex flex-row items-center">
@@ -132,7 +130,7 @@
                 @svg('06_Seguidas', ['class' => 'md:w-12 md:h-12 w-10 h-10 basis-1/3'])
                 <div class="basis-2/3 flex flex-col justify-center items-center md:text-base text-xs">
                     <span class="font-bold text-mtv-gold text-center w-24 md:h-12 h-10">Oportunidades favoritas</span>
-                    <span class="text-mtv-text-gray text-lg">10</span>
+                    <span class="text-mtv-text-gray text-lg">{{ $estadisticas['num_oportunidades_favoritas'] }}</span>
                 </div>
             </div>
         </div>

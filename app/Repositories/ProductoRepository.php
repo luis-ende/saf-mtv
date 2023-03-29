@@ -327,6 +327,17 @@ class ProductoRepository
         }
     }
 
+    public function obtieneNumProductosPorProveedor(int $personaId): int
+    {
+        return DB::table('productos AS p')
+                    ->join('cat_productos AS cp', 'p.id_cat_productos', 'p.id')
+                    ->join('personas AS per', 'cp.id_persona', 'per.id')
+                    ->where('per.id', $personaId)
+                    // Se filtran registros de productos que por alguna razón no se completaron
+                    ->where('p.registro_fase', '>=', RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS)
+                    ->count();
+    }
+
     public static function obtieneCapitulos()
     {
         return DB::table('cat_capitulos')->pluck('numero');

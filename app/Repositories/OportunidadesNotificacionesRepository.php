@@ -7,6 +7,7 @@ use App\Models\OportunidadNegocio;
 use Illuminate\Support\Facades\DB;
 use App\Models\EstatusContratacion;
 use App\Repositories\OportunidadNegocioRepository;
+use Maize\Markable\Models\Bookmark;
 
 /**
  * Clase repositorio para el centro de notificaciones de oportunidades de negocio.
@@ -16,7 +17,7 @@ class OportunidadesNotificacionesRepository
     /**
      * Obtiene las oportunidades de negocio marcadas con bookmark por el usuario.
      */
-    public function obtieneOportunidadesGuardadas(User $user) 
+    public function obtieneOportunidadesGuardadas(User $user)
     {        
         $query = OportunidadNegocio::whereHasBookmark($user);
         $oportunidades = $this->getQuerySelectOportunidades($query, $user)

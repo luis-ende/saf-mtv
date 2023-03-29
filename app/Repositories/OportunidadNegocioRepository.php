@@ -69,6 +69,11 @@ class OportunidadNegocioRepository
         }
     }
 
+    public function obtieneNumInstitutcionesCompradoras()
+    {
+        return $this->obtieneInstitucionesCompradoras()->unique()->count();
+    }
+
     /**
      * Obtiene un arreglo de números iniciales de los capítulos filtrados.
      */

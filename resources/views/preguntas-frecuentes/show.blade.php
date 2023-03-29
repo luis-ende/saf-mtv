@@ -368,7 +368,8 @@
             </span>
         </div>
     </div>
-    <form method="POST" action="{{ route('preguntas-frecuentes-form.store') }}">
+    <form id="contacto" method="POST"
+          action="{{ route('preguntas-frecuentes-form.store') }}">
         @csrf
         <div class="flex flex-col mb-20">
             <div class="mx-auto lg:flex justify-center w-3/5">
