@@ -48,8 +48,8 @@ Route::controller(DirectorioController::class)->group(function () {
     Route::get('/directorio', 'index')->name('directorio.index');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/escritorio', function () {
+    return view('escritorio.show');
 })->middleware(['auth', 'verified', 'registro_mtv.status'])->name('dashboard');
 
 Route::post('persona/{persona}/contactos', [PersonaController::class, 'storeContactos'])
