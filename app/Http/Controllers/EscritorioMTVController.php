@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UsuarioMensajeTipo;
 use App\Repositories\CalendarioComprasRepository;
 use App\Repositories\ObjetivoTareaRepository;
 use App\Repositories\OportunidadesNotificacionesRepository;
 use App\Repositories\OportunidadNegocioRepository;
 use App\Repositories\ProductoRepository;
+use App\Repositories\UsuariosMensajesRepository;
 use App\Services\ObjetivosTareasService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -41,17 +43,25 @@ class EscritorioMTVController extends Controller
         $productoRepo = new ProductoRepository();
         $opnRepo = new OportunidadNegocioRepository();
         $calendarioRepo = new CalendarioComprasRepository();
+        $opnNotificacionesRepo = new OportunidadesNotificacionesRepository();
+        $mensajesRepo = new UsuariosMensajesRepository();
 
         return [
             'num_instituciones_compradoras' =>
                 $opnRepo->obtieneNumInstitutcionesCompradoras(),
             'num_procedimientos_programados' =>
                 number_format($calendarioRepo->obtieneNumTotalProcedimientos(), 0),
+            'num_mensajes_cotizacion' =>
+                $mensajesRepo->obtieneNumMensajesProveedor($user->id, UsuarioMensajeTipo::SolicitudCotizacion->value),
             'num_productos_proveedor' =>
                 $productoRepo->obtieneNumProductosPorProveedor($proveedor->id),
+            'num_productos_proveedor_favoritos' =>
+                $productoRepo->obtieneProveedorNumProductosFavoritos($proveedor->id),
             'oportunidades_buscadas_guardadas' => false,
+            'num_oportunidades_sugeridas' =>
+                $opnNotificacionesRepo->obtieneNumOportunidadesSugeridas($user),
             'num_oportunidades_favoritas' =>
-                OportunidadesNotificacionesRepository::obtieneNumBookmarks($user)
+                $opnNotificacionesRepo->obtieneNumBookmarks($user)
         ];
     }
 }

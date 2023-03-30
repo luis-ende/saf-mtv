@@ -330,7 +330,7 @@ class ProductoRepository
     public function obtieneNumProductosPorProveedor(int $personaId): int
     {
         return DB::table('productos AS p')
-                    ->join('cat_productos AS cp', 'p.id_cat_productos', 'p.id')
+                    ->join('cat_productos AS cp', 'cp.id', 'p.id_cat_productos')
                     ->join('personas AS per', 'cp.id_persona', 'per.id')
                     ->where('per.id', $personaId)
                     // Se filtran registros de productos que por alguna razón no se completaron
@@ -341,6 +341,20 @@ class ProductoRepository
     public static function obtieneCapitulos()
     {
         return DB::table('cat_capitulos')->pluck('numero');
+    }
+
+    /**
+     * Obtiene el número de productos del catálogo de un proveedor que han sido marcados como favoritos.
+     */
+    public function obtieneProveedorNumProductosFavoritos(int $personaId): int
+    {
+        return DB::table('markable_favorites AS mf')
+                    ->where('markable_type', Producto::class)
+                    ->join('productos as p', 'p.id', 'mf.markable_id')
+                    ->join('cat_productos AS cp', 'cp.id', 'p.id_cat_productos')
+                    ->join('personas AS per', 'per.id', 'cp.id_persona')
+                    ->where('per.id', $personaId)
+                    ->count();
     }
 
     /**

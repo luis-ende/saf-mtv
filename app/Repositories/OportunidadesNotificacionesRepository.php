@@ -4,6 +4,9 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Models\OportunidadNegocio;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use App\Models\EstatusContratacion;
 use App\Repositories\OportunidadNegocioRepository;
@@ -30,7 +33,7 @@ class OportunidadesNotificacionesRepository
      * Obtiene oportunidades de negocio que coincidan con el perfil de negocio del usuario
      * o productos registrados en su catálogo.
      */
-    public function obtieneOportunidadesSugeridas(User $user) 
+    public function obtieneOportunidadesSugeridasQB(User $user): Builder
     {     
         $query = OportunidadNegocio::from('oportunidades_negocio');
         $query = $this->getQuerySelectOportunidades($query, $user)
@@ -74,9 +77,24 @@ class OportunidadesNotificacionesRepository
             });
         });        
 
-        $oportunidades = $query->limit(30)->get();
+        return $query;
+    }
 
-        return $oportunidades;        
+    public function obtieneOportunidadesSugeridas(User $user): Collection
+    {
+        $qb = $this->obtieneOportunidadesSugeridasQB($user);
+        $oportunidades = $qb->limit(30)->get();
+
+        return $oportunidades;
+    }
+
+    public function obtieneNumOportunidadesSugeridas(User $user): int
+    {
+        // Ya que la consulta puede ser costosa y las oportunidades de negocio no se están actualizando constantemente,
+        // se ha optado por mantener este dato en caché por una hora (3600 segundos).
+        return Cache::remember('num_oportunidades_sugeridas', 3600, function() use($user) {
+            return $this->obtieneOportunidadesSugeridas($user)->count();
+        });
     }
 
     /**
@@ -97,7 +115,7 @@ class OportunidadesNotificacionesRepository
     /**
      * Obtiene el número de bookmarks guardados por un usuario.
      */
-    public static function obtieneNumBookmarks(User $user): int
+    public function obtieneNumBookmarks(User $user): int
     {
         return DB::table('markable_bookmarks')->selectRaw('COUNT(*) AS usuario_num_bookmarks')
                                               ->where('user_id', $user->id)

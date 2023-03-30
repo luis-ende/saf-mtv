@@ -3,7 +3,10 @@
         <a href="{{ route('centro-notificaciones.index', [1]) }}" class="text-mtv-primary mr-9" title="Notificaciones">
             @svg('codicon-bell', ['class' => 'h-6 w-6 inline-block'])
         </a>
-        @php($numBookmarks = App\Repositories\OportunidadesNotificacionesRepository::obtieneNumBookmarks(request()->user()))        
+        {{--TODO Llamar conteos desde otro servicio central. Si es la vista del escritorio, se puede usar el mismo conteo para no repetir la consulta --}}
+        {{--@php($numBookmarks = (new (App\Repositories\OportunidadesNotificacionesRepository))->obtieneNumBookmarks(request()->user()))--}}
+        @php($numBookmarks = 0)
+        {{--TODO Agregar check y cambio de ícono para oportunidades sugeridas --}}
         <a href="{{ route('centro-notificaciones.index', [2]) }}" class="text-mtv-primary mr-7" title="Favoritos">
             @if($numBookmarks > 0)
                 @svg('bi-bookmark-heart-fill', ['class' => 'h-6 w-6 inline-block'])

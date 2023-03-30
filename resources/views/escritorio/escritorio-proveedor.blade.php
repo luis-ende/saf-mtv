@@ -89,26 +89,26 @@
                     {{ $estadisticas['num_procedimientos_programados'] }}
                 </span>
                 <span class="block text-center text-mtv-text-gray">Procedimientos programados</span>
-                <a href="#" class="block mtv-link-gold text-center">Ver todos los procedimientos</a>
+                <a href="{{ route('calendario-compras.index') }}" class="block mtv-link-gold text-center">Ver todos los procedimientos</a>
             </div>
             <div class="flex flex-row rounded-xl border border-mtv-gray-light md:hover:shadow-lg px-2 flex flex-row items-center">
                 @svg('01_Perfil', ['class' => 'md:w-12 md:h-12 w-10 h-10 basis-1/3'])
                 <div class="basis-2/3 flex flex-col justify-center items-center md:text-base text-xs">
-                    <span class="font-bold text-mtv-gold text-center w-24 md:h-12 h-10">Mi Perfil de negocio</span>
-                    <a class="mtv-link-gold" href="#">Editar</a>
+                    <a href="{{ route('registro-perfil-negocio.show') }}" class="mtv-link-gold font-bold text-center w-24 md:h-12 h-10">Mi Perfil de negocio</a>
+                    <a href="{{ route('registro-perfil-negocio.show') }}" class="mtv-link-gold">Editar</a>
                 </div>
             </div>
             <div class="flex flex-row rounded-xl border border-mtv-gray-light px-2 flex flex-row items-center">
                 @svg('02_Cotizaciones', ['class' => 'md:w-12 md:h-12 w-10 h-10 basis-1/3'])
                 <div class="basis-2/3 flex flex-col justify-center items-center md:text-base text-xs">
                     <span class="font-bold text-mtv-gold text-center w-24 md:h-12 h-10">Cotizaciones solicitadas</span>
-                    <span class="text-mtv-text-gray text-lg">4</span>
+                    <span class="text-mtv-text-gray text-lg">{{ $estadisticas['num_mensajes_cotizacion'] }}</span>
                 </div>
             </div>
             <div class="flex flex-row rounded-xl border border-mtv-gray-light md:hover:shadow-lg px-2 flex flex-row items-center">
                 @svg('03_Productos', ['class' => 'md:w-12 md:h-12 w-10 h-10 basis-1/3'])
                 <div class="basis-2/3 flex flex-col justify-center items-center md:text-base text-xs">
-                    <span class="font-bold text-mtv-gold text-center w-24 md:h-12 h-10">Productos</span>
+                    <a href="{{ route('catalogo-productos') }}" class="mtv-link-gold font-bold text-center w-24 md:h-12 h-10">Productos</a>
                     <span class="text-mtv-text-gray text-lg">{{ $estadisticas['num_productos_proveedor'] }}</span>
                 </div>
             </div>
@@ -116,20 +116,20 @@
                 @svg('04_Megusta', ['class' => 'md:w-12 md:h-12 w-10 h-10 basis-1/3'])
                 <div class="basis-2/3 flex flex-col justify-center items-center md:text-base text-xs">
                     <span class="font-bold text-mtv-gold text-center md:w-36 w-28 md:h-12 h-10">Usuarios siguiendo tus productos</span>
-                    <span class="text-mtv-text-gray text-lg">20</span>
+                    <span class="text-mtv-text-gray text-lg">{{ $estadisticas['num_productos_proveedor_favoritos'] }}</span>
                 </div>
             </div>
             <div class="flex flex-row rounded-xl border border-mtv-gray-light md:hover:shadow-lg px-2 flex flex-row items-center">
                 @svg('05_Sugeridas', ['class' => 'md:w-12 md:h-12 w-10 h-10 basis-1/3'])
                 <div class="basis-2/3 flex flex-col justify-center items-center md:text-base text-xs">
-                    <span class="font-bold text-mtv-gold text-center w-24 md:h-12 h-10">Oportunidades sugeridas</span>
-                    <span class="text-mtv-text-gray text-lg">5</span>
+                    <a href="{{ route('centro-notificaciones.index', 1) }}" class="mtv-link-gold font-bold text-center w-24 md:h-12 h-10">Oportunidades sugeridas</a>
+                    <span class="text-mtv-text-gray text-lg">{{ $estadisticas['num_oportunidades_sugeridas'] }}</span>
                 </div>
             </div>
             <div class="flex flex-row rounded-xl border border-mtv-gray-light md:hover:shadow-lg px-2 flex flex-row items-center">
                 @svg('06_Seguidas', ['class' => 'md:w-12 md:h-12 w-10 h-10 basis-1/3'])
                 <div class="basis-2/3 flex flex-col justify-center items-center md:text-base text-xs">
-                    <span class="font-bold text-mtv-gold text-center w-24 md:h-12 h-10">Oportunidades favoritas</span>
+                    <a href="{{ route('centro-notificaciones.index', 2) }}" class="mtv-link-gold font-bold text-center w-24 md:h-12 h-10">Oportunidades favoritas</a>
                     <span class="text-mtv-text-gray text-lg">{{ $estadisticas['num_oportunidades_favoritas'] }}</span>
                 </div>
             </div>
