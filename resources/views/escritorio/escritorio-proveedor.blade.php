@@ -9,7 +9,7 @@
 
 <div class="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-items-center">
     <div class="basis-full md:basis-7/12 relative">
-        <div class="md:absolute w-full h-full flex justify-center items-center flex flex-col 2xl:mt-2 lg:mt-2 md:mt-0 md:bg-transparent bg-mtv-gold-light rounded-xl py-4 md:py-0 mt-2">
+        <div class="md:absolute w-full h-full flex justify-center items-center flex flex-col 2xl:mt-2 lg:mt-2 md:mt-0 md:bg-transparent bg-mtv-gold-banner rounded-xl py-4 md:py-0 mt-2">
             <span class="text-mtv-primary font-bold 2xl:text-5xl xl:text-4xl lg:text-3xl md:text-2xl text-xl 2xl:mb-3 xl:mb-2 lg:mb-1 md:mb-0">
                 ¿Qué vamos a hacer hoy?
             </span>

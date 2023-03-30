@@ -18,6 +18,7 @@ module.exports = {
             colors: {
                 'mtv-gold': '#bc955c',
                 'mtv-gold-light': '#ddc9a3',
+                'mtv-gold-banner': '#f0dfc0',
                 'mtv-primary': '#9f2241',
                 'mtv-secondary': '#235b4e',
                 'mtv-secondary-dark': '#10312b',

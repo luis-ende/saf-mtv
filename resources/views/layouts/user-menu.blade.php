@@ -1,20 +1,5 @@
 <div class="hidden sm:flex sm:items-center sm:ml-6">
-    @role('proveedor')
-        <a href="{{ route('centro-notificaciones.index', [1]) }}" class="text-mtv-primary mr-9" title="Notificaciones">
-            @svg('codicon-bell', ['class' => 'h-6 w-6 inline-block'])
-        </a>
-        {{--TODO Llamar conteos desde otro servicio central. Si es la vista del escritorio, se puede usar el mismo conteo para no repetir la consulta --}}
-        {{--@php($numBookmarks = (new (App\Repositories\OportunidadesNotificacionesRepository))->obtieneNumBookmarks(request()->user()))--}}
-        @php($numBookmarks = 0)
-        {{--TODO Agregar check y cambio de ícono para oportunidades sugeridas --}}
-        <a href="{{ route('centro-notificaciones.index', [2]) }}" class="text-mtv-primary mr-7" title="Favoritos">
-            @if($numBookmarks > 0)
-                @svg('bi-bookmark-heart-fill', ['class' => 'h-6 w-6 inline-block'])
-            @else 
-                @svg('bi-bookmark-heart', ['class' => 'h-6 w-6 inline-block'])
-            @endif 
-        </a>                
-    @endrole
+    <x-global.menu-barra-proveedor />
 
     <x-dropdown align="right" width="36">
         <x-slot name="trigger">
