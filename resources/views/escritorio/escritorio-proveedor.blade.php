@@ -48,26 +48,6 @@
     </button>
 </div>
 
-{{--Datos de prueba--}}
-@php
-    $mensajes = [
-        [
-            'id' => 1,
-            'nombre_urg' => 'Secretaría de Administración y Finanzas',
-            'asunto' => 'Solicitud de información',
-            'fecha' => '23 marzo 2023',
-            'hora' => '10:05',
-        ],
-        [
-            'id' => 2,
-            'nombre_urg' => 'Agencia Digital de Innovación Pública',
-            'asunto' => 'Cotización',
-            'fecha' => '20 marzo 2023',
-            'hora' => '10:05',
-        ],
-    ]
-@endphp
-
 <div class="flex flex-row my-10">
     {{-- Sección Objetivos --}}
     <div class="hidden md:inline-flex basis-1/4 flex flex-col space-y-10 md:pr-2">
@@ -94,8 +74,8 @@
             <div class="flex flex-row rounded-xl border border-mtv-gray-light md:hover:shadow-lg px-2 flex flex-row items-center">
                 @svg('01_Perfil', ['class' => 'md:w-12 md:h-12 w-10 h-10 basis-1/3'])
                 <div class="basis-2/3 flex flex-col justify-center items-center md:text-base text-xs">
-                    <a href="{{ route('registro-perfil-negocio.show') }}" class="mtv-link-gold font-bold text-center w-24 md:h-12 h-10">Mi Perfil de negocio</a>
-                    <a href="{{ route('registro-perfil-negocio.show') }}" class="mtv-link-gold">Editar</a>
+                    <a href="{{ route('perfil-negocio') }}" class="mtv-link-gold font-bold text-center w-24 md:h-12 h-10">Mi Perfil de negocio</a>
+                    <a href="{{ route('perfil-negocio') }}" class="mtv-link-gold">Editar</a>
                 </div>
             </div>
             <div class="flex flex-row rounded-xl border border-mtv-gray-light px-2 flex flex-row items-center">
@@ -136,7 +116,7 @@
         </div>
     </div>
     {{-- Sección Centro de mensajes --}}
-    <div class="hidden md:inline-flex basis-1/4 pl-16 pr-8 min-h-max">
+    <div class="hidden md:inline-flex basis-1/4 pl-16 pr-8 min-h-max my-3">
         <x-escritorio-proveedor.mensajes-seccion
                 :mensajes="$mensajes"
         />

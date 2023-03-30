@@ -13,9 +13,19 @@ use App\Repositories\UsuariosMensajesRepository;
 use App\Services\ObjetivosTareasService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 
 class EscritorioMTVController extends Controller
 {
+    private UsuariosMensajesRepository $mensajesRepo;
+    private OportunidadNegocioRepository $opnRepo;
+
+    public function __construct()
+    {
+        $this->mensajesRepo = new UsuariosMensajesRepository();
+        $this->opnRepo = new OportunidadNegocioRepository();
+    }
+
     public function show(Request $request)
     {
         if ($request->user()->hasRole('proveedor')) {
@@ -26,12 +36,14 @@ class EscritorioMTVController extends Controller
 
             $estadisticas = $this->obtieneEscritorioProveedorEstadisticas($request->user());
             $objetivos = $objetivosTareasRepo->obtieneObjetivos($estadisticas);
+            $mensajes = $this->obtieneMensajesProveedor($request->user()->id);
 
             // Obtener tarea aleatoria para el banner del escritorio.
             $objetivo_tarea = ObjetivosTareasService::obtieneObjetivoTarea($objetivos, $objetivosTareasRepo);
 
             return view('escritorio.show', compact(
-                'objetivos', 'objetivo_tarea', 'estadisticas', 'ultimo_login'));
+                'objetivos', 'objetivo_tarea', 'estadisticas',
+                         'ultimo_login', 'mensajes'));
         }
 
         return view('escritorio.show');
@@ -41,18 +53,17 @@ class EscritorioMTVController extends Controller
     {
         $proveedor = $user->persona;
         $productoRepo = new ProductoRepository();
-        $opnRepo = new OportunidadNegocioRepository();
         $calendarioRepo = new CalendarioComprasRepository();
         $opnNotificacionesRepo = new OportunidadesNotificacionesRepository();
-        $mensajesRepo = new UsuariosMensajesRepository();
 
         return [
             'num_instituciones_compradoras' =>
-                $opnRepo->obtieneNumInstitutcionesCompradoras(),
+                $this->opnRepo->obtieneNumInstitutcionesCompradoras(),
             'num_procedimientos_programados' =>
                 number_format($calendarioRepo->obtieneNumTotalProcedimientos(), 0),
             'num_mensajes_cotizacion' =>
-                $mensajesRepo->obtieneNumMensajesProveedor($user->id, UsuarioMensajeTipo::SolicitudCotizacion->value),
+                $this->mensajesRepo->obtieneNumMensajesProveedor($user->id,
+                                                                 UsuarioMensajeTipo::SolicitudCotizacion->value),
             'num_productos_proveedor' =>
                 $productoRepo->obtieneNumProductosPorProveedor($proveedor->id),
             'num_productos_proveedor_favoritos' =>
@@ -63,5 +74,20 @@ class EscritorioMTVController extends Controller
             'num_oportunidades_favoritas' =>
                 $opnNotificacionesRepo->obtieneNumBookmarks($user)
         ];
+    }
+
+    protected function obtieneMensajesProveedor(int $userId): Collection
+    {
+        return $this->mensajesRepo
+                    ->obtieneMensajesProveedor($userId)
+                    ->map(function($m) {
+                        return [
+                            ...$m,
+                            'fecha' => Carbon::parse($m['updated_at'])
+                                                ->translatedFormat('d F Y'),
+                            'hora' => Carbon::parse($m['updated_at'])
+                                                ->translatedFormat('h:i'),
+                        ];
+                    });
     }
 }
