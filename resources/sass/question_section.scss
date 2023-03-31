@@ -112,3 +112,16 @@
         fill: #e9efed;
     }
 }
+
+.buttons-questions-mobile {
+    display: none;
+    @media only screen and (max-width: 600px) {
+        display: block;
+    }
+}
+.buttons-questions-desktop {
+    display: block;
+    @media only screen and (max-width: 600px) {
+        display: none;
+    }
+}
