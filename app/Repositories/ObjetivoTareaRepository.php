@@ -26,7 +26,7 @@ class ObjetivoTareaRepository
             [
                 'id' => ObjetivoTareaCondicion::OportunidadesBuscadasGuardadas->value,
                 'objetivo' => 'Buscar oportunidades de negocio',
-                'completo' => $objetivosParams['oportunidades_buscadas_guardadas'] ?? false,
+                'completo' => $objetivosParams['ha_usado_buscador_oportunidades'] === true,
             ],
         ];
     }

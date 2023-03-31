@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Persona;
 use Illuminate\Http\Request;
 use App\Models\OportunidadNegocio;
 use Maize\Markable\Models\Bookmark;
@@ -19,6 +20,11 @@ class OportunidadesController extends Controller
         $estadisticas = $oportunidadesRepo->obtieneEstadisticas($oportunidades);
         $filtros_opciones = $this->obtieneFiltrosOpciones($oportunidadesRepo);
         $busqueda_termino = $request->input('tb');
+
+        if (auth()->user()) {
+            Persona::where('id', auth()->user()->id)
+                        ->update(['ultima_busqueda_oportunidades' => now()]);
+        }
 
         return view('oportunidades.show', compact('filtros_opciones', 'oportunidades', 'estadisticas', 'busqueda_termino'));
     }

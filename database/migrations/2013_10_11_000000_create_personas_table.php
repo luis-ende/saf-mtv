@@ -29,6 +29,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('registro_fase')->default(1);
             // 1 = Proveedor registrado en MTV | 2 = Proveedor importado de Padrón de Roveedores
             $table->unsignedSmallInteger('id_tipo_registro')->default(1);
+            $table->timestamp('ultima_busqueda_oportunidades')->nullable();
             $table->timestamps();
         });
     }

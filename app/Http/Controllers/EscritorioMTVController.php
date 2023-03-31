@@ -8,6 +8,7 @@ use App\Repositories\CalendarioComprasRepository;
 use App\Repositories\ObjetivoTareaRepository;
 use App\Repositories\OportunidadesNotificacionesRepository;
 use App\Repositories\OportunidadNegocioRepository;
+use App\Repositories\PersonaRepository;
 use App\Repositories\ProductoRepository;
 use App\Repositories\UsuariosMensajesRepository;
 use App\Services\ObjetivosTareasService;
@@ -68,7 +69,7 @@ class EscritorioMTVController extends Controller
                 $productoRepo->obtieneNumProductosPorProveedor($proveedor->id),
             'num_productos_proveedor_favoritos' =>
                 $productoRepo->obtieneProveedorNumProductosFavoritos($proveedor->id),
-            'oportunidades_buscadas_guardadas' => false,
+            'ha_usado_buscador_oportunidades' => !is_null($proveedor->ultima_busqueda_oportunidades),
             'num_oportunidades_sugeridas' =>
                 $opnNotificacionesRepo->obtieneNumOportunidadesSugeridas($user),
             'num_oportunidades_favoritas' =>
