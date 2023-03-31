@@ -1,6 +1,7 @@
 {{-- Clase del componente: app/View/Components/EscritorioProveedor/CarruselSeccion.php --}}
 
 <div x-data="carruselSeccion()"
+     x-cloak
      class="h-full">
     <template x-for="slide in slides" :key="slide.id">
         <div x-show="activeSlide === slide.id"

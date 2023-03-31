@@ -2,12 +2,30 @@
 
 <div x-data="centroMensajes()"
      x-init="initCentroMensajes()"
+     x-cloak
      class="flex flex-col">
     <div class="h-4/5">
+        {{-- Título de la sección --}}
         <div class="flex flex-row text-mtv-primary font-bold items-center">
-            @svg('uni-comment-exclamation-o', ['class' => 'w-10 h-10 mr-5'])
-            <span class="2xl:text-2xl xl:text-xl text-base">Centro de mensajes</span>
+            @svg('uni-comment-exclamation-o', ['class' => 'hidden md:flex w-10 h-10 mr-5'])
+            <span class="hidden md:flex 2xl:text-2xl xl:text-xl text-base">Centro de mensajes</span>
+
+            {{-- Título visible sólo en versión responsiva --}}
+            <div :class="{'flex flex-row justify-between items-center': $data.mensajesModalOpen, 'hidden': !$data.mensajesModalOpen}"
+                 class="fixed top-0 left-0 bg-white right-0 border-b-2 hidden h-12 pt-1 pl-6">
+                <span class="text-base">Centro de mensajes</span>
+                <button @click="$data.mensajesModalOpen = !$data.mensajesModalOpen"
+                        aria-label="Cerrar"
+                        class="p-2 inline-flex items-center justify-center rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500">
+                    <svg class="h-5 w-5" :class="{'hidden': ! $data.mensajesModalOpen, 'inline-flex': $data.mensajesModalOpen }"
+                         stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
         </div>
+
+        {{-- Total de mensajes --}}
         <div class="my-3">
             <span class="block text-mtv-text-gray font-bold">Total de mensajes: {{ count($mensajes) }}</span>
             <span x-show="items.length > 1"
@@ -15,6 +33,8 @@
                 Para conocer el detalle, revisa tu correo electrónico.
             </span>
         </div>
+
+        {{-- Área de mensajes --}}
         <div class="h-96">
             <template x-for="(mensaje, index) in items" :key="index">
                 <div x-show="checkView(index + 1)" class="mb-3">
@@ -29,6 +49,8 @@
             </template>
         </div>
     </div>
+
+    {{-- Barra de paginación --}}
     <div x-show="pages.length > 1"
          class="h-1/4 flex flex-row items-center justify-center text-mtv-gold font-bold">
         <div x-show="currentPage !== 1"
