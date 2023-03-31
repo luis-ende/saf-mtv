@@ -1,7 +1,7 @@
 <nav x-data="{ open: false }" class="bg-white border-b-4 border-mtv-gold-light text-mtv-gold-light">
     <!-- Menú principal -->
     <div class="px-3">
-        <div class="flex justify-between h-16">
+        <div class="flex justify-between h-12">
             <div class="flex">
                 <div class="hidden space-x-6 sm:-my-px sm:flex">
                     @auth

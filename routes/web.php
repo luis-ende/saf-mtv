@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DirectorioController;
+use App\Http\Controllers\EscritorioMTVController;
 use App\Http\Controllers\PreguntasFrecuentesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonaController;
@@ -48,9 +49,8 @@ Route::controller(DirectorioController::class)->group(function () {
     Route::get('/directorio', 'index')->name('directorio.index');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified', 'registro_mtv.status'])->name('dashboard');
+Route::get('/escritorio', [EscritorioMTVController::class, 'show'])
+    ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('dashboard');
 
 Route::post('persona/{persona}/contactos', [PersonaController::class, 'storeContactos'])
         ->middleware(['role:proveedor', 'auth'])

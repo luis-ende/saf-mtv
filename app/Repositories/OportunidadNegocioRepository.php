@@ -17,7 +17,7 @@ class OportunidadNegocioRepository
 {
     public const BUSQUEDA_OPORTUNIDADES_PAGINATION_OFFSET = 30;
 
-    public function obtieneRubros() 
+    public function obtieneRubros(): Collection
     {
         return Cache::rememberForever('cat_capitulos', function() {
             return DB::table('cat_capitulos')->select('id', 'numero', 'nombre')->get();
@@ -31,14 +31,14 @@ class OportunidadNegocioRepository
         });                
     }
 
-    public function obtieneMetodosContratacion() 
+    public function obtieneMetodosContratacion(): Collection
     {
         return Cache::rememberForever('cat_metodos_contratacion', function() {
             return DB::table('cat_metodos_contratacion')->select('id', 'metodo')->get();
         });        
     }
 
-    public function obtieneEtapasProcedimiento()
+    public function obtieneEtapasProcedimiento(): Collection
     {
         return Cache::rememberForever('cat_etapas_procedimiento', function() {
             return DB::table('cat_etapas_procedimiento')->select('id', 'etapa')
@@ -47,14 +47,14 @@ class OportunidadNegocioRepository
         });        
     }
 
-    public function obtieneEstatusContratacion()
+    public function obtieneEstatusContratacion(): Collection
     {
         return Cache::rememberForever('cat_estatus_contratacion', function() {
             return DB::table('cat_estatus_contratacion')->select('id', 'estatus')->get();
         });        
     }
 
-    public function obtieneInstitucionesCompradoras(bool $cached = true)
+    public function obtieneInstitucionesCompradoras(bool $cached = true): Collection
     {
         if ($cached) {
             return Cache::rememberForever('cat_unidades_compradoras', function() {
@@ -67,6 +67,11 @@ class OportunidadNegocioRepository
                                                               ->orderBy('nombre')
                                                               ->get();
         }
+    }
+
+    public function obtieneNumInstitutcionesCompradoras(): int
+    {
+        return $this->obtieneInstitucionesCompradoras()->unique()->count();
     }
 
     /**

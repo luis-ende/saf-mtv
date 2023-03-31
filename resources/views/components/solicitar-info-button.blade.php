@@ -37,8 +37,9 @@
                             </div>
                             <div class="mtv-input-wrapper">
                                 <select type="text" class="mtv-text-input" id="asunto" name="asunto" required>
-                                    <option value="Más información">Más información</option>
-                                    <option value="Solicitar cotización">Solicitar cotización</option>
+                                    @foreach(App\Models\UsuarioMensajeTipo::cases() as $tipoMensaje)
+                                        <option value="{{ $tipoMensaje }}">{{ $tipoMensaje }}</option>
+                                    @endforeach
                                 </select>
                                 <label class="mtv-input-label" for="asunto">Asunto</label>
                             </div>                                            

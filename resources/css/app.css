@@ -59,9 +59,15 @@
     active:text-white active:ring-2 active:ring-mtv-secondary;
   }
 
+  .mtv-link-primary {
+    @apply font-bold bg-white text-mtv-primary no-underline
+    hover:bg-white hover:text-mtv-gold hover:underline
+    active:text-mtv-gold-light;
+  }
+
   .mtv-link-secondary {
       @apply font-bold bg-white text-mtv-secondary no-underline
-      hover:bg-white hover:text-mtv-gold-light hover:underline
+      hover:bg-white hover:text-mtv-gold hover:underline
       active:text-mtv-gold-light;
   }
 
