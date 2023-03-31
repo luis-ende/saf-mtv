@@ -1,4 +1,4 @@
-<div class="w-full md:w-2/3">
+<div class="w-full md:w-7/12">
     <span class="block text-mtv-primary font-bold md:text-3xl text-lg text-center">
         Bienvenido a tu Escritorio virtual
     </span>
@@ -14,7 +14,7 @@
                 ¿Qué vamos a hacer hoy?
             </span>
             <a href="{{ $objetivo_tarea->url_accion }}"
-               class="mtv-link-gold font-bold 2xl:text-3xl xl:text-2xl lg:text-xl md:text-base text-sm bg-transparent">
+               class="w-2/3 mtv-link-gold font-bold 2xl:text-3xl xl:text-2xl lg:text-xl md:text-base text-sm bg-transparent text-center">
                 {{ $objetivo_tarea->sugerencia }}
             </a>
         </div>
@@ -22,22 +22,12 @@
     </div>
     <div class="basis-full md:basis-5/12">
         <div class="h-full md:px-8 md:pt-[5%]">
-            <div class="h-full flex flex-row bg-mtv-secondary md:rounded-3xl rounded-xl md:py-0 py-2">
-                <div class="basis-1/2">
-                    {{--Imagen--}}
-                </div>
-                <div class="basis-1/2 flex justify-center items-center">
-                    <div class="text-white 2xl:text-3xl xl:text-2xl lg:text-lg md:text-base text-base px-5 max-h-48">
-                        <span class="block text-center">Conoce</span>
-                        <span class="block font-bold text-center">Contratos Marco</span>
-                    </div>
-                </div>
-            </div>
+            <x-escritorio-proveedor.carrusel-seccion />
         </div>
     </div>
 </div>
 
-<div class="md:hidden flex flex-row items-center justify-center justify-content-around">
+<div class="md:hidden flex flex-row items-center justify-center justify-content-around my-4">
     <button type="button" class="mtv-button-secondary">
         @svg('clarity-bullseye-line', ['class' => 'inline-block w-5 h-5 mr-2'])
         Objetivos

@@ -90,11 +90,7 @@ class OportunidadesNotificacionesRepository
 
     public function obtieneNumOportunidadesSugeridas(User $user): int
     {
-        // Ya que la consulta puede ser costosa y las oportunidades de negocio no se están actualizando constantemente,
-        // se ha optado por mantener este dato en caché por una hora (3600 segundos).
-        return Cache::remember('num_oportunidades_sugeridas', 3600, function() use($user) {
-            return $this->obtieneOportunidadesSugeridas($user)->count();
-        });
+        return $this->obtieneOportunidadesSugeridas($user)->count();
     }
 
     /**
