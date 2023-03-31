@@ -1,5 +1,7 @@
 <div class="hidden sm:flex sm:items-center sm:ml-6">
-    <x-global.menu-barra-proveedor />
+    @role('proveedor')
+        <x-global.menu-barra-proveedor />
+    @endrole
 
     <x-dropdown align="right" width="36">
         <x-slot name="trigger">
