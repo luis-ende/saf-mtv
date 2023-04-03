@@ -1,8 +1,8 @@
-<nav x-data="{ open: false }" class="bg-white border-b-4 border-mtv-gold-light text-mtv-gold-light">
+<nav x-data="{ open: false }" class="hidden md:inline text-mtv-gold-light">
     <!-- Menú principal -->
     <div class="px-3">
-        <div class="flex justify-between h-12">
-            <div class="flex">
+        <div class="flex justify-between min-h-fit">
+            <div class="flex py-2">
                 <div class="hidden space-x-6 sm:-my-px sm:flex">
                     @auth
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">

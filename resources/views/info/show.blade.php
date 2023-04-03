@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout :with_background_color="false">
     @section('page_title', '¿Qué es Mi Tiendita Virtual?')
     <div class="information-container">
         <div class="py-6 px-12 bg-white flex flex-col sm py-1 px-1">
