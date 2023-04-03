@@ -13,14 +13,7 @@
                 </h1>
             </div>
             <div class="self-center">
-                <div class="flex flex-row space-x-4 mt-2">
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                </div>                    
+                <x-global.puntos-block />
             </div>                
             <div class="my-4 text-lg text-mtv-text-gray flex flex-col items-center">
                 <span class="font-bold md:text-xl xs:text-base text-mtv-secondary mb-4 block text-center">
@@ -32,6 +25,7 @@
                 </span>
             </div>
 
+            {{-- Barra de filtros con contadores --}}
             <div class="md:w-10/12 xs:w-full md:flex md:flex-row md:space-x-16 md:space-y-0 xs:grid xs:grid-cols-2 xs:grid-rows-2 xs:gap-x-5 xs:gap-y-2 my-4 self-center"
                  x-data=etapasFiltros()>
                 <div class="md:basis-1/5 text-mtv-gray flex flex-column items-center py-2 md:inline-flex xs:hidden">
@@ -77,8 +71,10 @@
                 @endpush
             </div>                
         </div>
-        
+
+        {{-- Sección principal de contenido --}}
         <div class="my-3 flex flex-col" x-data="{ terminoBusqueda: @js(request()->get('tb') ?? '') }">
+            {{-- Sección del input buscador por palabra clave --}}
             <div class="md:w-2/4 xs:w-3/4 self-center my-4">
                 <form method="POST"
                       x-bind:action="'/oportunidades-de-negocio' + ($data.terminoBusqueda !== '' ? '?tb=' + $data.terminoBusqueda : '')">
@@ -108,27 +104,32 @@
                         </div>
                     </div>
                 </form>
-            </div>            
+            </div>
+
             <div id="seccion-principal" x-ref="seccionPrincipal" class="flex md:flex-row xs:flex-col m-4"
                 {{-- TIP: Buscar inicialización de esta función reutilizable 'oportunidadesFiltrosURLParams()' en resources/js/app.js --}}
                  x-data="oportunidadesFiltrosURLParams">
+
+                {{-- Barra lateral de filtros --}}
                 <div x-data="filtrosSideBar()"
                     @scroll.window="stickyFiltrosButton = $refs.seccionPrincipal.getBoundingClientRect().top <= 0">
                     <div class="basis-full md:basis-1/4 md:mr-7">
+                        {{-- Título del diálogo de filtros visible sólo en versión responsiva --}}
                         <div :class="{'flex flex-row justify-between': filtrosModalOpen, 'hidden': !filtrosModalOpen}"
                              class="fixed top-0 left-0 bg-white right-0 border-b-2 hidden h-12 px-3">
                             <span class="self-center text-mtv-primary font-bold text-lg uppercase">Filtros</span>
                             <button @click="filtrosModalOpen = ! filtrosModalOpen"
                                     aria-label="Cerrar"
                                     class="p-2 inline-flex items-center justify-center rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                                <svg class="h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path :class="{'hidden': ! filtrosModalOpen, 'inline-flex': filtrosModalOpen }"
-                                          class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                <svg class="h-5 w-5" :class="{'hidden': ! filtrosModalOpen, 'inline-flex': filtrosModalOpen }"
+                                     stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
 
-                        <div :class="{'w-full h-full bg-white fixed border-indigo-700 top-12 left-0 right-0 z-40 overflow-y-auto px-2': filtrosModalOpen, 'hidden': !filtrosModalOpen}"
+                        {{-- Área de filtros --}}
+                        <div :class="{'w-full h-full bg-white fixed top-12 left-0 right-0 z-40 overflow-y-auto px-2': filtrosModalOpen, 'hidden': !filtrosModalOpen}"
                              class="md:block">
                             <x-oportunidades.buscador-filtros-sidebar
                                     :filtros_opciones="$filtros_opciones"
@@ -155,17 +156,12 @@
                                 filtrosSideBarOpen: false,
                                 filtrosModalOpen: false,
                                 stickyFiltrosButton: false,
-                                setModalOpen() {
-                                    this.filtrosModalOpen = !filtrosModalOpen;
-                                    if (this.filtrosModalOpen) {
-                                        this.filtrosSideBarOpen = false;
-                                    }
-                                }
                             }
                         }
                     </script>
-                @endpush    
+                @endpush
 
+                {{-- Sección principal de resultados de búsqueda --}}
                 <div class="basis-full md:basis-3/4 flex flex-col" x-data="{ rutaDescarga: '' }">
                     @if(count($oportunidades) >= 1)
                         <a :href="rutaDescarga"

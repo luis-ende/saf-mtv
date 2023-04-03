@@ -11,7 +11,6 @@ class ObjetivoTareaRepository
 {
     public function obtieneObjetivos(array $objetivosParams): array
     {
-        // TODO pasar elemento 'oportunidades_buscadas_guardadas' en array $objetivosParams
         return [
             [
                 'id' => ObjetivoTareaCondicion::PerfilNegocioCreado->value,
