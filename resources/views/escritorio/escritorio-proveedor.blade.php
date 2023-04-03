@@ -15,7 +15,9 @@
             <span class="text-mtv-primary font-bold 2xl:text-5xl xl:text-4xl lg:text-3xl md:text-2xl text-xl 2xl:mb-3 xl:mb-2 lg:mb-1 md:mb-0">
                 ¿Qué vamos a hacer hoy?
             </span>
+            @php($accionUrlTarget = empty(parse_url($objetivo_tarea->url_accion, PHP_URL_HOST)) ? '_self' : '_blank')
             <a href="{{ $objetivo_tarea->url_accion }}"
+               target="{{ $accionUrlTarget }}"
                class="w-2/3 mtv-link-gold font-bold 2xl:text-3xl xl:text-2xl lg:text-xl md:text-base text-sm bg-transparent text-center">
                 {{ $objetivo_tarea->sugerencia }}
             </a>
