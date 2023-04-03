@@ -25,7 +25,7 @@
 
 
 
-<x-guest-layout>
+<x-app-layout :with_background_color="false">
     <div class="flex flex-col" style="background-color:#FFFFFF" id="back-main">
         <!-- Carousel -->
         <div class="h-96">

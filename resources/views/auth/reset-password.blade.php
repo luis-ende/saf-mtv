@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout :with_background_color="false">
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">

@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout :with_background_color="false">
     <div class="py-6 md:px-12 xs:px-6 bg-white  flex flex-col">
         <div class="self-center">
             <label class="text-mtv-gray-2 md:text-xl">
@@ -421,4 +421,4 @@
             </div>
         </div>
     </form>
-</x-guest-layout>
+</x-app-layout>

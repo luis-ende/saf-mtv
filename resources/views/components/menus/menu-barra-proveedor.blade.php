@@ -1,4 +1,4 @@
-{{-- Clase del componente: app/View/Components/Global/MenuBarraProveedor.php --}}
+{{-- Clase del componente: app/View/Components/Menus/MenuBarraProveedor.php --}}
 
 <div class="flex flex-row items-baseline">
     <a href="{{ route('centro-notificaciones.index', [1]) }}"

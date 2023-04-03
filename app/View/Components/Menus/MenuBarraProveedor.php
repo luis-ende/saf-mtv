@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Global;
+namespace App\View\Components\Menus;
 
 use App\Repositories\OportunidadesNotificacionesRepository;
 use Illuminate\View\Component;
@@ -30,6 +30,6 @@ class MenuBarraProveedor extends Component
      */
     public function render()
     {
-        return view('components.global.menu-barra-proveedor');
+        return view('components.menus.menu-barra-proveedor');
     }
 }
