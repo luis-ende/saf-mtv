@@ -83,7 +83,7 @@
             </div>
             <p class="message-one">Ofrece tus productos</p>
             <p class="message-second">Registra tus Bienes y/o Servicios</p>
-            <button>Mi Tiendita Virtual</button>
+            <button onclick="window.location='{{ route('catalogo-productos') }}'">Mi Tiendita Virtual</button>
         </div>
         <div class="card-menu-bottom">
             <div class="circle">
@@ -91,7 +91,7 @@
             </div>
             <p class="message-one">Planeación anual</p>
             <p class="message-second">Compras programadas para el próximo año</p>
-            <button>Calendario de compras</button>
+            <button onclick="window.location='{{ route('calendario-compras.index') }}'">Calendario de compras</button>
         </div>
         <div class="card-menu-bottom">
             <div class="circle">
@@ -99,7 +99,7 @@
             </div>
             <p class="message-one">Buscador de oportunidades</p>
             <p class="message-second">Oportunidades para venderle a la CDMX</p>
-            <button>Oportunidades de negocio</button>
+            <button onclick="window.location='{{ route('oportunidades-negocio.search') }}'">Oportunidades de negocio</button>
         </div>
     </div>
     <!-- Menú de mi Tiendita virtual-->
@@ -366,7 +366,7 @@
         </svg>
     </button>
     </div>
-</x-guest-layout>
+</x-app-layout>
 
 <script type="text/javascript">
 const buttonUp = document.getElementById("button-back-up")
