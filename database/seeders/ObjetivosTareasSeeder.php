@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\ObjetivoTarea;
-use App\Models\ObjetivoTareaCondicion;
-use App\Models\ObjetivoTareaTipo;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Objetivos\ObjetivoTarea;
+use App\Models\Objetivos\ObjetivoTareaCondicion;
+use App\Models\Objetivos\ObjetivoTareaTipo;
 use Illuminate\Database\Seeder;
 
 class ObjetivosTareasSeeder extends Seeder

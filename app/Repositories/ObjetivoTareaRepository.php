@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Models\ObjetivoTarea;
-use App\Models\ObjetivoTareaCondicion;
+use App\Models\Objetivos\ObjetivoTarea;
+use App\Models\Objetivos\ObjetivoTareaCondicion;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
