@@ -2,20 +2,32 @@
 
 namespace App\View\Components\EscritorioProveedor;
 
+use App\Models\Banners\MTVBannerTipo;
+use App\Repositories\MTVBannersRepository;
+use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
 class CarruselSeccion extends Component
 {
-    public array $slides;
+    public Collection $slides;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(MTVBannersRepository $bannersRepo)
     {
-        $this->slides = [
+        $banners = $bannersRepo->obtieneBanners(MTVBannerTipo::EscritorioProveedor->value);
+        $this->slides = $banners->map(function($banner) {
+           return [
+               'id' => $banner->id,
+               'ruta_imagen' => $banner->ruta_imagen,
+               'enlace' => $banner->enlace,
+           ];
+        });
+
+        /*$this->slides = [
             [
                 'id' => 1,
                 'text' => 'Conoce <span class="block font-bold text-center">Contratos Marco</span>',
@@ -40,7 +52,7 @@ class CarruselSeccion extends Component
                 'image' => '',
                 'url' => '',
             ],
-        ];
+        ];*/
     }
 
     /**

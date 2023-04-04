@@ -32,6 +32,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CatEtapasProcedimientoSeeder::class);
         $this->call(CatEstatusContratacionSeeder::class);
         $this->call(PreguntasFrecuentesSeeder::class);
+        $this->call(ObjetivosTareasSeeder::class);
+        $this->call(MTVBannersSeeder::class);
 
         // Roles y usuarios de prueba locales.
         // Usuarios generados sin tokens de autenticación.

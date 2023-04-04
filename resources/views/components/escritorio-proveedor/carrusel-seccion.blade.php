@@ -1,21 +1,17 @@
 {{-- Clase del componente: app/View/Components/EscritorioProveedor/CarruselSeccion.php --}}
 
 <div x-data="carruselSeccion()"
+     x-init="initCarrusel()"
      x-cloak
      class="h-full">
     <template x-for="slide in slides" :key="slide.id">
         <div x-show="activeSlide === slide.id"
-             class="h-full flex flex-row bg-mtv-secondary md:rounded-3xl rounded-xl md:py-0 py-2">
-            <div class="basis-1/2">
-                {{--Imagen--}}
-            </div>
-            <div class="basis-1/2 flex justify-center items-center">
-                <div class="text-white 2xl:text-3xl xl:text-2xl lg:text-lg md:text-base text-base px-5 max-h-48">
-                    <span class="block text-center" x-html="slide.text">
-                        {{--Conoce <span class="block font-bold text-center">Contratos Marco</span>--}}
-                    </span>
-                </div>
-            </div>
+             class="h-full flex flex-row bg-transparent">
+            <a :href="slide.enlace" target="_blank"
+               class="md:w-auto w-full h-[95%]">
+                <img :src="slide.ruta_imagen" alt="Banner escritorio proveedor"
+                     class="md:w-auto w-full h-full object-contain md:rounded-3xl rounded-xl">
+            </a>
         </div>
     </template>
     <div class="h-1 w-1/3 flex items-center justify-center mx-auto">
@@ -37,7 +33,12 @@
         function carruselSeccion() {
             return {
                 activeSlide: 1,
-                slides: @js($slides)
+                slides: @js($slides),
+                initCarrusel() {
+                    if (this.slides.length > 0) {
+                        this.activeSlide = this.slides[0].id;
+                    }
+                }
             }
         }
     </script>
