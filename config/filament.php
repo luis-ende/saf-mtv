@@ -72,7 +72,7 @@ return [
     |
     */
 
-    'brand' => env('APP_NAME'),
+    'brand' => 'MTV - Módulo de Administración',
 
     /*
     |--------------------------------------------------------------------------
@@ -261,7 +261,7 @@ return [
     |
     */
 
-    'favicon' => null,
+    'favicon' => '/images/tianguis.png',
 
     /*
     |--------------------------------------------------------------------------
@@ -300,7 +300,7 @@ return [
     |
     */
 
-    'google_fonts' => 'https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap',
+    'google_fonts' => 'https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700',
 
     /*
     |--------------------------------------------------------------------------

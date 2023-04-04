@@ -2,11 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\ObjetivoTarea;
-use App\Models\ObjetivoTareaCondicion;
-use App\Models\Persona;
+use App\Models\Objetivos\ObjetivoTarea;
+use App\Models\Objetivos\ObjetivoTareaCondicion;
 use App\Repositories\ObjetivoTareaRepository;
-use function PHPUnit\Framework\isEmpty;
 
 class ObjetivosTareasService
 {
