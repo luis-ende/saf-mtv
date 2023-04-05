@@ -36,7 +36,7 @@ Route::get('/', function () {
 })->name('homepage');
 
 Route::get('/info-venderle-a-cdmx', function() {
-    return view('info.show');
+    return view('flujograma.show');
 })->name('flujograma.show');
 
 Route::controller(PreguntasFrecuentesController::class)->group(function () {
