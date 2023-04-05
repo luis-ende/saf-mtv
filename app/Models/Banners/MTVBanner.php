@@ -15,4 +15,16 @@ class MTVBanner extends Model
      * @var string
      */
     protected $table = 'mtv_banners';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'tipo',
+        'nombre',
+        'ruta_imagen',
+        'enlace',
+    ];
 }

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('mtv_banners', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre', 100);
             $table->unsignedSmallInteger('tipo');
             $table->string('ruta_imagen');
             $table->string('enlace')->nullable();
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('m_t_v_banners');
+        Schema::dropIfExists('mtv_banners');
     }
 };

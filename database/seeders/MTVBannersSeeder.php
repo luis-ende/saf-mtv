@@ -18,22 +18,26 @@ class MTVBannersSeeder extends Seeder
     {
         MTVBanner::create([
             'tipo' => MTVBannerTipo::EscritorioProveedor->value,
-            'ruta_imagen' => '/images/banners/banner_01.png',
+            'nombre' => 'Precotizaciones digitales',
+            'ruta_imagen' => 'images/banners/banner_01.png',
             'enlace' => 'https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login',
         ]);
         MTVBanner::create([
             'tipo' => MTVBannerTipo::EscritorioProveedor->value,
-            'ruta_imagen' => '/images/banners/banner_02.png',
+            'nombre' => 'Prebases',
+            'ruta_imagen' => 'images/banners/banner_02.png',
             'enlace' => 'https://prebasestianguisdigital.cdmx.gob.mx/',
         ]);
         MTVBanner::create([
             'tipo' => MTVBannerTipo::EscritorioProveedor->value,
-            'ruta_imagen' => '/images/banners/banner_03.png',
+            'nombre' => 'Convocatorias',
+            'ruta_imagen' => 'images/banners/banner_03.png',
             'enlace' => 'https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas',
         ]);
         MTVBanner::create([
             'tipo' => MTVBannerTipo::EscritorioProveedor->value,
-            'ruta_imagen' => '/images/banners/banner_04.png',
+            'nombre' => 'Supermercado digital',
+            'ruta_imagen' => 'images/banners/banner_04.png',
             // Enlace no proporcionado
 //            'enlace' => '',
         ]);

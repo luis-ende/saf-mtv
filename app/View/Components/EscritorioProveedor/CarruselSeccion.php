@@ -5,6 +5,7 @@ namespace App\View\Components\EscritorioProveedor;
 use App\Models\Banners\MTVBannerTipo;
 use App\Repositories\MTVBannersRepository;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\Component;
 
 class CarruselSeccion extends Component
@@ -22,37 +23,11 @@ class CarruselSeccion extends Component
         $this->slides = $banners->map(function($banner) {
            return [
                'id' => $banner->id,
-               'ruta_imagen' => $banner->ruta_imagen,
+               'nombre' => $banner->nombre,
+               'ruta_imagen' => Storage::url($banner->ruta_imagen),
                'enlace' => $banner->enlace,
            ];
         });
-
-        /*$this->slides = [
-            [
-                'id' => 1,
-                'text' => 'Conoce <span class="block font-bold text-center">Contratos Marco</span>',
-                'image' => '',
-                'url' => '',
-            ],
-            [
-                'id' => 2,
-                'text' => 'Conoce <span class="block font-bold text-center">Contratos Marco</span>',
-                'image' => '',
-                'url' => '',
-            ],
-            [
-                'id' => 3,
-                'text' => 'Conoce <span class="block font-bold text-center">Contratos Marco</span>',
-                'image' => '',
-                'url' => '',
-            ],
-            [
-                'id' => 4,
-                'text' => 'Conoce <span class="block font-bold text-center">Contratos Marco</span>',
-                'image' => '',
-                'url' => '',
-            ],
-        ];*/
     }
 
     /**

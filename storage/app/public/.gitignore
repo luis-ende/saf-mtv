@@ -1,4 +1,7 @@
 *
+!images
+!images/banners
+!images/banners/*
 !plantillas/
 !plantillas/productos_carga_masiva.xlsx
 !.gitignore

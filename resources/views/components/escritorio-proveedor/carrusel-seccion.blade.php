@@ -9,7 +9,7 @@
              class="h-full flex flex-row bg-transparent">
             <a :href="slide.enlace" target="_blank"
                class="md:w-auto w-full h-[95%]">
-                <img :src="slide.ruta_imagen" alt="Banner escritorio proveedor"
+                <img :src="slide.ruta_imagen" :alt="slide.nombre"
                      class="md:w-auto w-full h-full object-contain md:rounded-3xl rounded-xl">
             </a>
         </div>

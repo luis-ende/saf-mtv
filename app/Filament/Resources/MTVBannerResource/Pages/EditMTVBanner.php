@@ -1,28 +1,28 @@
 <?php
 
-namespace App\Filament\Resources\ObjetivoTareaResource\Pages;
+namespace App\Filament\Resources\MTVBannerResource\Pages;
 
-use App\Filament\Resources\ObjetivoTareaResource;
+use App\Filament\Resources\MTVBannerResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Cache;
 
-class EditObjetivoTarea extends EditRecord
+class EditMTVBanner extends EditRecord
 {
-    protected static string $resource = ObjetivoTareaResource::class;
+    protected static string $resource = MTVBannerResource::class;
 
     protected function getActions(): array
     {
         return [
             Actions\DeleteAction::make()
                                     ->after(function () {
-                                        Cache::forget('objetivos_tareas');
+                                        Cache::forget('mtv_banners');
                                     }),
         ];
     }
 
     protected function afterSave()
     {
-        Cache::forget('objetivos_tareas');
+        Cache::forget('mtv_banners');
     }
 }
