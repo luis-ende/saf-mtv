@@ -39,8 +39,8 @@
     <div class="w-full h-3 bg-mtv-gold-light"></div>
     <div class="text-2xl py-1 px-7 bg-white border-b border-gray-200 flex flex-row my-3">
         <div class="{{ $esRegistroInicio ? 'basis-11/12' : 'basis-full' }}">
-            <div class="font-bold text-2xl text-mtv-primary">{{ $titulo }}</div>
-            <div class="xs:text-base md:text-lg tracking-wide text-mtv-text-gray">
+            <div class="font-bold text-lg md:text-2xl text-mtv-primary">{{ $titulo }}</div>
+            <div class="text-sm md:text-lg tracking-wide text-mtv-text-gray">
                 {{ $subtitulo }}
             </div>
         </div>
@@ -49,20 +49,20 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <div>
+                            <span class="block">
                                 @svg('fluentui-chat-help-24-o', ['class' => 'md:h-7 md:w-7 xs:h-5 xs:w-5 inline-block text-mtv-primary'])
-                            </div>
-                            <div class="ml-1">
+                            </span>
+                            <span class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
-                            </div>
+                            </span>
                         </button>
                     </x-slot>
                     <x-slot name="content">
                         <x-dropdown-link href="#" 
                             @click="event.preventDefault(); mostrarMensajeAyudaRFC()">
-                            {{ __('Tengo problemas con mi RFC') }}
+                            Tengo problemas con mi RFC
                         </x-dropdown-link>
                     </x-slot>
                 </x-dropdown>

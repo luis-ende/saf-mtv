@@ -1,8 +1,8 @@
 @props(['value', 'modo' => 'registro', 'disabled' => false, 'tipo_persona' => ''])
 
 @php($url = $modo === 'registro' ? '/api/proveedores/registro/' : '/api/proveedores/login/')
-@php($placeholder = $tipo_persona === 'F' ? 'XXXXXXXXXX - XXX' : ($tipo_persona === 'M' ? 'XXXXXXXXX - XXX' : ''))
-@php($mask = $tipo_persona === 'F' ? '*************' : ($tipo_persona === 'M' ? '************' : ''))
+@php($placeholder = $tipo_persona === App\Models\Persona::TIPO_PERSONA_FISICA_ID ? 'XXXXXXXXXX - XXX' : ($tipo_persona === App\Models\Persona::TIPO_PERSONA_MORAL_ID ? 'XXXXXXXXX - XXX' : ''))
+@php($mask = $tipo_persona === App\Models\Persona::TIPO_PERSONA_FISICA_ID ? '*************' : ($tipo_persona === App\Models\Persona::TIPO_PERSONA_MORAL_ID ? '************' : ''))
 
 <div x-data="rfcValidacion()">
     <div class="mtv-input-wrapper relative">

@@ -2,7 +2,7 @@
     @section('page_title', 'Registro Mi Tiendita Virtual')
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-4">
         <div class="bg-white overflow-hidden shadow-sm min-h-screen">
-            @include('registro.registro-header',
+            @include('registro-proveedor.registro-header',
                        ['titulo' => 'Contactos',
                         'subtitulo' => 'La matriz de escalamiento son los datos de contacto de personas clave en tu negocio. Los requerimos para saber a quién dirigirnos.'])
             <div class="px-6">

@@ -2,13 +2,13 @@
     @section('page_title', 'Registro Mi Tiendita Virtual')
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-4">
         <div class="bg-white overflow-hidden shadow-sm">
-            @include('registro.registro-header',
+            @include('registro-proveedor.registro-header',
                        ['titulo' => 'Registro a Mi Tiendita Virtual',
                         'subtitulo' => 'Crea una cuenta para realizar tu catálogo de productos y recibir notificaciones personalizadas.'])
             <div class="px-6">
                 <div class="w-fit mx-auto flex flex-col">
                     <div class="basis-full mt-3 flex flex-col space-y-3">
-                        <label class="text-xl font-bold text-mtv-primary self-center">1. Selecciona tu certificado</label>
+                        <label class="text-base md:text-xl font-bold text-mtv-primary self-center">1. Selecciona tu certificado</label>
                         <form
                             action="{{ route('registro-inicio-identificacion.store') }}" method="POST"
                             enctype="multipart/form-data"
@@ -33,7 +33,7 @@
                         </form>
                     </div>
                     <div class="basis-full mt-24 mb-5 flex flex-col">
-                        @include('registro/registro-footer')
+                        @include('registro-proveedor/registro-footer')
                     </div>
                 </div>
             </div>

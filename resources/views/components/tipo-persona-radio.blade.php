@@ -6,12 +6,13 @@
            id="tipo_persona_fisica"
            name="tipo_persona"
            x-model="tipoPersona"
-           value="F"
-           {{ $tipo_persona === 'F' ? 'checked' : '' }}
+           value="{{ App\Models\Persona::TIPO_PERSONA_FISICA_ID }}"
+           {{ $tipo_persona === App\Models\Persona::TIPO_PERSONA_FISICA_ID ? 'checked' : '' }}
            {{ $disabled ? 'disabled' : '' }}
     >
     <label
-        :class="tipoPersona === 'F' ? 'font-bold text-lg text-mtv-secondary' : 'text-lg text-mtv-gray'"
+        class="text-base md:text-lg"
+        :class="tipoPersona === '{{ App\Models\Persona::TIPO_PERSONA_FISICA_ID  }}' ? 'font-bold text-mtv-secondary' : 'text-mtv-gray'"
         for="tipo_persona_fisica">Física</label>
 </div>
 <div class="basis-1/2 flex flex-row justify-end">
@@ -20,11 +21,12 @@
            id="tipo_persona_moral"
            name="tipo_persona"
            x-model="tipoPersona"
-           value="M"
-           {{ $tipo_persona === 'M' ? 'checked' : '' }}
+           value="{{ App\Models\Persona::TIPO_PERSONA_MORAL_ID }}"
+           {{ $tipo_persona === App\Models\Persona::TIPO_PERSONA_MORAL_ID ? 'checked' : '' }}
            {{ $disabled ? 'disabled' : '' }}
     >
     <label
-        :class="tipoPersona === 'M' ? 'font-bold text-lg text-mtv-secondary' : 'text-lg text-mtv-gray'"
+        class="text-base md:text-lg"
+        :class="tipoPersona === '{{ App\Models\Persona::TIPO_PERSONA_MORAL_ID }}' ? 'font-bold text-mtv-secondary' : 'text-mtv-gray'"
         for="tipo_persona_moral">Moral</label>
 </div>

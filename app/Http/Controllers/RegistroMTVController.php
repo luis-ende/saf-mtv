@@ -28,17 +28,17 @@ class RegistroMTVController extends Controller
     {
         $request->session()->regenerate();
 
-        return view('registro.inicio');
+        return view('registro-proveedor.inicio');
     }
 
     public function showRegistroIdentificacion(Request $request, string $tipoPersona, string $tipoRegistro)
     {
         if ($tipoRegistro === RegistroMTV::TIPO_REGISTRO_CERT) {
-            return response()->view('registro.inicio-certificado', [
+            return response()->view('registro-proveedor.inicio-certificado', [
                 'tipoPersona' => $tipoPersona,
             ]);
         } elseif ($tipoRegistro === RegistroMTV::TIPO_REGISTRO_EMAIL) {
-            return response()->view('registro.inicio-confirmacion', [
+            return response()->view('registro-proveedor.inicio-confirmacion', [
                 'tipoRegistro' => $tipoRegistro,
                 'tipoPersona' => $tipoPersona,
             ]);
@@ -78,7 +78,7 @@ class RegistroMTVController extends Controller
             return redirect()->back()->withError($e->getMessage());
         }
 
-        return response()->view('registro.inicio-confirmacion',
+        return response()->view('registro-proveedor.inicio-confirmacion',
             compact('tipoPersona', 'tipoRegistro', 'personaDatos'));
     }
 
@@ -106,7 +106,7 @@ class RegistroMTVController extends Controller
                         RegistroMTV::TIPO_REGISTRO_EMAIL
                     ]),
                 ],
-                'password' => 'required|min:8|max:15|same:password_confirmacion' // TODO: Aplicar las mismas validaciones que en front-end
+                'password' => 'required|min:8|max:15|same:password_confirmacion'
             ]);
 
             $personaDatos = $request->only('tipo_persona', 'email', 'password');
@@ -154,10 +154,8 @@ class RegistroMTVController extends Controller
 
             $datos = compact('tipoPersona', 'tipoRegistro', 'personaDatos');
             $request->session()->flash('error', 'El proceso de registro no pudo ser completado: ' . $e->getMessage());
-            // TODO: Personalizar mensajes de error para password y email que deben coincidir, y otros
-            // https://laravel.com/docs/9.x/validation#customizing-the-error-messages
 
-            return view('registro.inicio-confirmacion', $datos);
+            return view('registro-proveedor.inicio-confirmacion', $datos);
         }
 
         try {
@@ -173,7 +171,7 @@ class RegistroMTVController extends Controller
         } catch (\Throwable $e) {
             $request->session()->flash('error', 'El proceso de registro no pudo ser completado debido al siguiente error: ' . $e->getMessage());
 
-            return view('registro.inicio-confirmacion',
+            return view('registro-proveedor.inicio-confirmacion',
                 compact('tipoPersona', 'tipoRegistro', 'personaDatos'));
         }
     }
@@ -183,7 +181,7 @@ class RegistroMTVController extends Controller
         $persona = Auth::user()->persona;
 
         if (!$persona->registroCompleto()) {
-            return view('registro.registro-perfil-negocio', [
+            return view('registro-proveedor.registro-perfil-negocio', [
                 'persona' => $persona,
                 'cat_paises' => PaisesRepository::obtienePaises(),
                 'tipos_vialidad' => VialidadRepository::obtieneTiposVialidad(),
@@ -260,7 +258,7 @@ class RegistroMTVController extends Controller
 
         if (!$persona->registroCompleto()) {
             if ($persona->registro_fase === RegistroMTV::REGISTRO_FASE_TU_NEGOCIO) {
-                return view('registro.registro-contactos', [
+                return view('registro-proveedor.registro-contactos', [
                     'persona' => $persona,
                 ]);
             } elseif ($persona->registro_fase === RegistroMTV::REGISTRO_FASE_IDENTIFICACION) {
