@@ -1,11 +1,5 @@
 <x-app-layout :with_background_color="false">
     <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
-
         <div class="uppercase text-mtv-primary font-bold border-l-4 border-mtv-primary p-2 mb-2"> 
             ¿Olvidaste tu contraseña?
         </div>                    
@@ -32,4 +26,4 @@
             </div>
         </form>
     </x-auth-card>
-</x-guest-layout>
+</x-app-layout>

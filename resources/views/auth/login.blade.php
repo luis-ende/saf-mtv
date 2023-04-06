@@ -14,26 +14,26 @@
             @php($queryParams = count(request()->query()) > 0 ? '?' . http_build_query(request()->query()) : '')
             <div class="form-register">
                 <form method="POST" action="{{ route('login') . $queryParams }}">
-                @csrf
+                    @csrf
 
-                <!-- RFC -->
-                <x-rfc-validacion-input id="rfc"
-                                        name="rfc"
-                                        :modo="__('login')"
-                                        :value="old('rfc')" />
-                <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
+                    <!-- RFC -->
+                    <x-rfc-validacion-input id="rfc"
+                                            name="rfc"
+                                            :modo="__('login')"
+                                            :value="old('rfc')" />
+                    <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
 
-                <!-- Password -->
-                <x-password-input
-                    id="password"
-                    name="password"
-                    label_id="password"
-                    label="Contraseña"
-                    required
-                />
+                    <!-- Password -->
+                    <x-password-input
+                        id="password"
+                        name="password"
+                        label_id="password"
+                        label="Contraseña"
+                        required
+                    />
 
-                <!-- Remember Me -->
-                <div class="remember-password">
+                    <!-- Remember Me -->
+                    <div class="remember-password">
                         <label for="remember_me" class="inline-flex items-center">
                             <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
                             <span class="remember">{{ __('Recordar credenciales') }}</span>
@@ -44,15 +44,14 @@
                                 {{ __('¿Olvidaste tu contraseña?') }}
                             </a>
                         @endif
-                        </div>
+                    </div>
 
                     <div class="button-content">
                         <button id="btn_login" class="btn-signUp">
                             Ingresar
                         </button>
                     </div>
-                </div>
-            </form>
+                </form>
                 <p class="font-bold my-3 register">¿Aún no estás regístrado?
                     <br>
                     <a class="register-link" href="{{ route('registro-inicio') }}">Regístrate</a>
