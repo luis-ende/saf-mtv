@@ -42,9 +42,9 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <x-primary-button>
-                    {{ __('Reset Password') }}
-                </x-primary-button>
+                <button type="submit" class="mtv-button-primary">
+                    Reestablecer contraseña
+                </button>
             </div>
         </form>
     </x-auth-card>

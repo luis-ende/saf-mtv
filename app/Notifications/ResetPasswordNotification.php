@@ -2,10 +2,9 @@
 
 namespace App\Notifications;
 
+use Carbon\Carbon;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\HtmlString;
 
 class ResetPasswordNotification extends ResetPassword
 {
@@ -17,13 +16,13 @@ class ResetPasswordNotification extends ResetPassword
      */
     protected function buildMailMessage($url)
     {
-        return (new MailMessage)
-            ->subject('Notificación de reestablecimiento de contraseña')
-            ->greeting("Estimado proveedor,")
-            ->line('Has recibido este mensaje debido a que solicitaste restablecer la contraseña de tu cuenta en Mi Tiendita Virtual.')
-            ->action('Reestablecer contraseña', $url)
-            ->line(Lang::get('Este enlace expirará en :count minutos.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
-            ->line('Ignora este mensaje si no has solicitado reestablecer contraseña.')
-            ->salutation(new HtmlString("Atentamente, <br><br> Mi Tiendita Virtual"));
+        $mailMessage = new MailMessage();
+        $mailMessage->markdown('emails.reset-password', [
+            'timestamp' => ucfirst(Carbon::now()->translatedFormat('l, d F Y - h:i')) . ' hrs.'
+        ]);
+
+        return $mailMessage
+            ->subject('Notificación de recuperación de contraseña')
+            ->action($url, $url);
     }
 }

@@ -26,9 +26,9 @@
             </div>
 
             <div class="flex justify-end mt-4">
-                <x-primary-button>
-                    {{ __('Confirm') }}
-                </x-primary-button>
+                <button type="submit" class="mtv-button-primary">
+                    Confirmar
+                </button>
             </div>
         </form>
     </x-auth-card>

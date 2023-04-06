@@ -21,9 +21,9 @@
                 @csrf
 
                 <div>
-                    <x-primary-button>
-                        {{ __('Resend Verification Email') }}
-                    </x-primary-button>
+                    <button type="submit" class="mtv-button-primary">
+                        Reenviar correo de verificación
+                    </button>
                 </div>
             </form>
 

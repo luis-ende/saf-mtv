@@ -38,15 +38,16 @@ a img {
 /* Typography */
 
 h1 {
-    color: #3d4852;
-    font-size: 18px;
+    color: #9f2241;
+    font-size: 20px;
     font-weight: bold;
     margin-top: 0;
     text-align: left;
 }
 
 h2 {
-    font-size: 16px;
+    color: #235b4e;
+    font-size: 18px;
     font-weight: bold;
     margin-top: 0;
     text-align: left;
@@ -60,9 +61,11 @@ h3 {
 }
 
 p {
+    color: #6f7271;
     font-size: 16px;
     line-height: 1.5em;
     margin-top: 0;
+    margin-bottom: 0;
     text-align: left;
 }
 
@@ -80,7 +83,7 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    background-color: #edf2f7;
+    background-color: #FFFFFF;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -98,15 +101,9 @@ img {
 /* Header */
 
 .header {
-    padding: 25px 0;
-    text-align: center;
-}
-
-.header a {
-    color: #3d4852;
-    font-size: 19px;
-    font-weight: bold;
-    text-decoration: none;
+    padding: 25px 32px;
+    text-align: left;
+    width: 100%;
 }
 
 /* Logo */
@@ -123,9 +120,7 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    background-color: #edf2f7;
-    border-bottom: 1px solid #edf2f7;
-    border-top: 1px solid #edf2f7;
+    background-color: #ffffff;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -134,15 +129,11 @@ img {
 .inner-body {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
-    -premailer-width: 570px;
+    -premailer-width: 100%;
     background-color: #ffffff;
-    border-color: #e8e5ef;
-    border-radius: 2px;
-    border-width: 1px;
-    box-shadow: 0 2px 0 rgba(0, 0, 150, 0.025), 2px 4px 0 rgba(0, 0, 150, 0.015);
     margin: 0 auto;
     padding: 0;
-    width: 570px;
+    width: 100%;
 }
 
 /* Subcopy */
@@ -165,18 +156,21 @@ img {
     -premailer-width: 570px;
     margin: 0 auto;
     padding: 0;
-    text-align: center;
-    width: 570px;
+    width: 100%;
+    background-color: #235b4e;
+    border-top: 3px solid #bc955c;
 }
 
 .footer p {
-    color: #b0adc5;
+    color: #ffffff;
     font-size: 12px;
-    text-align: center;
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 2px;
 }
 
 .footer a {
-    color: #b0adc5;
+    color: #FFFFFF;
     text-decoration: underline;
 }
 
@@ -215,9 +209,9 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    margin: 30px auto;
+    margin: 0;
     padding: 0;
-    text-align: center;
+    text-align: left;
     width: 100%;
 }
 
@@ -228,6 +222,12 @@ img {
     display: inline-block;
     overflow: hidden;
     text-decoration: none;
+}
+
+.button-gold {
+    color: #bc955c;
+    font-weight: bold;
+    background-color: #FFFFFF;
 }
 
 .button-blue,
@@ -287,4 +287,8 @@ img {
 
 .break-all {
     word-break: break-all;
+}
+
+.salutation-block {
+    font-size: 10px;
 }

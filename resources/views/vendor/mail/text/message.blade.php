@@ -2,26 +2,23 @@
     {{-- Header --}}
     <x-slot:header>
         <x-mail::header :url="config('app.url')">
-            {{ config('app.name') }}
+            Mi Tiendita Virtual
         </x-mail::header>
     </x-slot:header>
 
     {{-- Body --}}
     {{ $slot }}
 
-    {{-- Subcopy --}}
-    @isset($subcopy)
-        <x-slot:subcopy>
-            <x-mail::subcopy>
-                {{ $subcopy }}
-            </x-mail::subcopy>
-        </x-slot:subcopy>
-    @endisset
-
     {{-- Footer --}}
     <x-slot:footer>
         <x-mail::footer>
-            © {{ date('Y') }} {{ 'Mi Tiendita Virtual' }}. @lang('2023 Gobierno de la CDMX.')
+Dudas o aclaraciones de Mi Tiendita Virtual:
+5557236565 o 5551342600 Ext. 5004 y 5026
+proveedores@finanzas.cdmx.gob.mx o proveedores_cdmx@finanzas.cdmx.gob.mx
+
+O acude a nuestras oficinas ubicadas en la siguiente dirección:
+Calle Viaducto 515, (Entrada por Añil, piso 7), Granjas México, C.P. 08400, Ciudad de México
+Horario de atención: Lunes a viernes de 09:00 a 18:00 hrs.
         </x-mail::footer>
     </x-slot:footer>
 </x-mail::layout>
