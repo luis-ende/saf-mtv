@@ -10,7 +10,11 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ContactoFormularioMail extends Mailable
+/**
+ * Mensaje de correo al administrador de MTV para notificar sobre una nueva solicitud de información
+ * desde el formulario de contacto de la página de Preguntas frecuentes.
+ */
+class NotificacionFormularioContacto extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -61,7 +65,7 @@ class ContactoFormularioMail extends Mailable
     public function content()
     {
         return new Content(
-            markdown: 'emails.formulario-contacto',
+            markdown: 'emails.notificacion-formulario-contacto',
         );
     }
 
