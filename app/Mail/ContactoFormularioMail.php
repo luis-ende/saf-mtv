@@ -4,7 +4,6 @@ namespace App\Mail;
 
 use App\Repositories\TipoPymeRepository;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
@@ -62,8 +61,7 @@ class ContactoFormularioMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'emails.formulario-contacto',
-            text: 'emails.formulario-contacto-text'
+            markdown: 'emails.formulario-contacto',
         );
     }
 

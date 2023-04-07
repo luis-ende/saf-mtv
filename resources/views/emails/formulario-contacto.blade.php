@@ -1,14 +1,17 @@
-<img src="{{ asset('images/logos/gobierno_cdmx_con.svg') }}" style="width: 144px; height: 80px;" alt="Logo CDMX">
-<img src="{{ asset('images/logos/tianguis_digital.svg') }}" style="width: 144px; height: 80px;" alt="Logo Tianguis Digital">
+@extends('emails.email-message')
+@section('content')
+# Solicitud de información
+## Estimado usuario de Mi Tiendita Virtual de la Ciudad de México,
 
-<p>Mensaje enviado a través del formulario de contacto de la sección de <strong>Preguntas frecuentes</strong> de Mi Tiendita Virtual.</p>
-<br>
-<p>Nombre: {{ $mensajeInfo['nombre'] }}</p>
-<p>Email: {{ $mensajeInfo['email'] }}</p>
-<p>{{ $mensajeInfo['tipo_persona'] }}</p>
-@isset($mensajeInfo['tipo_empresa'])
-    <p>Tipo de empresa: {{ $mensajeInfo['tipo_empresa'] }}</p>
+Hemos recibido el siguiente mensaje a través del formulario de contacto de la sección de Preguntas frecuentes de Mi Tiendita Virtual.
+
+>Nombre: {{ $mensajeInfo['nombre'] }}<br>
+Email: {{ $mensajeInfo['email'] }}<br>
+{{ $mensajeInfo['tipo_persona'] }}<br>
+@isset($mensajeInfo['tipo_empresa'])<br>
+Tipo de empresa: {{ $mensajeInfo['tipo_empresa'] }}<br>
 @endisset
-<p>Alcaldía o ciudad: {{ $mensajeInfo['ubicacion'] }}</p>
-<p>Mensaje:</p>
-<span>{{ $mensajeInfo['mensaje'] }}</span>
+Alcaldía o ciudad: {{ $mensajeInfo['ubicacion'] }}<br>
+Mensaje:<br>
+{{ $mensajeInfo['mensaje'] }}<br>
+@endsection
