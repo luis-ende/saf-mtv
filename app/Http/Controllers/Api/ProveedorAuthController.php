@@ -207,7 +207,6 @@ class ProveedorAuthController extends Controller
             throw new \Exception('Categoria SCIAN no encontrada en MTV.');
         }
 
-        // @todo Agregar campo para identificar procedencia del registro de proveedor en tabla de 'personas'
         $user = null;
         $payload = $request->payload;
         DB::transaction(function() use(&$user, $payload, $domicilioDatos, $perfilNegocioDatos) {

@@ -15,8 +15,6 @@ class ProductosController extends Controller
 {
     public function update(Request $request, Producto $producto, ProductoRepository $productoRepo)
     {
-        // TODO Producto debe pertenecer al catálogo del usuario
-
         $rulesAdjuntos = ProductoRequest::rulesProductoAdjuntos();
         $requiredRule = array_search('required', $rulesAdjuntos['ficha_tecnica_file']);
         unset($rulesAdjuntos['ficha_tecnica_file'][$requiredRule]);
@@ -75,8 +73,6 @@ class ProductosController extends Controller
     }
 
     public function showFotos(Request $request, Producto $producto) {
-        // TODO Validar que el producto pertenezca al catálogo del usuario
-
         return $producto->getMedia('fotos')->toArray();
     }
 

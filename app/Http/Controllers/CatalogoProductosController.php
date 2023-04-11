@@ -50,7 +50,6 @@ class CatalogoProductosController extends Controller
 
     public function showAltaProducto1(?Producto $producto)
     {
-        // TODO: Pasar validación a middleware
         if ($producto && $producto->registro_fase >= RegistroProductosService::ALTA_PRODUCTO_FASE_ADJUNTOS) {
             return redirect()->route('catalogo-registro-inicio')->with('error', 'El producto ya ha completado su proceso de registro previamente.');
         }
@@ -117,7 +116,6 @@ class CatalogoProductosController extends Controller
 
         switch($registroFase) {
             case RegistroProductosService::ALTA_PRODUCTO_FASE_CABMS_CATEGORIAS:
-                // TODO: Abrir db transaction
                 if ($producto) {
                     $producto->update($request->only('tipo', 'id_cabms'));
                 }
@@ -170,7 +168,6 @@ class CatalogoProductosController extends Controller
     public function showImportacionProductos1(Request $request)
     {
         $catalogoProductos = $request->user()->persona->catalogoProductos;
-        // TODO: Pasar validación a middleware
         if ($catalogoProductos->carga_masiva_completa === true) {
             return redirect()->route('catalogo-registro-inicio')->with('warning', 'La carga masiva se permite sólo una vez.');
         }
@@ -181,7 +178,6 @@ class CatalogoProductosController extends Controller
     public function showImportacionProductos2(Request $request)
     {
         $catalogoProductos = $request->user()->persona->catalogoProductos;
-        // TODO: Pasar validación a middleware
         if ($catalogoProductos->carga_masiva_completa === true) {
             return redirect()->route('catalogo-registro-inicio')->with('warning', 'La carga masiva se permite sólo una vez.');
         }
@@ -198,7 +194,6 @@ class CatalogoProductosController extends Controller
     public function showImportacionProductos3(Request $request, ProductoRepository $productoRepo)
     {
         $catalogoProductos = $request->user()->persona->catalogoProductos;
-        // TODO: Pasar validación a middleware
         if ($catalogoProductos->carga_masiva_completa === true) {
             return redirect()->route('catalogo-registro-inicio')->with('warning', 'La carga masiva se permite sólo una vez.');
         }
@@ -239,8 +234,7 @@ class CatalogoProductosController extends Controller
 
                     $productosImport = new ProductosImport($catalogoId);
 
-                    // TODO: Colocar ruta de plantilla en constante
-                    $plantillaPath = Storage::path('public/plantillas/productos_carga_masiva.xlsx');
+                    $plantillaPath = Storage::path(config('mtv.plantilla_productos_carga_masiva'));
 
                     $plantillaRows = Excel::toArray($productosImport, $plantillaPath);
 
