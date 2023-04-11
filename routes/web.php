@@ -39,6 +39,10 @@ Route::get('/info-venderle-a-cdmx', function() {
     return view('flujograma.show');
 })->name('flujograma.show');
 
+Route::get('/aviso-privacidad', function() {
+    return view('aviso-privacidad.show');
+})->name('aviso-privacidad.show');
+
 Route::controller(PreguntasFrecuentesController::class)->group(function () {
     Route::get('/preguntas-frecuentes', 'show')->name('preguntas-frecuentes.show');
     Route::get('/preguntas-frecuentes/list/{categoria?}/{subcategoria?}', 'list')->name('preguntas-frecuentes.list');
