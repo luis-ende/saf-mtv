@@ -18,10 +18,10 @@
 - Vagrant 2.3.1
 - Laravel Homestead (ver servicios que se instalan por default en el ambiente de desarrollo en: https://laravel.com/docs/9.x/homestead#included-software)
  
-- Para levantar el proyecto en modo local ir a la carpeta `Homestead` de la carpeta del repositorio MTV
+- Para levantar el proyecto en modo local de desarrollo ir a la carpeta `Homestead` de la carpeta del repositorio MTV
 - Copiar el archivo `Homestead.example.yaml` como `Homestead.yaml` y ajustar rutas de directorios locales (en Windows el formato de las rutas debe ajustarse, ver https://laravel.com/docs/9.x/homestead#configuring-shared-folders)
 - Ejecutar `composer install` (es necesario tener instalados PHP y Composer en la máquina host)
-- Es necesario agregar el DNS local (saf-mtv.test) `hosts` (Por ejemplo, agregar la línea: 192.168.56.56	saf-mtv.test)
+- Es necesario agregar el DNS local (saf-mtv.test) al archivo `hosts` (Por ejemplo, agregar la línea: 192.168.56.56	saf-mtv.test)
 - Ejecutar `vagrant up`
 - El sitio local debe estar disponible al abrir la url `saf-mtv.test` en el navegador
 
@@ -54,6 +54,16 @@
 
 **IMPORTANTE:** El archivo .env contiene las variables TEST_MODE, API_URL_BUSQUEDA_RFC_PADRON_PROVEEDORES, API_URL_BUSQUEDA_CURP, las cuales apuntan a endpoints de prueba. En modo producción TEST_MODE debe ser `false` y las URLs de las APIs deben apuntar a URLs en producción.
 
+## Ambiente de desarrollo y pruebas en contenedores Docker
+
+- Instrucciones para instalar Docker y Docker Compose en Linux: [https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+  - En Windows [https://docs.docker.com/desktop/install/windows-install/](https://docs.docker.com/desktop/install/windows-install/)
+- Desde la carpeta raíz del proyecto, ir al subdirectorio `scripts` y ejecutar `sh docker-build.sh` para generar la imagen de Docker y levantar los contenedores del proyecto
+  - En Windows: Abrir el archivo docker-build.sh y comentar o descomentar líneas según el sistema operativo (Windows/Linux). Ejecutar en una terminal (preferiblemente PowerShell) como Administrador
+- Para acceder al contenedor de PostgreSQL y la base de datos de MTV con psql: `docker compose exec postgres psql -U saf_mtv_dbuser -W -d saf_mtv`
+- Para correr un servidor de correo de desarrollo local para pruebas (Mailhog): `docker run --name safmtv-mailhog --network="saf-mtv_safmtv" -p 8025:8025 -p 1025:1025 -d mailhog/mailhog`
+  - Usar el ID del contenedor como host en el archivo .env (`MAIL_HOST`)
+
 ### Compilación de assets
 
 - Para generar los assets desde la carpeta raíz del proyecto ejecutar: `npm run build`
@@ -64,7 +74,7 @@
 
 - Los íconos utilizados en format SVG se encuentran en la carpeta `resources/svg` como archivos .svg y se utilizan en plantillas Blade con la directiva `@svg`, por ejemplo: `@svg('govicon-building')`. Ver más acerca sobre los íconos de [Blade UI Kit](https://blade-ui-kit.com/blade-icons).
 
-### Paquetes utilizados
+### Paquetes de Laravel utilizados en el proyecto (`composer.json`)
 
 - Íconos svg en templates Balde: Blade UI Kit - [https://github.com/blade-ui-kit/blade-icons](https://github.com/blade-ui-kit/blade-icons)
 - Gestión de fuentes Google: Laravel Google Fonts - [https://github.com/spatie/laravel-google-fonts](https://github.com/spatie/laravel-google-fonts)
@@ -76,25 +86,21 @@
   - Los favoritos de productos se encuentran en la tabla `markable_favorites`
   - Las alertas de oportunidades de negocio se encuentran en la tabla `markable_bookmarks`
 - Mensajes simples entre usuarios mediante la plataforma: [https://github.com/cmgmyr/laravel-messenger](https://github.com/cmgmyr/laravel-messenger)
+  - Ver ejemplos de uso en: [https://github.com/cmgmyr/laravel-messenger/blob/master/examples/MessagesController.php](https://github.com/cmgmyr/laravel-messenger/blob/master/examples/MessagesController.php)
 - Enlaces de redes sociales (en este proyecto se usan solamente las funciones para generar los enlaces, no los botones en el front-end): https://github.com/jorenvh/laravel-share
 - Para la extracción de datos vía [web scrapping](https://es.wikipedia.org/wiki/Web_scraping) de los sitios de Concurso Digital y Prebases se utiliza el paquete: Laravel Roach PHP - [https://roach-php.dev/docs/laravel/](https://roach-php.dev/docs/laravel/). Para abrir una línea de comando interactiva usar: `php artisan roach:shell https://roach-php.dev/docs/introduction` O para ejecutar un spider específico (desde el directorio raíz del proyecto), por ejemplo: `vendor/bin/roach roach:run App\\Spiders\\PrebasesOportunidadesSpider`
 - Panel de administración de Mi Tiendita Virtual (para catálogos y configuración de la plataforma): Filament - [https://filamentphp.com](https://filamentphp.com)
 - Tokens para APIs: Laravel Sanctum - [https://laravel.com/docs/9.x/sanctum#issuing-api-tokens](https://laravel.com/docs/9.x/sanctum#issuing-api-tokens)
 
-## MTV en Docker
-
-- Instrucciones para instalar Docker y Docker Compose en Linux: [https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
-  - En Windows [https://docs.docker.com/desktop/install/windows-install/](https://docs.docker.com/desktop/install/windows-install/) 
-- Desde la carpeta raíz del proyecto, ir al subdirectorio `scripts` y ejecutar `sh docker-build.sh` para generar la imagen de Docker y levantar los contenedores del proyecto
-	- En Windows: Abrir el archivo docker-build.sh y comentar o descomentar líneas según el sistema operativo (Windows/Linux). Ejecutar en una terminal (preferiblemente PowerShell) como Administrador
-- Para acceder al contenedor de PostgreSQL y la base de datos de MTV con psql: `docker compose exec postgres psql -U saf_mtv_dbuser -W -d saf_mtv`
-- Para correr un servidor de correo de desarrollo local para pruebas (Mailhog): `docker run --name safmtv-mailhog --network="saf-mtv_safmtv" -p 8025:8025 -p 1025:1025 -d mailhog/mailhog`
-  - Usar el ID del contenedor como host en el archivo .env (`MAIL_HOST`)
-
 ## Producción y carga de catálogos y datos predefenidos:
 
 - Consideraciones para el despliegue en ambiente de producción (primera instalación):
   - Generar llave de aplicación, ejecutar: `php artisan key:generate` 
+  - Ajustes al archivo .env en producción:
+    - APP_URL debe apuntar al dominio correcto
+    - APP_DEBUG=false
+    - TEST_MODE=false
+    - DB_DATABASE, DB_USERNAME, DB_PASSWORD deben apuntar a valores de producción (no los defaults de desarrollo)
   - Precargado de fuentes, ejecutar: `php artisan google-fonts:fetch`
   - `database/seeders/DatabaseSeeder.php` (ejecutar `php artisan db:seed`) carga catálogos de MTV
   - `database/seeders/CatCiudadanoCABMSSeeder.php` (ejecutar `php artisan db:seed --class=CatCiudadanoCABMSSeeder`) carga los catálogos relacionados con el catálogo CABMS (importados previamente de un archivo Excel a CSV y luego a SQL)
@@ -106,13 +112,14 @@
   - La tabla `cat_ciudadano_cabms` se carga solamente para crear y llenar las tablas `cat_sectores`, `cat_categorias_scian` y `cat_cabms`, pero puede ser eliminada después para ahorrar espacio
   - La carga predeterminada de datos del Calendario de compras desde un archivo Excel se ejecuta mediante un seeder: `php artisan db:seed --class=ComprasProcedimientosSeeder`
   - La carga predeterminada de datos de preguntas frecuentes desde un archivo Excel se ejecuta mediante un seeder: `php artisan db:seed --class=PreguntasFrecuentesSeeder`
-  - Para generar token de autenticación para el usuario super administrador (mtvadmin) se puede usar el comando `php artisan mtv:gen-token {user_id}` 
+  - Para generar token de autenticación para el usuario super administrador (mtvadmin) se puede usar el comando `php artisan mtv:gen-token {user_id}`
+  - Ver más información acerca de los seeders en la documentación del proyecto en la carpeta **[docs](docs/funcionalidad/README.md)**
 
 ### Integraciones de MTV con otros sistemas:
 
 - [OK] Consulta de estatus de RFC en **Padrón de Proveedores**. Utilizado desde MTV para verificar si un RFC a utilizar ya existe en Padrón de Proveedores
 
-- [OK] Consulta de datos del CURP desde el endpoint interno de datos de Renapo
+- [OK] Consulta de datos del CURP desde el endpoint interno de datos de RENAPO. Esta consulta es necesaria para completar los datos completos (nombre completo, fecha de nacimiento, etc.) del proveedor (persona física), una vez que ha proporcionado su CURP.
 
 - [Pendiente] Consulta de datos de Perfil de Negocio y Contacto de un proveedor en **Padrón de Proveedores**. Consulta de datos de proveedor registrado en Padrón de Proveedores para crear y sincronizar la cuenta del proveedor durante el login en MTV
 
@@ -131,5 +138,5 @@
 ### Documentación e información relacionada con el repositorio del proyecto
 
 - Para consultar la lista de tareas abiertas y pendientes, ver: https://gitlab.com/saf-mtv/saf-mtv/-/issues
-- ***Consultar documentación adicional sobre el proyecto en la carpeta `docs` de este proyecto***
+- ***Consultar documentación adicional sobre el proyecto en la carpeta `docs` de este repositorio***
   
