@@ -5,9 +5,9 @@
 <tr>
 <td cellpadding="0" cellspacing="0" align="left">
 <a href="{{ $url }}" style="text-decoration: none">
-<img src="{{ asset('images/logos/gobierno_cdmx_con.svg') }}" style="width: auto; height: 45px; margin-right: 3px"
+<img src="{{ asset('images/logos/LOGO_SAF_2021-01-min.png') }}" style="width: auto; height: 45px;"
  alt="Logo CDMX">
-<img src="{{ asset('images/logos/tianguis_digital.svg') }}" style="width: auto; height: 45px;"
+<img src="{{ asset('images/logos/tianguis_digital.png') }}" style="width: auto; height: 25px; vertical-align: super;"
  alt="Logo Tianguis Digital">
 </a>
 </td>
