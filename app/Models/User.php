@@ -6,6 +6,7 @@ use App\Notifications\RegistroVerificacionNotification;
 use App\Notifications\ResetPasswordNotification;
 use Carbon\Carbon;
 use Cmgmyr\Messenger\Traits\Messagable;
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,7 +18,7 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * Modelo que corresponde a la entidad Usuario de MTV.
  */
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
     use Messagable;
@@ -111,5 +112,16 @@ class User extends Authenticatable
     public function sendEmailVerificationNotification()
     {
         $this->notify(new RegistroVerificacionNotification());
+    }
+
+    /**
+     * Devuelve si el panel de administración es accesible para el usuario actual.
+     * Solamente el rol 'mtv-admin' tiene permiso a este módulo de la plataforma.
+     *
+     * @return bool
+     */
+    public function canAccessFilament(): bool
+    {
+        return $this->hasRole('mtv-admin');
     }
 }
