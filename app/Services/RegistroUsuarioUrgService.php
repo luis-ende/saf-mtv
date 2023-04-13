@@ -14,18 +14,23 @@ class RegistroUsuarioUrgService
         $user = null;
         $usuarioUrg = null;
         DB::transaction(function() use($usuarioUrgData, &$user, &$usuarioUrg) {
-            $usuarioUrg = UsuarioURG::create([
+            $usuarioUrgAttr = [
                 'nombre' => $usuarioUrgData['nombre'],
                 'email' => $usuarioUrgData['email'],
-            ]);
+            ];
+            if (isset($usuarioUrgData['id_urg'])) {
+                $usuarioUrgAttr['id_urg'] = $usuarioUrgData['id_urg'];
+            }
+            $usuarioUrg = UsuarioURG::create($usuarioUrgAttr);
 
             $user = User::create([
                 'rfc' => $usuarioUrgData['rfc'],
                 'name' => $usuarioUrgData['rfc'],
                 'email' => $usuarioUrgData['email'],
                 'password' => Hash::make($usuarioUrgData['password']),
-                'activo' => true,
+                'activo' => $usuarioUrgData['activo'] ?? true,
             ]);
+
             $user->assignRole('urg');
         });
 

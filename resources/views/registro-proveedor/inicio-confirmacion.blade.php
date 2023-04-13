@@ -36,7 +36,7 @@
                                         <x-input-error :messages="$errors->get('rfc')" class="mt-2"/>
                                     </div>
                                 @if($tipoPersona === \App\Models\Persona::TIPO_PERSONA_MORAL_ID)
-                                    <div class="mtv-input-wrapper basis-full basis-1/2">
+                                    <div class="mtv-input-wrapper basis-full md:basis-1/2">
                                         <input type="date" class="mtv-text-input" id="fecha_constitucion" name="fecha_constitucion"
                                                value=""
                                                required
