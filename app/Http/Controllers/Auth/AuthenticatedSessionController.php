@@ -46,7 +46,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        if (User::where('rfc', $request->input('rfc'))->value('activo') !== true) {
+        $habilitado = User::where('rfc', $request->input('rfc'))->value('activo');
+        if (!is_null($habilitado) && ($habilitado === false)) {
             return redirect()
                     ->back()
                     ->with('warning', 'No es posible iniciar sesión. La cuenta se encuentra desactivada.');
