@@ -3,6 +3,7 @@
 use App\Http\Controllers\DirectorioController;
 use App\Http\Controllers\EscritorioMTVController;
 use App\Http\Controllers\PreguntasFrecuentesController;
+use App\Http\Controllers\RegistroURGController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProductosController;
@@ -62,6 +63,13 @@ Route::post('persona/{persona}/contactos', [PersonaController::class, 'storeCont
 
 Route::get('/productos/{producto}/cabms_categorias', [ProductosController::class, 'obtieneProductoCABMSCategorias'])
     ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('productos-cabms-categorias.show');
+
+Route::controller(RegistroURGController::class)->group(function () {
+    Route::middleware(['guest'])->group(function() {
+        Route::get('/registro-urg', 'show')->name('registro-urg.show');
+        Route::post('/registro-urg', 'store')->name('registro-urg.store');
+    });
+});
 
 Route::controller(RegistroMTVController::class)->group(function () {
     Route::middleware(['guest'])->group(function() {

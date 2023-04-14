@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre', 160);
             $table->string('email');
+            $table->foreignId('id_unidad_compradora')->nullable()->constrained('cat_unidades_compradoras');
             $table->timestamps();
         });
     }

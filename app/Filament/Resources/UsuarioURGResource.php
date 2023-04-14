@@ -5,11 +5,16 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UsuarioURGResource\Pages;
 use App\Filament\Resources\UsuarioURGResource\RelationManagers;
 use App\Models\User;
+use App\Repositories\OportunidadNegocioRepository;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -28,9 +33,37 @@ class UsuarioURGResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $opnRepo = new OportunidadNegocioRepository();
+        $catUnidadesCompradoras = $opnRepo->obtieneInstitucionesCompradoras()
+            ->pluck('nombre', 'id');
+
+        // Todos los campos estáh deshabilitados para edición ya que por el momento
+        // el formulario sirve solamente para activar o desactivar usuarios.
+
         return $form
             ->schema([
-                //
+                TextInput::make('rfc')
+                    ->label('RFC')
+                    ->disabled()
+                    ->required(),
+                Toggle::make('activo')
+                    ->label('Usuario activo')
+                    ->onColor('success')
+                    ->columnSpanFull(),
+                Forms\Components\Section::make('Usuario URG')
+                    ->relationship('urg')
+                    ->schema([
+                        TextInput::make('nombre')
+                            ->label('Nombre completo')
+                            ->disabled(),
+                        TextInput::make('email')
+                            ->label('Correo electrónico')
+                            ->disabled(),
+                        Select::make('id_unidad_compradora')
+                            ->label('Unidad compradora')
+                            ->options($catUnidadesCompradoras)
+                            ->disabled()
+                    ]),
             ]);
     }
 
@@ -38,10 +71,13 @@ class UsuarioURGResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('rfc'),
+                TextColumn::make('rfc')
+                    ->label('RFC'),
                 TextColumn::make('urg.nombre')
                     ->label('Nombre'),
-                TextColumn::make('last_login'),
+                TextColumn::make('last_login')
+                    ->label('Último acceso'),
+                IconColumn::make('activo')->boolean(),
             ])
             ->filters([
                 //
@@ -65,13 +101,14 @@ class UsuarioURGResource extends Resource
     {
         return [
             'index' => Pages\ListUsuarioURGS::route('/'),
-            'create' => Pages\CreateUsuarioURG::route('/create'),
+            //'create' => Pages\CreateUsuarioURG::route('/create'),
             'edit' => Pages\EditUsuarioURG::route('/{record}/edit'),
         ];
     }
 
     public static function getEloquentQuery(): Builder
     {
+        // Filtro para obtener solamente usuarios URG
         return parent::getEloquentQuery()->whereNotNull('id_urg');
     }
 }

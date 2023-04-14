@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\AuthenticateWithAccessTokenTrait;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +46,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+        $habilitado = User::where('rfc', $request->input('rfc'))->value('activo');
+        if (!is_null($habilitado) && ($habilitado === false)) {
+            return redirect()
+                    ->back()
+                    ->with('warning', 'No es posible iniciar sesión. La cuenta se encuentra desactivada.');
+        }
+
         $request->authenticate();
 
         $request->session()->regenerate();
