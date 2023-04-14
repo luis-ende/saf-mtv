@@ -278,7 +278,6 @@ class ProductoRepository
                                         ->limit(10)
                                         ->get();
 
-        // TODO Obtener información en join!
         $productos->each(function (&$producto) {
             $producto['foto_info'] = $producto->getFirstMedia('fotos');
         });

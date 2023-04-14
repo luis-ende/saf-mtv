@@ -11,14 +11,7 @@
                 </div>
             </div>
             <div class="self-center">
-                <div class="flex flex-row space-x-4 mt-2">
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                    <span class="w-1 h-1 inline-block bg-mtv-gold-light"></span>
-                </div>
+                <x-global.puntos-block />
             </div>
             <div class="mt-3 text-lg text-mtv-text-gray text-center">
                 <span class="font-bold text-xl text-mtv-secondary my-4 inline-block flowchart-message">

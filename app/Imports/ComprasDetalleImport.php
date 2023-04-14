@@ -38,7 +38,6 @@ class ComprasDetalleImport implements ToModel, WithHeadingRow
             return mb_strtolower($uc->nombre) === mb_strtolower($nombreURG);
         });
 
-        // TODO Agregar tipo de contratación 'SERVICIO INTEGRAL'?
         $tipoContrBienesId = $this->tiposContratacion->where('tipo', '=', 'Adquisición de Bienes')->value('id');
         $tipoContrServiciosId = $this->tiposContratacion->where('tipo', '=', 'Prestación de Servicios')->value('id');
 

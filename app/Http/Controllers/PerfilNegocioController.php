@@ -34,7 +34,6 @@ class PerfilNegocioController extends Controller
 
     public function update(PerfilNegocioRequest $request, PerfilNegocioRepository $perfilNegocioRepository)
     {
-        // TODO: Implementar TRANSACCION
         $persona = Auth::user()->persona;
 
         $personaDatos = $request->safe()->only([

@@ -288,12 +288,10 @@ class CatalogoProductosController extends Controller
                 case RegistroProductosService::IMPORTACION_FASE_VISTA_PREVIA:
                     $archivoImportacionPath = $catalogoProductos->getFirstMedia('importaciones');
                     if ($archivoImportacionPath) {
-                        // TODO: Implementar barra de progreso de carga, el proceso puede tardar si el archivo contiene muchas imágenes y renglones
                         $archivoImportacionPath = $archivoImportacionPath->getPath();
                         Excel::import(new ProductosImport($catalogoId), $archivoImportacionPath);
                         $productos = $catalogoProductos->productos;
                         foreach ($productos as $producto) {
-                            // TODO: Cachar errores de descarga de fotos (y verificar desde paso previo)
                             if (!empty($producto->foto_url_1)) {
                                 $producto->addMediaFromUrl($producto->foto_url_1)->toMediaCollection('fotos');
                             }
@@ -323,8 +321,6 @@ class CatalogoProductosController extends Controller
 
     public function storeCargaProductosProducto(Request $request, Producto $producto, ProductoRepository $productoRepo)
     {
-        // TODO: Verificar que el producto pertenece al catálogo del usuario. Regresar error 403 si no
-
         try {
             $this->validate($request, [
                 'id_cabms' => 'integer',
@@ -335,7 +331,6 @@ class CatalogoProductosController extends Controller
                 'producto_fotos_eliminadas' => 'nullable|string',
             ]);
         } catch (ValidationException $e) {
-            // TODO: Verificar si devuelve errores en el formato correcto
             return [$e->validator];
         }
 
