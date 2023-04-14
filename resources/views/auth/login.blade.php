@@ -19,7 +19,7 @@
                     <!-- RFC -->
                     <x-rfc-validacion-input id="rfc"
                                             name="rfc"
-                                            :modo="__('login')"
+                                            modo="login"
                                             :value="old('rfc')" />
                     <x-input-error :messages="$errors->get('rfc')" class="mt-2" />
 

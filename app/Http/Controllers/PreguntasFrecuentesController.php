@@ -53,15 +53,15 @@ class PreguntasFrecuentesController extends Controller
 
         $mailableToUser = new NotificacionFormularioContactoUsuario();
 
-        //try {
+        try {
             Mail::to(env('MAIL_FROM_ADDRESS'))->send($mailableToAdmin);
             Mail::to($request->input('email'))->send($mailableToUser);
 
             return redirect()->back()->with('success', 'Mensaje enviado exitosamente.');
-        /*} catch(\Exception $e) {
+        } catch(\Exception $e) {
             return redirect()->back()
-                            ->with('error', 'Error al enviar correo. No fue posible enviar el mensaje.')
-                            ->withInput();
-        }*/
+                             ->with('error', 'Error al enviar correo. No fue posible enviar el mensaje.')
+                             ->withInput();
+        }
     }
 }
