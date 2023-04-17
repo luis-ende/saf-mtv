@@ -38,7 +38,7 @@
                                 :active="request()->routeIs('directorio.index')">
                         Directorio CDMX
                     </x-nav-link>
-                    <x-nav-link :href="'#'">
+                    <x-nav-link href="https://tianguisdigital.finanzas.cdmx.gob.mx/" target="_blank">
                         Padrón de Proveedores
                     </x-nav-link>
                     <x-menus.mtv-catalogo-menu-item />

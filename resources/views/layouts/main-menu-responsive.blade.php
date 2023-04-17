@@ -28,7 +28,7 @@
                                :active="request()->routeIs('directorio.index')">
             Directorio CDMX
         </x-responsive-nav-link>
-        <x-responsive-nav-link href="#">
+        <x-responsive-nav-link href="https://tianguisdigital.finanzas.cdmx.gob.mx/" target="_blank">
             Padrón de Proveedores
         </x-responsive-nav-link>
         <x-responsive-nav-link :href="route('buscador-mtv.index')">
