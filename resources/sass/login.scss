@@ -32,7 +32,6 @@
 
 .login-page {
     display: flex;
-    padding-top: 50px;
 }
 
 .login-page h1 {
@@ -45,10 +44,10 @@
 }
 
 .login-page h2 {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: normal;
     color: #235b4e;
-    padding: 0px 100px 20px 100px;
+    padding: 0 220px 20px 220px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -76,8 +75,8 @@
 }
 
 .recover-password {
-    font-size: 10px;
-    font-weight: 600px;
+    font-size: 0.7rem;
+    font-weight: 600;
     color: #235b4e;
     text-decoration: none;
 }
@@ -94,7 +93,7 @@
 
 .remember {
     color: #98989a;
-    font-size: 10px;
+    font-size: 0.7rem;
     font-weight: 600;
     margin-left: 5px;
 }
@@ -106,17 +105,13 @@
 
 .register {
     text-align: center;
-    border-bottom: 2px solid #bc955c;
-    border-style: dotted;
-    margin-top: -20px;
-    padding-bottom: 20px;
     color: #6f7271;
-    font-size: 12px;
+    font-size: .8rem;
 }
 
 .register-link {
     font-size: 16px;
-    font-weight: 600px;
+    font-weight: 600;
     color: #235b4e;
     text-decoration: none;
     padding-bottom: 20px;
@@ -132,12 +127,11 @@
 
 .register-providers p {
     color: #bc955c;
-    font-size: 12px;
+    font-size: .8rem;
 }
 
 .register-providers a {
-    font-size: 16px;
-    font-weight: 600px;
+    font-weight: 600;
     color: #bc955c;
     text-decoration: none;
 }
@@ -161,4 +155,12 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+}
+
+.dotted-spaced {
+    height: 10px;
+    background-image: linear-gradient(to right, #98989a 10%, rgba(255, 255, 255, 0) 0%);
+    background-position: top;
+    background-size: 15px 2px;
+    background-repeat: repeat-x;
 }

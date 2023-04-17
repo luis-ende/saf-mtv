@@ -1,16 +1,15 @@
-<x-app-layout>
+<x-app-layout :with_background_color="false" :show_menu_bar="false" :show_main_menu="false">
     @section('page_title', 'Inicio de sesión Proveedor')
-<!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+    <x-auth-session-status class="mb-4" :status="session('status')" />
     <div class="login-page">
         <div class="login-page-left">
-            <!-- Aquí va la imagen que falta -->
+            <img src="{{ asset('images/ilustracion_login.svg') }}" alt="Imagen de Mi Tiendita Virtual">
         </div>
 
         <div class="login-page-rigth">
-                <h1>Bienvenido a Mi Tiendita Virtual</h1>
-                <h2>Has llegado al espacio donde podrás crear tu catálogo de productos y dar seguimiento a las convocatorias del Gobierno de la Ciudad de México</h2>
-            
+            <h1>Bienvenido a Mi Tiendita Virtual</h1>
+            <h2>Has llegado al espacio donde podrás promover tu negocio y encontrar oportunidades para venderle al Gobierno de la Ciudad de México.</h2>
+
             @php($queryParams = count(request()->query()) > 0 ? '?' . http_build_query(request()->query()) : '')
             <div class="form-register">
                 <form method="POST" action="{{ route('login') . $queryParams }}">
@@ -36,31 +35,32 @@
                     <div class="remember-password">
                         <label for="remember_me" class="inline-flex items-center">
                             <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                            <span class="remember">{{ __('Recordar credenciales') }}</span>
+                            <span class="remember">Recordar credenciales</span>
                         </label>
 
                         @if (Route::has('password.request'))
                             <a class="recover-password" href="{{ route('password.request') }}">
-                                {{ __('¿Olvidaste tu contraseña?') }}
+                                ¿Olvidaste tu contraseña?
                             </a>
                         @endif
                     </div>
 
-                    <div class="button-content">
-                        <button id="btn_login" class="btn-signUp">
-                            Ingresar
-                        </button>
-                    </div>
+                    <button id="btn_login" class="mtv-button-secondary">
+                        Ingresar
+                    </button>
                 </form>
-                <p class="font-bold my-3 register">¿Aún no estás regístrado?
-                    <br>
-                    <a class="register-link" href="{{ route('registro-inicio') }}">Regístrate</a>
-                </p>
-            <div class="register-providers">
-                    <p class="font-bold my-3">¿Estás registrado en el padrón de proveedores?
+                <div class="mt-20">
+                    <p class="register">¿Aún no tienes tu cuenta?
                         <br>
-                        <a href="https://tianguisdigital.finanzas.cdmx.gob.mx/login">ingresa aquí.</a>
+                        <a class="register-link font-bold" href="{{ route('registro-inicio') }}">Regístrate</a>
                     </p>
+                    <div class='dotted-spaced'></div>
+                    <div class="register-providers my-3">
+                        <p class="my-0">¿Estás registrado en el padrón de proveedores?</p>
+                        <a href="https://tianguisdigital.finanzas.cdmx.gob.mx/login"
+                           class="mtv-link-gold font-bold">Ingresa aquí</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
