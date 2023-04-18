@@ -75,6 +75,8 @@ class UsuarioURGResource extends Resource
                     ->label('RFC'),
                 TextColumn::make('urg.nombre')
                     ->label('Nombre'),
+                TextColumn::make('urg.email')
+                    ->label('Email'),
                 TextColumn::make('last_login')
                     ->label('Último acceso'),
                 IconColumn::make('activo')->boolean(),
