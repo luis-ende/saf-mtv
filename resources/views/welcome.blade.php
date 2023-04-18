@@ -301,7 +301,7 @@
             </p>
             <button class=" hover hover:text-[#9f2241] hover:bg-[#ddc9a3]" type="button"
                 onclick="window.location='{{ route('registro-inicio') }}'">Regístrate aquí</button>
-            <p class="how-part-information-title">¿Por qué ser parte de Mi Tiendita Virtual</p>
+            <p class="how-part-information-title">¿Por qué ser parte de Mi Tiendita Virtual?</p>
         </div>
         <div class="why-be-part-of">
             <div class="why-be-part-of-container">

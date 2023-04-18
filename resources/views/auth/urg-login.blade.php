@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :with_background_color="false">
     <x-auth-session-status class="mb-4" :status="session('status')" />
     <div class="min-h-screen bg-white">
         <div class="flex flex-col items-center justify-center my-20 bg-white px-3">
