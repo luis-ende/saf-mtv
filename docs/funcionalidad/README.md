@@ -1,4 +1,4 @@
-# Documentacion de características por módulo de Mi Tiendita Virtual
+# Documentacion técnica de características por módulo de Mi Tiendita Virtual
 
 ## Catálogos
 
@@ -46,6 +46,9 @@ La carga inicial de los catálogos necesarios para el funcionamiento de MTV se r
   
 ### Registro de usuarios URG
 
+- Registro manual (`/registro-urg`)
+  - Después de registrarse como usuario URG es necesario que el usuario administrador de MTV active la nueva cuenta desde el Módulo de administración de MTV (sección Usuarios URG) para que el usuario pueda loguearse a MTV con la cuenta creada 
+  
 - Registro de usuarios URG por API endpoint (POST) `/api/usuarios-urg/register` (Ver `routes/api.php`)
     - Usar token de autenticación del usuario super administrador: `mtv-admin`
     - Endpoint devuelve el token de autenticación generado para el usuario registrado en MTV
@@ -64,6 +67,12 @@ La carga inicial de los catálogos necesarios para el funcionamiento de MTV se r
 
 - Inicio de sesión de usuarios URG o proveedores con token de acceso:
   - `\urg-login?access_token=[token]` o `\login?access_token=[token]`
+
+- Un usuario de MTV puede tener los siguientes roles:
+  - `proveedor` - Rol de proveedor registrado en MTV
+  - `urg` - Rol de usuario de URG registrado en MTV
+  - `admin` - Rol de usuario con permisos de administrador (algunas URG podrían tener este rol también)
+  - `mtv-admin` - Rol de super usuario con permisos para el Panel de administración de MTV 
 
 ## Registro de productos
 
@@ -94,9 +103,16 @@ La carga inicial de los catálogos necesarios para el funcionamiento de MTV se r
 
 ### Buscador de productos
 
+- Página pública, accesible para todo tipo de usuarios (proveedores, URG, etc.)
+
 ### Buscador de proveedores
 
+- Página pública, accesible para todo tipo de usuarios (proveedores, URG, etc.)
+- La vista de resultados de esta página consulta los estatus de constancias desde Padrón de Proveedores 
+
 ### Favoritos (página)
+
+- Página accesible únicamente para usuarios con rol de URG.
 
 ## Buscador de oportunidades
 
@@ -131,7 +147,7 @@ La carga inicial de los catálogos necesarios para el funcionamiento de MTV se r
 
 ## Escritorio del proveedor
 
-- El escritorio carga tareas de objetivos de la base de datos
+- El escritorio carga tareas de objetivos de la base de datos. Las tareas se pueden crear, editar o eliminar en el módulo de administración de MTV 
 - Los banners informativos se cargan desde la base de datos y se pueden modificar desde el módulo administrador, por default las imágenes de los banners se almacenan en la carpeta `storage/app/public/images/banners`
 
 ## Módulo de administración de MTV
@@ -146,4 +162,5 @@ La carga inicial de los catálogos necesarios para el funcionamiento de MTV se r
 - Al solicitar restablecemiento de contraseña en url `/forgot-password`. Ver `app/Http/Controllers/Auth/PasswordResetLinkController.php : store`
 - Después de reestablecer la contraseña en url `/reset-password/{token}`. Ver `app/Http/Controllers/Auth/NewPasswordController.php : store`
 - Al solicitar información en la página de producto o perfil de negocio de proveedor (opción habilitada sólo para usuarios URG). Se envía un mensaje al correo del proveedor y otro al correo del usuario URG logueado
-- Al enviar un mensaje por medio del formulario de contacto de la página de Preguntas frecuentes `/preguntas-frecuentes`. Se envía un correo a la dirección de correo proporcionada por el usuario en el formulario, y se envía otro correo a la cuenta de administrador de MTV (ver correo configurado, variable `MAIL_FROM_ADDRESS`, en el archivo .env ) 
+- Al enviar un mensaje por medio del formulario de contacto de la página de Preguntas frecuentes `/preguntas-frecuentes`. Se envía un correo a la dirección de correo proporcionada por el usuario en el formulario, y se envía otro correo a la cuenta de administrador de MTV (ver correo configurado, variable `MAIL_FROM_ADDRESS`, en el archivo .env )
+- Después del registro exitoso de cuenta de Unidad Responsable de Gasto se envía un correo al usuario. Ver `RegistroURGController.php : store`

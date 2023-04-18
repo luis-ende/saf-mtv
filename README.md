@@ -114,6 +114,7 @@
   - La carga predeterminada de datos de preguntas frecuentes desde un archivo Excel se ejecuta mediante un seeder: `php artisan db:seed --class=PreguntasFrecuentesSeeder`
   - Para generar token de autenticación para el usuario super administrador (mtvadmin) se puede usar el comando `php artisan mtv:gen-token {user_id}`
   - Ver más información acerca de los seeders en la documentación del proyecto en la carpeta **[docs](docs/funcionalidad/README.md)**
+  - Comandos disponibles para tareas comunes de MTV: Ver directorio `Console/Commands`
 
 ### Integraciones de MTV con otros sistemas:
 

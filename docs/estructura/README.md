@@ -10,7 +10,7 @@
 ## Plantillas Blade y componentes Front-end
 
 - Las plantillas Blade utilizan [componentes](https://laravel.com/docs/9.x/blade#components) como se explica en la documentación oficial. Todos los componentes del proyecto están ubicados en la carpeta `resources/views/components`, algunos componentes tienen una clase asociada, dichas clases se encuentran en `app/View/Components`  
-- Bootstrap (framework CSS) está incluído en el proyecto pero se usan únicamente algunos estilos y el componente de acordeón colapsable en la página de Perfil de Negocio de proveedor
+- Bootstrap (framework CSS) está incluído en el proyecto pero se usan únicamente algunos estilos y los componentes de acordeón colapsable en la página de Perfil de Negocio de proveedor y carrusel en la página principal
 - **Importante:** JQuery no está cargado en el proyecto ya que se utilizan Alpine.js y vanilla JavaScript
 - Para los estilos de páginas y componentes del front-end se utilizan sobre todo estilos de Tailwind CSS y JavaScript con la librería [Alpine.js](https://alpinejs.dev/), salvo algunas páginas (por ejemplo, la página principal) en donde se usan estilos CSS directos y vanilla JavaScript
 - En lugar de clases para todos los elementos de la aplicación se ha optado por usar componentes Blade que encapsulan estilos (CSS) y funcionalidad (JavaScript)
