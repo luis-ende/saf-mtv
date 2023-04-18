@@ -311,7 +311,7 @@
         padding-left: 5px;
     }
 
-    & button {
+    & a {
         color: $gold;
         font-size: 1.2rem;
         font-weight: 700;
@@ -319,6 +319,7 @@
         border-radius: 18px;
         background-color: $beige;
         text-align: center;
+        text-decoration: none;
         box-shadow: 2px 2px #af9467;
     }
 
