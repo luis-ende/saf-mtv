@@ -33,7 +33,7 @@
                             <select id="id_urg" name="id_urg" class="mtv-text-input" required>
                                 <option value="">Selecciona URG</option>
                                 @foreach($unidades_compradoras as $uc)
-                                    <option value="{{ $uc->id }}" @selected($uc->id == old('id_urg'))>
+                                    <option class="uppercase" value="{{ $uc->id }}" @selected($uc->id == old('id_urg'))>
                                         {{ $uc->nombre }}
                                     </option>
                                 @endforeach
