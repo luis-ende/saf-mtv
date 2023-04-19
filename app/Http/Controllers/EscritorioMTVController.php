@@ -8,7 +8,6 @@ use App\Repositories\CalendarioComprasRepository;
 use App\Repositories\ObjetivoTareaRepository;
 use App\Repositories\OportunidadesNotificacionesRepository;
 use App\Repositories\OportunidadNegocioRepository;
-use App\Repositories\PersonaRepository;
 use App\Repositories\ProductoRepository;
 use App\Repositories\UsuariosMensajesRepository;
 use App\Services\ObjetivosTareasService;

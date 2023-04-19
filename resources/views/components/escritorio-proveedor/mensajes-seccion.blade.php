@@ -40,7 +40,7 @@
                 <div x-show="checkView(index + 1)" class="mb-3">
                     <span class="block font-bold text-mtv-secondary" x-text="mensaje['user_name']"></span>
                     <span class="block text-mtv-text-gray" x-text="mensaje['subject']"></span>
-                    <span class="block text-mtv-text-gray flex flex-row">
+                    <span class="text-mtv-text-gray flex flex-row">
                         <span x-text="mensaje['fecha']"></span>
                         @svg('entypo-dot-single', ['class' => 'w-4 h-4 self-center mx-1'])
                         <span x-text="mensaje['hora']"></span>

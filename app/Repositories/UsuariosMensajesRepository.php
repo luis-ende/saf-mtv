@@ -19,7 +19,10 @@ class UsuariosMensajesRepository
                     ->with('participants')
                     ->get();
 
-        return $threads->map(function($t) use($userId) {
+        $opnRepo = new OportunidadNegocioRepository();
+        $catUnidadesCompradoras = $opnRepo->obtieneInstitucionesCompradoras();
+
+        return $threads->map(function($t) use($userId, $catUnidadesCompradoras) {
             // Se asume que el thread tiene solamente de dos participantes, el proveedor y un usuario URG.
             $threadParticipantUrg = $t->participants->first(function ($p) use($userId) {
                 return $p->id !== $userId;
@@ -27,7 +30,13 @@ class UsuariosMensajesRepository
             $usuarioUrg = User::find($threadParticipantUrg->user_id);
             $nombreUrg = '';
             if ($usuarioUrg->urg) {
+                // Mostrar nombre de usuario por default o nombre de unidad compradora si está asignado
                 $nombreUrg = $usuarioUrg->urg->nombre;
+                $unidadCompradoraId = $usuarioUrg->urg->id_unidad_compradora;
+                if ($unidadCompradoraId) {
+                    $uc = $catUnidadesCompradoras->firstWhere('id', $unidadCompradoraId);
+                    $nombreUrg = $uc->nombre;
+                }
             }
 
             return [
