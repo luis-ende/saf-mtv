@@ -13,6 +13,7 @@ La carga inicial de los catálogos necesarios para el funcionamiento de MTV se r
 - Catálogos para oportunidades de negocio: 
   - Capítulos (grandes rubros de gastos): `database/seeders/CatCapitulosSeeder.php`
   - Instituciones compradoras: `database/seeders/CatUnidadesCompradorasSeeder.php`
+    - Este catálogo es utilizado por Usuarios URG (urg_usuarios), Oportunidades de negocio (oportunidades_negocio), y Compras programadas (compras_procedimientos)  
   - Tipos de contratación: `database/seeders/CatTiposContratacionSeeder.php`
   - Métodos de contratación: `database/seeders/CatMetodosContratacionSeeder.php`
   - Etapas de procedimientos: `database/seeders/CatEtapasProcedimientoSeeder.php`
@@ -119,7 +120,9 @@ La carga inicial de los catálogos necesarios para el funcionamiento de MTV se r
 - Para cargar la información del buscador de oportunidades, como por ejemplo registros de convocatorias y prebases, se utilizan seeders (`database/seeders/OportunidadesNegocioSeeder.php`) y servicios que pueden ser sustituidos para consumir la información desde otras fuentes de datos (p.e., un API endpoint).
 - Para que estos seeders alimenten la base de datos de MTV con oportunidades de negocio se debe correr un proceso periódicamente (cronjob o scheduled task) que los ejecute.
 - El siguiente diagrama muestra el flujo de información desde las fuentes de datos para oportunidades de negocio de MTV:
-[Insertar diagramas de flujo de información entre sistemas]
+
+![Integraciones](mtv_oportunidades_negocio_integraciones.png)
+
 - Cada oportunidad de negocio tiene un identificador único en MTV (ver tabla `oportunidades_negocio`) que sirve a su vez también para permitir a los proveedores guardar oportunidades (como favoritos en la tabla `markable_bookmarks`).     
 
 ### Notificaciones (página)

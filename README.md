@@ -51,6 +51,7 @@
     - `psql -v ON_ERROR_STOP=1 -h homestead -U saf_mtv_dbuser -W -d saf_mtv < database/backups/mtv_saf_db_20Feb2023.sql`
 
 - No olvidar copiar la carpeta `storage`, en donde se guardan imágenes y documentos
+- Con Homestead se pueden revisar los **correos** salientes de MTV (con la configuración predeterminada de desarrollo) en la url: `saf-mtv.test:8025` 
 
 **IMPORTANTE:** El archivo .env contiene las variables TEST_MODE, API_URL_BUSQUEDA_RFC_PADRON_PROVEEDORES, API_URL_BUSQUEDA_CURP, las cuales apuntan a endpoints de prueba. En modo producción TEST_MODE debe ser `false` y las URLs de las APIs deben apuntar a URLs en producción.
 
@@ -114,7 +115,7 @@
   - La carga predeterminada de datos de preguntas frecuentes desde un archivo Excel se ejecuta mediante un seeder: `php artisan db:seed --class=PreguntasFrecuentesSeeder`
   - Para generar token de autenticación para el usuario super administrador (mtvadmin) se puede usar el comando `php artisan mtv:gen-token {user_id}`
   - Ver más información acerca de los seeders en la documentación del proyecto en la carpeta **[docs](docs/funcionalidad/README.md)**
-  - Comandos disponibles para tareas comunes de MTV: Ver directorio `Console/Commands`
+  - Comandos disponibles para tareas comunes de MTV (por ejemplo, generar tokens de acceso para usuarios): Ver directorio `Console/Commands`
 
 ### Integraciones de MTV con otros sistemas:
 
@@ -127,6 +128,7 @@
 - [Pendiente] Consulta de estatus de contratación de un grupo de RFCs en **Padrón de Proveedores**. Consulta mediante API que recibe varios RFC de proveedores y devuelve los estatus de contratación de cada uno (ya sea que existan o no)
 
 - [Pendiente] API Endpoint en MTV para crear y actualizar cuentas de URGs mediante información del portal de **Acceso Único**. De tal manera que los usuarios de URGs autorizados puedan tener acceso a MTV
+  - De manera temporal se creó el registro de cuentas para usuarios de URGs directamente en MTV
 
 - Integraciones para el Buscador de Oportunidades de Negocio: 
   - [Pendiente] Consulta de convocatorias abiertas desde el portal de **Concurso Digital** [https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas](https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas) y [https://brandmestudio-test.com/contrataciones-abiertas](https://brandmestudio-test.com/contrataciones-abiertas)
@@ -135,9 +137,11 @@
   - [Pendiente] Consulta de datos de precotizaciones desde el portal de **Precotizaciones** [https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login](https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login) y PAAAPS (Programa Anual de Adquisiciones, Arrendamientos y Prestación de Servicios)
 
   - En MTV la tabla `oportunidades_negocio` concentra todos los registro provenientes de las diferentes plataformas. Para la extracción de información se utilizan las clases/servicio ubicadas en `app/Services/OportunidadesNegocio`, las cuales transforman los registros de la fuente a oportunidad de negocio. Para extraer la información se utilizan seeders. Por ejemplo, el seeder `database/seeders/OportunidadNegocioSeeder.php` hace uso del servicio para importar convocatorias públicas del sitio de Concurso digital. Estos seeder pueden ser ejecutados con la misma regularidad (por ejemplo, una vez al día) o en diferentes tiempos según la frecuencia con que cambien los datos en la fuente.
+  - [Pendiente] Para el Calendario de compras y detalle de compras se requieren datos de compras programadas provenientes del sistema de PAAAPS  
+  - [Pendiente] Para el directorio CDMX se requieren datos de funcionarios provenientes del sistema de Acceso único
 
 ### Documentación e información relacionada con el repositorio del proyecto
 
 - Para consultar la lista de tareas abiertas y pendientes, ver: https://gitlab.com/saf-mtv/saf-mtv/-/issues
-- ***Consultar documentación adicional sobre el proyecto en la carpeta `docs` de este repositorio***
+- ***Consultar documentación específica sobre diferentes aspectos del proyecto en la carpeta `docs` de este repositorio***
   
