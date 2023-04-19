@@ -34,9 +34,15 @@
                     <span x-show="tipoBusqueda === 'proveedores'" class="font-bold text-sm md:text-xl text-mtv-secondary my-4 inline-block">
                         Encuentra proveedores registrados en Mi Tiendita Virtual
                     </span>
+                    @php
+                        $favoritos_ruta = (auth()->user()) && (auth()->user()->hasRole('urg')) ?
+                                            route('urg-productos-favoritos.index') :
+                                            route('urg-login') . '?url=/urg-productos/favoritos';
+                    @endphp
                     <span x-show="tipoBusqueda === 'productos'" class="w-3/4 inline-block text-sm">
-                        <a href="{{ route('urg-login') }}" class="underline font-bold mtv-link-gold">Inicia sesión</a> para agregar a Bienes/Servicios a tus 
-                        "<a href="{{ route('urg-login') }}" class="underline font-bold mtv-link-gold">Favoritos</a>". 
+                        <a href="{{ route('urg-login') }}" class="underline font-bold mtv-link-gold">Inicia sesión</a> para agregar a Bienes/Servicios a tus"
+                            <a href="{{ $favoritos_ruta }}"
+                               class="underline font-bold mtv-link-gold">Favoritos</a>".
                         Aplica <strong>sólo para Instituciones compradoras.</strong>
                     </span>                    
                     <span x-show="tipoBusqueda === 'proveedores'" class="w-3/4 inline-block text-sm">
