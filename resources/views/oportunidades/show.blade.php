@@ -185,10 +185,10 @@
                                     Intenta con otras palabras.
                                 </span>
                                 <span class="text-mtv-text-gray text-base">
-                                    Consulta los catálogos “<a href="#" class="mtv-link-gold font-bold underline">Rubros</a>” o “<a href="#" class="mtv-link-gold font-bold underline">Bienes y Servicios</a>”
+                                    Consulta los catálogos “<a href="http://rmsg.df.gob.mx/rmsg/modulo/dai/cabms/" class="mtv-link-gold font-bold underline" target="_blank">Rubros</a>” o “<a href="http://rmsg.df.gob.mx/rmsg/modulo/dai/cabms/" class="mtv-link-gold font-bold underline" target="_blank">Bienes y Servicios</a>”
                                 </span>
                                 <span class="text-mtv-text-gray text-base">
-                                    Visita el “<a href="#" class="mtv-link-gold font-bold  underline">Calendario de compras</a>” y consultar la programación para este año.
+                                    Visita el “<a href="{{ route('calendario-compras.index') }}" class="mtv-link-gold font-bold underline">Calendario de compras</a>” y consultar la programación para este año.
                                 </span>
                             </div>
                         @endif

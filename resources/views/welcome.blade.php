@@ -26,6 +26,7 @@
 
 
 <x-app-layout :with_background_color="false">
+    @section('page_title', 'Inicio')
     <div class="flex flex-col" style="background-color:#FFFFFF" id="back-main">
         <!-- Carousel -->
         <div class="h-96">
@@ -244,7 +245,7 @@
             <div class="for-mtv-information-container-bottom">
                 <div class="for-mtv-information-container-bottom-red">
                     <p class="for-mtv-information-title">No soy proveedor</p>
-                    <p class="for-mtv-information-notes">(No le he vendido al Gobierno de la CDMX)</span>
+                    <p class="for-mtv-information-notes">(No le he vendido al Gobierno de la CDMX)</p>
                     <ul>
                         <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Conoce cómo venderle a la CDMX.</li>
                         <li>@svg('circle-check', ['class' => 'd-inline mr-2'])Identifica los requisitos y documentos

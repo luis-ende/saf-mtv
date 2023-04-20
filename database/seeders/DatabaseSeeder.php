@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         // Roles y usuarios de prueba locales.
         // Usuarios generados sin tokens de autenticación.
         $this->creaMTVRoles();
-        $this->creaUsuarioURG();
+        //$this->creaUsuarioURG();
     }
 
     private function creaMTVRoles()
