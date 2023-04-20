@@ -33,7 +33,6 @@ INSERT INTO cat_unidades_compradoras(nombre, created_at, updated_at) VALUES ('Ce
 INSERT INTO cat_unidades_compradoras(nombre, created_at, updated_at) VALUES ('Comisión De Derechos Humanos', current_timestamp, current_timestamp);
 INSERT INTO cat_unidades_compradoras(nombre, created_at, updated_at) VALUES ('Comisión Ejecutiva de Atención a Víctimas de la Ciudad de México', current_timestamp, current_timestamp);
 INSERT INTO cat_unidades_compradoras(nombre, created_at, updated_at) VALUES ('Congreso de la Ciudad de México', current_timestamp, current_timestamp);
-INSERT INTO cat_unidades_compradoras(nombre, created_at, updated_at) VALUES ('Congreso de la Ciudad de México', current_timestamp, current_timestamp);
 INSERT INTO cat_unidades_compradoras(nombre, created_at, updated_at) VALUES ('Consejería Jurídica y de Servicios Legales', current_timestamp, current_timestamp);
 INSERT INTO cat_unidades_compradoras(nombre, created_at, updated_at) VALUES ('Consejo de Evaluación del Desarrollo Social', current_timestamp, current_timestamp);
 INSERT INTO cat_unidades_compradoras(nombre, created_at, updated_at) VALUES ('Consejo de la Judicatura', current_timestamp, current_timestamp);
