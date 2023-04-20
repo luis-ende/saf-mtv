@@ -1,15 +1,15 @@
 <footer class="text-mtv-gold-light">
     <div class="p-3 bg-mtv-secondary-dark">
-        <div class="flex flex-row">
-            <div class="basis-1/12 text-white self-center">
+        <div class="flex flex-col md:flex-row">
+            <div class="md:basis-1/12 basis-full text-white self-center">
                 @svg('logotipo_CDMX_blanco', ['class' => 'object-fill'])
             </div>
-            <div class="basis-11/12 flex flex-col">
-                <label class="w-full basis-full font-bold md:text-lg xs:text-sm text-center xs:mb-3">
+            <div class="md:basis-11/12 basis-full flex flex-col">
+                <label class="w-full basis-full font-bold md:text-base text-sm text-center my-3 md:my-0">
                     Si tienes preguntas, comentarios o problemas técnicos, queremos ayudarte. Te proporcionamos los
                     medios de contacto a tu disposición:
                 </label>
-                <div class="basis-full flex md:flex-row xs:flex-col md:space-x-5 text-center md:text-lg xs:text-sm">
+                <div class="basis-full flex md:flex-row xs:flex-col md:space-x-5 text-center md:text-base text-sm">
                     <div class="md:basis-1/4 xs:mb-3">
                         Añil 168, Centro, Iztacalco, 08400, CDMX
                     </div>
@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <div class="bg-mtv-secondary flex flex-row px-3 py-1">
+    <div class="bg-mtv-secondary flex flex-row px-3 py-1 text-xs">
         <div class="basis-1/2 flex flex-row justify-start space-x-5">
             <span>
                 <a href="#"
@@ -51,4 +51,5 @@
             <span>Diseñado y operado por la Secretaría de Administración y Finanzas</span>
             <span>{{ now()->year }} Gobierno de la CDMX</span>
         </div>
+    </div>
 </footer>

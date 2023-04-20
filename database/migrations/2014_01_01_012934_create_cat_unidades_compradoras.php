@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('cat_unidades_compradoras', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 160);
-            $table->string('clave', 6)->nullable();
             $table->timestamps();
         });
     }

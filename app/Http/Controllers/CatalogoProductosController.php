@@ -220,8 +220,7 @@ class CatalogoProductosController extends Controller
             switch($cargaFase) {
                 case RegistroProductosService::IMPORTACION_FASE_CARGA_EXCEL:
                     $this->validate($request, [
-                        /*'productos_import_file' => 'required|file|mimes:xlsx,csv|max:1000',*/
-                        'productos_import_file' => 'required|file|max:1000',
+                        'productos_import_file' => 'required|file|max:1000|mimes:xlsx',
                     ]);
 
                     // Permitir carga de archivo mientras no se haya concluido el proceso de importación
