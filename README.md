@@ -105,13 +105,13 @@
   - Precargado de fuentes, ejecutar: `php artisan google-fonts:fetch`
   - `database/seeders/DatabaseSeeder.php` (ejecutar `php artisan db:seed`) carga catálogos de MTV
   - `database/seeders/CatCiudadanoCABMSSeeder.php` (ejecutar `php artisan db:seed --class=CatCiudadanoCABMSSeeder`) carga los catálogos relacionados con el catálogo CABMS (importados previamente de un archivo Excel a CSV y luego a SQL)
-    - Antes es necesario de asegurarse que existe el archivo `database/data/cat_ciudadano_cabms.sql` que contiene los datos del catálogo. Este archivo no está en el repositorio de código, sino en un directorio de datos independiente (o bien, se puede obtener del ambiente de producción)  
+    - Antes es necesario de asegurarse que existe el archivo `database/data/cat_ciudadano_cabms.sql` que contiene los datos del catálogo. Este archivo no está en el repositorio de código, sino en un directorio de datos independiente (o bien, se puede obtener del ambiente de producción)
+    - La tabla `cat_ciudadano_cabms` se carga solamente para crear y llenar las tablas `cat_sectores`, `cat_categorias_scian` y `cat_cabms`, pero puede ser eliminada después para ahorrar espacio
   - **Para las búsquedas por palabra clave basadas en "lógica difusa" es necesario activar la extensiión `pg_trgm` en PostgreSQL.** 
     - En línea de comando con psql, revisar si la extensión ya se encuentra activada usar: `\dx`
     - Para activar la extensión: `CREATE EXTENSION pg_trgm;`
     - Más información sobre la extensión y su uso: https://www.postgresql.org/docs/current/pgtrgm.html
-  - Algunos catálogos se guardan en cache (por ejemplo, ver clase `OportunidadNegocioRepository`), se puede usar `Cache::flush()` para eliminar todos los caches, o uno específico con `Cache::forget('key')` según sea el caso
-  - La tabla `cat_ciudadano_cabms` se carga solamente para crear y llenar las tablas `cat_sectores`, `cat_categorias_scian` y `cat_cabms`, pero puede ser eliminada después para ahorrar espacio
+  - Algunos catálogos se guardan en cache (por ejemplo, ver clase `OportunidadNegocioRepository`), se puede usar `Cache::flush()` para eliminar todos los caches, o uno específico con `Cache::forget('key')` según sea el caso 
   - La carga predeterminada de datos del Calendario de compras desde un archivo Excel se ejecuta mediante un seeder: `php artisan db:seed --class=ComprasProcedimientosSeeder`
   - La carga predeterminada de datos de preguntas frecuentes desde un archivo Excel se ejecuta mediante un seeder: `php artisan db:seed --class=PreguntasFrecuentesSeeder`
   - Para generar token de autenticación para el usuario super administrador (mtvadmin) se puede usar el comando `php artisan mtv:gen-token {user_id}`
