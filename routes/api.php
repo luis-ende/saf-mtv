@@ -27,11 +27,7 @@ Route::post('/tokens/create', function (Request $request) {
 Route::post('/usuarios-urg/register', [\App\Http\Controllers\Api\UrgAuthController::class, 'registraUsuarioUrg']);
 Route::post('/proveedores/register', [\App\Http\Controllers\Api\ProveedorAuthController::class, 'registraProveedor']);
 
-//Route::post('/usuarios-urg/login', [\App\Http\Controllers\Api\AuthController::class, 'loginUsuarioUrg']);
-
 Route::get('proveedores/registro/{rfc}', [\App\Http\Controllers\Api\ProveedoresController::class, 'verificaRFCRegistro']);
-
-Route::get('proveedores/login/{rfc}', [\App\Http\Controllers\Api\ProveedoresController::class, 'verificaRFCLogin']);
 
 Route::get('contacto/asentamientos/{cp}', [\App\Http\Controllers\Api\ContactoController::class, 'consultaInfoDomicilio']);
 

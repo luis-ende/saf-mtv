@@ -19,14 +19,4 @@ class ProveedoresController extends Controller
 
         return response()->json($rfcEstatus);
     }
-
-    /**
-     * Consulta si existe RFC en Padrón de Proveedores.
-     */
-    public function verificaRFCLogin($rfc, VerificacionRFCService $verificacionRFCService): JsonResponse
-    {
-        $rfcEstatus = $verificacionRFCService->verificaRFCExisteEnPadronProveedores($rfc);
-
-        return response()->json($rfcEstatus);
-    }
 }

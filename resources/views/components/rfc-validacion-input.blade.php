@@ -1,6 +1,6 @@
 @props(['value', 'modo' => 'registro', 'disabled' => false, 'tipo_persona' => ''])
 
-@php($url = $modo === 'registro' ? '/api/proveedores/registro/' : '/api/proveedores/login/')
+@php($routeRegistroVerificaRfc = '/api/proveedores/registro/')
 @php($placeholder = $tipo_persona === App\Models\Persona::TIPO_PERSONA_FISICA_ID ? 'XXXXXXXXXX - XXX' : ($tipo_persona === App\Models\Persona::TIPO_PERSONA_MORAL_ID ? 'XXXXXXXXX - XXX' : ''))
 @php($mask = $tipo_persona === App\Models\Persona::TIPO_PERSONA_FISICA_ID ? '*************' : ($tipo_persona === App\Models\Persona::TIPO_PERSONA_MORAL_ID ? '************' : ''))
 
@@ -11,9 +11,9 @@
               @blur="verificaRFC()"
               @keyup="rfcInvalido = ''"
               :value="$value"
-              :disabled="$disabled"                            
+              :disabled="$disabled"
               placeholder="{{ $placeholder }}"
-              x-mask="{{ $mask }}"                                          
+              x-mask="{{ $mask }}"
         />
         <div class="absolute inset-y-0 top-4 right-0 pr-3 flex items-center text-sm leading-5">
             <span x-show="isLoading" class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
@@ -33,8 +33,8 @@
             rfcInvalido: '',
             rfcCompleto: '',
             mensajeError: '',
-            modoValidacion: {!! json_encode($modo) !!},
-            rfcVerificacionUrl: {!! json_encode($url) !!},
+            modoValidacion: @js($modo),
+            rfcVerificacionUrl: @js($routeRegistroVerificaRfc),
             isLoading: false,
 
             verificaRFC() {
@@ -42,10 +42,10 @@
                 this.rfcEtapaEnPadronProveedores = '';
                 this.rfcExisteEnMTV = false;
                 this.rfcInvalido = '';
-                this.mensajeError = '';                
+                this.mensajeError = '';
                 this.rfcCompleto = this.rfcText;
 
-                if (this.esRFCValido(this.rfcCompleto)) {
+                if (this.esRFCValido(this.rfcCompleto) && this.modoValidacion === 'registro') {
                     this.isLoading = true;
 
                     fetch(this.rfcVerificacionUrl + this.rfcCompleto)
@@ -54,14 +54,14 @@
                                 this.isLoading = false;
                                 if (res['error']) {
                                     this.mensajeError = 'Servicio no disponible. No es posible registrar el RFC en Mi Tiendita Virtual.'
-                                } else {                                    
+                                } else {
                                     this.rfcExisteEnPadronProveedores = res['existe_en_padron_proveedores'];
                                     this.rfcExisteEnMTV = res['existe_en_mtv'];
                                     this.rfcEtapaEnPadronProveedores = res['etapa_en_padron_proveedores'];
 
                                     if (!res['permitir_registro_login']) {
-                                        this.rfcInvalido = res['rfc'];                                        
-                                        if (this.rfcExisteEnMTV && this.modoValidacion === 'registro') {    
+                                        this.rfcInvalido = res['rfc'];
+                                        if (this.rfcExisteEnMTV) {
                                             Swal.fire({
                                                 ...SwalMTVCustom,
                                                 title: 'Ya estás registrado en Mi Tiendita Virtual',
@@ -93,7 +93,7 @@
             },
             esRFCValido(rfc) {
                 return rfc.length === 12 || rfc.length === 13;
-            },            
+            },
         }
     }
 </script>
