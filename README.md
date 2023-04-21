@@ -105,6 +105,7 @@
   - Precargado de fuentes, ejecutar: `php artisan google-fonts:fetch`
   - `database/seeders/DatabaseSeeder.php` (ejecutar `php artisan db:seed`) carga catálogos de MTV
   - `database/seeders/CatCiudadanoCABMSSeeder.php` (ejecutar `php artisan db:seed --class=CatCiudadanoCABMSSeeder`) carga los catálogos relacionados con el catálogo CABMS (importados previamente de un archivo Excel a CSV y luego a SQL)
+    - Antes es necesario de asegurarse que existe el archivo `database/data/cat_ciudadano_cabms.sql` que contiene los datos del catálogo. Este archivo no está en el repositorio de código, sino en un directorio de datos independiente (o bien, se puede obtener del ambiente de producción)  
   - **Para las búsquedas por palabra clave basadas en "lógica difusa" es necesario activar la extensiión `pg_trgm` en PostgreSQL.** 
     - En línea de comando con psql, revisar si la extensión ya se encuentra activada usar: `\dx`
     - Para activar la extensión: `CREATE EXTENSION pg_trgm;`
