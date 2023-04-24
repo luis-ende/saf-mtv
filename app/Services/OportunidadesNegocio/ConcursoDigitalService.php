@@ -22,10 +22,8 @@ class ConcursoDigitalService
     /**
      * Importa concursos a la tabla de oportunidades_negocio de MTV.
      */
-    public function importaOportunidadesNegocio() 
-    {        
-        $concursos = $this->extraerConvocatorias();
-    
+    public function importaOportunidadesNegocio(array $convocatorias): void
+    {
         $tipoContratacionBien = DB::table('cat_tipos_contratacion')->where('tipo', 'Adquisición de Bienes')->value('id');
         $tipoContratacionServicio = DB::table('cat_tipos_contratacion')->where('tipo', 'Prestación de Servicios')->value('id');
         $tipoMetodoContratacionLP = DB::table('cat_metodos_contratacion')->where('metodo', 'Licitación pública')->value('id');
@@ -34,38 +32,53 @@ class ConcursoDigitalService
         $estatusContrVigente = DB::table('cat_estatus_contratacion')->where('estatus', EstatusContratacion::ESTATUS_CONTRATACION_VIGENTE)->value('id');
         $estatusContrCerrado = DB::table('cat_estatus_contratacion')->where('estatus', EstatusContratacion::ESTATUS_CONTRATACION_FINALIZADO)->value('id');
         
-        foreach($concursos as $concurso) {
-            $fechaPublicacion = $concurso['fecha_publicacion'] ? 
-                                    Carbon::createFromFormat('Y-m-d', substr($concurso['fecha_publicacion'], 0, 10)) : 
-                                    Carbon::now();
-            $fechaPresentacionP = $concurso['fecha_presentacion_propuestas'] ? 
-                                    Carbon::createFromFormat('Y-m-d', substr($concurso['fecha_presentacion_propuestas'], 0, 10)) : 
-                                    Carbon::now();
-            $unidadCompradoraId = DB::table('cat_unidades_compradoras')->where('nombre', $concurso['entidad_convocante'])->value('id');
+        foreach($convocatorias as $convocatoria) {
+            $fechaPublicacion = $convocatoria['fecha_publicacion'] ?
+                Carbon::createFromFormat('Y-m-d', substr($convocatoria['fecha_publicacion'], 0, 10)) :
+                Carbon::now();
+            $fechaPresentacionP = $convocatoria['fecha_presentacion_propuestas'] ?
+                Carbon::createFromFormat('Y-m-d', substr($convocatoria['fecha_presentacion_propuestas'], 0, 10)) :
+                Carbon::now();
+            $unidadCompradoraId = DB::table('cat_unidades_compradoras')->where('nombre', $convocatoria['entidad_convocante'])->value('id');
             if (is_null($unidadCompradoraId)) {
                 $uc = UnidadCompradora::create([
-                    'nombre' => $concurso['entidad_convocante'],
+                    'nombre' => $convocatoria['entidad_convocante'],
                 ]);
                 $unidadCompradoraId = $uc->id;
             }
-                
+
+            $convData = [
+                'fecha_presentacion_propuestas' => $fechaPresentacionP,
+                'id_unidad_compradora' => $unidadCompradoraId,
+                'id_tipo_contratacion' => $convocatoria['tipo_contratacion'] === 'Adquisición de Bienes' ? $tipoContratacionBien : $tipoContratacionServicio,
+                'id_metodo_contratacion' => $convocatoria['metodo_contratacion'] === 'Licitación Pública' ?  $tipoMetodoContratacionLP : $tipoMetodoContratacionIR,
+                'id_etapa_procedimiento' => $etapaLicEnProc,
+                'id_estatus_contratacion' => $estatusContrVigente,
+                'fuente_url' => $convocatoria['fuente_url'],
+                'partidas' => $convocatoria['partidas'] ?? '',
+                'cabms' => $convocatoria['cabms'] ?? '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
+            if (!empty($convocatoria['partidas'])) {
+                $convData['partidas'] = $convocatoria['partidas'];
+            }
+
+            if (!empty($convocatoria['cabms'])) {
+                $convData['cabms'] = $convocatoria['cabms'];
+            }
+
+            // Algunas convocatorias aparecen duplicadas, por lo que si ya existe una oportunidad con
+            // mismo nombre de procedimiento y fecha de publicación no se agrega de nuevo.
             OportunidadNegocio::updateOrInsert([
-                    'nombre_procedimiento' => $concurso['nombre_procedimiento'],
+                    'nombre_procedimiento' => $convocatoria['nombre_procedimiento'],
                     'fecha_publicacion' => $fechaPublicacion,
                 ],
-                [
-                    'fecha_presentacion_propuestas' => $fechaPresentacionP,
-                    'id_unidad_compradora' => $unidadCompradoraId,
-                    'id_tipo_contratacion' => $concurso['tipo_contratacion'] === 'Adquisición de Bienes' ? $tipoContratacionBien : $tipoContratacionServicio,
-                    'id_metodo_contratacion' => $concurso['metodo_contratacion'] === 'LP - Licitación Pública' ?  $tipoMetodoContratacionLP : $tipoMetodoContratacionIR,
-                    'id_etapa_procedimiento' => $etapaLicEnProc,
-                    'id_estatus_contratacion' => $estatusContrVigente,
-                    'fuente_url' => $concurso['fuente_url'],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-            ]);
+                $convData,
+            );
             
-            // Actualizar estatus de oportunidades de negocio con fecha de presentación de propuestas haya transcurrido.
+            // Actualizar estatus de oportunidades de negocio con fecha de presentación de propuestas que haya expirado.
             DB::table('oportunidades_negocio')->where('fecha_presentacion_propuestas', '<=', Carbon::now())
                                               ->update(['id_estatus_contratacion' => $estatusContrCerrado]);
         }    
