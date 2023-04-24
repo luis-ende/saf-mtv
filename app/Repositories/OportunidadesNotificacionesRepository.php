@@ -30,16 +30,20 @@ class OportunidadesNotificacionesRepository
     }
 
     /**
-     * Obtiene oportunidades de negocio que coincidan con el perfil de negocio del usuario
-     * o productos registrados en su catálogo.
+     * Obtiene el constructor de expresiones SQL para obtener oportunidades de negocio que
+     * coincidan con el perfil de negocio del usuario  o productos registrados en su catálogo.
      */
-    public function obtieneOportunidadesSugeridasQB(User $user): Builder
+    public function obtieneOportunidadesSugeridasQB(User $user, string $proveedorPartidas): Builder
     {     
         $query = OportunidadNegocio::from('oportunidades_negocio');
         $query = $this->getQuerySelectOportunidades($query, $user)
                       ->addSelect(DB::raw('true AS oportunidad_sugerida'))                      
                       // Deben ser solamente oportunidades vigentes.
-                      ->where('ec.estatus', "<>", EstatusContratacion::ESTATUS_CONTRATACION_FINALIZADO);
+                      ->whereNotNull('oportunidades_negocio.partidas')
+                      ->where([
+                          ['ec.estatus', "<>", EstatusContratacion::ESTATUS_CONTRATACION_FINALIZADO],
+                          ['oportunidades_negocio.partidas', '!=', '']
+                      ]);
 
         // Omitir sugerencias de oportunidades que hayan sido descartadas por el usuario.
         $userId = $user->id;
@@ -48,42 +52,39 @@ class OportunidadesNotificacionesRepository
                  ->from('oportunidades_sugeridas AS opns')
                  ->whereRaw(DB::raw('opns.id_oportunidad_negocio = oportunidades_negocio.id'))
                  ->where('opns.id_user', $userId);
-        });        
+        });
 
-        $perfNegocioId = $user->persona->perfil_negocio->id;
-        $catProductosId = $user->persona->catalogoProductos->id;        
-        $query = $query->where(function($subQ) use($catProductosId, $perfNegocioId) {
-            // Filtro de oportunidades de negocio por partidas similares en perfil de negocio, productos y categorías de productos del usuario
-            // TODO Funciona solamente para una partida en la oportunidad de negocio, no se ha definido aún si habrá múltiples partidas
-            $subQ->whereIn('oportunidades_negocio.partidas', function($subSel) use($catProductosId, $perfNegocioId) {
-                $subselProductos = DB::table('productos AS p')->selectRaw(DB::raw('DISTINCT(ccb.partida)'))
-                                                              ->join('cat_cabms AS ccb', 'ccb.id', 'p.id_cabms')
-                                                              ->where('p.id_cat_productos', $catProductosId);
-
-                $subselProdCategorias = DB::table('productos_categorias AS pc')->selectRaw(DB::raw('DISTINCT(ccb.partida)'))
-                                                                               ->join('productos AS p', 'p.id', 'pc.id_producto')
-                                                                               ->join('cat_cabms AS ccb', 'ccb.id_categoria_scian', 'pc.id_categoria_scian')
-                                                                               ->where('p.id_cat_productos', $catProductosId);
-
-                $subSel->from('cat_cabms AS ccb')
-                       ->selectRaw(DB::raw('DISTINCT(ccb.partida)'))
-                       ->where('ccb.id_categoria_scian', '=', function($subSel) use($perfNegocioId) {
-                                                                    $subSel->from('perfil_negocio AS perfn')
-                                                                        ->select('perfn.id_categoria_scian')
-                                                                        ->where('perfn.id', $perfNegocioId);
-                                                                })
-                       ->union($subselProductos)
-                       ->union($subselProdCategorias);                
-            });
-        });        
+        // Filtro de oportunidades de negocio por partidas similares en perfil de negocio, productos y categorías de productos del usuario
+        $query = $query->where(function($subQ) use($proveedorPartidas) {
+            // Condición SQL para comparar partidas de la oportunidad de negocio con las del proveedor
+            // Ver https://www.postgresql.org/docs/current/functions-array.html
+            $subQ->whereRaw("STRING_TO_ARRAY(oportunidades_negocio.partidas, ',') <@ array[{$proveedorPartidas}]");
+        });
 
         return $query;
     }
 
     public function obtieneOportunidadesSugeridas(User $user): Collection
     {
-        $qb = $this->obtieneOportunidadesSugeridasQB($user);
-        $oportunidades = $qb->limit(30)->get();
+        $perfNegocioId = $user->persona->perfil_negocio->id;
+        $catProductosId = $user->persona->catalogoProductos->id;
+        $proveedorPartidas = $this->obtieneProveedorPartidas($catProductosId, $perfNegocioId);
+
+        // La consulta sólo se ejecuta si se encontraron partidas asociadas al usuario.
+        if (!empty($proveedorPartidas)) {
+            $partidas = array_map(function ($p) {
+                        return "'{$p->partida}'";
+                    }, $proveedorPartidas);
+            $partidas = implode(',', $partidas);
+
+            $qb = $this->obtieneOportunidadesSugeridasQB($user, $partidas);
+            $oportunidades = $qb->limit(30)->get();
+
+            // TODO Una vez obtenidas las oportunidades que coinciden, se podría aplicar
+            // un filtro más específico con las oportunidades que tienen datos en el campo 'cabms'
+        } else {
+            $oportunidades = new Collection();
+        }
 
         return $oportunidades;
     }
@@ -144,5 +145,32 @@ class OportunidadesNotificacionesRepository
                     ->leftJoin('cat_metodos_contratacion AS mc', 'mc.id', 'oportunidades_negocio.id_metodo_contratacion')
                     ->leftJoin('cat_etapas_procedimiento AS etp', 'etp.id', 'oportunidades_negocio.id_etapa_procedimiento')
                     ->orderByDesc('oportunidades_negocio.fecha_publicacion');        
+    }
+
+    /**
+     * Obtiene todas las partidas asociadas al Perfil de negocio y productos del usuario.
+     */
+    private function obtieneProveedorPartidas(int $catProductosId, int $perfNegocioId): array
+    {
+        $subselProductos = DB::table('productos AS p')->selectRaw(DB::raw('DISTINCT(ccb.partida)'))
+                            ->join('cat_cabms AS ccb', 'ccb.id', 'p.id_cabms')
+                            ->where('p.id_cat_productos', $catProductosId);
+
+        $subselProdCategorias = DB::table('productos_categorias AS pc')->selectRaw(DB::raw('DISTINCT(ccb.partida)'))
+                            ->join('productos AS p', 'p.id', 'pc.id_producto')
+                            ->join('cat_cabms AS ccb', 'ccb.id_categoria_scian', 'pc.id_categoria_scian')
+                            ->where('p.id_cat_productos', $catProductosId);
+
+        $partidas = DB::table('cat_cabms AS ccb')
+                            ->selectRaw(DB::raw('DISTINCT(ccb.partida)'))
+                            ->where('ccb.id_categoria_scian', '=', function($subSel) use($perfNegocioId) {
+                                $subSel->from('perfil_negocio AS perfn')
+                                    ->select('perfn.id_categoria_scian')
+                                    ->where('perfn.id', $perfNegocioId);
+                            })
+                            ->union($subselProductos)
+                            ->union($subselProdCategorias);
+
+        return $partidas->get()->toArray();
     }
 }
