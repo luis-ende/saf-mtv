@@ -15,7 +15,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('mtv:importa-convocatorias')
+                    ->dailyAt('04:00')
+                    ->environments(['production'])
+                    ->appendOutputTo( storage_path('logs/mtv') . '/cronjobs.log');
     }
 
     /**
