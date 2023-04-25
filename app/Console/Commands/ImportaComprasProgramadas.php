@@ -4,11 +4,13 @@ namespace App\Console\Commands;
 
 use App\Models\ComprasProcedimiento;
 use App\Models\OportunidadNegocio;
+use App\Models\TipoContratacion;
 use App\Models\UnidadCompradora;
 use App\Repositories\OportunidadNegocioRepository;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ImportaComprasProgramadas extends Command
 {
@@ -79,12 +81,14 @@ class ImportaComprasProgramadas extends Command
 
     private function importaCalendarioComprasProgramadas(array $compras): void
     {
+        DB::table('compras_procedimientos')->truncate();
+
         $opnRepo = new OportunidadNegocioRepository();
         $unidadesCompradoras = $opnRepo->obtieneInstitucionesCompradoras(false);
         $tiposContratacion = $opnRepo->obtieneTiposContratacion();
 
-        $tipoContrBienesId = $tiposContratacion->where('tipo', '=', 'Adquisición de Bienes')->value('id');
-        $tipoContrServiciosId = $tiposContratacion->where('tipo', '=', 'Prestación de Servicios')->value('id');
+        $tipoContrBienesId = $tiposContratacion->where('tipo', '=', TipoContratacion::AdquisicionBienes->value)->value('id');
+        $tipoContrServiciosId = $tiposContratacion->where('tipo', '=', TipoContratacion::PrestacionServicios->value)->value('id');
 
         foreach ($compras as $compra) {
             $nombreURG = trim($compra['unidad_compradora']);

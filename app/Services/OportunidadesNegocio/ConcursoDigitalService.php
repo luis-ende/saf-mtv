@@ -2,6 +2,9 @@
 
 namespace App\Services\OportunidadesNegocio;
 
+use App\Models\EtapaProcedimiento;
+use App\Models\MetodoContratacion;
+use App\Models\TipoContratacion;
 use App\Models\UnidadCompradora;
 use Carbon\Carbon;
 use RoachPHP\Roach;
@@ -24,11 +27,11 @@ class ConcursoDigitalService
      */
     public function importaOportunidadesNegocio(array $convocatorias): void
     {
-        $tipoContratacionBien = DB::table('cat_tipos_contratacion')->where('tipo', 'Adquisición de Bienes')->value('id');
-        $tipoContratacionServicio = DB::table('cat_tipos_contratacion')->where('tipo', 'Prestación de Servicios')->value('id');
-        $tipoMetodoContratacionLP = DB::table('cat_metodos_contratacion')->where('metodo', 'Licitación pública')->value('id');
-        $tipoMetodoContratacionIR = DB::table('cat_metodos_contratacion')->where('metodo', 'Invitación restringida')->value('id');
-        $etapaLicEnProc = DB::table('cat_etapas_procedimiento')->where('etapa', 'Licitaciones en proceso')->value('id');
+        $tipoContratacionBien = DB::table('cat_tipos_contratacion')->where('tipo', TipoContratacion::AdquisicionBienes->value)->value('id');
+        $tipoContratacionServicio = DB::table('cat_tipos_contratacion')->where('tipo', TipoContratacion::PrestacionServicios->value)->value('id');
+        $tipoMetodoContratacionLP = DB::table('cat_metodos_contratacion')->where('metodo', MetodoContratacion::LicitacionPublica->value)->value('id');
+        $tipoMetodoContratacionIR = DB::table('cat_metodos_contratacion')->where('metodo', MetodoContratacion::InvitacionRestringida->value)->value('id');
+        $etapaLicEnProc = DB::table('cat_etapas_procedimiento')->where('etapa', EtapaProcedimiento::LicitacionEnProceso->value)->value('id');
         $estatusContrVigente = DB::table('cat_estatus_contratacion')->where('estatus', EstatusContratacion::ESTATUS_CONTRATACION_VIGENTE)->value('id');
         $estatusContrCerrado = DB::table('cat_estatus_contratacion')->where('estatus', EstatusContratacion::ESTATUS_CONTRATACION_FINALIZADO)->value('id');
         

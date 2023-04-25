@@ -21,6 +21,7 @@ class OportunidadesNegocioSeeder extends Seeder
                         PrebasesService $prebasesService): void
     {
         $concursoDService->importaOportunidadesNegocio($concursoDService->extraerConvocatorias());
-        $prebasesService->importaOportunidadesNegocio();
+        $proyectos = $prebasesService->extraerProyectosPrebases();
+        $prebasesService->importaOportunidadesNegocio($proyectos);
     }
 }

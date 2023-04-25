@@ -2,6 +2,10 @@
 
 namespace App\Services\OportunidadesNegocio;
 
+use App\Models\EtapaProcedimiento;
+use App\Models\MetodoContratacion;
+use App\Models\TipoContratacion;
+use App\Repositories\OportunidadNegocioRepository;
 use Carbon\Carbon;
 use RoachPHP\Roach;
 use App\Models\OportunidadNegocio;
@@ -19,25 +23,22 @@ use RoachPHP\Spider\Configuration\Overrides;
  */
 class PrebasesService 
 {
-/**
+    /**
      * Importa proyectos de prebases a la tabla de oportunidades_negocio de MTV.
      */
-    public function importaOportunidadesNegocio() 
+    public function importaOportunidadesNegocio(array $proyectos): void
     {
-        $proyectos = $this->extraerProyectosPrebases();
+        $opnRepo = new OportunidadNegocioRepository();
 
-        $tipoContratacionBien = DB::table('cat_tipos_contratacion')->where('tipo', 'Adquisición de Bienes')->value('id');
-        $tipoContratacionServicio = DB::table('cat_tipos_contratacion')->where('tipo', 'Prestación de Servicios')->value('id');
-        $tipoMetodoContratacionLP = DB::table('cat_metodos_contratacion')->where('metodo', 'Licitación pública')->value('id');
-        $tipoMetodoContratacionIR = DB::table('cat_metodos_contratacion')->where('metodo', 'Invitación restringida')->value('id');
-        $etapaLicEnProc = DB::table('cat_etapas_procedimiento')->where('etapa', 'Prebases')->value('id');
-        $estatusContrVigente = DB::table('cat_estatus_contratacion')->where('estatus', EstatusContratacion::ESTATUS_CONTRATACION_VIGENTE)->value('id');
-        $estatusContrCerrado = DB::table('cat_estatus_contratacion')->where('estatus', EstatusContratacion::ESTATUS_CONTRATACION_FINALIZADO)->value('id');
-        
+        $etapaPrebasesId = DB::table('cat_etapas_procedimiento')->where('etapa', EtapaProcedimiento::Prebase->value)->value('id');
+        $tiposContr = $opnRepo->obtieneTiposContratacion();
+        $metodosContr = $opnRepo->obtieneMetodosContratacion();
+        $estatusContr = $opnRepo->obtieneEstatusContratacion();
+
         foreach($proyectos as $proyecto) {
             $fechaPublicacion = $proyecto['fecha_publicacion'] ? 
                                     Carbon::createFromFormat('d/m/Y', substr(trim($proyecto['fecha_publicacion']), 0, 10)) : 
-                                    Carbon::now();            
+                                    Carbon::now();
 
             $partidas = null;
             if (!empty($proyecto['partidas'])) {
@@ -47,17 +48,38 @@ class PrebasesService
                     $partidas = implode(',', $matches[0]);
                 }                
             }
-                
+
+            if (strtolower($proyecto['estatus']) === 'abierto') {
+                $estatusContrId = $estatusContr->where('estatus', EstatusContratacion::ESTATUS_CONTRATACION_VIGENTE)->value('id');
+            } else if (strtolower($proyecto['estatus']) === 'programado') {
+                $estatusContrId = $estatusContr->where('estatus', EstatusContratacion::ESTATUS_CONTRATACION_PROGRAMADO)->value('id');
+            } else {
+                $estatusContrId = $estatusContr->where('estatus', EstatusContratacion::ESTATUS_CONTRATACION_FINALIZADO)->value('id');
+            }
+
+            if (strtolower($proyecto['tipo_contratacion']) === 'adquisición de bienes') {
+                $tipoContrId = $tiposContr->where('tipo', TipoContratacion::AdquisicionBienes->value)->value('id');
+            } else {
+                $tipoContrId = $tiposContr->where('tipo', TipoContratacion::PrestacionServicios->value)->value('id');
+            }
+
+            $metodoContrId = $metodosContr->where('metodo', MetodoContratacion::LicitacionPublica->value)->value('id');
+            if (strtolower($proyecto['metodo_contratacion']) === 'invitación restringida') {
+                $metodoContrId = $metodosContr->where('metodo', MetodoContratacion::InvitacionRestringida->value)->value('id');
+            }
+
+            // Actualizar solamente si ya existe
             OportunidadNegocio::updateOrInsert([
                     'nombre_procedimiento' => $proyecto['nombre_proyecto'],
                     'fecha_publicacion' => $fechaPublicacion,
+                    'id_etapa_procedimiento' => $etapaPrebasesId,
                 ],
                 [                    
                     'id_unidad_compradora' => DB::table('cat_unidades_compradoras')->where('nombre', $proyecto['ente_publico'])->value('id'),
-                    'id_tipo_contratacion' => strtolower($proyecto['tipo_contratacion']) === 'adquisición de bienes' ? $tipoContratacionBien : $tipoContratacionServicio,
-                    'id_metodo_contratacion' => strtolower($proyecto['metodo_contratacion']) === 'licitación pública' ?  $tipoMetodoContratacionLP : $tipoMetodoContratacionIR,
-                    'id_etapa_procedimiento' => $etapaLicEnProc,
-                    'id_estatus_contratacion' => strtolower($proyecto['estatus']) === 'abierto' ? $estatusContrVigente : $estatusContrCerrado,
+                    'id_tipo_contratacion' => $tipoContrId,
+                    'id_metodo_contratacion' => $metodoContrId,
+                    'id_etapa_procedimiento' => $etapaPrebasesId,
+                    'id_estatus_contratacion' => $estatusContrId,
                     'partidas' => $partidas,
                     'fuente_url' => $proyecto['fuente_url'],                    
                     'created_at' => now(),
