@@ -7,6 +7,7 @@ use App\Models\OportunidadNegocio;
 use App\Models\TipoContratacion;
 use App\Models\UnidadCompradora;
 use App\Repositories\OportunidadNegocioRepository;
+use App\Services\Traits\BusquedaUnidadDeCompra;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 
 class ImportaComprasProgramadas extends Command
 {
+    use BusquedaUnidadDeCompra;
+
     /**
      * The name and signature of the console command.
      *
@@ -84,31 +87,32 @@ class ImportaComprasProgramadas extends Command
         DB::table('compras_procedimientos')->truncate();
 
         $opnRepo = new OportunidadNegocioRepository();
-        $unidadesCompradoras = $opnRepo->obtieneInstitucionesCompradoras(false);
+        //$unidadesCompradoras = $opnRepo->obtieneInstitucionesCompradoras(false);
         $tiposContratacion = $opnRepo->obtieneTiposContratacion();
 
         $tipoContrBienesId = $tiposContratacion->where('tipo', '=', TipoContratacion::AdquisicionBienes->value)->value('id');
         $tipoContrServiciosId = $tiposContratacion->where('tipo', '=', TipoContratacion::PrestacionServicios->value)->value('id');
 
         foreach ($compras as $compra) {
-            $nombreURG = trim($compra['unidad_compradora']);
-            $unidadCompradora = $unidadesCompradoras->first(function (object $uc, int $key) use($nombreURG) {
-                return mb_strtolower($uc->nombre) === mb_strtolower($nombreURG);
-            });
-
-            if (!$unidadCompradora) {
-                $unidadCompradora = UnidadCompradora::create([
-                    'nombre' => $nombreURG,
-                ]);
-                // Refrescar lista de de unidades compradoras
-                $unidadesCompradoras = $opnRepo->obtieneInstitucionesCompradoras(false);
-            }
+            $unidadCompradoraId = $this->buscaUnidadCompraHomologada($compra['unidad_compradora']);
+//            $nombreURG = trim($compra['unidad_compradora']);
+//            $unidadCompradora = $unidadesCompradoras->first(function (object $uc, int $key) use($nombreURG) {
+//                return mb_strtolower($uc->nombre) === mb_strtolower($nombreURG);
+//            });
+//
+//            if (!$unidadCompradora) {
+//                $unidadCompradora = UnidadCompradora::create([
+//                    'nombre' => $nombreURG,
+//                ]);
+//                // Refrescar lista de de unidades compradoras
+//                $unidadesCompradoras = $opnRepo->obtieneInstitucionesCompradoras(false);
+//            }
 
             $valorContr = str_replace('$', '', $compra['valor_estimado_contratacion']);
             $valorContr = str_replace(',', '', $valorContr);
 
             ComprasProcedimiento::insert([
-                'id_unidad_compradora' => $unidadCompradora->id,
+                'id_unidad_compradora' => $unidadCompradoraId,
                 'objeto_contratacion' => $compra['objeto_contratacion'],
                 'metodo_contr_proyectado' => $compra['metodo_contr_proyectado'],
                 'valor_estimado_contratacion' => $valorContr,

@@ -6,6 +6,7 @@ use App\Models\EtapaProcedimiento;
 use App\Models\MetodoContratacion;
 use App\Models\TipoContratacion;
 use App\Models\UnidadCompradora;
+use App\Services\Traits\BusquedaUnidadDeCompra;
 use Carbon\Carbon;
 use RoachPHP\Roach;
 use App\Models\OportunidadNegocio;
@@ -22,6 +23,8 @@ use App\Spiders\ConvocatoriasOportunidadesSpider;
  */
 class ConcursoDigitalService 
 {
+    use BusquedaUnidadDeCompra;
+
     /**
      * Importa concursos a la tabla de oportunidades_negocio de MTV.
      */
@@ -43,17 +46,18 @@ class ConcursoDigitalService
                 Carbon::createFromFormat('Y-m-d', substr($convocatoria['fecha_presentacion_propuestas'], 0, 10)) :
                 Carbon::now();
 
-            $unidadCompradoraId = DB::table('cat_unidades_compradoras')->where('nombre', $convocatoria['entidad_convocante'])->value('id');
-            if (is_null($unidadCompradoraId)) {
-                $uc = UnidadCompradora::create([
-                    'nombre' => $convocatoria['entidad_convocante'],
-                ]);
-                $unidadCompradoraId = $uc->id;
-            }
+            $unidadCompraId = $this->buscaUnidadCompraHomologada($convocatoria['entidad_convocante']);
+//            $unidadCompradoraId = DB::table('cat_unidades_compradoras')->where('nombre', $convocatoria['entidad_convocante'])->value('id');
+//            if (is_null($unidadCompradoraId)) {
+//                $uc = UnidadCompradora::create([
+//                    'nombre' => $convocatoria['entidad_convocante'],
+//                ]);
+//                $unidadCompradoraId = $uc->id;
+//            }
 
             $convData = [
                 'fecha_presentacion_propuestas' => $fechaPresentacionP,
-                'id_unidad_compradora' => $unidadCompradoraId,
+                'id_unidad_compradora' => $unidadCompraId,
                 'id_tipo_contratacion' => $convocatoria['tipo_contratacion'] === 'Adquisición de Bienes' ? $tipoContratacionBien : $tipoContratacionServicio,
                 'id_metodo_contratacion' => $convocatoria['metodo_contratacion'] === 'Licitación Pública' ?  $tipoMetodoContratacionLP : $tipoMetodoContratacionIR,
                 'id_estatus_contratacion' => $estatusContrVigente,

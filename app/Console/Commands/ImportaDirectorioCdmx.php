@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Directorio\Funcionario;
 use App\Models\UnidadCompradora;
 use App\Repositories\OportunidadNegocioRepository;
+use App\Services\Traits\BusquedaUnidadDeCompra;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Http;
 
 class ImportaDirectorioCdmx extends Command
 {
+    use BusquedaUnidadDeCompra;
+
     /**
      * The name and signature of the console command.
      *
@@ -58,29 +61,30 @@ class ImportaDirectorioCdmx extends Command
     {
         DB::table('funcionarios')->truncate();
 
-        $opnRepo = new OportunidadNegocioRepository();
-        $unidadesCompradoras = $opnRepo->obtieneInstitucionesCompradoras(false);
+        //$opnRepo = new OportunidadNegocioRepository();
+        //$unidadesCompradoras = $opnRepo->obtieneInstitucionesCompradoras(false);
 
         foreach ($funcionarios as $funcionario) {
-            $nombreURG = $funcionario['institucion'];
-            $unidadCompradora = $unidadesCompradoras->first(function (object $uc, int $key) use($nombreURG) {
-                return mb_strtolower($uc->nombre) === mb_strtolower($nombreURG);
-            });
-
-            if (!$unidadCompradora) {
-                $unidadCompradora = UnidadCompradora::create([
-                    'nombre' => $nombreURG,
-                ]);
-                // Refrescar lista de de unidades compradoras
-                $unidadesCompradoras = $opnRepo->obtieneInstitucionesCompradoras(false);
-            }
+            $unidadCompraId = $this->buscaUnidadCompraHomologada($funcionario['institucion']);
+//            $nombreURG = $funcionario['institucion'];
+//            $unidadCompradora = $unidadesCompradoras->first(function (object $uc, int $key) use($nombreURG) {
+//                return mb_strtolower($uc->nombre) === mb_strtolower($nombreURG);
+//            });
+//
+//            if (!$unidadCompradora) {
+//                $unidadCompradora = UnidadCompradora::create([
+//                    'nombre' => $nombreURG,
+//                ]);
+//                // Refrescar lista de de unidades compradoras
+//                $unidadesCompradoras = $opnRepo->obtieneInstitucionesCompradoras(false);
+//            }
 
             $nombreCompleto = $funcionario['nombre'] . " " . $funcionario['primer_apellido'] . " " . $funcionario['segundo_apellido'];
 
             Funcionario::updateOrInsert(
                 [
                     'nombre' => $nombreCompleto,
-                    'id_unidad_compradora' => $unidadCompradora->id,
+                    'id_unidad_compradora' => $unidadCompraId,
                 ],
                 [
                     'puesto' => $funcionario['puesto'],

@@ -6,6 +6,7 @@ use App\Models\EtapaProcedimiento;
 use App\Models\MetodoContratacion;
 use App\Models\TipoContratacion;
 use App\Repositories\OportunidadNegocioRepository;
+use App\Services\Traits\BusquedaUnidadDeCompra;
 use Carbon\Carbon;
 use RoachPHP\Roach;
 use App\Models\OportunidadNegocio;
@@ -23,6 +24,8 @@ use RoachPHP\Spider\Configuration\Overrides;
  */
 class PrebasesService 
 {
+    use BusquedaUnidadDeCompra;
+
     /**
      * Importa proyectos de prebases a la tabla de oportunidades_negocio de MTV.
      */
@@ -68,6 +71,8 @@ class PrebasesService
                 $metodoContrId = $metodosContr->where('metodo', MetodoContratacion::InvitacionRestringida->value)->value('id');
             }
 
+            $unidadCompraId = $this->buscaUnidadCompraHomologada($proyecto['ente_publico']);
+
             // Actualizar solamente si ya existe
             OportunidadNegocio::updateOrInsert([
                     'nombre_procedimiento' => $proyecto['nombre_proyecto'],
@@ -75,7 +80,7 @@ class PrebasesService
                     'id_etapa_procedimiento' => $etapaPrebasesId,
                 ],
                 [                    
-                    'id_unidad_compradora' => DB::table('cat_unidades_compradoras')->where('nombre', $proyecto['ente_publico'])->value('id'),
+                    'id_unidad_compradora' => $unidadCompraId,
                     'id_tipo_contratacion' => $tipoContrId,
                     'id_metodo_contratacion' => $metodoContrId,
                     'id_etapa_procedimiento' => $etapaPrebasesId,

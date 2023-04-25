@@ -31,6 +31,8 @@ class ImportaConvocatorias extends Command
     public function handle()
     {
         $convocatorias = $this->obtieneConvocatorias();
+
+        var_dump($convocatorias);
         $concursosService = new ConcursoDigitalService();
         $concursosService->importaOportunidadesNegocio($convocatorias);
 
