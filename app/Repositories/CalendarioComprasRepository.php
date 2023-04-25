@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -18,6 +19,7 @@ class CalendarioComprasRepository
                              DB::raw('SUM(cp.valor_estimado_contratacion) AS presup_contratacion_aprobado'),
                              DB::raw('(SELECT COUNT(*) FROM compras_procedimientos WHERE compras_procedimientos.id_unidad_compradora = cuc.id) AS total_procedimientos'))
                     ->leftJoin('cat_unidades_compradoras AS cuc', 'cuc.id', 'cp.id_unidad_compradora')
+                    ->where('anio', Carbon::today()->format('Y'))
                     ->groupByRaw('cuc.nombre, cp.id_unidad_compradora, total_procedimientos')
                     ->orderBy('unidad_compradora')
                     ->get()
@@ -56,7 +58,10 @@ class CalendarioComprasRepository
                      DB::raw("TO_CHAR(cp.fecha_estimada_fin_contr, 'dd/mm/yyyy') AS fecha_estimada_fin_contr"),
                 'ctc.tipo AS tipo_contratacion')
             ->leftJoin('cat_tipos_contratacion AS ctc', 'cp.id_tipo_contratacion', 'ctc.id')            
-            ->where('cp.id_unidad_compradora', $unidadCompradoraId)
+            ->where([
+                ['cp.id_unidad_compradora', $unidadCompradoraId],
+                ['anio', Carbon::today()->format('Y')],
+            ])
             ->orderBy('cp.objeto_contratacion')
             ->get()
             ->toArray();
