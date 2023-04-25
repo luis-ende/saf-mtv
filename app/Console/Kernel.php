@@ -19,6 +19,11 @@ class Kernel extends ConsoleKernel
                     ->dailyAt('04:00')
                     ->environments(['production'])
                     ->appendOutputTo( storage_path('logs/mtv') . '/cronjobs.log');
+
+        $schedule->command('mtv:importa-directorio-cdmx')
+                    ->quarterly()
+                    ->environments(['production'])
+                    ->appendOutputTo( storage_path('logs/mtv') . '/cronjobs.log');
     }
 
     /**

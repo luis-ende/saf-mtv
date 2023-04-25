@@ -46,6 +46,7 @@ class ImportaConvocatorias extends Command
 
         $client = new \GuzzleHttp\Client();
         $response = $client->request('GET', $url);
+        // Por la cantidad de información recibida, el response se procesa en batches
         $phpStream = \GuzzleHttp\Psr7\StreamWrapper::getResource($response->getBody());
         foreach (\JsonMachine\Items::fromStream($phpStream, ['pointer' => '/-/respuesta']) as $key => $conv) {
             $fechaPublicacion = Carbon::createFromFormat('Y-m-d H:i:s', $conv->fecha_publicacion_convocatoria);

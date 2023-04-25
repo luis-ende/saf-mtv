@@ -39,6 +39,7 @@ class ConcursoDigitalService
             $fechaPresentacionP = $convocatoria['fecha_presentacion_propuestas'] ?
                 Carbon::createFromFormat('Y-m-d', substr($convocatoria['fecha_presentacion_propuestas'], 0, 10)) :
                 Carbon::now();
+
             $unidadCompradoraId = DB::table('cat_unidades_compradoras')->where('nombre', $convocatoria['entidad_convocante'])->value('id');
             if (is_null($unidadCompradoraId)) {
                 $uc = UnidadCompradora::create([
@@ -52,7 +53,6 @@ class ConcursoDigitalService
                 'id_unidad_compradora' => $unidadCompradoraId,
                 'id_tipo_contratacion' => $convocatoria['tipo_contratacion'] === 'Adquisición de Bienes' ? $tipoContratacionBien : $tipoContratacionServicio,
                 'id_metodo_contratacion' => $convocatoria['metodo_contratacion'] === 'Licitación Pública' ?  $tipoMetodoContratacionLP : $tipoMetodoContratacionIR,
-                'id_etapa_procedimiento' => $etapaLicEnProc,
                 'id_estatus_contratacion' => $estatusContrVigente,
                 'fuente_url' => $convocatoria['fuente_url'],
                 'partidas' => $convocatoria['partidas'] ?? '',
@@ -74,13 +74,14 @@ class ConcursoDigitalService
             OportunidadNegocio::updateOrInsert([
                     'nombre_procedimiento' => $convocatoria['nombre_procedimiento'],
                     'fecha_publicacion' => $fechaPublicacion,
+                    'id_etapa_procedimiento' => $etapaLicEnProc,
                 ],
                 $convData,
             );
             
             // Actualizar estatus de oportunidades de negocio con fecha de presentación de propuestas que haya expirado.
             DB::table('oportunidades_negocio')->where('fecha_presentacion_propuestas', '<=', Carbon::now())
-                                              ->update(['id_estatus_contratacion' => $estatusContrCerrado]);
+                                                    ->update(['id_estatus_contratacion' => $estatusContrCerrado]);
         }    
     }
 
@@ -101,46 +102,4 @@ class ConcursoDigitalService
 
         return $convocatorias;
     }
-
-    /**
-     * Obtiene convocatorias agrupadas por Entidad convocante.
-     */
-    public function agruparConvocatoriasPorCategoria(array $convocatorias): array
-    {
-        $categorias = [];        
-        foreach($convocatorias as $convocatoria) {
-            $categorias[$convocatoria['entidad_convocante']][] = $convocatoria;            
-        }
-
-        return $categorias;        
-    }
-
-    /**
-     * Obtiene número de convocatorias por método de contratación.
-     */
-    public function obtenerConvocatoriasEstadisticas(array $convocatorias) 
-    {
-        $numInvRestringidas = 0;
-        $numAdjDirectas = 0;
-        $numLicitacionesPublicas = 0;
-        foreach($convocatorias as $convocatoria) {
-            $categorias[$convocatoria['entidad_convocante']][] = $convocatoria;
-            if ($convocatoria['metodo_contratacion'] === 'Invitación restringida') {
-                $numInvRestringidas++;
-            }
-            if ($convocatoria['metodo_contratacion'] === 'Adjudicación directa') {
-                $numAdjDirectas++;
-            }
-            if ($convocatoria['metodo_contratacion'] === 'LP - Licitación Pública') {
-                $numLicitacionesPublicas++;
-            }
-        }
-
-        return [
-            'procedimientos_proximos' => count($convocatorias),
-            'invitaciones_restringidas' => $numInvRestringidas,
-            'adjudicaciones_directas' => $numAdjDirectas,
-            'licitaciones_publicas' => $numLicitacionesPublicas,
-        ];
-    }    
 }
