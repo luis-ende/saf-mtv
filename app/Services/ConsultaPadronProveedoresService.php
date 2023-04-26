@@ -10,16 +10,6 @@ class ConsultaPadronProveedoresService
     {
         $response = Http::get( env('API_URL_BUSQUEDA_RFC_PADRON_PROVEEDORES') . $rfc);
 
-        // Servicio de consulta devuelve:
-        // [
-        //     {
-        //       "rfc": "AEJL690531RB3",
-        //       "es_usuario": true,
-        //       "id_etapa": 1,
-        //       "etapa": "SOLICITUD EN PROCESO"
-        //     }
-        // ]
-
         $provEtapa = [];
         if ($response->successful()) {
             $estatusData = $response->json();            
@@ -39,17 +29,42 @@ class ConsultaPadronProveedoresService
         return $provEtapa;
     }
 
+    public function consultaMultiplePadronProveedores(array $listRfc): array
+    {
+        $provEtapas = [];
+
+        if (count($listRfc) === 0) {
+            return $provEtapas;
+        }
+
+        $response = Http::post( env('API_URL_PADRON_PROVEEDORES_CONSULTA_MULTIPLE_RFC'), [
+            'data' => $listRfc,
+        ]);
+
+        if ($response->successful()) {
+            $estatusData = $response->json();
+            if ($estatusData !== 'no existe') {
+                $provEtapas = $estatusData;
+            }
+        }
+
+        return $provEtapas;
+    }
+
     public function consultaPadronProveedoresLista(array $listaRFC): array
     {
         $listaEstatus = [];
-        foreach ($listaRFC as $rfc) {
-            // TODO Sustituir por llamada a servicio que acepta la lista completa de RFC.
-            $result = $this->consultaPadronProveedores($rfc);
-            if (isset($result['error'])) {
-                $listaEstatus[$rfc] = -1;
-            } else {
-                $listaEstatus[$rfc] = $result['id_etapa'];
+        $proveedoresEstatus = $this->consultaMultiplePadronProveedores($listaRFC);
+        foreach ($proveedoresEstatus as $provEstatus) {
+            //$result = $this->consultaPadronProveedores($rfc);
+            if (isset($provEstatus['id_etapa'])) {
+                $listaEstatus[$provEstatus['rfc']] = $provEstatus['id_etapa'];
             }
+//            if (isset($result['error'])) {
+//                $listaEstatus[$rfc] = -1;
+//            } else {
+//                $listaEstatus[$rfc] = $result['id_etapa'];
+//            }
         }
 
         return $listaEstatus;
