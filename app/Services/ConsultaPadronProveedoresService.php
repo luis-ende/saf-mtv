@@ -55,9 +55,15 @@ class ConsultaPadronProveedoresService
     {
         $listaEstatus = [];
         $proveedoresEstatus = $this->consultaMultiplePadronProveedores($listaRFC);
-        foreach ($proveedoresEstatus as $provEstatus) {
-            if (isset($provEstatus['id_etapa'])) {
-                $listaEstatus[$provEstatus['rfc']] = $provEstatus['id_etapa'];
+        foreach ($listaRFC as $rfc) {
+            $rfcItem = array_filter($proveedoresEstatus, function($e) use($rfc) {
+                return $e['rfc'] === $rfc;
+            });
+
+            if ($rfcItem && isset($rfcItem['id_etapa'])) {
+                $listaEstatus[$rfc] = $rfcItem['id_etapa'];
+            } else {
+                $listaEstatus[$rfc] = 0;
             }
         }
 
