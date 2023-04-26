@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 class TipoPymeRepository
 {
-    private const TIPOS_PYME = [
+    public const TIPOS_PYME = [
         [
             'id' => 1,
             'tipo_pyme' => 'Micro', // string, 10

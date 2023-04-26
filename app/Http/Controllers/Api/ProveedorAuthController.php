@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\AuthenticateWithAccessTokenTrait;
 use App\Http\Requests\PerfilNegocioRequest;
 use App\Models\Persona;
 use App\Services\RegistroProveedorMTVService;
+use App\Services\Traits\PerfilNegocioCatalogosEquivalencias;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -18,6 +19,7 @@ use Illuminate\Validation\ValidationException;
 class ProveedorAuthController extends Controller
 {
     use AuthenticateWithAccessTokenTrait;
+    use PerfilNegocioCatalogosEquivalencias;
 
     private RegistroProveedorMTVService $registroService;
 
@@ -138,8 +140,7 @@ class ProveedorAuthController extends Controller
     {
         $domicilioDatos = $request->payload['domicilio'];
 
-        $idPais = DB::table('cat_paises')->whereRaw('UPPER(pais) LIKE ?', [strtoupper($domicilioDatos['pais'])])
-                                               ->value('id');
+        $idPais = $this->findPais($domicilioDatos['pais']);
         if ($idPais) {
             $domicilioDatos['id_pais'] = $idPais;
             unset($domicilioDatos['pais']);
@@ -147,10 +148,11 @@ class ProveedorAuthController extends Controller
             throw new \Exception('Nombre de país no encontrado en MTV.');
         }
 
-        $idAsentamiento = DB::table('cat_asentamientos')->where([
+        $idAsentamiento = $this->findAsentamiento([
             ['cp', $domicilioDatos['cp']],
             ['asentamiento', $domicilioDatos['asentamiento']],
-            ['municipio', $domicilioDatos['alcaldia']]])->value('id');
+            ['municipio', $domicilioDatos['alcaldia']]
+        ]);
         if ($idAsentamiento) {
             $domicilioDatos['id_asentamiento'] = $idAsentamiento;
             unset($domicilioDatos['pais']);
@@ -163,9 +165,7 @@ class ProveedorAuthController extends Controller
             throw new \Exception('Asentamiento no localizado en MTV.');
         }
 
-        $idTipoVialidad = DB::table('cat_tipo_vialidad')
-                            ->whereRaw('UPPER(tipo_vialidad) LIKE ?', [strtoupper($domicilioDatos['tipo_vialidad'])])
-                            ->value('id');
+        $idTipoVialidad = $this->findTipoVialidad($domicilioDatos['tipo_vialidad']);
         if ($idTipoVialidad) {
             $domicilioDatos['id_tipo_vialidad'] = $idTipoVialidad;
             unset($domicilioDatos['tipo_vialidad']);
@@ -174,9 +174,7 @@ class ProveedorAuthController extends Controller
         }
 
         $perfilNegocioDatos = $request->payload['perfil_negocio'];
-        $idGrupoPrioritario = DB::table('cat_grupos_prioritarios')
-                                ->whereRaw('UPPER(grupo) LIKE ?', [strtoupper($perfilNegocioDatos['grupo_prioritario'])])
-                                ->value('id');
+        $idGrupoPrioritario = $this->findGrupoPrioritario($perfilNegocioDatos['grupo_prioritario']);
         if ($idGrupoPrioritario) {
             $perfilNegocioDatos['id_grupo_prioritario'] = $idGrupoPrioritario;
             if ($perfilNegocioDatos['grupo_prioritario'] === 'MIPYMES' && !$perfilNegocioDatos['id_tipo_pyme']) {
@@ -187,9 +185,7 @@ class ProveedorAuthController extends Controller
             throw new \Exception('Grupo prioritario no encontrado en MTV.');
         }
 
-        $idSector = DB::table('cat_sectores')
-            ->whereRaw('UPPER(sector) LIKE ?', [strtoupper($perfilNegocioDatos['sector'])])
-            ->value('id');
+        $idSector = $this->findSector($perfilNegocioDatos['sector']);
         if ($idSector) {
             $perfilNegocioDatos['id_sector'] = $idSector;
             unset($perfilNegocioDatos['sector']);
@@ -197,9 +193,7 @@ class ProveedorAuthController extends Controller
             throw new \Exception('Sector no encontrado en MTV.');
         }
 
-        $idCategoriaScian = DB::table('cat_categorias_scian')
-            ->whereRaw('UPPER(categoria_scian) LIKE ?', [strtoupper($perfilNegocioDatos['categoria_scian'])])
-            ->value('id');
+        $idCategoriaScian = $this->findCategoriaScian($perfilNegocioDatos['categoria_scian']);
         if ($idCategoriaScian) {
             $perfilNegocioDatos['id_categoria_scian'] = $idCategoriaScian;
             unset($perfilNegocioDatos['categoria_scian']);
@@ -210,8 +204,7 @@ class ProveedorAuthController extends Controller
         $user = null;
         $payload = $request->payload;
         DB::transaction(function() use(&$user, $payload, $domicilioDatos, $perfilNegocioDatos) {
-            $user = $this->registroService->registraProveedorMTV($payload['persona'], $domicilioDatos,
-                                                        RegistroProveedorMTVService::TIPO_REGISTRO_EXTERNO);
+            $user = $this->registroService->registraProveedorMTV($payload['persona'], $domicilioDatos);
             $this->registroService->registraPerfilNegocio($perfilNegocioDatos, $user->persona);
             $this->registroService->registraContactos(json_encode($payload['contactos']), $user->persona);
         });

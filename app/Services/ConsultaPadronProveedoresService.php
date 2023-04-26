@@ -69,4 +69,18 @@ class ConsultaPadronProveedoresService
 
         return $listaEstatus;
     }
+
+    public function consultaProveedorPerfilNegocio(string $rfc): ?array
+    {
+        $response = Http::get( env('API_URL_PADRON_PROVEEDORES_CONSULTA_PERFIL_NEGOCIO') . $rfc);
+
+        if ($response->successful()) {
+            $proveedorData = $response->json();
+            if ($proveedorData !== 'no existe') {
+                return $proveedorData[0];
+            }
+        }
+
+        return null;
+    }
 }

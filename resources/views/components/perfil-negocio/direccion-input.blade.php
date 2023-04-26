@@ -59,7 +59,9 @@
         <div class="mtv-input-wrapper">
             <select x-model="asentamientoSeleccion" class="mtv-text-input" id="colonia" name="colonia">
                 <template x-for="colonia in colonias" :key="colonia.id">
-                    <option :value="colonia.id" x-text="colonia.nombre"></option>
+                    <option :value="colonia.id"
+                            x-text="colonia.nombre">
+                    </option>
                 </template>
             </select>
             <label class="mtv-input-label" for="colonia">Colonia</label>
@@ -153,7 +155,7 @@
                                 }
                             });
 
-                            if (res.length >= 1) {
+                            if ((res.length >= 1) && !this.asentamientoSeleccion) {
                                 this.asentamientoSeleccion = res[0]['id'];
                             }
                         });
@@ -161,7 +163,7 @@
             },
             obtieneTipoVialidadLabel() {
                 return this.tipoVialidad.charAt(0).toUpperCase() + this.tipoVialidad.toLowerCase().slice(1);
-            }
+            },
         }
     }
 </script>

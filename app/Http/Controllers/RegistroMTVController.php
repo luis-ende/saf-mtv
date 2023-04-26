@@ -86,6 +86,7 @@ class RegistroMTVController extends Controller
         Request $request,
         RegistroProveedorMTVService $registroService)
     {
+        // Validaciones de entradas
         try {
             $errorMessages = [
                 'rfc.unique' => 'El RFC: ' . $request->input('rfc') . ' ya está registrado en Mi Tiendita Virtual',
@@ -158,6 +159,7 @@ class RegistroMTVController extends Controller
             return view('registro-proveedor.inicio-confirmacion', $datos);
         }
 
+        // Alta de cuenta
         try {
             $user = $registroService->registraProveedorMTV($personaDatos);
 
