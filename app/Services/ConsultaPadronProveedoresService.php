@@ -56,15 +56,9 @@ class ConsultaPadronProveedoresService
         $listaEstatus = [];
         $proveedoresEstatus = $this->consultaMultiplePadronProveedores($listaRFC);
         foreach ($proveedoresEstatus as $provEstatus) {
-            //$result = $this->consultaPadronProveedores($rfc);
             if (isset($provEstatus['id_etapa'])) {
                 $listaEstatus[$provEstatus['rfc']] = $provEstatus['id_etapa'];
             }
-//            if (isset($result['error'])) {
-//                $listaEstatus[$rfc] = -1;
-//            } else {
-//                $listaEstatus[$rfc] = $result['id_etapa'];
-//            }
         }
 
         return $listaEstatus;
