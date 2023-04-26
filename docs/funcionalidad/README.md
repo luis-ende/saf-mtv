@@ -38,6 +38,7 @@ La carga inicial de los catálogos necesarios para el funcionamiento de MTV se r
 
 - Registro de usuarios proveedor desde el registro de MTV. 
   - Para completar los datos (nombre, primer apellido, segundo apellido, fecha de nacimiento) de personas físicas se requiere consulta de datos mediante CURP a la API endpoint de Renapo
+  - MTV verifica si el RFC existe en Padrón de Proveedores (env variable `API_URL_PADRON_PROVEEDORES_CONSULTA_PERFIL_NEGOCIO`), si existe los datos son utilizados para completar el nuevo registro
   - El proveedor será registrado siempre con tipo de registro 1 (`id_tipo_registro` en tabla `personas`)
 
 - Registro de usuarios proveedor por API endpoint (POST) `/api/proveedores/register` (Ver `routes/api.php`)

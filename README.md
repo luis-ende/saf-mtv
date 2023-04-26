@@ -103,6 +103,7 @@
     - TEST_MODE=false
     - DB_DATABASE, DB_USERNAME, DB_PASSWORD deben apuntar a valores de producción (no los defaults de desarrollo)
   - Precargado de fuentes, ejecutar: `php artisan google-fonts:fetch`
+  - Ejecutar `php artisan storage:link` para generar el symlink en public   
   - `database/seeders/DatabaseSeeder.php` (ejecutar `php artisan db:seed`) carga catálogos de MTV
   - `database/seeders/CatCiudadanoCABMSSeeder.php` (ejecutar `php artisan db:seed --class=CatCiudadanoCABMSSeeder`) carga los catálogos relacionados con el catálogo CABMS (importados previamente de un archivo Excel a CSV y luego a SQL)
     - Antes es necesario de asegurarse que existe el archivo `database/data/cat_ciudadano_cabms.sql` que contiene los datos del catálogo. Este archivo no está en el repositorio de código, sino en un directorio de datos independiente (o bien, se puede obtener del ambiente de producción)
@@ -117,6 +118,9 @@
   - Para generar token de autenticación para el usuario super administrador (mtvadmin) se puede usar el comando `php artisan mtv:gen-token {user_id}`
   - Ver más información acerca de los seeders en la documentación del proyecto en la carpeta **[docs](docs/funcionalidad/README.md)**
   - Comandos disponibles para tareas comunes de MTV (por ejemplo, generar tokens de acceso para usuarios): Ver directorio `Console/Commands`
+  - Para encontrar los comandos que se ejecutan como tareas programadas (por ejemplo, para importar convocatorias de Concurso digital) ver: `app/Console/Kernel.php`
+    - El archivo de logs se genera en: `storage/logs/mtv/cronjobs.log`
+  - Asegurarse de que las variables para consulta de APIs (archivo .env) son correctos 
 
 ### Integraciones de MTV con otros sistemas:
 
