@@ -29,6 +29,11 @@ class Kernel extends ConsoleKernel
                     ->quarterly()
                     ->environments(['production'])
                     ->appendOutputTo( storage_path('logs/mtv') . '/cronjobs.log');
+
+        $schedule->command('mtv:importa-requisiciones')
+                    ->quarterly()
+                    ->environments(['production'])
+                    ->appendOutputTo( storage_path('logs/mtv') . '/cronjobs.log');
     }
 
     /**

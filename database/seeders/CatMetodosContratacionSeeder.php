@@ -31,5 +31,11 @@ class CatMetodosContratacionSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::table('cat_metodos_contratacion')->insert([
+            'metodo' =>  'No aplica',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }
