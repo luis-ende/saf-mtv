@@ -2,7 +2,7 @@
 
 ## Requerimientos
 
-- PHP 8.1+
+- PHP 8.1
 - Laravel 9 (Vite) / Blade Components
 - PostgreSQL 13
 - [Bootstrap 5](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
@@ -14,8 +14,8 @@
 
 ## Instalación del ambiente local de desarrollo
 
-- VirtualBox 6.1
-- Vagrant 2.3.1
+- VirtualBox 6.1+
+- Vagrant 2.3.1+
 - Laravel Homestead (ver servicios que se instalan por default en el ambiente de desarrollo en: https://laravel.com/docs/9.x/homestead#included-software)
  
 - Para levantar el proyecto en modo local de desarrollo ir a la carpeta `Homestead` de la carpeta del repositorio MTV
@@ -93,6 +93,7 @@
 - Para la extracción de datos vía [web scrapping](https://es.wikipedia.org/wiki/Web_scraping) de los sitios de Concurso Digital y Prebases se utiliza el paquete: Laravel Roach PHP - [https://roach-php.dev/docs/laravel/](https://roach-php.dev/docs/laravel/). Para abrir una línea de comando interactiva usar: `php artisan roach:shell https://roach-php.dev/docs/introduction` O para ejecutar un spider específico (desde el directorio raíz del proyecto), por ejemplo: `vendor/bin/roach roach:run App\\Spiders\\PrebasesOportunidadesSpider`
 - Panel de administración de Mi Tiendita Virtual (para catálogos y configuración de la plataforma): Filament - [https://filamentphp.com](https://filamentphp.com)
 - Tokens para APIs: Laravel Sanctum - [https://laravel.com/docs/9.x/sanctum#issuing-api-tokens](https://laravel.com/docs/9.x/sanctum#issuing-api-tokens)
+- Respaldos completos del directorio de MTV - [https://spatie.be/docs/laravel-backup/v8/introduction](https://spatie.be/docs/laravel-backup/v8/introduction)
 
 ## Producción y carga de catálogos y datos predefenidos:
 
@@ -105,6 +106,7 @@
     - DB_DATABASE, DB_USERNAME, DB_PASSWORD deben apuntar a valores de producción (no los defaults de desarrollo)
     - Variables del servidor de corrreo (MAIL_HOST, etc.)
   - Precargado de fuentes, ejecutar: `php artisan google-fonts:fetch` (Debe ejecutarse cada vez que hay un cambio de dominio de MTV)
+  - Cada vez que haya cambios en vistas, estilos, archivos de javascript, debe ejecutarse `npm run build` para recompilar los assets
   - Ejecutar `php artisan storage:link` para generar el symlink en public   
   - `database/seeders/DatabaseSeeder.php` (ejecutar `php artisan db:seed`) carga de catálogos de MTV
   - `database/seeders/CatCiudadanoCABMSSeeder.php` (ejecutar `php artisan db:seed --class=CatCiudadanoCABMSSeeder`) carga los catálogos relacionados con el catálogo CABMS (importados previamente de un archivo Excel a CSV y luego a SQL)
@@ -152,6 +154,9 @@
    
 - Para el directorio CDMX se consumen datos de funcionarios provenientes del sistema de Acceso único
   - Variable archivo .env `API_ACCESO_UNICO_DIRECTORIO_CDMX`
+
+- Consulta de usuario URG autorizado en Acceso Único (login):
+  - Variable archivo .env `API_TIANGUIS_DIGITAL_ACCESO_UNICO_URG`
 
 ### Documentación e información relacionada con el repositorio del proyecto
 
