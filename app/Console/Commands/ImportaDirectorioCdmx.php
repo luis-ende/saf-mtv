@@ -61,23 +61,8 @@ class ImportaDirectorioCdmx extends Command
     {
         DB::table('funcionarios')->truncate();
 
-        //$opnRepo = new OportunidadNegocioRepository();
-        //$unidadesCompradoras = $opnRepo->obtieneInstitucionesCompradoras(false);
-
         foreach ($funcionarios as $funcionario) {
             $unidadCompraId = $this->buscaUnidadCompraHomologada($funcionario['institucion']);
-//            $nombreURG = $funcionario['institucion'];
-//            $unidadCompradora = $unidadesCompradoras->first(function (object $uc, int $key) use($nombreURG) {
-//                return mb_strtolower($uc->nombre) === mb_strtolower($nombreURG);
-//            });
-//
-//            if (!$unidadCompradora) {
-//                $unidadCompradora = UnidadCompradora::create([
-//                    'nombre' => $nombreURG,
-//                ]);
-//                // Refrescar lista de de unidades compradoras
-//                $unidadesCompradoras = $opnRepo->obtieneInstitucionesCompradoras(false);
-//            }
 
             $nombreCompleto = $funcionario['nombre'] . " " . $funcionario['primer_apellido'] . " " . $funcionario['segundo_apellido'];
 

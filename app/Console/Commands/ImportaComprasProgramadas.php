@@ -87,7 +87,6 @@ class ImportaComprasProgramadas extends Command
         DB::table('compras_procedimientos')->truncate();
 
         $opnRepo = new OportunidadNegocioRepository();
-        //$unidadesCompradoras = $opnRepo->obtieneInstitucionesCompradoras(false);
         $tiposContratacion = $opnRepo->obtieneTiposContratacion();
 
         $tipoContrBienesId = $tiposContratacion->where('tipo', '=', TipoContratacion::AdquisicionBienes->value)->value('id');
@@ -95,18 +94,6 @@ class ImportaComprasProgramadas extends Command
 
         foreach ($compras as $compra) {
             $unidadCompradoraId = $this->buscaUnidadCompraHomologada($compra['unidad_compradora']);
-//            $nombreURG = trim($compra['unidad_compradora']);
-//            $unidadCompradora = $unidadesCompradoras->first(function (object $uc, int $key) use($nombreURG) {
-//                return mb_strtolower($uc->nombre) === mb_strtolower($nombreURG);
-//            });
-//
-//            if (!$unidadCompradora) {
-//                $unidadCompradora = UnidadCompradora::create([
-//                    'nombre' => $nombreURG,
-//                ]);
-//                // Refrescar lista de de unidades compradoras
-//                $unidadesCompradoras = $opnRepo->obtieneInstitucionesCompradoras(false);
-//            }
 
             $valorContr = str_replace('$', '', $compra['valor_estimado_contratacion']);
             $valorContr = str_replace(',', '', $valorContr);
@@ -116,7 +103,7 @@ class ImportaComprasProgramadas extends Command
                 'objeto_contratacion' => $compra['objeto_contratacion'],
                 'metodo_contr_proyectado' => $compra['metodo_contr_proyectado'],
                 'valor_estimado_contratacion' => $valorContr,
-                //'fecha_estimada_procedimiento' => Carbon::createFromFormat('d-m-Y', $compra['fecha_estimada_procedimiento_contratacion']),
+                //'fecha_estimada_procedimiento' => // Dato no proporcionado
                 'fecha_estimada_inicio_contr' => Carbon::createFromFormat('Y-m-d', $compra['fecha_estimada_inicio_contr']),
                 'fecha_estimada_fin_contr' => Carbon::createFromFormat('Y-m-d', $compra['fecha_estimada_fin_contr']),
                 'id_tipo_contratacion' => $compra['tipo_contratacion'] === 'BIEN' ? $tipoContrBienesId : $tipoContrServiciosId,

@@ -47,13 +47,6 @@ class ConcursoDigitalService
                 Carbon::now();
 
             $unidadCompraId = $this->buscaUnidadCompraHomologada($convocatoria['entidad_convocante']);
-//            $unidadCompradoraId = DB::table('cat_unidades_compradoras')->where('nombre', $convocatoria['entidad_convocante'])->value('id');
-//            if (is_null($unidadCompradoraId)) {
-//                $uc = UnidadCompradora::create([
-//                    'nombre' => $convocatoria['entidad_convocante'],
-//                ]);
-//                $unidadCompradoraId = $uc->id;
-//            }
 
             $convData = [
                 'fecha_presentacion_propuestas' => $fechaPresentacionP,
