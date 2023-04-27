@@ -22,7 +22,7 @@
             </div>
         </div>
         <p class="information-container-message">El Gobierno de la Ciudad de México adquiere a través de cada una de sus
-            <a href="#" class="text-[#BC955C] hover:text-[#8B1232]">Instituciones compradoras</a>, una amplia variedad
+            <a href="{{ route('calendario-compras.index') }}" class="text-[#BC955C] hover:text-[#8B1232]">Instituciones compradoras</a>, una amplia variedad
             de bienes y servicios año con año, lo cual brinda la oportunidad a personas
             físicas y morales de convertirse en proveedores del Gobierno. Venderle a la CDMX representa grandes
             beneficios para tu negocio, por eso en MI TIENDITA VIRTUAL buscamos apoyarte para incrementar tu cartera
@@ -105,7 +105,7 @@
                                 Instituciones compradoras podrán conocer tus productos y contactarte.
                                 Además, puedes compartir el enlace con tus clientes y prospectos.</p>
                             <div class="d-flex align-items-center">
-                                <a href="{{ route('login') }}" class="mr-3">Crea tu Tiendita Virtual</a>
+                                <a href="{{ route('catalogo-productos') }}" class="mr-3">Crea tu Tiendita Virtual</a>
                                 @svg('arrow-link')
                             </div>
                         </div>
@@ -147,7 +147,7 @@
                                     y tu Tiendita Virtual,</strong> además podrás guardar las que sean de tu interés.
                             </p>
                             <div class="d-flex align-items-center">
-                                <a href="{{ route('login') }}" class="mr-3">Favoritos</a>
+                                <a href="{{ route('centro-notificaciones.index', [2]) }}" class="mr-3">Favoritos</a>
                                 @svg('arrow-link')
                             </div>
                         </div>
@@ -295,7 +295,7 @@
                                         CDMX.</strong>
                                 </p>
                                 <div class="d-flex align-items-center">
-                                    <a href="#" class="mr-3">Ir al sistema de Requisiciones</a>
+                                    <a href="https://dev.finanzas.cdmx.gob.mx/requisiciones" target="_blank" class="mr-3">Ir al sistema de Requisiciones</a>
                                     @svg('arrow-link')
                                 </div>
                             </div>
@@ -306,7 +306,7 @@
                                     correspondiente.
                                 </p>
                                 <div class="d-flex align-items-center">
-                                    <a href="#" class="mr-3">Directorio de Instituciones compradoras</a>
+                                    <a href="{{ route('directorio.index') }}" class="mr-3">Directorio de Instituciones compradoras</a>
                                     @svg('arrow-link')
                                 </div>
                             </div>
@@ -355,7 +355,7 @@
                                                 solicitante)</li>
                                         </ul>
                                         <div class="d-flex align-items-center">
-                                            <a href="#" class="mr-3">Directorio CDMX</a>
+                                            <a href="{{ route('directorio.index') }}" class="mr-3">Directorio CDMX</a>
                                             <svg class="w-5 h-16" xmlns="http://www.w3.org/2000/svg" fill="none"
                                                 viewBox="0 0 24 24" stroke-width="1.5" stroke="#bc955c"
                                                 aria-hidden="true">
@@ -494,7 +494,7 @@
                                         Instituciones compradoras podrán conocer tus productos y contactarte. Además,
                                         puedes compartir el enlace con tus clientes y prospectos.</p>
                                     <div class="d-flex align-items-center">
-                                        <a href="{{ route('login') }}" class="mr-3">Crea tu Tiendita virtual</a>
+                                        <a href="{{ route('catalogo-productos') }}" class="mr-3">Crea tu Tiendita virtual</a>
                                         @svg('arrow-link')
                                     </div>
                                 </div>
@@ -544,7 +544,7 @@
                                             oportunidades de acuerdo a tu Perfil y tu Tiendita Virtual, además podrás
                                             guardar las que sean de tu interés.</p>
                                         <div class="d-flex align-items-center">
-                                            <a href="{{ route('login') }}" class="mr-3">Favoritos</a>
+                                            <a href="{{ route('centro-notificaciones.index', [2]) }}" class="mr-3">Favoritos</a>
                                             @svg('arrow-link')
                                         </div>
                                     </div>
@@ -577,9 +577,9 @@
                                         <p class="title">Regístrate en Padrón de Proveedores</p>
                                         <p class="message">Si encontraste alguna oportunidad de negocio y algún
                                             procedimiento es de tu
-                                            interés, tramita tu <a href="#"
+                                            interés, tramita tu <span
                                                 class="text-[#BC955C] hover:text-[#8B1232]">Constancia de Registro en el
-                                                Padrón de Proveedores</a> de la
+                                                Padrón de Proveedores</span> de la
                                             Administración Pública de la Ciudad de México.</p>
                                         <div class="d-flex align-items-center">
                                             <a href="https://tianguisdigital.finanzas.cdmx.gob.mx/requisitos"
@@ -776,7 +776,7 @@
                                                         de la CDMX.</strong>
                                                 </p>
                                                 <div class="d-flex align-items-center">
-                                                    <a href="#" class="mr-3">Ir al sistema de Requisiciones</a>
+                                                    <a href="https://dev.finanzas.cdmx.gob.mx/requisiciones" target="_blank" class="mr-3">Ir al sistema de Requisiciones</a>
                                                     @svg('arrow-link')
                                                 </div>
                                             </div>
@@ -787,7 +787,7 @@
                                                     procedimiento estipuladas por la Institución compradora, sigue el
                                                     proceso correspondiente.</p>
                                                 <div class="d-flex align-items-center">
-                                                    <a href="#" class="mr-3">Directorio de Instituciones compradoras</a>
+                                                    <a href="{{ route('directorio.index') }}" class="mr-3">Directorio de Instituciones compradoras</a>
                                                     @svg('arrow-link')
                                                 </div>
                                             </div>
@@ -842,7 +842,7 @@
                                                                 compradora solicitante)</li>
                                                         </ul>
                                                         <div class="d-flex align-items-center">
-                                                            <a href="#" class="mr-3">Directorio CDMX</a>
+                                                            <a href="{{ route('directorio.index') }}" class="mr-3">Directorio CDMX</a>
                                                             <svg class="w-5 h-16" xmlns="http://www.w3.org/2000/svg"
                                                                 fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                                                 stroke="#bc955c" aria-hidden="true">
