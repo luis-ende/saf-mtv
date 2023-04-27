@@ -8,11 +8,6 @@ use Illuminate\Support\Facades\Http;
 
 class VerificacionRFCService
 {
-    private const ETAPAS_PROVEEDORES_REGISTRO_PERMITIDO = [
-        10, // SOLICITUD VENCIDA
-        12, // RECHAZADO CON SOLICITUD VENCIDA
-    ];
-
     /**
      * Verifica si el RFC ya existe en el Padrón de Proveedores o en MTV y obtiene detalles sobre el registro existente.
      */
@@ -52,13 +47,10 @@ class VerificacionRFCService
                     if ($estatusData['es_usuario'] === true) {
                         $responseData['existe_en_padron_proveedores'] = true;
                         $responseData['etapa_en_padron_proveedores'] = $estatusData['etapa'];
-                        // Permitir el registro en MTV aún si existe en Padrón de Proveedores pero con estatus vencido.
-                        if (in_array($estatusData['id_etapa'], self::ETAPAS_PROVEEDORES_REGISTRO_PERMITIDO)) {
-                            $responseData['permitir_registro_login'] = true;
-                        }
-                    } else {
-                        $responseData['permitir_registro_login'] = true;
                     }
+
+                    // Permitir el registro en MTV aún si existe en Padrón de Proveedores.
+                    $responseData['permitir_registro_login'] = true;
                 }
             }
         } else {
