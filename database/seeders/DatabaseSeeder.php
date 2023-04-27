@@ -35,10 +35,11 @@ class DatabaseSeeder extends Seeder
         $this->call(ObjetivosTareasSeeder::class);
         $this->call(MTVBannersSeeder::class);
 
-        // Roles y usuarios de prueba locales.
-        // Usuarios generados sin tokens de autenticación.
         $this->creaMTVRoles();
-        //$this->creaUsuarioURG();
+        // Roles y usuarios de prueba locales.
+        // Usuarios de prueba/modo desarrollo generados sin tokens de autenticación.
+//        $this->creaUsuarioURG();
+//        $this->creaUsuarioAdmin();
     }
 
     private function creaMTVRoles()
@@ -73,13 +74,11 @@ class DatabaseSeeder extends Seeder
     // Usuario administrador predeterminado para el módulo de administración de MTV (ambiente de desarrollo local).
     private function creaUsuarioAdmin()
     {
-        $usuarioURG = UsuarioURG::create(['nombre' => 'MTV Administrador']);
         $user = User::create([
             'name' => 'mtv-admin',
             'email' => 'admin@test.com',
             'rfc' => 'mtv-admin',
             'activo' => true,
-            'id_urg' => $usuarioURG->id,
             'last_login' => now(),
             'password' => bcrypt('12345678C$')]);
         $user->assignRole('mtv-admin');
