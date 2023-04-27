@@ -6,7 +6,7 @@
             <h2 class="text-mtv-secondary text-lg font-bold">Unidades Responsables de Gasto</h2>
             <p class="text-sm md:text-base text-mtv-text-gray text-center">Inicia sesión para tener acceso a funcionalidades del sitio diseñadas sólo para Unidades Responsables de Gasto.</p>
 
-            @php($queryParams = count(request()->query()) > 0 ? '?' . http_build_query(request()->query()) : '')
+            @php($queryParams = count(request()->query()) > 0 ? '?' . http_build_query(request()->query()) . '&urg_login=true' : '?urg_login=true')
 
             <form method="POST"
                   action="{{ route('login') . $queryParams }}"
@@ -20,6 +20,7 @@
                         class="mtv-text-input"
                         maxlength=13
                         required
+                        value="{{ old('rfc') }}"
                         oninput="this.value = this.value.toUpperCase()">
                     <label class="mtv-input-label" for="rfc">RFC</label>
                 </div>

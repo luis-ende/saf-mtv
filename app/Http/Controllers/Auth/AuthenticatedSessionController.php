@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\AuthenticateWithAccessTokenTrait;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Services\VerificacionRfcAccesoUnicoService;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -46,6 +47,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+        if (isset($request->query()['urg_login'])) {
+            $service = new VerificacionRfcAccesoUnicoService();
+            if (! $service->esUsuarioUrg($request->input('rfc'))) {
+                return redirect()
+                        ->back()
+                        ->with('error', 'No es posible iniciar sesión. La cuenta no existe o no es de una URG autorizada.');
+            }
+        }
+
         $habilitado = User::where('rfc', $request->input('rfc'))->value('activo');
         if (!is_null($habilitado) && ($habilitado === false)) {
             return redirect()
