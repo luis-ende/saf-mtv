@@ -64,12 +64,13 @@ Route::post('persona/{persona}/contactos', [PersonaController::class, 'storeCont
 Route::get('/productos/{producto}/cabms_categorias', [ProductosController::class, 'obtieneProductoCABMSCategorias'])
     ->middleware(['auth', 'verified', 'registro_mtv.status'])->name('productos-cabms-categorias.show');
 
-Route::controller(RegistroURGController::class)->group(function () {
+// El registro se hará vía Acceso único
+/*Route::controller(RegistroURGController::class)->group(function () {
     Route::middleware(['guest'])->group(function() {
         Route::get('/registro-urg', 'show')->name('registro-urg.show');
         Route::post('/registro-urg', 'store')->name('registro-urg.store');
     });
-});
+});*/
 
 Route::controller(RegistroMTVController::class)->group(function () {
     Route::middleware(['guest'])->group(function() {
