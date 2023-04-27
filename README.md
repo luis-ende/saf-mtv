@@ -42,6 +42,7 @@
 
 - Generar respaldo de la base de datos en producción (u otro ambiente), ejemplo:
   - `pg_dump -U saf_mtv_dbuser -W -d saf_mtv > mtv_saf_db_20Feb2023.sql`
+  - O también con `php artisan backup:run` (genera respaldo completo que incluye también la carpeta storage) (los respaldos se generan en la carpeta `/storage/app/MTV`)
 
 - Para restaurar un respaldo local en el servidor local de desarrollo (Homestead):
   - Entrar al servidor Homestead con `vagrant ssh`, después al servidor Postgresql con `psql -h homestead -U saf_mtv_dbuser -d saf_mtv`
@@ -53,7 +54,7 @@
 - No olvidar copiar la carpeta `storage`, en donde se guardan imágenes y documentos
 - Con Homestead se pueden revisar los **correos** salientes de MTV (con la configuración predeterminada de desarrollo) en la url: `saf-mtv.test:8025` 
 
-**IMPORTANTE:** El archivo .env contiene las variables TEST_MODE, API_URL_BUSQUEDA_RFC_PADRON_PROVEEDORES, API_URL_BUSQUEDA_CURP, las cuales apuntan a endpoints de prueba. En modo producción TEST_MODE debe ser `false` y las URLs de las APIs deben apuntar a URLs en producción.
+**IMPORTANTE:** El archivo .env contiene las variables TEST_MODE, API_URL_BUSQUEDA_RFC_PADRON_PROVEEDORES, API_URL_BUSQUEDA_CURP, las cuales apuntan a endpoints de prueba para el modo desarrollo. En modo producción TEST_MODE debe ser `false` y las URLs de las APIs deben apuntar a URLs en producción.
 
 ## Ambiente de desarrollo y pruebas en contenedores Docker
 
@@ -102,9 +103,10 @@
     - APP_DEBUG=false
     - TEST_MODE=false
     - DB_DATABASE, DB_USERNAME, DB_PASSWORD deben apuntar a valores de producción (no los defaults de desarrollo)
-  - Precargado de fuentes, ejecutar: `php artisan google-fonts:fetch`
+    - Variables del servidor de corrreo (MAIL_HOST, etc.)
+  - Precargado de fuentes, ejecutar: `php artisan google-fonts:fetch` (Debe ejecutarse cada vez que hay un cambio de dominio de MTV)
   - Ejecutar `php artisan storage:link` para generar el symlink en public   
-  - `database/seeders/DatabaseSeeder.php` (ejecutar `php artisan db:seed`) carga catálogos de MTV
+  - `database/seeders/DatabaseSeeder.php` (ejecutar `php artisan db:seed`) carga de catálogos de MTV
   - `database/seeders/CatCiudadanoCABMSSeeder.php` (ejecutar `php artisan db:seed --class=CatCiudadanoCABMSSeeder`) carga los catálogos relacionados con el catálogo CABMS (importados previamente de un archivo Excel a CSV y luego a SQL)
     - Antes es necesario de asegurarse que existe el archivo `database/data/cat_ciudadano_cabms.sql` que contiene los datos del catálogo. Este archivo no está en el repositorio de código, sino en un directorio de datos independiente (o bien, se puede obtener del ambiente de producción)
     - La tabla `cat_ciudadano_cabms` se carga solamente para crear y llenar las tablas `cat_sectores`, `cat_categorias_scian` y `cat_cabms`, pero puede ser eliminada después para ahorrar espacio
@@ -113,40 +115,45 @@
     - Para activar la extensión: `CREATE EXTENSION pg_trgm;`
     - Más información sobre la extensión y su uso: https://www.postgresql.org/docs/current/pgtrgm.html
   - Algunos catálogos se guardan en cache (por ejemplo, ver clase `OportunidadNegocioRepository`), se puede usar `Cache::flush()` para eliminar todos los caches, o uno específico con `Cache::forget('key')` según sea el caso 
-  - La carga predeterminada de datos del Calendario de compras desde un archivo Excel se ejecuta mediante un seeder: `php artisan db:seed --class=ComprasProcedimientosSeeder`
+  - La carga predeterminada de datos del Calendario de compras desde un archivo Excel se ejecuta mediante un seeder (en producción se utiliza la integración por API, ver sección de Integraciones de MTV): `php artisan db:seed --class=ComprasProcedimientosSeeder`
   - La carga predeterminada de datos de preguntas frecuentes desde un archivo Excel se ejecuta mediante un seeder: `php artisan db:seed --class=PreguntasFrecuentesSeeder`
   - Para generar token de autenticación para el usuario super administrador (mtvadmin) se puede usar el comando `php artisan mtv:gen-token {user_id}`
   - Ver más información acerca de los seeders en la documentación del proyecto en la carpeta **[docs](docs/funcionalidad/README.md)**
   - Comandos disponibles para tareas comunes de MTV (por ejemplo, generar tokens de acceso para usuarios): Ver directorio `Console/Commands`
   - Para encontrar los comandos que se ejecutan como tareas programadas (por ejemplo, para importar convocatorias de Concurso digital) ver: `app/Console/Kernel.php`
     - El archivo de logs se genera en: `storage/logs/mtv/cronjobs.log`
-  - Asegurarse de que las variables para consulta de APIs (archivo .env) son correctos 
+  - Asegurarse de que las variables para consulta de datos mediante APIs (archivo .env) son correctos 
 
 ### Integraciones de MTV con otros sistemas:
 
-- [OK] Consulta de estatus de RFC en **Padrón de Proveedores**. Utilizado desde MTV para verificar si un RFC a utilizar ya existe en Padrón de Proveedores
+- Consulta de estatus de RFC en **Padrón de Proveedores**. Utilizado desde MTV durante el registro para completar el perfil de negocio de un proveedor con datos provenientes del Padrón de Proveedores (Si existe una cuenta)
+  - Variable archivo .env `API_URL_PADRON_PROVEEDORES_CONSULTA_PERFIL_NEGOCIO`
 
-- [OK] Consulta de datos del CURP desde el endpoint interno de datos de RENAPO. Esta consulta es necesaria para completar los datos completos (nombre completo, fecha de nacimiento, etc.) del proveedor (persona física), una vez que ha proporcionado su CURP.
+- Consulta de datos del CURP desde el endpoint interno de datos de RENAPO. Esta consulta es necesaria para completar los datos completos (nombre completo, fecha de nacimiento, etc.) del proveedor (persona física), una vez que ha proporcionado su CURP
+  - Variable archivo .env `API_URL_BUSQUEDA_CURP`
 
-- [Pendiente] Consulta de datos de Perfil de Negocio y Contacto de un proveedor en **Padrón de Proveedores**. Consulta de datos de proveedor registrado en Padrón de Proveedores para crear y sincronizar la cuenta del proveedor durante el login en MTV
-
-- [Pendiente] Consulta de estatus de contratación de un grupo de RFCs en **Padrón de Proveedores**. Consulta mediante API que recibe varios RFC de proveedores y devuelve los estatus de contratación de cada uno (ya sea que existan o no)
-
-- [Pendiente] API Endpoint en MTV para crear y actualizar cuentas de URGs mediante información del portal de **Acceso Único**. De tal manera que los usuarios de URGs autorizados puedan tener acceso a MTV
-  - De manera temporal se creó el registro de cuentas para usuarios de URGs directamente en MTV
+- Consulta de estatus de contratación de un grupo de RFCs para el filtro por estatus de constancia de Padrón de Proveedores en búsqueda de proveedores (Catálogo de proveedores). Consulta mediante API que recibe varios RFC de proveedores y devuelve los estatus de contratación de cada uno (ya sea que existan o no)
+  - Variable archivo .env `API_URL_PADRON_PROVEEDORES_CONSULTA_MULTIPLE_RFC` 
 
 - Integraciones para el Buscador de Oportunidades de Negocio: 
-  - [Pendiente] Consulta de convocatorias abiertas desde el portal de **Concurso Digital** [https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas](https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas) y [https://brandmestudio-test.com/contrataciones-abiertas](https://brandmestudio-test.com/contrataciones-abiertas)
-  - [Pendiente] Consulta de datos de compras programadas desde el portal de **Requisiciones** [https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login](https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login)
-  - [Pendiente] Consulta de datos de convocatorias desde el portal de **Prebases** [https://prebasestianguisdigital.cdmx.gob.mx/](https://prebasestianguisdigital.cdmx.gob.mx/)
-  - [Pendiente] Consulta de datos de precotizaciones desde el portal de **Precotizaciones** [https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login](https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login) y PAAAPS (Programa Anual de Adquisiciones, Arrendamientos y Prestación de Servicios)
+  - Consulta de convocatorias abiertas desde el portal de **Concurso Digital** [https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas](https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas) y [https://brandmestudio-test.com/contrataciones-abiertas](https://brandmestudio-test.com/contrataciones-abiertas)
+    - Variable archivo .env `API_CONCURSO_DIGITAL_CONVOCATORIAS`
+  - Consulta de datos de compras programadas desde el portal de **Requisiciones** [https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login](https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login)
+    - Variable archivo .env `API_PAAAPS_COMPRAS_PROGRAMADAS` (requiere basic auth)
+  - Consulta de datos de convocatorias desde el portal de **Prebases** [https://prebasestianguisdigital.cdmx.gob.mx/](https://prebasestianguisdigital.cdmx.gob.mx/)
+    - Variable archivo .env `API_PREBASES`
+  - Consulta de datos de precotizaciones desde el portal de **Precotizaciones** [https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login](https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login)
+    - Variable archivo .env `API_REQUISICIONES_PRECOTIZACIONES`
+  - En MTV la tabla `oportunidades_negocio` concentra todos los registro provenientes de las diferentes plataformas. Para la extracción de información se utilizan las clases/servicio ubicadas en `app/Services/OportunidadesNegocio`, las cuales transforman los registros de la fuente a oportunidad de negocio. Para extraer la información se utilizan seeders. Por ejemplo, el seeder `database/seeders/OportunidadNegocioSeeder.php` hace uso del servicio para importar convocatorias públicas del sitio de Concurso digital. Estos seeder pueden ser ejecutados con la misma regularidad (por ejemplo, una vez al día) o en diferentes tiempos según la frecuencia con que cambien los datos en la fuente (Ver todas las tareas programadas en `app/Console/Kernel.php`)
 
-  - En MTV la tabla `oportunidades_negocio` concentra todos los registro provenientes de las diferentes plataformas. Para la extracción de información se utilizan las clases/servicio ubicadas en `app/Services/OportunidadesNegocio`, las cuales transforman los registros de la fuente a oportunidad de negocio. Para extraer la información se utilizan seeders. Por ejemplo, el seeder `database/seeders/OportunidadNegocioSeeder.php` hace uso del servicio para importar convocatorias públicas del sitio de Concurso digital. Estos seeder pueden ser ejecutados con la misma regularidad (por ejemplo, una vez al día) o en diferentes tiempos según la frecuencia con que cambien los datos en la fuente.
-  - [Pendiente] Para el Calendario de compras y detalle de compras se requieren datos de compras programadas provenientes del sistema de PAAAPS  
-  - [Pendiente] Para el directorio CDMX se requieren datos de funcionarios provenientes del sistema de Acceso único
+- Para el Calendario de compras y detalle de compras se consumen datos de compras programadas provenientes del sistema de PAAAPS
+  - Variable archivo .env `API_PAAAPS_COMPRAS_PROGRAMADAS` (requiere basic auth)
+  - El mismo proceso de importación alimenta Oportunidades de negocio de etapas "Compra programada" y los procedimientos del calendario (Ver `app/Console/Commands/ImportaComprasProgramadas.php`)
+   
+- Para el directorio CDMX se consumen datos de funcionarios provenientes del sistema de Acceso único
+  - Variable archivo .env `API_ACCESO_UNICO_DIRECTORIO_CDMX`
 
 ### Documentación e información relacionada con el repositorio del proyecto
 
-- Para consultar la lista de tareas abiertas y pendientes, ver: https://gitlab.com/saf-mtv/saf-mtv/-/issues
-- ***Consultar documentación específica sobre diferentes aspectos del proyecto en la carpeta `docs` de este repositorio***
+- ***Consultar documentación específica sobre diferentes aspectos del proyecto en la carpeta `docs` (archivos README.md) de este repositorio***
   
