@@ -4,6 +4,9 @@ import '../sass/app.scss';
 import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
 
+import { rfcValido } from "./rfc-validacion";
+window.rfcValido = rfcValido;
+
 import swal from 'sweetalert2';
 window.Swal = swal;
 window.SwalMTVCustom = {

@@ -92,7 +92,15 @@
                 }
             },
             esRFCValido(rfc) {
-                return rfc.length === 12 || rfc.length === 13;
+                const resultado = window.rfcValido(rfc);
+                if (resultado === false) {
+                    this.mensajeError = 'RFC no válido.'
+                    document.getElementById('rfc').focus();
+
+                    return false;
+                }
+
+                return rfc;
             },
         }
     }
