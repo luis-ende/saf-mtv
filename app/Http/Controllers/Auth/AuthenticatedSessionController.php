@@ -7,12 +7,11 @@ use App\Http\Controllers\Traits\AuthenticateWithAccessTokenTrait;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Services\RegistroProveedorMTVService;
 use App\Services\VerificacionRfcAccesoUnicoService;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -47,6 +46,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+        // Verificar si es usuario URG activo
         if (isset($request->query()['urg_login'])) {
             $service = new VerificacionRfcAccesoUnicoService();
             if (! $service->esUsuarioUrg($request->input('rfc'))) {
@@ -54,6 +54,11 @@ class AuthenticatedSessionController extends Controller
                         ->back()
                         ->with('error', 'No es posible iniciar sesión. La cuenta no existe o no es de una URG autorizada.');
             }
+        } else {
+            // Verificar si es usuario proveedor de Padrón de Proveedores
+            $service = new RegistroProveedorMTVService();
+            // Crea o actualiza el usuario proveedor si existe en Padrón de Proveedoers
+            $service->esProveedorPP($request->input('rfc'));
         }
 
         $habilitado = User::where('rfc', $request->input('rfc'))->value('activo');
