@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
         
         // Seeders Oportunidad de Negocio
         $this->call(CatCapitulosSeeder::class);
-        $this->call(CatUnidadesCompradorasSeeder::class);
+        // Datos de unidades compradoras no actualizados, actualizar con datos de bd de producción
+        //$this->call(CatUnidadesCompradorasSeeder::class);
         $this->call(CatTiposContratacionSeeder::class);
         $this->call(CatMetodosContratacionSeeder::class);
         $this->call(CatEtapasProcedimientoSeeder::class);
