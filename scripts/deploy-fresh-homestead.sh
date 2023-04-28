@@ -15,7 +15,5 @@ npm install
 php artisan migrate:fresh
 php artisan db:seed
 npm run build
-php artisan cache:clear
-php artisan config:cache
 # php artisan config:clear
 vagrant exit
