@@ -18,3 +18,9 @@
 - Los estilos CSS adicionales de algunas páginas se encuentran en la carpeta `resources/sass`, la cual contiene el archivo `app.scss` con estilos de varios componentes (por ejemplo, SweetAlert o Choices.js) 
 - Las librerías JavaScript importadas para el proyecto se pueden ver en el archivo `resources/js/app.js`, también en este archivo se encuentran las funciones globales usadas en bloques de Alpine.js
 - Todos los íconos SVG utilizados en el proyecto se encuentran en la carpeta `resources/svg` y son usados en las plantillas Blade con la directiva `@svg` (Ver más en la documentación de [https://github.com/blade-ui-kit/blade-icons](https://github.com/blade-ui-kit/blade-icons))
+
+## Estructura de la base de datos
+
+![Base de datos](mtv_base_datos_28Abr2023.png)
+
+- La mayoría de las tablas tienen un modelo implementados. Ver directorio `app/Models`

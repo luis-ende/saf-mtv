@@ -13,7 +13,8 @@ La carga inicial de los catálogos necesarios para el funcionamiento de MTV se r
 - Catálogos para oportunidades de negocio: 
   - Capítulos (grandes rubros de gastos): `database/seeders/CatCapitulosSeeder.php`
   - Instituciones compradoras: `database/seeders/CatUnidadesCompradorasSeeder.php`
-    - Este catálogo es utilizado por Usuarios URG (urg_usuarios), Oportunidades de negocio (oportunidades_negocio), y Compras programadas (compras_procedimientos)  
+    - Este catálogo es utilizado por Usuarios URG (urg_usuarios), Oportunidades de negocio (oportunidades_negocio), y Compras programadas (compras_procedimientos)
+    - El catálogo cargado en ambiente de desarrollo por este seeder es diferente al de producción, ya que este catálogo se alimenta al momento de importar compras programadas, oportunidades de negocio y funcionarios del directorio. Durante la importación también se realiza una homologación para excluir en la medida de lo posible nombres de unidades compradoras duplicadas por variación en sus nombres (por ejemplo, Alcaldía Coyoacán = Alcaldía de Coyoacán o ALCALDIA COYOACAN) 
   - Tipos de contratación: `database/seeders/CatTiposContratacionSeeder.php`
   - Métodos de contratación: `database/seeders/CatMetodosContratacionSeeder.php`
   - Etapas de procedimientos: `database/seeders/CatEtapasProcedimientoSeeder.php`
@@ -37,9 +38,9 @@ La carga inicial de los catálogos necesarios para el funcionamiento de MTV se r
 ### Registro de proveedores
 
 - Registro de usuarios proveedor desde el registro de MTV. 
-  - Para completar los datos (nombre, primer apellido, segundo apellido, fecha de nacimiento) de personas físicas se requiere consulta de datos mediante CURP a la API endpoint de Renapo
-  - MTV verifica si el RFC existe en Padrón de Proveedores (env variable `API_URL_PADRON_PROVEEDORES_CONSULTA_PERFIL_NEGOCIO`), si existe los datos son utilizados para completar el nuevo registro
-  - El proveedor será registrado siempre con tipo de registro 1 (`id_tipo_registro` en tabla `personas`)
+  - Para completar los datos (nombre, primer apellido, segundo apellido, fecha de nacimiento) de personas físicas se requiere consulta de datos mediante CURP a la API endpoint de Renapo 
+  - MTV verifica si el RFC existe en Padrón de Proveedores (env variable `API_URL_PADRON_PROVEEDORES_CONSULTA_PERFIL_NEGOCIO`), si existe los datos son utilizados para completar el nuevo registro 
+  - Cuando el proveedor existe en Padrón de Proveedores, es registrado con tipo de registro 2 (`id_tipo_registro` en tabla `personas`). Si no existe en PP el tipo de registro es 1 por default
 
 - Registro de usuarios proveedor por API endpoint (POST) `/api/proveedores/register` (Ver `routes/api.php`)
     - Usar token de autenticación del usuario super administrador: `mtv-admin`
@@ -48,9 +49,6 @@ La carga inicial de los catálogos necesarios para el funcionamiento de MTV se r
   
 ### Registro de usuarios URG
 
-- Registro manual (`/registro-urg`)
-  - Después de registrarse como usuario URG es necesario que el usuario administrador de MTV active la nueva cuenta desde el Módulo de administración de MTV (sección Usuarios URG) para que el usuario pueda loguearse a MTV con la cuenta creada 
-  
 - Registro de usuarios URG por API endpoint (POST) `/api/usuarios-urg/register` (Ver `routes/api.php`)
     - Usar token de autenticación del usuario super administrador: `mtv-admin`
     - Endpoint devuelve el token de autenticación generado para el usuario registrado en MTV
@@ -74,7 +72,19 @@ La carga inicial de los catálogos necesarios para el funcionamiento de MTV se r
   - `proveedor` - Rol de proveedor registrado en MTV
   - `urg` - Rol de usuario de URG registrado en MTV
   - `admin` - Rol de usuario con permisos de administrador (algunas URG podrían tener este rol también)
-  - `mtv-admin` - Rol de super usuario con permisos para el Panel de administración de MTV 
+  - `mtv-admin` - Rol de super usuario con permisos para el Panel de administración de MTV
+
+### Inicio de sesión de proveedores
+
+`[url_mtv]/login`
+
+- Al momento de iniciar sesión, si se detecta que existe una cuenta en Padrón de Proveedores, se actualizan los datos del proveedor en MTV con los provenientes de PP. Si el API devuelve también la contraseña, y el proveedor no existen en MTV, se crea una nueva cuenta (Ver `app/Http/Controllers/Auth/AuthenticatedSessionController.php > store`)
+
+### Inicio de sesión de usuarios URG
+
+`[url_mtv]/urg-login`
+
+- Al momento de iniciar sesión, si se detecta que existe una cuenta válida en el sistema Acceso único, se crea la cuenta en MTV con el rol de `urg` con los datos devueltos por el endpoint del API (Ver archivo .env)  
 
 ## Registro de productos
 
@@ -118,7 +128,14 @@ La carga inicial de los catálogos necesarios para el funcionamiento de MTV se r
 
 ## Buscador de oportunidades
 
-- Para cargar la información del buscador de oportunidades, como por ejemplo registros de convocatorias y prebases, se utilizan seeders (`database/seeders/OportunidadesNegocioSeeder.php`) y servicios que pueden ser sustituidos para consumir la información desde otras fuentes de datos (p.e., un API endpoint).
+- Durante la fase de desarrollo, para cargar la información del buscador de oportunidades, como por ejemplo registros de convocatorias y prebases, se utilizaron seeders (`database/seeders/OportunidadesNegocioSeeder.php`)
+- En producción se ejecutan comandos (ver `app/Console/Commands` y `app/Console/Kernel.php`) para importar los datos para Oportunidades de negocio (ver API endpoint en archivo .env)
+  - La importación de datos de convocatorias se realiza una vez al día (4 am) y consulta las convocatorias abiertas 
+  - La importación de datos de prebases se realiza una vez al día (8 am) y consulta todos los proyectos de prebases existentes 
+    - *Pendiente:* Solamente nos proporcionó un API endpoint de desarrollo y se indicó que por el momento producción no está devolviendo datos, aunque la estructura de los datos devueltos es la misma para ambos ambientes
+  - La importación de datos de precotizaciones se realiza cada trimestre desde el API endpoint del sistema de requisiciones. Ya que las precotizaciones devueltas no tienen nombre de la unidad compradora, se utiliza la dependencia "DIRECCION GENERAL DE RECURSOS MATERIALES Y SERVICIOS GENERALES" al importarlas como Oportunidades de negocio  
+  - La importación de datos de compras programadas se realizó una vez para el 2023
+  
 - Para que estos seeders alimenten la base de datos de MTV con oportunidades de negocio se debe correr un proceso periódicamente (cronjob o scheduled task) que los ejecute.
 - El siguiente diagrama muestra el flujo de información desde las fuentes de datos para oportunidades de negocio de MTV:
 
@@ -130,24 +147,25 @@ La carga inicial de los catálogos necesarios para el funcionamiento de MTV se r
 
 ## Calendario de compras
 
-- Para cargar la información del Calendario de compras se utiliza un seeder (`database/seeders/ComprasProcedimientosSeeder.php`) con un importador desde un archivo de Excel, este importador puede ser sustituido por otro servicio que cargue los datos desde otra fuente (por ejemplo, un API endpoint).
-- La información cargada por el seeder para el Calendario de compras durante la fase de desarrollo proviene del archivo CSV en `database/data/compras_procedimientos_2022.csv` proporcionado por DEEM.
-- La página del Calendario de compras presenta la información calculada a partir de la tabla `compras_procedimientos`, la cual tiene que ser alimentada previamente con datos actualizados.
+- Durante la fase de desarrollo, para cargar la información del Calendario de compras se utilizó un seeder (`database/seeders/ComprasProcedimientosSeeder.php`) con un importador desde un archivo de Excel
+  - La información de prueba cargada por el seeder para el Calendario de compras durante la fase de desarrollo proviene del archivo CSV en `database/data/compras_procedimientos_2022.csv` proporcionado por DEEM.
+- En producción la importación de compras programadas desde PAAAPS se realizó una vez para el 2023 con el mismo comando que importa Oportunidades de negocio de compras programadas (Ver `app/Console/Commands/ImportaComprasProgramadas.php`) 
+- La página del Calendario de compras presenta la información calculada y filtrada por año actual a partir de la tabla `compras_procedimientos`, la cual tiene que ser alimentada previamente con datos actualizados. 
 [Insertar diagramas de flujo de información entre sistemas]
 
 ### Detalle de compras
 
-- La página de detalle de compras (desde Calendario de compras) presenta los procedimientos de una institución compradora, filtro que se aplica sobre la tabla `compras_procedimientos`
+- La página de detalle de compras (desde Calendario de compras) presenta los procedimientos de una institución compradora del año actual, filtro que se aplica sobre la tabla `compras_procedimientos`
 
 ## Preguntas frecuentes
 
 - Para cargar la información de la página de Preguntas frecuentas se utiliza un seeder (`database/seeders/PreguntasFrecuentesSeeder.php`) con un importador desde un archivo de Excel.
-- La información cargada por el seeder para el Preguntas frecuentes durante la fase de desarrollo proviene del archivo CSV en `database/data/PREGUNTAS FRECUENTES MTV.xlsx` proporcionado por DEEM.
+- La información cargada por el seeder para el Preguntas frecuentes durante la fase de desarrollo proviene del archivo CSV en `database/data/PREGUNTAS FRECUENTES MTV.xlsx` proporcionado por DEEM
 
-## Directorio
+## Directorio CDMX
 
-- Para cargar la información del Directorio se utiliza un seeder (`database/seeders/DirectorioCdmxSeeder.php`) con un importador desde un archivo de Excel, este importador puede ser sustituido por otro servicio que cargue los datos desde otra fuente (por ejemplo, un API endpoint).
-- La información cargada por el seeder para el Directorio CDMX durante la fase de desarrollo proviene del archivo CSV en `database/data/directorio_cdmx.xlsx`
+- Durante la fase de desarrollo, para cargar la información del Directorio CDMX se utiliza un seeder (`database/seeders/DirectorioCdmxSeeder.php`) con un importador desde un archivo de Excel
+- En producción la importación de datos de funcionarios desde el sistema de Acceso único se realiza cada trimestre (ver comando `app/Console/Commands/ImportaDirectorioCdmx.php` y tarea programada)
 
 ## Escritorio del proveedor
 
@@ -156,7 +174,13 @@ La carga inicial de los catálogos necesarios para el funcionamiento de MTV se r
 
 ## Módulo de administración de MTV
 
-- El módulo de administración de MTV fue implementado con [Filament](https://filamentphp.com), permite mantener algunos catálogos de MTV, como el directorio de funcionarios, o la lista de preguntas frecuentes
+- El módulo de administración de MTV permite consultar y mantener algunos catálogos de MTV:
+  - Funcionarios del Directorio CDMX
+  - Información de preguntas y respuestas de la página de Preguntas frecuentes
+  - Unidades compradoras
+  - Tareas de objetivos del escritorio de proveedor
+  - Banners del escritorio de proveedor
+  - Usuarios URG
 - Para acceder al módulo de administración de MTV usar el siguiente path: `/admin/login`
 
 ## Mensajes de Email enviados desde MTV

@@ -50,7 +50,8 @@
     - `DROP SCHEMA public CASCADE` y `CREATE SCHEMA public` 
   - Importar el archivo de respaldo (cambiar ubicación del archivo de respaldo a utilizar):
     - `psql -v ON_ERROR_STOP=1 -h homestead -U saf_mtv_dbuser -W -d saf_mtv < database/backups/mtv_saf_db_20Feb2023.sql`
-
+  
+- Algunos datos cargados (por ejemplo, catálogos) durante la fase de desarrollo mediante seeder se encuentran en el directorio `database/data`
 - No olvidar copiar la carpeta `storage`, en donde se guardan imágenes y documentos
 - Con Homestead se pueden revisar los **correos** salientes de MTV (con la configuración predeterminada de desarrollo) en la url: `saf-mtv.test:8025` 
 
@@ -91,7 +92,7 @@
   - Ver ejemplos de uso en: [https://github.com/cmgmyr/laravel-messenger/blob/master/examples/MessagesController.php](https://github.com/cmgmyr/laravel-messenger/blob/master/examples/MessagesController.php)
 - Enlaces de redes sociales (en este proyecto se usan solamente las funciones para generar los enlaces, no los botones en el front-end): https://github.com/jorenvh/laravel-share
 - Para la extracción de datos vía [web scrapping](https://es.wikipedia.org/wiki/Web_scraping) de los sitios de Concurso Digital y Prebases se utiliza el paquete: Laravel Roach PHP - [https://roach-php.dev/docs/laravel/](https://roach-php.dev/docs/laravel/). Para abrir una línea de comando interactiva usar: `php artisan roach:shell https://roach-php.dev/docs/introduction` O para ejecutar un spider específico (desde el directorio raíz del proyecto), por ejemplo: `vendor/bin/roach roach:run App\\Spiders\\PrebasesOportunidadesSpider`
-- Panel de administración de Mi Tiendita Virtual (para catálogos y configuración de la plataforma): Filament - [https://filamentphp.com](https://filamentphp.com)
+- Módulo de administración de Mi Tiendita Virtual (para catálogos y configuración de la plataforma): Filament - [https://filamentphp.com](https://filamentphp.com)
 - Tokens para APIs: Laravel Sanctum - [https://laravel.com/docs/9.x/sanctum#issuing-api-tokens](https://laravel.com/docs/9.x/sanctum#issuing-api-tokens)
 - Respaldos completos del directorio de MTV - [https://spatie.be/docs/laravel-backup/v8/introduction](https://spatie.be/docs/laravel-backup/v8/introduction)
 
@@ -124,11 +125,14 @@
   - Comandos disponibles para tareas comunes de MTV (por ejemplo, generar tokens de acceso para usuarios): Ver directorio `Console/Commands`
   - Para encontrar los comandos que se ejecutan como tareas programadas (por ejemplo, para importar convocatorias de Concurso digital) ver: `app/Console/Kernel.php`
     - El archivo de logs se genera en: `storage/logs/mtv/cronjobs.log`
+    - ***Importante:*** En producción se requiere supervisión regular de las tareas automáticas de importación de datos que están corriendo en el servidor de MTV, o incluso notificar por correo electrónico en caso de errores
   - Asegurarse de que las variables para consulta de datos mediante APIs (archivo .env) son correctos 
 
 ### Integraciones de MTV con otros sistemas:
 
-- Consulta de estatus de RFC en **Padrón de Proveedores**. Utilizado desde MTV durante el registro para completar el perfil de negocio de un proveedor con datos provenientes del Padrón de Proveedores (Si existe una cuenta)
+- Consulta de información de perfil de negocio de proveedores en **Padrón de Proveedores**. 
+  - Utilizado desde MTV durante el registro para completar el perfil de negocio de un proveedor con datos provenientes del Padrón de Proveedores (Si existe una cuenta)
+  - Utilizado desde MTV durante el login para crear o actualizar el perfil de negocio de un proveedor con datos provenientes del Padrón de Proveedores (Si existe una cuenta)
   - Variable archivo .env `API_URL_PADRON_PROVEEDORES_CONSULTA_PERFIL_NEGOCIO`
 
 - Consulta de datos del CURP desde el endpoint interno de datos de RENAPO. Esta consulta es necesaria para completar los datos completos (nombre completo, fecha de nacimiento, etc.) del proveedor (persona física), una vez que ha proporcionado su CURP
@@ -140,13 +144,13 @@
 - Integraciones para el Buscador de Oportunidades de Negocio: 
   - Consulta de convocatorias abiertas desde el portal de **Concurso Digital** [https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas](https://panel.concursodigital.cdmx.gob.mx/convocatorias_publicas) y [https://brandmestudio-test.com/contrataciones-abiertas](https://brandmestudio-test.com/contrataciones-abiertas)
     - Variable archivo .env `API_CONCURSO_DIGITAL_CONVOCATORIAS`
-  - Consulta de datos de compras programadas desde el portal de **Requisiciones** [https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login](https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login)
+  - Consulta de datos de compras programadas desde el portal de **PAAAPS** 
     - Variable archivo .env `API_PAAAPS_COMPRAS_PROGRAMADAS` (requiere basic auth)
-  - Consulta de datos de convocatorias desde el portal de **Prebases** [https://prebasestianguisdigital.cdmx.gob.mx/](https://prebasestianguisdigital.cdmx.gob.mx/)
+  - Consulta de datos de proyectos de prebases desde el portal de **Prebases** [https://prebasestianguisdigital.cdmx.gob.mx/](https://prebasestianguisdigital.cdmx.gob.mx/)
     - Variable archivo .env `API_PREBASES`
-  - Consulta de datos de precotizaciones desde el portal de **Precotizaciones** [https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login](https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login)
+  - Consulta de datos de precotizaciones desde el portal de **Requisiciones** [https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login](https://dev.finanzas.cdmx.gob.mx/requisiciones/public/login)
     - Variable archivo .env `API_REQUISICIONES_PRECOTIZACIONES`
-  - En MTV la tabla `oportunidades_negocio` concentra todos los registro provenientes de las diferentes plataformas. Para la extracción de información se utilizan las clases/servicio ubicadas en `app/Services/OportunidadesNegocio`, las cuales transforman los registros de la fuente a oportunidad de negocio. Para extraer la información se utilizan seeders. Por ejemplo, el seeder `database/seeders/OportunidadNegocioSeeder.php` hace uso del servicio para importar convocatorias públicas del sitio de Concurso digital. Estos seeder pueden ser ejecutados con la misma regularidad (por ejemplo, una vez al día) o en diferentes tiempos según la frecuencia con que cambien los datos en la fuente (Ver todas las tareas programadas en `app/Console/Kernel.php`)
+  - En MTV la tabla `oportunidades_negocio` concentra todos los registro provenientes de las diferentes plataformas. Para extraer la información se utilizan comandos y tareas programadas. Ver todas las tareas programadas en `app/Console/Kernel.php`
 
 - Para el Calendario de compras y detalle de compras se consumen datos de compras programadas provenientes del sistema de PAAAPS
   - Variable archivo .env `API_PAAAPS_COMPRAS_PROGRAMADAS` (requiere basic auth)
