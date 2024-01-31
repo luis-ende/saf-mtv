@@ -1,5 +1,7 @@
 # Proyecto Mi Tiendita Virtual
 
+Plataforma de registro de proveedores y productos en el proceso de compras públicas.
+
 ## Requerimientos
 
 - PHP 8.1
